@@ -1,0 +1,26 @@
+        size1 = b1.maxs - b1.mins
+        size2 = b2.maxs - b2.mins
+
+        if not isinstance(shape, (int, float)):
+            assert len(set(shape)) == 1
+            shape = float(shape[0])
+
+        # should these have +1 and -1?
+        steps_mins = np.floor((b2.mins - b1.maxs) / shape).astype(np.int) + 1
+        steps_maxs = np.floor((b2.maxs - b1.mins) / shape).astype(np.int)
+
+        return steps_mins, steps_maxs
+
+        distance_from_b2_to_b1 = b2.mins - b1.mins
+        num_steps_from_b2_to_b1 = distance_from_b2_to_b1 / shape
+    loop= np.vstack(loop)
+    line = np.vstack(line)
+    loop = Knot.from_periodic_line(loop, shape)
+    line = OpenKnot.from_periodic_line(line, shape)
+
+    line_closure = (line.points[-1] - line.points[0]) / shape[0]
+    line_closure = np.round(line_closure).astype(np.int)
+
+    print('closure is', line_closure)
+
+    b1 = BoundingBox(line.points)

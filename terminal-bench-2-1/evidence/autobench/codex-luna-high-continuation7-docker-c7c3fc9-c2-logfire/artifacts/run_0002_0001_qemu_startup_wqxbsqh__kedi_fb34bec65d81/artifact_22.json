@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "c54eccbd630a0e3a55e33481f00e0a7acf0992c5edcd9ba8cfd62397ca922264",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 40701,
+    "created_at": "2026-08-31T19:35:20.145614Z",
+    "expires_at": "2026-08-31T20:35:20.145614Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"combined_path\":\"/logs/agent/terminal/process_44/combined.bin\",\"command\":\"python3 -c 'import struct\\np='\\\"'\\\"'/app/alpine.iso'\\\"'\\\"'; sec=2048\\nwith open(p,'\\\"'\\\"'rb'\\\"'\\\"') as f:\\n def read_extent(ext,size):\\n  f.seek(ext*sec); return f.read(size)\\n def walk(ext,size,path='\\\"'\\\"''\\\"'\\\"'):\\n  d=read_extent(ext,size); pos=0\\n  while pos < len(d):\\n   n=d[pos]\\n   if not n: pos=(pos//sec+1)*sec; continue\\n   rec=d[pos:pos+n]; e=struct.unpack_from('\\\"'\\\"'<I'\\\"'\\\"',rec,2)[0]; sz=struct.unpack_from('\\\"'\\\"'<I'\\\"'\\\"',rec,10)[0]; flags=rec[25]; ln=rec[32]; name=rec[33:33+ln].decode('\\\"'\\\"'ascii'\\\"'\\\"','\\\"'\\\"'replace'\\\"'\\\"')\\n   if name not in ('\\\"'\\\"'\\\\x00'\\\"'\\\"','\\\"'\\\"'\\\\x01'\\\"'\\\"'):\\n    print(path+'\\\"'\\\"'/'\\\"'\\\"'+name, '\\\"'\\\"'extent'\\\"'\\\"',e,'\\\"'\\\"'size'\\\"'\\\"',sz,'\\\"'\\\"'dir'\\\"'\\\"',bool(flags&2))\\n    if flags&2 and path.count('\\\"'\\\"'/'\\\"'\\\"')<3: walk(e,sz,path+'\\\"'\\\"'/'\\\"'\\\"'+name)\\n   pos+=n\\n walk(20,2048)'\",\"cwd\":\"/app\",\"duration_seconds\":0.2741428750000523,\"exit_code\":0,\"output_limited\":false,\"pid\":1861,\"process_id\":\"process_44\",\"shell\":false,\"started_at\":\"2026-08-31T19:35:19.868390+00:00\",\"status\":\"finished\",\"stderr\":\"\",\"stderr_bytes\":0,\"stderr_invalid_utf8\":false,\"stderr_path\":\"…",
+    "ref_id": "tool_call_result_6",
+    "sensitive": false,
+    "size_bytes": 40701,
+    "summary": "builtins.dict value with 40701 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_1afa7c9e-d133-4061-b219-8d89623daa8c",
+  "source": "tool:run_command",
+  "status": "active"
+}

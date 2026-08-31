@@ -1,0 +1,66 @@
+
+                    extra_x_shifts.append(line[1][0] + 0.005 * normal_1[0])
+
+                    line[1] += 0.01*normal_1
+                    line[2] += 0.01*normal_2
+
+                elif len(line) == 3:
+                    join_1 = n.array([line[2, 0], line[2, 1], 0]) - n.array([line[0, 0], line[0, 1], 0])
+                    normal_1 = n.cross(join_1, [0, 0, 1])[:2]
+                    normal_1 /= n.linalg.norm(normal_1)
+
+                    extra_x_shifts.append(line[1][0] + 0.005 * normal_1[0])
+
+                    line[1] += 0.01*normal_1
+                elif len(line) == 2:
+                    join_1 = n.array([line[1, 0], line[1, 1], 0]) - n.array([line[0, 0], line[0, 1], 0])
+                    normal_1 = n.cross(join_1, [0, 0, 1])[:2]
+                    normal_1 /= n.linalg.norm(normal_1)
+
+                    line = n.vstack([line[0], line[0] + 0.5*(line[1] - line[0]) + 0.01*normal_1, line[1]])
+
+                    extra_x_shifts.append(line[1][0] - 0.005 * normal_1[0])
+                
+                    
+                lines.append(line)
+
+        extra_x_shifts = sorted(extra_x_shifts)[::-1]
+
+        return g, lines, node_labels, nodes_by_height, (leftmost_x, rightmost_x), first_edge, heights, extra_x_shifts
+
+    def draw_planar_graph(self):
+        import matplotlib.pyplot as plt
+        from matplotlib.patches import Circle
+        from matplotlib.collections import PatchCollection
+
+        g, lines, node_labels, nodes_by_height, xlims, first_edge, heights, extra_x_shifts = self._construct_planar_graph()
+        leftmost_x, rightmost_x = xlims
+
+        patches = []
+        for node, data in g.nodes(data=True):
+            # planarity renamed these attributes in version 1.0.
+            y = data.get('pos', data.get('vertex_position'))
+            xb = data.get('start', data.get('vertex_start'))
+            xe = data.get('end', data.get('vertex_end'))
+            x = int((xe + xb) / 2.)
+            patches.append(Circle((x, y), 0.25))
+        
+        plt.ion()
+
+        fig, ax = plt.subplots()
+        p = PatchCollection(patches, facecolor='none')
+        ax.add_collection(p)
+        # plt.axis('equal')
+
+        for node, (x, y) in node_labels.items():
+            plt.text(x, y, node,
+                     horizontalalignment='center',
+                     verticalalignment='center')
+
+        for line in lines:
+            ax.plot(line[:, 0], line[:, 1], linewidth=1)
+        
+        ax.set_xlim(leftmost_x - 1, rightmost_x + 1)
+        fig.show()
+        
+    def space_curve(self, **kwargs):

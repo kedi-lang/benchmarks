@@ -1,0 +1,1442 @@
+# yaml-language-server: $schema=/private/tmp/kedi-terminal-bench-home/.autobench/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba
+  experiment: exp_kedi_terminal_bench_2_1_20260831T213700722641Z
+  benchmark: kedi-terminal-bench-2.1
+  case: cancel-async-tasks__9pvfzsd
+  variant: kedi-267e1d1a9dba
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: cancel-async-tasks__9pvfzsd
+  input:
+    job_dir: /private/tmp/kedi-terminal-bench-publication/harbor/codex-luna-high-remaining5-docker-69ad944-c2-logfire
+    trial_dir: /private/tmp/kedi-terminal-bench-publication/harbor/codex-luna-high-remaining5-docker-69ad944-c2-logfire/cancel-async-tasks__9pVfzSd
+    trial_name: cancel-async-tasks__9pVfzSd
+    task_name: terminal-bench/cancel-async-tasks
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-267e1d1a9dba
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "subagents": false, "terminal_output_limit_bytes":
+      512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 512000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "subagents": false, "terminal_output_limit_bytes": 512000000,
+        "terminal_preview_bytes": 32768}'
+      source: variant
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 512000000
+      source: variant
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 6
+      id: obs_6
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 0.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.reward.mean:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.mean
+      kind: metric
+      value: 0.0
+      semantic: quality.score
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.cost_usd:
+      sequence: 22
+      id: obs_22
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.0094268
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.evidence_complete:
+      sequence: 58
+      id: obs_58
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 585.408462
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.environment_setup.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 3.200611
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.agent_setup.duration:
+      sequence: 12
+      id: obs_12
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 450.236293
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.agent_execution.duration:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.agent_execution.duration
+      kind: metric
+      value: 76.928951
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.verifier.duration:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.verifier.duration
+      kind: metric
+      value: 42.113779
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.input_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.input_tokens
+      kind: metric
+      value: 41734
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.cache_read_tokens:
+      sequence: 16
+      id: obs_16
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 14720
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.cache_write_tokens:
+      sequence: 17
+      id: obs_17
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.output_tokens:
+      sequence: 18
+      id: obs_18
+      name: kedi.output_tokens
+      kind: metric
+      value: 3108
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.total_tokens:
+      sequence: 19
+      id: obs_19
+      name: kedi.total_tokens
+      kind: metric
+      value: 44842
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.requests:
+      sequence: 20
+      id: obs_20
+      name: kedi.requests
+      kind: metric
+      value: 9
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.tool_calls:
+      sequence: 21
+      id: obs_21
+      name: kedi.tool_calls
+      kind: metric
+      value: 8
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    kedi.cache_read_ratio:
+      sequence: 23
+      id: obs_23
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.3527100206066996
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+  events:
+    terminal_bench.file.job.config.json:
+      sequence: 24
+      id: obs_24
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: 1c2adbb60680cb767cf5e49c201657b88b0ba7265f4724d83efe1d807c59da72
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.job.job.log:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: f29c2cdc42ac51544a9da0473204f0e3ddb3a62ad1cfd3f27a46ec67fde7d323
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: b7e05de6c3f11a9b997611872f49e9c158e268979f6b5d786bb5cc8586d056e9
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.job.lock.json:
+      sequence: 27
+      id: obs_27
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: ec573d951c6c25b0e5556307cc631e7dfe2843f9f7f9ad43dc711661bf0f9eb1
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.job.result.json:
+      sequence: 28
+      id: obs_28
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 3cde359f7b287e74a37d5bd69f824929cbb5b3d8fe60f09bcd33c44f025dbbf2
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.kedi-result.json:
+      sequence: 29
+      id: obs_29
+      name: terminal_bench.file.trial.agent.kedi-result.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi-result.json
+        sha256.source: d3a7feb0e76b1081b64840ce2631016562948999b7a447e4264895f44be26eae
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.kedi.txt:
+      sequence: 30
+      id: obs_30
+      name: terminal_bench.file.trial.agent.kedi.txt
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi.txt
+        sha256.source: 5db2807cb5d699d89e29fa056453b721da90c4cb92a54b6cbd41b81440ee7639
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal-events.jsonl:
+      sequence: 31
+      id: obs_31
+      name: terminal_bench.file.trial.agent.terminal-events.jsonl
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal-events.jsonl
+        sha256.source: af4ee998802beba68c128d09403476f943eda4cb3af53fe1d9fe4a01e5397d8b
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+      sequence: 32
+      id: obs_32
+      name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/combined.bin
+        sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+      sequence: 33
+      id: obs_33
+      name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+      sequence: 34
+      id: obs_34
+      name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stdout.bin
+        sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+      sequence: 35
+      id: obs_35
+      name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/combined.bin
+        sha256.source: ac744e83eafb9533906299e8e05c84da7316d329a1ca0d9042dfeb28158bb9fb
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+      sequence: 36
+      id: obs_36
+      name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+      kind: artifact
+      value: artifact_13
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+      sequence: 37
+      id: obs_37
+      name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+      kind: artifact
+      value: artifact_14
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stdout.bin
+        sha256.source: ac744e83eafb9533906299e8e05c84da7316d329a1ca0d9042dfeb28158bb9fb
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+      sequence: 38
+      id: obs_38
+      name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+      kind: artifact
+      value: artifact_15
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/combined.bin
+        sha256.source: e50eaa3453f13da3cdb1d29753f940d6292062572ea7b35d8cdbfb243245be27
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+      sequence: 39
+      id: obs_39
+      name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+      kind: artifact
+      value: artifact_16
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stderr.bin
+        sha256.source: e50eaa3453f13da3cdb1d29753f940d6292062572ea7b35d8cdbfb243245be27
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+      sequence: 40
+      id: obs_40
+      name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+      kind: artifact
+      value: artifact_17
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+      sequence: 41
+      id: obs_41
+      name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+      kind: artifact
+      value: artifact_18
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/combined.bin
+        sha256.source: f0656f60d8362a0c1664c7e525a2d2cfc4a719489d9f42b8ea18721c64787b00
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+      sequence: 42
+      id: obs_42
+      name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+      kind: artifact
+      value: artifact_19
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+      sequence: 43
+      id: obs_43
+      name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+      kind: artifact
+      value: artifact_20
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stdout.bin
+        sha256.source: f0656f60d8362a0c1664c7e525a2d2cfc4a719489d9f42b8ea18721c64787b00
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+      sequence: 44
+      id: obs_44
+      name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+      kind: artifact
+      value: artifact_21
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/combined.bin
+        sha256.source: c5ce51e974985fe92f3787469c5d307ca972563717e1acfb5dac6a5ae25c81e0
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+      sequence: 45
+      id: obs_45
+      name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+      kind: artifact
+      value: artifact_22
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+      sequence: 46
+      id: obs_46
+      name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+      kind: artifact
+      value: artifact_23
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stdout.bin
+        sha256.source: c5ce51e974985fe92f3787469c5d307ca972563717e1acfb5dac6a5ae25c81e0
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+      sequence: 47
+      id: obs_47
+      name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+      kind: artifact
+      value: artifact_24
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/combined.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+      sequence: 48
+      id: obs_48
+      name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+      kind: artifact
+      value: artifact_25
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+      sequence: 49
+      id: obs_49
+      name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+      kind: artifact
+      value: artifact_26
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 50
+      id: obs_50
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_27
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.config.json:
+      sequence: 51
+      id: obs_51
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_28
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: c6327722fd60e220f952f40d46b16c8cbbb56f3a3f47b52054507a3c58f0ef73
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.lock.json:
+      sequence: 52
+      id: obs_52
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_29
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: 19269cdbda7196c7714ff0adc115df30c15f1eb935db51f2983a97b700940392
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.result.json:
+      sequence: 53
+      id: obs_53
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_30
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: 085bfa7d939115406c4f856ae9a15fd810ce48ae7ed48e4b96f421468ef0887e
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.trial.log:
+      sequence: 54
+      id: obs_54
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_31
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: 405e7d1adb3669d961579e45e4b7867e504e01d4d7ee73ef8bc4e91394126ed7
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.verifier.ctrf.json:
+      sequence: 55
+      id: obs_55
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      kind: artifact
+      value: artifact_32
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/ctrf.json
+        sha256.source: cee8485b7d147c7e0fff443d44f60067c39bf23075d5e6e526b29c2e9719f785
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.verifier.reward.txt:
+      sequence: 56
+      id: obs_56
+      name: terminal_bench.file.trial.verifier.reward.txt
+      kind: artifact
+      value: artifact_33
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/reward.txt
+        sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.file.trial.verifier.test-stdout.txt:
+      sequence: 57
+      id: obs_57
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      kind: artifact
+      value: artifact_34
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/test-stdout.txt
+        sha256.source: 542c3f15955147f479ed2dfd640d7a3e1ec5c426fa13b3c3ac6d71cd1186848d
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+    terminal_bench.evidence_index:
+      sequence: 59
+      id: obs_59
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_35
+      span: span_1
+      source: task_observation
+      case: cancel-async-tasks__9pvfzsd
+      variant: kedi-267e1d1a9dba
+trace:
+  id: 5cdc4d46d9a684b51bbce2c61fb852b6
+  partial: false
+  spans: 2
+  signals: 99
+  artifact:
+    id: abp_trace
+    name: ABP trace
+    media: application/vnd.autobench.abp-trace+yaml
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/trace.yaml
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-08-31T21:37:01.113642+00:00'
+    ended_at: '2026-08-31T21:37:01.151551+00:00'
+    duration: 0.037909416
+    input:
+      task_name: terminal-bench/cancel-async-tasks
+      trial_name: cancel-async-tasks__9pVfzSd
+    output:
+      task_name: terminal-bench/cancel-async-tasks
+      trial_name: cancel-async-tasks__9pVfzSd
+      rewards:
+        reward: 0.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 14720
+        cache_write_tokens: 0
+        cost_usd: 0.0094268
+        input_tokens: 41734
+        output_tokens: 3108
+        requests: 9
+        tool_calls: 8
+        total_tokens: 44842
+        uncached_input_tokens: 27014
+      evidence_file_count: 34
+      evidence_bytes: 68240
+      skipped_file_count: 0
+    observations:
+      - obs_6
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+      - obs_27
+      - obs_28
+      - obs_29
+      - obs_30
+      - obs_31
+      - obs_32
+      - obs_33
+      - obs_34
+      - obs_35
+      - obs_36
+      - obs_37
+      - obs_38
+      - obs_39
+      - obs_40
+      - obs_41
+      - obs_42
+      - obs_43
+      - obs_44
+      - obs_45
+      - obs_46
+      - obs_47
+      - obs_48
+      - obs_49
+      - obs_50
+      - obs_51
+      - obs_52
+      - obs_53
+      - obs_54
+      - obs_55
+      - obs_56
+      - obs_57
+      - obs_58
+      - obs_59
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+      - artifact_13
+      - artifact_14
+      - artifact_15
+      - artifact_16
+      - artifact_17
+      - artifact_18
+      - artifact_19
+      - artifact_20
+      - artifact_21
+      - artifact_22
+      - artifact_23
+      - artifact_24
+      - artifact_25
+      - artifact_26
+      - artifact_27
+      - artifact_28
+      - artifact_29
+      - artifact_30
+      - artifact_31
+      - artifact_32
+      - artifact_33
+      - artifact_34
+      - artifact_35
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: 1c2adbb60680cb767cf5e49c201657b88b0ba7265f4724d83efe1d807c59da72
+    source: file
+    state: complete
+    sha256: 1c2adbb60680cb767cf5e49c201657b88b0ba7265f4724d83efe1d807c59da72
+    byte_count: 1699
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: f29c2cdc42ac51544a9da0473204f0e3ddb3a62ad1cfd3f27a46ec67fde7d323
+    source: file
+    state: complete
+    sha256: f29c2cdc42ac51544a9da0473204f0e3ddb3a62ad1cfd3f27a46ec67fde7d323
+    byte_count: 9499
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: b7e05de6c3f11a9b997611872f49e9c158e268979f6b5d786bb5cc8586d056e9
+    source: file
+    state: complete
+    sha256: b7e05de6c3f11a9b997611872f49e9c158e268979f6b5d786bb5cc8586d056e9
+    byte_count: 1996
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: ec573d951c6c25b0e5556307cc631e7dfe2843f9f7f9ad43dc711661bf0f9eb1
+    source: file
+    state: complete
+    sha256: ec573d951c6c25b0e5556307cc631e7dfe2843f9f7f9ad43dc711661bf0f9eb1
+    byte_count: 10494
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 3cde359f7b287e74a37d5bd69f824929cbb5b3d8fe60f09bcd33c44f025dbbf2
+    source: file
+    state: complete
+    sha256: 3cde359f7b287e74a37d5bd69f824929cbb5b3d8fe60f09bcd33c44f025dbbf2
+    byte_count: 1138
+    filename: result.json
+  terminal_bench.file.trial.agent.kedi-result.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.agent.kedi-result.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi-result.json
+      sha256.source: d3a7feb0e76b1081b64840ce2631016562948999b7a447e4264895f44be26eae
+    source: file
+    state: complete
+    sha256: d3a7feb0e76b1081b64840ce2631016562948999b7a447e4264895f44be26eae
+    byte_count: 10579
+    filename: kedi-result.json
+  terminal_bench.file.trial.agent.kedi.txt:
+    id: artifact_7
+    name: terminal_bench.file.trial.agent.kedi.txt
+    media: text/plain
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_7.txt
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi.txt
+      sha256.source: 5db2807cb5d699d89e29fa056453b721da90c4cb92a54b6cbd41b81440ee7639
+    source: file
+    state: complete
+    sha256: 5db2807cb5d699d89e29fa056453b721da90c4cb92a54b6cbd41b81440ee7639
+    byte_count: 945
+    filename: kedi.txt
+  terminal_bench.file.trial.agent.terminal-events.jsonl:
+    id: artifact_8
+    name: terminal_bench.file.trial.agent.terminal-events.jsonl
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_8.jsonl
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal-events.jsonl
+      sha256.source: af4ee998802beba68c128d09403476f943eda4cb3af53fe1d9fe4a01e5397d8b
+    source: file
+    state: complete
+    sha256: af4ee998802beba68c128d09403476f943eda4cb3af53fe1d9fe4a01e5397d8b
+    byte_count: 11868
+    filename: terminal-events.jsonl
+  terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+    id: artifact_9
+    name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_9.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/combined.bin
+      sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    source: file
+    state: complete
+    sha256: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    byte_count: 5
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+    id: artifact_10
+    name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_10.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+    id: artifact_11
+    name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_11.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stdout.bin
+      sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    source: file
+    state: complete
+    sha256: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    byte_count: 5
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+    id: artifact_12
+    name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_12.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/combined.bin
+      sha256.source: ac744e83eafb9533906299e8e05c84da7316d329a1ca0d9042dfeb28158bb9fb
+    source: file
+    state: complete
+    sha256: ac744e83eafb9533906299e8e05c84da7316d329a1ca0d9042dfeb28158bb9fb
+    byte_count: 95
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+    id: artifact_13
+    name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_13.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+    id: artifact_14
+    name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_14.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stdout.bin
+      sha256.source: ac744e83eafb9533906299e8e05c84da7316d329a1ca0d9042dfeb28158bb9fb
+    source: file
+    state: complete
+    sha256: ac744e83eafb9533906299e8e05c84da7316d329a1ca0d9042dfeb28158bb9fb
+    byte_count: 95
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+    id: artifact_15
+    name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_15.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/combined.bin
+      sha256.source: e50eaa3453f13da3cdb1d29753f940d6292062572ea7b35d8cdbfb243245be27
+    source: file
+    state: complete
+    sha256: e50eaa3453f13da3cdb1d29753f940d6292062572ea7b35d8cdbfb243245be27
+    byte_count: 669
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+    id: artifact_16
+    name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_16.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stderr.bin
+      sha256.source: e50eaa3453f13da3cdb1d29753f940d6292062572ea7b35d8cdbfb243245be27
+    source: file
+    state: complete
+    sha256: e50eaa3453f13da3cdb1d29753f940d6292062572ea7b35d8cdbfb243245be27
+    byte_count: 669
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+    id: artifact_17
+    name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_17.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+    id: artifact_18
+    name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_18.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/combined.bin
+      sha256.source: f0656f60d8362a0c1664c7e525a2d2cfc4a719489d9f42b8ea18721c64787b00
+    source: file
+    state: complete
+    sha256: f0656f60d8362a0c1664c7e525a2d2cfc4a719489d9f42b8ea18721c64787b00
+    byte_count: 57
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+    id: artifact_19
+    name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_19.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+    id: artifact_20
+    name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_20.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stdout.bin
+      sha256.source: f0656f60d8362a0c1664c7e525a2d2cfc4a719489d9f42b8ea18721c64787b00
+    source: file
+    state: complete
+    sha256: f0656f60d8362a0c1664c7e525a2d2cfc4a719489d9f42b8ea18721c64787b00
+    byte_count: 57
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+    id: artifact_21
+    name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_21.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/combined.bin
+      sha256.source: c5ce51e974985fe92f3787469c5d307ca972563717e1acfb5dac6a5ae25c81e0
+    source: file
+    state: complete
+    sha256: c5ce51e974985fe92f3787469c5d307ca972563717e1acfb5dac6a5ae25c81e0
+    byte_count: 36
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+    id: artifact_22
+    name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_22.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+    id: artifact_23
+    name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_23.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stdout.bin
+      sha256.source: c5ce51e974985fe92f3787469c5d307ca972563717e1acfb5dac6a5ae25c81e0
+    source: file
+    state: complete
+    sha256: c5ce51e974985fe92f3787469c5d307ca972563717e1acfb5dac6a5ae25c81e0
+    byte_count: 36
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+    id: artifact_24
+    name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_24.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/combined.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+    id: artifact_25
+    name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_25.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+    id: artifact_26
+    name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_26.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_27
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_27.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    source: file
+    state: complete
+    sha256: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    byte_count: 160
+    filename: manifest.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_28
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_28.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: c6327722fd60e220f952f40d46b16c8cbbb56f3a3f47b52054507a3c58f0ef73
+    source: file
+    state: complete
+    sha256: c6327722fd60e220f952f40d46b16c8cbbb56f3a3f47b52054507a3c58f0ef73
+    byte_count: 1386
+    filename: config.json
+  terminal_bench.file.trial.lock.json:
+    id: artifact_29
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_29.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: 19269cdbda7196c7714ff0adc115df30c15f1eb935db51f2983a97b700940392
+    source: file
+    state: complete
+    sha256: 19269cdbda7196c7714ff0adc115df30c15f1eb935db51f2983a97b700940392
+    byte_count: 1743
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_30
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_30.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: 085bfa7d939115406c4f856ae9a15fd810ce48ae7ed48e4b96f421468ef0887e
+    source: file
+    state: complete
+    sha256: 085bfa7d939115406c4f856ae9a15fd810ce48ae7ed48e4b96f421468ef0887e
+    byte_count: 4798
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_31
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_31.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: 405e7d1adb3669d961579e45e4b7867e504e01d4d7ee73ef8bc4e91394126ed7
+    source: file
+    state: complete
+    sha256: 405e7d1adb3669d961579e45e4b7867e504e01d4d7ee73ef8bc4e91394126ed7
+    byte_count: 1879
+    filename: trial.log
+  terminal_bench.file.trial.verifier.ctrf.json:
+    id: artifact_32
+    name: terminal_bench.file.trial.verifier.ctrf.json
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_32.json
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/ctrf.json
+      sha256.source: cee8485b7d147c7e0fff443d44f60067c39bf23075d5e6e526b29c2e9719f785
+    source: file
+    state: complete
+    sha256: cee8485b7d147c7e0fff443d44f60067c39bf23075d5e6e526b29c2e9719f785
+    byte_count: 3560
+    filename: ctrf.json
+  terminal_bench.file.trial.verifier.reward.txt:
+    id: artifact_33
+    name: terminal_bench.file.trial.verifier.reward.txt
+    media: text/plain
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_33.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/reward.txt
+      sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    source: file
+    state: complete
+    sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    byte_count: 2
+    filename: reward.txt
+  terminal_bench.file.trial.verifier.test-stdout.txt:
+    id: artifact_34
+    name: terminal_bench.file.trial.verifier.test-stdout.txt
+    media: text/plain
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_34.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/test-stdout.txt
+      sha256.source: 542c3f15955147f479ed2dfd640d7a3e1ec5c426fa13b3c3ac6d71cd1186848d
+    source: file
+    state: complete
+    sha256: 542c3f15955147f479ed2dfd640d7a3e1ec5c426fa13b3c3ac6d71cd1186848d
+    byte_count: 4770
+    filename: test-stdout.txt
+  terminal_bench.evidence_index:
+    id: artifact_35
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0002_0001_cancel_async_tasks_9pvfzsd__kedi_267e1d1a9dba/artifact_35.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: af3859cc701d0b587479fca6b15cc8e5700a6343674aca631b342f99e245b76b
+    byte_count: 6307
+output:
+  task_name: terminal-bench/cancel-async-tasks
+  trial_name: cancel-async-tasks__9pVfzSd
+  harbor_exception: null
+  rewards:
+    reward: 0.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 14720
+    cache_write_tokens: 0
+    cost_usd: 0.0094268
+    input_tokens: 41734
+    output_tokens: 3108
+    requests: 9
+    tool_calls: 8
+    total_tokens: 44842
+    uncached_input_tokens: 27014
+  evidence_file_count: 34
+  evidence_bytes: 68240
+  skipped_file_count: 0

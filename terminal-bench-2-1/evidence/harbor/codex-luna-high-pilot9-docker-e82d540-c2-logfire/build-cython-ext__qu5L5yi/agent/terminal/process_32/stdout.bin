@@ -1,0 +1,24 @@
+    points *= 10
+    points[0, -1] = 79
+    points[-1, -1] = 0
+    return CellKnot.folding(points, 80)
+
+def cell_trefoil2(num_points=40):
+    points = aperiodic_trefoil(num_points) + 4
+    points *= 10
+
+    end = n.zeros((30, 3), dtype=n.float)
+    end_start = points[-1]
+    end_prev = points[-2]
+    end[:, 0] = n.linspace(end_prev[0], end_start[0], 30)
+    end[:, 1] = n.linspace(end_prev[1], end_start[1], 30)
+    end[:, 2] = n.linspace(end_prev[2], 0, 30.)
+
+    start = n.zeros((30, 3), dtype=n.float)
+    start_start = points[0]
+    start_prev = points[1]
+    start[:, 0] = n.linspace(start_start[0], start_prev[0], 30)
+    start[:, 1] = n.linspace(start_start[1], start_prev[1], 30)
+    start[:, 2] = n.linspace(79.99, start_prev[2], 30)
+
+    points = n.vstack((start, points[1:-1], end))

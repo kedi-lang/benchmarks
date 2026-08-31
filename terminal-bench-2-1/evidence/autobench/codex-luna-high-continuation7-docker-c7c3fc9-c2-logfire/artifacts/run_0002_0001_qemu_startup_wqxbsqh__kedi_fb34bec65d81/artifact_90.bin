@@ -1,0 +1,87 @@
+
+/usr/bin/qemu-system-x86_64:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+00000000008bc6e0 <qemu_signalfd@@Base>:
+  8bc6e0:	41 55                	push   %r13
+  8bc6e2:	48 89 fa             	mov    %rdi,%rdx
+  8bc6e5:	b9 08 00 00 00       	mov    $0x8,%ecx
+  8bc6ea:	be ff ff ff ff       	mov    $0xffffffff,%esi
+  8bc6ef:	41 54                	push   %r12
+  8bc6f1:	53                   	push   %rbx
+  8bc6f2:	48 89 fb             	mov    %rdi,%rbx
+  8bc6f5:	bf 1a 01 00 00       	mov    $0x11a,%edi
+  8bc6fa:	48 83 ec 20          	sub    $0x20,%rsp
+  8bc6fe:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+  8bc705:	00 00 
+  8bc707:	48 89 44 24 18       	mov    %rax,0x18(%rsp)
+  8bc70c:	31 c0                	xor    %eax,%eax
+  8bc70e:	e8 4d 23 b0 ff       	callq  3bea60 <syscall@plt>
+  8bc713:	41 89 c5             	mov    %eax,%r13d
+  8bc716:	83 f8 ff             	cmp    $0xffffffff,%eax
+  8bc719:	74 2d                	je     8bc748 <qemu_signalfd@@Base+0x68>
+  8bc71b:	89 c7                	mov    %eax,%edi
+  8bc71d:	e8 6e a0 ff ff       	callq  8b6790 <qemu_set_cloexec@@Base>
+  8bc722:	48 8b 44 24 18       	mov    0x18(%rsp),%rax
+  8bc727:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+  8bc72e:	00 00 
+  8bc730:	0f 85 ff 00 00 00    	jne    8bc835 <qemu_signalfd@@Base+0x155>
+  8bc736:	48 83 c4 20          	add    $0x20,%rsp
+  8bc73a:	44 89 e8             	mov    %r13d,%eax
+  8bc73d:	5b                   	pop    %rbx
+  8bc73e:	41 5c                	pop    %r12
+  8bc740:	41 5d                	pop    %r13
+  8bc742:	c3                   	retq   
+  8bc743:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+  8bc748:	bf 88 00 00 00       	mov    $0x88,%edi
+  8bc74d:	e8 4e 4e b0 ff       	callq  3c15a0 <malloc@plt>
+  8bc752:	49 89 c4             	mov    %rax,%r12
+  8bc755:	48 85 c0             	test   %rax,%rax
+  8bc758:	0f 84 b5 00 00 00    	je     8bc813 <qemu_signalfd@@Base+0x133>
+  8bc75e:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi
+  8bc763:	e8 d8 4a b0 ff       	callq  3c1240 <pipe@plt>
+  8bc768:	41 89 c5             	mov    %eax,%r13d
+  8bc76b:	83 f8 ff             	cmp    $0xffffffff,%eax
+  8bc76e:	0f 84 b4 00 00 00    	je     8bc828 <qemu_signalfd@@Base+0x148>
+  8bc774:	8b 7c 24 10          	mov    0x10(%rsp),%edi
+  8bc778:	e8 13 a0 ff ff       	callq  8b6790 <qemu_set_cloexec@@Base>
+  8bc77d:	8b 7c 24 14          	mov    0x14(%rsp),%edi
+  8bc781:	e8 0a a0 ff ff       	callq  8b6790 <qemu_set_cloexec@@Base>
+  8bc786:	f3 0f 6f 03          	movdqu (%rbx),%xmm0
+  8bc78a:	f3 0f 6f 4b 10       	movdqu 0x10(%rbx),%xmm1
+  8bc78f:	48 8d 7c 24 08       	lea    0x8(%rsp),%rdi
+  8bc794:	f3 0f 6f 53 20       	movdqu 0x20(%rbx),%xmm2
+  8bc799:	f3 0f 6f 5b 30       	movdqu 0x30(%rbx),%xmm3
+  8bc79e:	41 b8 01 00 00 00    	mov    $0x1,%r8d
+  8bc7a4:	4c 89 e1             	mov    %r12,%rcx
+  8bc7a7:	f3 0f 6f 63 40       	movdqu 0x40(%rbx),%xmm4
+  8bc7ac:	f3 0f 6f 6b 50       	movdqu 0x50(%rbx),%xmm5
+  8bc7b1:	48 8d 15 58 fe ff ff 	lea    -0x1a8(%rip),%rdx        # 8bc610 <mod_utf8_encode@@Base+0x110>
+  8bc7b8:	48 8d 35 94 db 17 00 	lea    0x17db94(%rip),%rsi        # a3a353 <AES_sbox@@Base+0xcb3>
+  8bc7bf:	f3 0f 6f 73 60       	movdqu 0x60(%rbx),%xmm6
+  8bc7c4:	f3 0f 6f 7b 70       	movdqu 0x70(%rbx),%xmm7
+  8bc7c9:	41 0f 11 04 24       	movups %xmm0,(%r12)
+  8bc7ce:	8b 44 24 14          	mov    0x14(%rsp),%eax
+  8bc7d2:	41 0f 11 4c 24 10    	movups %xmm1,0x10(%r12)
+  8bc7d8:	41 0f 11 54 24 20    	movups %xmm2,0x20(%r12)
+  8bc7de:	41 89 84 24 80 00 00 	mov    %eax,0x80(%r12)
+  8bc7e5:	00 
+  8bc7e6:	41 0f 11 5c 24 30    	movups %xmm3,0x30(%r12)
+  8bc7ec:	41 0f 11 64 24 40    	movups %xmm4,0x40(%r12)
+  8bc7f2:	41 0f 11 6c 24 50    	movups %xmm5,0x50(%r12)
+  8bc7f8:	41 0f 11 74 24 60    	movups %xmm6,0x60(%r12)
+  8bc7fe:	41 0f 11 7c 24 70    	movups %xmm7,0x70(%r12)
+  8bc804:	e8 17 91 fc ff       	callq  885920 <qemu_thread_create@@Base>
+  8bc809:	44 8b 6c 24 10       	mov    0x10(%rsp),%r13d
+  8bc80e:	e9 0f ff ff ff       	jmpq   8bc722 <qemu_signalfd@@Base+0x42>
+  8bc813:	e8 d8 54 b0 ff       	callq  3c1cf0 <__errno_location@plt>
+  8bc818:	c7 00 0c 00 00 00    	movl   $0xc,(%rax)
+  8bc81e:	e9 ff fe ff ff       	jmpq   8bc722 <qemu_signalfd@@Base+0x42>
+  8bc823:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+  8bc828:	4c 89 e7             	mov    %r12,%rdi
+  8bc82b:	e8 70 20 b0 ff       	callq  3be8a0 <free@plt>
+  8bc830:	e9 ed fe ff ff       	jmpq   8bc722 <qemu_signalfd@@Base+0x42>
+  8bc835:	e8 56 27 b0 ff       	callq  3bef90 <__stack_chk_fail@plt>
+  8bc83a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)

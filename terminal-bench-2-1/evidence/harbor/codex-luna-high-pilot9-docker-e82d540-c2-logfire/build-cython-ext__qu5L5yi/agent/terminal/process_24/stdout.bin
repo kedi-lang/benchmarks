@@ -1,0 +1,449 @@
+pyknotid/representations/planardiagram.py:15:import numpy as n
+pyknotid/representations/dtnotation.py:12:import numpy as n
+pyknotid/representations/dtnotation.py:55:            dt.append(n.array([int(number) for number in numbers], dtype=n.int))
+pyknotid/representations/dtnotation.py:73:        arr = n.zeros((len(dt) * 2, 2), dtype=n.int)
+pyknotid/representations/gaussdiagram.py:18:import numpy as n
+pyknotid/representations/gausscode.py:15:import numpy as n
+pyknotid/representations/gausscode.py:123:            keep = n.ones(len(row), dtype=n.bool)
+pyknotid/representations/gausscode.py:239:        keeps = [n.ones(l.shape[0], dtype=bool) for l in code]
+pyknotid/representations/gausscode.py:276:            keeps = [n.ones(l.shape[0], dtype=bool) for l in code]
+pyknotid/representations/representation.py:15:import numpy as n
+pyknotid/make/named.py:16:import numpy as n
+pyknotid/make/named.py:17:import numpy as np
+pyknotid/make/named.py:23:    data = n.zeros((num_points, 3), dtype=n.float64)
+pyknotid/make/named.py:32:    data = n.zeros((num_points, 3), dtype=n.float64)
+pyknotid/make/named.py:43:    data = n.zeros((num_points, 3), dtype=n.float64)
+pyknotid/make/named.py:55:    data = n.zeros((num_points, 3), dtype=n.float64)
+pyknotid/make/periodic_knot.py:11:import numpy as n
+pyknotid/make/periodic_knot.py:12:import numpy as np
+pyknotid/make/periodic_knot.py:34:    end = n.zeros((30, 3), dtype=n.float)
+pyknotid/make/periodic_knot.py:41:    start = n.zeros((30, 3), dtype=n.float)
+pyknotid/make/periodic_knot.py:231:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:251:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:274:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:295:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:425:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:445:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:467:    points = np.array([[0, 0, 0],
+pyknotid/make/periodic_knot.py:485:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:502:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:524:    points = np.array([[0, 0, 0.],
+pyknotid/make/periodic_knot.py:545:    points = np.array([[0, 0, 0.],
+pyknotid/make/torus.py:13:import numpy as np
+pyknotid/make/torus.py:97:        angles = np.linspace(0, 2*np.pi, self._num_points)
+pyknotid/make/torus.py:101:        divisions = (np.max([self._q, self._p]) *
+pyknotid/make/torus.py:102:                     np.min([self._q, self._p]) / self.num_components)
+pyknotid/make/torus.py:103:        starting_angles = np.linspace(
+pyknotid/make/torus.py:104:            0, 2*np.pi, divisions + 1)[
+pyknotid/make/torus.py:111:            vertices = np.zeros((self._num_points, 3))
+pyknotid/make/torus.py:113:            radii = (self._minor_radius * np.cos(q * angles) +
+pyknotid/make/torus.py:115:            vertices[:, 0] = radii * np.cos(p * local_angles)
+pyknotid/make/torus.py:116:            vertices[:, 1] = radii * np.sin(p * local_angles)
+pyknotid/make/torus.py:118:                              np.sin(q * angles))
+pyknotid/cinvariants.pyx:2:import numpy as n
+pyknotid/cinvariants.pyx:3:cimport numpy as n
+pyknotid/utils.py:7:import numpy as n
+pyknotid/invariants.py:31:import numpy as n
+pyknotid/invariants.py:81:        numpy or sympy as appropriate. If maxima or mathematica, that
+pyknotid/invariants.py:124:        return _alexander_numpy(crossings, variable, quadrant)
+pyknotid/invariants.py:129:def _alexander_numpy(crossings, variable=-1.0, quadrant='lr'):
+pyknotid/invariants.py:135:    import numpy as n
+pyknotid/invariants.py:137:    dtype = n.complex if isinstance(variable, n.complex) else n.float
+pyknotid/invariants.py:138:    matrix = n.zeros((num_crossings, num_crossings), dtype=dtype)
+pyknotid/invariants.py:187:    # This is almost the same as the numpy implementation...they should
+pyknotid/invariants.py:965:def _crossing_arrows_and_signs_numpy(gc, crossing_numbers):
+pyknotid/invariants.py:978:    arrows = n.zeros((len(crossing_numbers), 3), dtype=n.long)
+pyknotid/invariants.py:1163:        return _vassiliev_degree_3_numpy(representation)
+pyknotid/invariants.py:1225:def _vassiliev_degree_3_numpy(representation):
+pyknotid/invariants.py:1239:    arrows = _crossing_arrows_and_signs_numpy(
+pyknotid/invariants.py:1245:        print('Failed to import cinvariants. Using *slow* python numpy method.')
+pyknotid/writhes.py:2:import numpy as np
+pyknotid/writhes.py:279:    return np.sum(results.values()) + np.sum(results2.values())
+pyknotid/writhes.py:280:    return np.sum(results.values()), np.sum(results2.values())
+pyknotid/writhes.py:296:    total = np.sum(results_2.values()) + results_1.values()[0]
+pyknotid/writhes.py:309:def writhing_numbers_numpy(gc, diagrams, based=False):
+pyknotid/spacecurves/knot.py:15:import numpy as n
+pyknotid/spacecurves/knot.py:16:import numpy as np
+pyknotid/spacecurves/knot.py:489:        directions = np.apply_along_axis(
+pyknotid/spacecurves/knot.py:490:            lambda arr: np.arctan2(arr[1], arr[0]), 1, tangents)
+pyknotid/spacecurves/knot.py:492:        directions[directions > np.pi] -= 2*np.pi
+pyknotid/spacecurves/knot.py:493:        directions[directions < -np.pi] += 2*np.pi
+pyknotid/spacecurves/knot.py:495:        jumps = np.roll(directions, -1) - directions
+pyknotid/spacecurves/knot.py:498:        index = np.sum(jumps > np.pi) - np.sum(jumps < -np.pi)
+pyknotid/spacecurves/knot.py:524:        colours = np.ones((len(points), len(points), 3))
+pyknotid/spacecurves/knot.py:525:        heights = np.zeros((len(points), len(points)))
+pyknotid/spacecurves/knot.py:534:                theta = np.arccos(direction[2] / mag(direction))
+pyknotid/spacecurves/knot.py:535:                phi = np.arctan2(direction[1], direction[0])
+pyknotid/spacecurves/knot.py:537:                # colours[i2, i1] = hls_to_rgb((phi + np.pi) / (2*np.pi), erfinv((theta / np.pi) * 2 - 1.) / 4.4 + 0.5, 1)
+pyknotid/spacecurves/knot.py:538:                colours[i2, i1] = hsluv_to_rgb((360 * (phi + np.pi) / (2*np.pi), 100, 65))# * (erfinv((theta / np.pi) * 2 - 1.) / 4.4 + 0.5)))
+pyknotid/spacecurves/knot.py:540:                colours[i1, i2] =  hsluv_to_rgb((360 * ((phi + 2*np.pi) % (2*np.pi)) / (2*np.pi), 100, 65))
+pyknotid/spacecurves/knot.py:546:                heights[i1, i2] = np.pi - theta
+pyknotid/spacecurves/knot.py:548:        print(np.min(phis), np.max(phis), np.min(thetas), np.max(thetas))
+pyknotid/spacecurves/knot.py:553:        # ax.contour(heights, cmap='Greys', levels=np.linspace(-1, 1, 13))
+pyknotid/spacecurves/knot.py:554:        ax.contour(heights, cmap='Greys_r', levels=np.linspace(0, np.pi, 11),
+pyknotid/spacecurves/knot.py:589:        maxima_indices = np.argwhere((zs > np.roll(zs, 1)) & (zs > np.roll(zs, -1))).T[0]
+pyknotid/spacecurves/knot.py:590:        minima_indices = np.argwhere((zs < np.roll(zs, 1)) & (zs < np.roll(zs, -1))).T[0]
+pyknotid/spacecurves/knot.py:598:        xs = np.arange(len(points))
+pyknotid/spacecurves/knot.py:630:            radii = self.points - np.average(self.points, axis=0)
+pyknotid/spacecurves/knot.py:631:            radius = 2.5 * np.max(np.sqrt(np.sum(radii**2, axis=1)))
+pyknotid/spacecurves/knot.py:661:                segment1 = np.vstack(
+pyknotid/spacecurves/knot.py:673:                segment2 = np.vstack(
+pyknotid/spacecurves/knot.py:676:                directions = np.vstack([
+pyknotid/spacecurves/knot.py:685:            radii = np.sqrt(np.sum(line**2, axis=1))
+pyknotid/spacecurves/knot.py:686:            thetas = np.arccos(line[:, 2] / radii)
+pyknotid/spacecurves/knot.py:687:            phis = np.arctan2(line[:, 1], line[:, 0])
+pyknotid/spacecurves/knot.py:689:            local_radius = radius - 0.02*i*radius*np.sin(2*np.sin(thetas))
+pyknotid/spacecurves/knot.py:691:            sphere_points = np.zeros(line.shape)
+pyknotid/spacecurves/knot.py:692:            sphere_points[:, 0] = radius * np.sin(thetas) * np.cos(phis)
+pyknotid/spacecurves/knot.py:693:            sphere_points[:, 1] = radius * np.sin(thetas) * np.sin(phis)
+pyknotid/spacecurves/knot.py:694:            sphere_points[:, 2] = radius * np.cos(thetas)
+pyknotid/spacecurves/knot.py:696:            # sphere_points += 2*(np.random.random(sphere_points.shape) - 0.5) * 0.005 * radius
+pyknotid/spacecurves/knot.py:709:        mesh1 = Mesh(vertices=vertices, faces=faces, vertex_colors=np.array([(0.3, 0.3, 0.3, 1) for v in vertices]))
+pyknotid/spacecurves/knot.py:712:        mesh2 = Mesh(vertices=vertices, faces=faces, vertex_colors=np.array([(0.3, 0.3, 0.3, 1) for v in vertices]))
+pyknotid/spacecurves/knot.py:719:        colours = [hsv_to_rgb(hue, 1, 0.8) for hue in np.linspace(0, 1, len(sphere_lines) + 1)][:-1]
+pyknotid/spacecurves/knot.py:720:        colours = np.array(colours)
+pyknotid/spacecurves/knot.py:721:        np.random.shuffle(colours)
+pyknotid/spacecurves/__init__.py:46:  import numpy as np
+pyknotid/spacecurves/__init__.py:49:  points = np.array([[9.0, 0.0, 0.0],
+pyknotid/spacecurves/__init__.py:71:  import numpy as np
+pyknotid/spacecurves/chelpers.pyx:5:import numpy as n
+pyknotid/spacecurves/chelpers.pyx:6:cimport numpy as n
+pyknotid/spacecurves/geometry.py:8:import numpy as n
+pyknotid/spacecurves/smooth.py:6:import numpy as n
+pyknotid/spacecurves/smooth.py:27:    import numpy as n    
+pyknotid/spacecurves/smooth.py:34:    numpy.hanning, numpy.hamming, numpy.bartlett, numpy.blackman, numpy.convolve
+pyknotid/spacecurves/spacecurve.py:22:import numpy as n
+pyknotid/spacecurves/spacecurve.py:23:import numpy as np
+pyknotid/spacecurves/spacecurve.py:104:        ts = np.roll(self.points, -1, axis=0) - self.points
+pyknotid/spacecurves/spacecurve.py:112:        The points of the spacecurve, as an Nx3 numpy array.
+pyknotid/spacecurves/spacecurve.py:131:        points = np.roll(points, distance, axis=0)
+pyknotid/spacecurves/spacecurve.py:133:            points = np.vstack([points, points[:1]])
+pyknotid/spacecurves/spacecurve.py:353:            index = int(np.round(cur_strand[-1][0])) - 1
+pyknotid/spacecurves/spacecurve.py:416:        tangents = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/spacecurve.py:417:        angles = np.arctan2(tangents[:, 1], tangents[:, 0])
+pyknotid/spacecurves/spacecurve.py:427:            if (0 < angle < np.pi / 2.) and (-np.pi / 2. < next_angle < 0):
+pyknotid/spacecurves/spacecurve.py:429:            elif (-np.pi / 2. < angle < 0) and (0 < next_angle < np.pi / 2.):
+pyknotid/spacecurves/spacecurve.py:435:            if (0 < angle < np.pi / 2.) and (-np.pi / 2. < next_angle < 0):
+pyknotid/spacecurves/spacecurve.py:437:            elif (-np.pi / 2. < angle < 0) and (0 < next_angle < np.pi / 2.):
+pyknotid/spacecurves/spacecurve.py:442:            if (0 < angle < np.pi / 2.) and (-np.pi / 2. < next_angle < 0):
+pyknotid/spacecurves/spacecurve.py:444:            elif (-np.pi / 2. < angle < 0) and (0 < next_angle < np.pi / 2.):
+pyknotid/spacecurves/spacecurve.py:447:        cuaps = np.array(cuaps)
+pyknotid/spacecurves/spacecurve.py:638:        z = np.array(z).astype(np.float)
+pyknotid/spacecurves/spacecurve.py:944:                rog_squared += np.sum((next_point - point)**2)
+pyknotid/spacecurves/spacecurve.py:948:        return np.sqrt(rog_squared)
+pyknotid/spacecurves/spacecurve.py:990:        new_points = n.zeros((len(indices), 3), dtype=n.float)
+pyknotid/spacecurves/spacecurve.py:1081:        ts = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/spacecurve.py:1083:        keep_points = np.ones(len(points), dtype=np.bool)
+pyknotid/spacecurves/spacecurve.py:1088:            t1 /= np.sqrt(np.sum(t1**2))
+pyknotid/spacecurves/spacecurve.py:1090:            t2 /= np.sqrt(np.sum(t2**2))
+pyknotid/spacecurves/spacecurve.py:1091:            if np.dot(t1, t2) > (1 - 10e-10):
+pyknotid/spacecurves/spacecurve.py:1100:        ts = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/spacecurve.py:1101:        vs = np.sqrt(np.sum(ts*ts, axis=1))
+pyknotid/spacecurves/spacecurve.py:1103:        gamma_dd = 0.25 * (np.roll(points, -2, axis=0) + np.roll(points, 2, axis=0) - 2*points)
+pyknotid/spacecurves/spacecurve.py:1104:        vns = 0.5 * (vs + np.roll(vs, 1))
+pyknotid/spacecurves/spacecurve.py:1105:        gamma_d = 0.5 * (np.roll(points, -1, axis=0) - np.roll(points, 1, axis=0))
+pyknotid/spacecurves/spacecurve.py:1106:        ans = 0.25 * (np.roll(vs, -1) + vs - np.roll(vs, 1) - np.roll(vs, 2))
+pyknotid/spacecurves/spacecurve.py:1107:        kappas = gamma_dd - np.einsum('i,ij->ij', (ans / vns), gamma_d)
+pyknotid/spacecurves/spacecurve.py:1108:        kappas = np.sqrt(np.sum(kappas * kappas, axis=1))
+pyknotid/spacecurves/spacecurve.py:1119:        segments = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/spacecurve.py:1120:        segments_2 = np.roll(segments, -1, axis=0)
+pyknotid/spacecurves/spacecurve.py:1122:        mags = np.sqrt(np.sum(segments * segments, axis=1))
+pyknotid/spacecurves/spacecurve.py:1123:        mags_2 = np.roll(mags, -1)
+pyknotid/spacecurves/spacecurve.py:1125:        angles = np.arccos(np.sum(segments * segments_2, axis=1) / (mags * mags_2))
+pyknotid/spacecurves/spacecurve.py:1126:        return np.sum(angles)
+pyknotid/spacecurves/spacecurve.py:1134:        ts = np.roll(d, -1, axis=0) - d
+pyknotid/spacecurves/spacecurve.py:1135:        vs = np.sqrt(np.sum(ts*ts, axis=1))
+pyknotid/spacecurves/spacecurve.py:1137:        gamma_dd = 0.25 * (np.roll(d, -2, axis=0) + np.roll(d, 2, axis=0) - 2*d)
+pyknotid/spacecurves/spacecurve.py:1138:        vns = 0.5 * (vs + np.roll(vs, 1))
+pyknotid/spacecurves/spacecurve.py:1139:        gamma_d = 0.5 * (np.roll(d, -1, axis=0) - np.roll(d, 1, axis=0))
+pyknotid/spacecurves/spacecurve.py:1140:        ans = 0.25 * (np.roll(vs, -1) + vs - np.roll(vs, 1) - np.roll(vs, 2))
+pyknotid/spacecurves/spacecurve.py:1142:        kappas = gamma_dd - np.einsum('i,ij->ij', (ans / vns), gamma_d)
+pyknotid/spacecurves/spacecurve.py:1143:        kappas = np.sum(kappas * kappas, axis=1)
+pyknotid/spacecurves/spacecurve.py:1145:        gamma_ddd = 0.125 * (np.roll(d, -3, axis=0) - 3*np.roll(d, -1, axis=0) +
+pyknotid/spacecurves/spacecurve.py:1146:                            3*np.roll(d, 1, axis=0) - np.roll(d, 3, axis=0))
+pyknotid/spacecurves/spacecurve.py:1148:        numerator = np.sum(np.cross(gamma_d, gamma_dd) * gamma_ddd, axis=1)
+pyknotid/spacecurves/spacecurve.py:1149:        denominator = vns**2 * np.abs(kappas)
+pyknotid/spacecurves/spacecurve.py:1153:            torsions = np.abs(torsions)
+pyknotid/spacecurves/spacecurve.py:1166:        self.points = np.vstack([self.points, self.points[:1]])
+pyknotid/spacecurves/spacecurve.py:1177:        cum_length_fracs = np.cumsum(lengths) / np.sum(lengths)
+pyknotid/spacecurves/spacecurve.py:1184:        points = splev(np.linspace(0, 1, num_points),
+pyknotid/spacecurves/spacecurve.py:1187:        new_points = np.zeros((num_points, 3))
+pyknotid/spacecurves/helpers.py:5:import numpy as n
+pyknotid/spacecurves/setup.py:5:import numpy
+pyknotid/spacecurves/setup.py:14:  include_dirs = [numpy.get_include()],
+pyknotid/spacecurves/complexity.py:16:import numpy as n
+pyknotid/spacecurves/complexity.py:17:import numpy as np
+pyknotid/spacecurves/complexity.py:68:#     dps = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/complexity.py:79:#             cross = np.cross(dps[i1], dps[i2])
+pyknotid/spacecurves/complexity.py:80:#             writhe += diff.dot(cross) / np.sqrt(np.sum(diff**2))**3
+pyknotid/spacecurves/complexity.py:82:#     return 2 * writhe / (4*np.pi)
+pyknotid/spacecurves/complexity.py:93:    dps = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/complexity.py:115:            n1 = np.cross(r13, r14)
+pyknotid/spacecurves/complexity.py:116:            n1 /= np.sqrt(np.sum(n1**2))
+pyknotid/spacecurves/complexity.py:118:            n2 = np.cross(r14, r24)
+pyknotid/spacecurves/complexity.py:119:            n2 /= np.sqrt(np.sum(n2**2))
+pyknotid/spacecurves/complexity.py:121:            n3 = np.cross(r24, r23)
+pyknotid/spacecurves/complexity.py:122:            if np.any(np.abs(n3) > 0.):
+pyknotid/spacecurves/complexity.py:123:                n3 /= np.sqrt(np.sum(n3**2))
+pyknotid/spacecurves/complexity.py:125:            n4 = np.cross(r23, r13)
+pyknotid/spacecurves/complexity.py:126:            if np.any(np.abs(n4) > 0.):
+pyknotid/spacecurves/complexity.py:127:                n4 /= np.sqrt(np.sum(n4**2))
+pyknotid/spacecurves/complexity.py:129:            if np.any(np.isnan(n3)):
+pyknotid/spacecurves/complexity.py:133:                print('nan', r23, r13, np.cross(r23, r13))
+pyknotid/spacecurves/complexity.py:135:            t1, t2, t3, t4 = np.clip([n1.dot(n2),
+pyknotid/spacecurves/complexity.py:141:            writhe_contribution = (np.arcsin(t1) +
+pyknotid/spacecurves/complexity.py:142:                                   np.arcsin(t2) +
+pyknotid/spacecurves/complexity.py:143:                                   np.arcsin(t3) +
+pyknotid/spacecurves/complexity.py:144:                                   np.arcsin(t4))
+pyknotid/spacecurves/complexity.py:147:            writhe_contribution *= np.sign(np.cross(r34, r12).dot(r13))
+pyknotid/spacecurves/complexity.py:149:            if np.isnan(writhe_contribution):
+pyknotid/spacecurves/complexity.py:157:    return 2 * writhe / (4*np.pi), 2 * acn / (4*np.pi)
+pyknotid/spacecurves/complexity.py:162:    dps = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/complexity.py:164:    contributions = np.zeros((len(points[:-1]), len(points[:-1])))
+pyknotid/spacecurves/complexity.py:165:    contributions = np.zeros((len(points), len(points)))
+pyknotid/spacecurves/complexity.py:189:            n1 = np.cross(r13, r14)
+pyknotid/spacecurves/complexity.py:190:            n1 /= np.sqrt(np.sum(n1**2))
+pyknotid/spacecurves/complexity.py:192:            n2 = np.cross(r14, r24)
+pyknotid/spacecurves/complexity.py:193:            n2 /= np.sqrt(np.sum(n2**2))
+pyknotid/spacecurves/complexity.py:195:            n3 = np.cross(r24, r23)
+pyknotid/spacecurves/complexity.py:196:            if np.any(np.abs(n3) > 0.):
+pyknotid/spacecurves/complexity.py:197:                n3 /= np.sqrt(np.sum(n3**2))
+pyknotid/spacecurves/complexity.py:199:            n4 = np.cross(r23, r13)
+pyknotid/spacecurves/complexity.py:200:            if np.any(np.abs(n4) > 0.):
+pyknotid/spacecurves/complexity.py:201:                n4 /= np.sqrt(np.sum(n4**2))
+pyknotid/spacecurves/complexity.py:203:            if np.any(np.isnan(n1)):
+pyknotid/spacecurves/complexity.py:207:                print('nan', r23, r13, np.cross(r23, r13))
+pyknotid/spacecurves/complexity.py:212:            t1, t2, t3, t4 = np.clip([n1.dot(n2),
+pyknotid/spacecurves/complexity.py:218:            writhe_contribution = (np.arcsin(t1) +
+pyknotid/spacecurves/complexity.py:219:                                   np.arcsin(t2) +
+pyknotid/spacecurves/complexity.py:220:                                   np.arcsin(t3) +
+pyknotid/spacecurves/complexity.py:221:                                   np.arcsin(t4))
+pyknotid/spacecurves/complexity.py:223:            if np.isnan(writhe_contribution):
+pyknotid/spacecurves/complexity.py:228:                print(n1.dot(n2), np.arcsin(n1.dot(n2)))
+pyknotid/spacecurves/complexity.py:229:                print(n2.dot(n3), np.arcsin(n2.dot(n3)))
+pyknotid/spacecurves/complexity.py:230:                print(n3.dot(n4), np.arcsin(n3.dot(n4)))
+pyknotid/spacecurves/complexity.py:231:                print(n4.dot(n1), np.arcsin(n4.dot(n1)))
+pyknotid/spacecurves/complexity.py:233:            writhe_contribution *= np.sign(np.cross(r34, r12).dot(r13))
+pyknotid/spacecurves/complexity.py:246:            order = np.array(order)
+pyknotid/spacecurves/complexity.py:253:    return writhe / (2*np.pi)**2
+pyknotid/spacecurves/complexity.py:283:    dps = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/complexity.py:285:    contributions = np.zeros((len(points[:-1]), len(points[:-1])))
+pyknotid/spacecurves/complexity.py:286:    contributions = np.zeros((len(points), len(points)))
+pyknotid/spacecurves/complexity.py:312:            n1 = np.cross(r13, r14)
+pyknotid/spacecurves/complexity.py:313:            n1 /= np.sqrt(np.sum(n1**2))
+pyknotid/spacecurves/complexity.py:315:            n2 = np.cross(r14, r24)
+pyknotid/spacecurves/complexity.py:316:            n2 /= np.sqrt(np.sum(n2**2))
+pyknotid/spacecurves/complexity.py:318:            n3 = np.cross(r24, r23)
+pyknotid/spacecurves/complexity.py:319:            if np.any(np.abs(n3) > 0.):
+pyknotid/spacecurves/complexity.py:320:                n3 /= np.sqrt(np.sum(n3**2))
+pyknotid/spacecurves/complexity.py:322:            n4 = np.cross(r23, r13)
+pyknotid/spacecurves/complexity.py:323:            if np.any(np.abs(n4) > 0.):
+pyknotid/spacecurves/complexity.py:324:                n4 /= np.sqrt(np.sum(n4**2))
+pyknotid/spacecurves/complexity.py:326:            if np.any(np.isnan(n1)):
+pyknotid/spacecurves/complexity.py:330:                print('nan', r23, r13, np.cross(r23, r13))
+pyknotid/spacecurves/complexity.py:335:            t1, t2, t3, t4 = np.clip([n1.dot(n2),
+pyknotid/spacecurves/complexity.py:341:            writhe_contribution = (np.arcsin(t1) +
+pyknotid/spacecurves/complexity.py:342:                                   np.arcsin(t2) +
+pyknotid/spacecurves/complexity.py:343:                                   np.arcsin(t3) +
+pyknotid/spacecurves/complexity.py:344:                                   np.arcsin(t4))
+pyknotid/spacecurves/complexity.py:346:            if np.isnan(writhe_contribution):
+pyknotid/spacecurves/complexity.py:351:                print(n1.dot(n2), np.arcsin(n1.dot(n2)))
+pyknotid/spacecurves/complexity.py:352:                print(n2.dot(n3), np.arcsin(n2.dot(n3)))
+pyknotid/spacecurves/complexity.py:353:                print(n3.dot(n4), np.arcsin(n3.dot(n4)))
+pyknotid/spacecurves/complexity.py:354:                print(n4.dot(n1), np.arcsin(n4.dot(n1)))
+pyknotid/spacecurves/complexity.py:356:            writhe_contribution *= np.sign(np.cross(r34, r12).dot(r13))
+pyknotid/spacecurves/complexity.py:368:    contributions = np.zeros((len(points[:-1]), len(points[:-1])))
+pyknotid/spacecurves/complexity.py:369:    contributions = np.zeros((len(points), len(points)))
+pyknotid/spacecurves/complexity.py:389:            n1 = np.cross(r13, r14)
+pyknotid/spacecurves/complexity.py:390:            n1 /= np.sqrt(np.sum(n1**2))
+pyknotid/spacecurves/complexity.py:392:            n2 = np.cross(r14, r24)
+pyknotid/spacecurves/complexity.py:393:            n2 /= np.sqrt(np.sum(n2**2))
+pyknotid/spacecurves/complexity.py:395:            n3 = np.cross(r24, r23)
+pyknotid/spacecurves/complexity.py:396:            if np.any(np.abs(n3) > 0.):
+pyknotid/spacecurves/complexity.py:397:                n3 /= np.sqrt(np.sum(n3**2))
+pyknotid/spacecurves/complexity.py:399:            n4 = np.cross(r23, r13)
+pyknotid/spacecurves/complexity.py:400:            if np.any(np.abs(n4) > 0.):
+pyknotid/spacecurves/complexity.py:401:                n4 /= np.sqrt(np.sum(n4**2))
+pyknotid/spacecurves/complexity.py:403:            if np.any(np.isnan(n1)):
+pyknotid/spacecurves/complexity.py:407:                print('nan', r23, r13, np.cross(r23, r13))
+pyknotid/spacecurves/complexity.py:412:            t1, t2, t3, t4 = np.clip([n1.dot(n2),
+pyknotid/spacecurves/complexity.py:418:            writhe_contribution = (np.arcsin(t1) +
+pyknotid/spacecurves/complexity.py:419:                                   np.arcsin(t2) +
+pyknotid/spacecurves/complexity.py:420:                                   np.arcsin(t3) +
+pyknotid/spacecurves/complexity.py:421:                                   np.arcsin(t4))
+pyknotid/spacecurves/complexity.py:423:            if np.isnan(writhe_contribution):
+pyknotid/spacecurves/complexity.py:428:                print(n1.dot(n2), np.arcsin(n1.dot(n2)))
+pyknotid/spacecurves/complexity.py:429:                print(n2.dot(n3), np.arcsin(n2.dot(n3)))
+pyknotid/spacecurves/complexity.py:430:                print(n3.dot(n4), np.arcsin(n3.dot(n4)))
+pyknotid/spacecurves/complexity.py:431:                print(n4.dot(n1), np.arcsin(n4.dot(n1)))
+pyknotid/spacecurves/complexity.py:433:            writhe_contribution *= np.sign(np.cross(r34, r12).dot(r13))
+pyknotid/spacecurves/complexity.py:452:    contributions = np.zeros((len(points[:-1]), len(points[:-1])))
+pyknotid/spacecurves/complexity.py:453:    contributions = np.zeros((len(points), len(points)))
+pyknotid/spacecurves/complexity.py:455:    contributions = np.zeros(len(points))
+pyknotid/spacecurves/complexity.py:477:        # n1 = np.cross(r13, r14)
+pyknotid/spacecurves/complexity.py:478:        # n1 /= np.sqrt(np.sum(n1**2))
+pyknotid/spacecurves/complexity.py:479:        n1 = np.array([0., 0, 0])
+pyknotid/spacecurves/complexity.py:481:        n2 = np.cross(r14, r24)
+pyknotid/spacecurves/complexity.py:482:        n2 /= np.sqrt(np.sum(n2**2))
+pyknotid/spacecurves/complexity.py:484:        # n3 = np.cross(r24, r23)
+pyknotid/spacecurves/complexity.py:485:        # if np.any(np.abs(n3) > 0.):
+pyknotid/spacecurves/complexity.py:486:        #     n3 /= np.sqrt(np.sum(n3**2))
+pyknotid/spacecurves/complexity.py:487:        n3 = np.array([0., 0, 0])
+pyknotid/spacecurves/complexity.py:489:        n4 = np.cross(r23, r13)
+pyknotid/spacecurves/complexity.py:490:        if np.any(np.abs(n4) > 0.):
+pyknotid/spacecurves/complexity.py:491:            n4 /= np.sqrt(np.sum(n4**2))
+pyknotid/spacecurves/complexity.py:493:        if np.any(np.isnan(n1)):
+pyknotid/spacecurves/complexity.py:497:            print('nan', r23, r13, np.cross(r23, r13))
+pyknotid/spacecurves/complexity.py:503:        t1, t2, t3, t4 = np.clip([n1.dot(n2),
+pyknotid/spacecurves/complexity.py:509:        writhe_contribution = (np.arcsin(t1) +
+pyknotid/spacecurves/complexity.py:510:                                np.arcsin(t2) +
+pyknotid/spacecurves/complexity.py:511:                                np.arcsin(t3) +
+pyknotid/spacecurves/complexity.py:512:                                np.arcsin(t4))
+pyknotid/spacecurves/complexity.py:514:        if np.isnan(writhe_contribution):
+pyknotid/spacecurves/complexity.py:519:            print(n1.dot(n2), np.arcsin(n1.dot(n2)))
+pyknotid/spacecurves/complexity.py:520:            print(n2.dot(n3), np.arcsin(n2.dot(n3)))
+pyknotid/spacecurves/complexity.py:521:            print(n3.dot(n4), np.arcsin(n3.dot(n4)))
+pyknotid/spacecurves/complexity.py:522:            print(n4.dot(n1), np.arcsin(n4.dot(n1)))
+pyknotid/spacecurves/complexity.py:524:        # writhe_contribution *= np.sign(np.cross(r34, r12).dot(r13))
+pyknotid/spacecurves/complexity.py:538:    dps = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/complexity.py:545:    lengths = np.sqrt(np.sum(dps**2, axis=1))
+pyknotid/spacecurves/complexity.py:546:    total_length = np.sum(lengths)
+pyknotid/spacecurves/complexity.py:547:    cumulative_lengths = np.cumsum(lengths)
+pyknotid/spacecurves/complexity.py:549:    assert np.max(cumulative_fractions) <= 1.000001
+pyknotid/spacecurves/complexity.py:551:    weights = (lengths + np.roll(lengths, 1)) / 2.
+pyknotid/spacecurves/complexity.py:560:            #     difference = np.abs(difference - 1.)
+pyknotid/spacecurves/complexity.py:564:                difference = np.abs(difference - total_length)
+pyknotid/spacecurves/complexity.py:566:            distance = np.sqrt(np.sum((p2 - p1)**2))
+pyknotid/spacecurves/complexity.py:579:    # xs = np.linspace(-2, 2, 15)
+pyknotid/spacecurves/complexity.py:580:    # return np.sum(np.convolve(values, np.exp(-1 * xs**2)))
+pyknotid/spacecurves/complexity.py:582:    # distance_quantity *= np.sum(lengths)
+pyknotid/spacecurves/complexity.py:595:    dps = np.roll(points, -1, axis=0) - points
+pyknotid/spacecurves/complexity.py:601:    lengths = np.sqrt(np.sum(dps**2, axis=1))
+pyknotid/spacecurves/complexity.py:602:    total_length = np.sum(lengths)
+pyknotid/spacecurves/complexity.py:603:    cumulative_lengths = np.cumsum(lengths)
+pyknotid/spacecurves/complexity.py:605:    assert np.max(cumulative_fractions) <= 1.000001
+pyknotid/spacecurves/complexity.py:607:    weights = (lengths + np.roll(lengths, 1)) / 2.
+pyknotid/spacecurves/complexity.py:618:            difference /= np.sqrt(np.sum(difference**2))
+pyknotid/spacecurves/complexity.py:620:            dp2 /= np.sqrt(np.sum(dp2**2))
+pyknotid/spacecurves/complexity.py:622:            cos_angle = np.abs(difference.dot(dp2))
+pyknotid/spacecurves/complexity.py:626:                difference = np.abs(difference - total_length)
+pyknotid/spacecurves/complexity.py:628:            distance = np.sqrt(np.sum((p2 - p1)**2))**2
+pyknotid/spacecurves/periodicline.py:2:import numpy as n
+pyknotid/spacecurves/rotation.py:1:import numpy as n
+pyknotid/spacecurves/link.py:19:import numpy as n
+pyknotid/spacecurves/link.py:486:        from ..invariants import multivariate_alexander_numpy
+pyknotid/spacecurves/openknot.py:15:import numpy as n
+pyknotid/spacecurves/openknot.py:1127:            keeps = n.ones(len(cs), dtype=n.bool)
+pyknotid/spacecurves/openknot.py:1214:            keeps = n.ones(len(cs), dtype=n.bool)
+pyknotid/spacecurves/ccomplexity.pyx:4:import numpy as np
+pyknotid/spacecurves/ccomplexity.pyx:5:cimport numpy as np
+pyknotid/spacecurves/ccomplexity.pyx:16:    cdef long [:] indices = np.zeros(4, dtype=np.int)
+pyknotid/spacecurves/ccomplexity.pyx:44:    cdef long [:] indices = np.zeros(4, dtype=np.int)
+pyknotid/spacecurves/ccomplexity.pyx:67:    return (writhe_1 / (2*np.pi)**2,
+pyknotid/spacecurves/ccomplexity.pyx:68:            writhe_2 / (2*np.pi)**2,
+pyknotid/spacecurves/ccomplexity.pyx:69:            writhe_3 / (2*np.pi)**2)
+pyknotid/spacecurves/ccomplexity.pyx:75:    cdef long [:] indices = np.zeros(4, dtype=np.int)
+pyknotid/spacecurves/ccomplexity.pyx:108:    return (writhe_1 / (2*np.pi)**2,
+pyknotid/spacecurves/ccomplexity.pyx:109:            writhe_2 / (2*np.pi)**2,
+pyknotid/spacecurves/ccomplexity.pyx:110:            writhe_3 / (2*np.pi)**2)
+pyknotid/spacecurves/ccomplexity.pyx:130:#             n1 = np.cross(r13, r14)
+pyknotid/spacecurves/ccomplexity.pyx:131:#             n1 /= np.sqrt(np.sum(n1**2))
+pyknotid/spacecurves/ccomplexity.pyx:133:#             n2 = np.cross(r14, r24)
+pyknotid/spacecurves/ccomplexity.pyx:134:#             n2 /= np.sqrt(np.sum(n2**2))
+pyknotid/spacecurves/ccomplexity.pyx:136:#             n3 = np.cross(r24, r23)
+pyknotid/spacecurves/ccomplexity.pyx:137:#             if np.any(np.abs(n3) > 0.):
+pyknotid/spacecurves/ccomplexity.pyx:138:#                 n3 /= np.sqrt(np.sum(n3**2))
+pyknotid/spacecurves/ccomplexity.pyx:140:#             n4 = np.cross(r23, r13)
+pyknotid/spacecurves/ccomplexity.pyx:141:#             if np.any(np.abs(n4) > 0.):
+pyknotid/spacecurves/ccomplexity.pyx:142:#                 n4 /= np.sqrt(np.sum(n4**2))
+pyknotid/spacecurves/ccomplexity.pyx:144:#             if np.any(np.isnan(n1)):
+pyknotid/spacecurves/ccomplexity.pyx:148:#                 print('nan', r23, r13, np.cross(r23, r13))
+pyknotid/spacecurves/ccomplexity.pyx:153:#             t1, t2, t3, t4 = np.clip([n1.dot(n2),
+pyknotid/spacecurves/ccomplexity.pyx:159:#             writhe_contribution = (np.arcsin(t1) +
+pyknotid/spacecurves/ccomplexity.pyx:160:#                                    np.arcsin(t2) +
+pyknotid/spacecurves/ccomplexity.pyx:161:#                                    np.arcsin(t3) +
+pyknotid/spacecurves/ccomplexity.pyx:162:#                                    np.arcsin(t4))
+pyknotid/spacecurves/ccomplexity.pyx:164:#             if np.isnan(writhe_contribution):
+pyknotid/spacecurves/ccomplexity.pyx:169:#                 print(n1.dot(n2), np.arcsin(n1.dot(n2)))
+pyknotid/spacecurves/ccomplexity.pyx:170:#                 print(n2.dot(n3), np.arcsin(n2.dot(n3)))
+pyknotid/spacecurves/ccomplexity.pyx:171:#                 print(n3.dot(n4), np.arcsin(n3.dot(n4)))
+pyknotid/spacecurves/ccomplexity.pyx:172:#                 print(n4.dot(n1), np.arcsin(n4.dot(n1)))
+pyknotid/spacecurves/ccomplexity.pyx:174:#             writhe_contribution *= np.sign(np.cross(r34, r12).dot(r13))
+pyknotid/spacecurves/periodiccell.py:12:import numpy as n
+pyknotid/spacecurves/periodiccell.py:13:import numpy as np
+pyknotid/spacecurves/periodiccell.py:97:            total_length = np.sum(lengths)
+pyknotid/spacecurves/periodiccell.py:170:            OpenKnot.from_periodic_line(np.vstack(l), self.shape,
+pyknotid/spacecurves/periodiccell.py:174:        linkings = np.zeros((len(lines), len(lines)))
+pyknotid/spacecurves/periodiccell.py:217:    #     linkings = np.zeros((len(self.lines),
+pyknotid/spacecurves/periodiccell.py:227:    #         cum_lengths_1 = np.cumsum(map(len, segments_1))
+pyknotid/spacecurves/periodiccell.py:233:    #             cum_lengths_2 = np.cumsum(map(len, segments_2))
+pyknotid/spacecurves/periodiccell.py:236:    #                 np.roll(segment[:, :2], -1, axis=0) - segment[:, :2] for
+pyknotid/spacecurves/periodiccell.py:240:    #                 step_lengths_2.append(np.array(
+pyknotid/spacecurves/periodiccell.py:241:    #                     [np.sqrt(np.sum(row**2))
+pyknotid/spacecurves/periodiccell.py:243:    #             max_step_lengths_2 = [np.max(ls) for ls in
+pyknotid/spacecurves/periodiccell.py:270:    #                             new_crossings = np.array(new_crossings)
+pyknotid/spacecurves/periodiccell.py:277:    #                 all_crossings.append((i1, i2, np.vstack(crossings)))
+pyknotid/spacecurves/periodiccell.py:346:    closing_distance = np.sqrt(np.sum((line[-1] - line[0])**2))
+pyknotid/spacecurves/periodiccell.py:359:        self.mins = np.min(l, axis=0)
+pyknotid/spacecurves/periodiccell.py:360:        self.maxs = np.max(l, axis=0)
+pyknotid/spacecurves/periodiccell.py:394:        steps_mins = np.floor((b2.mins - b1.maxs) / shape).astype(np.int) + 1
+pyknotid/spacecurves/periodiccell.py:395:        steps_maxs = np.floor((b2.maxs - b1.mins) / shape).astype(np.int)
+pyknotid/spacecurves/periodiccell.py:407:        l = Link.from_periodic_lines((np.vstack(line1),
+pyknotid/spacecurves/periodiccell.py:408:                                      np.vstack(line2)),
+pyknotid/spacecurves/periodiccell.py:435:                points2 += np.array([dx, dy, dz]) * np.array(shape)
+pyknotid/spacecurves/periodiccell.py:454:    loop= np.vstack(loop)
+pyknotid/spacecurves/periodiccell.py:455:    line = np.vstack(line)
+pyknotid/spacecurves/periodiccell.py:460:    line_closure = np.round(line_closure).astype(np.int)
+pyknotid/spacecurves/periodiccell.py:480:    random_matrix = get_rotation_matrix(np.random.random(size=3) * 2 * np.pi)
+pyknotid/spacecurves/periodiccell.py:497:    axis_rotation = get_rotation_matrix((np.pi / 2., 0, 0))
+pyknotid/spacecurves/periodiccell.py:508:                translation = random_matrix.dot(np.array((dx, dy, dz)) * np.array(shape))
+pyknotid/spacecurves/periodiccell.py:555:loop1 = np.array([[0., 0, 0],
+pyknotid/spacecurves/periodiccell.py:561:loop2 = np.array([[2.5, 2.5, -3],
+pyknotid/spacecurves/periodiccell.py:567:loop3 = loop2 + np.array([30., 0, 0])
+pyknotid/spacecurves/periodic.py:3:import numpy as n
+pyknotid/io.py:9:import numpy as n
+pyknotid/io.py:31:    json format, and returns the result as a numpy array.
+pyknotid/visualise.py:26:import numpy as n
+pyknotid/visualise.py:27:import numpy as np
+pyknotid/visualise.py:178:    from numpy.linalg import norm
+pyknotid/visualise.py:204:    previous_translate = np.zeros(3)
+pyknotid/visualise.py:227:                axis = np.cross(T, [0, 1, 0])
+pyknotid/visualise.py:228:                angle = np.dot(T, [0, 1, 0]) / (norm(T) * 1.)
+pyknotid/visualise.py:229:                angle *= 180 / np.pi
+pyknotid/visualise.py:237:                axis = np.cross(N, [0, 0, 1])
+pyknotid/visualise.py:238:                angle = np.dot(N, [0, 0, 1]) / (norm(N) * 1.)
+pyknotid/visualise.py:239:                angle *= 180 / np.pi
+pyknotid/visualise.py:1006:        # print('radius is', np.sqrt(vertex[0]**2 + vertex[1]**2))
+pyknotid/visualise.py:1007:        # print('angle is', np.arctan2(vertex[1], vertex[0]))
+pyknotid/visualise.py:1013:        theta = 2*np.arccos(np.sqrt(vertex[0]**2 + vertex[1]**2)/2.)
+pyknotid/visualise.py:1014:        phi = np.arctan2(vertex[1], vertex[0])
+pyknotid/visualise.py:1104:        theta = 2*np.arccos(np.sqrt(vertex[0]**2 + vertex[1]**2)/2.)
+pyknotid/visualise.py:1105:        phi = np.arctan2(vertex[1], vertex[0])
+pyknotid/visualcollection.py:6:import numpy as np
+pyknotid/visualcollection.py:26:        cum_lens = np.hstack([[0], np.cumsum(list(map(len, vertices)))[:-1]])
+pyknotid/visualcollection.py:31:        vertices = np.vstack(vertices)
+pyknotid/visualcollection.py:32:        indices = np.vstack(indices)
+pyknotid/visualcollection.py:33:        vertex_colors = np.vstack(vertex_colors)
+pyknotid/catalogue/improve.py:23:import numpy as n
+pyknotid/catalogue/converters.py:5:import numpy as n    
+pyknotid/catalogue/converters.py:67:    coeffs = n.zeros((len(terms),2),dtype=int)
+pyknotid/catalogue/converters.py:80:    cs = n.zeros(cmax-cmin+1,dtype=int)
+pyknotid/catalogue/converters.py:94:    coeffs = n.zeros((len(terms), 2), dtype=int)
+pyknotid/catalogue/converters.py:110:        # Need int to convert from numpy.int64
+pyknotid/catalogue/converters.py:122:    coeffs = n.zeros((len(terms), 3), dtype=int)
+pyknotid/catalogue/converters.py:138:        # Need int to convert from numpy.int64
+pyknotid/catalogue/converters.py:224:    np = np.subs(z, sym.sqrt(q) - 1/sym.sqrt(q))
+pyknotid/catalogue/converters.py:225:    np = np.expand()
+pyknotid/catalogue/converters.py:235:    np = np.expand()
+pyknotid/catalogue/converters.py:245:    np = np.expand()
+pyknotid/catalogue/database.py:183:        import numpy as np
+pyknotid/catalogue/database.py:187:        k.points += 0.0001 * np.random.random(k.points.shape)
+pyknotid/simplify/octree.py:8:import numpy as n
+pyknotid/simplify/octree.py:770:        keep = n.ones(len(points), dtype=bool)
+pyknotid/simplify/octree.py:799:    keep = n.ones(len(points), dtype=n.bool)
+pyknotid/simplify/coctree.pyx:6:import numpy as n
+pyknotid/simplify/coctree.pyx:7:cimport numpy as n
+pyknotid/simplify/coctree.pyx:24:    cdef double [:] dv2 = n.zeros(3, dtype=n.double)
+pyknotid/simplify/coctree.pyx:100:    cdef double [:] cy_dv = n.zeros(3, dtype=n.double)
+pyknotid/cli/plot_knot.py:7:import numpy as np
+pyknotid/cli/analyse_knot_file.py:7:import numpy as np

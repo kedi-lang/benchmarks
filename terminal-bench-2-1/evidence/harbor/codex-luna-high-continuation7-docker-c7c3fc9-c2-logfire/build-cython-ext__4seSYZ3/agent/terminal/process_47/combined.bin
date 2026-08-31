@@ -1,0 +1,51 @@
+        crossings = self.raw_crossings(recalculate=recalculate, **kwargs)
+        gc = Representation(crossings, verbose=self.verbose)
+        self._representation = gc
+        return gc
+        
+
+    def planar_diagram(self, **kwargs):
+        '''
+        Returns a
+        :class:`~pyknotid.representations.planardiagram.PlanarDiagram`
+        instance representing the crossings of the knot.
+
+        This method passes kwargs directly to :meth:`raw_crossings`,
+        see the documentation of that function for all options.
+        '''
+        from ..representations.planardiagram import PlanarDiagram
+        crossings = self.raw_crossings(**kwargs)
+        return PlanarDiagram(crossings)
+
+    def gauss_diagram(self, simplify=False, **kwargs):
+        '''
+        Returns a
+        :class:`~pyknotid.representations.gaussdiagram.GaussDiagram`
+        instance representing the crossings of the knot.
+
+        This method passes kwargs directly to :meth:`raw_crossings`,
+        see the documentation of that function for all options.
+        '''
+        from ..representations.gaussdiagram import GaussDiagram
+        gc = self.gauss_code(**kwargs)
+        if simplify:
+            gc.simplify()
+        return GaussDiagram(gc)
+
+    def reconstructed_space_curve(self):
+        r = self.representation()
+        return SpaceCurve(r.space_curve())
+
+    def plot(self, mode='auto', clf=True, closed=False,
+             **kwargs):
+        '''
+        Plots the line. See :func:`pyknotid.visualise.plot_line` for
+        full documentation.
+        '''
+        plot_line(self.points, mode=mode, clf=clf,
+                  closed=closed, **kwargs)
+
+    def plot_projection(self, with_crossings=True, mark_start=False,
+                        fig_ax=None, show=True, mark_points=False):
+        '''Plots a 2D diagram of the knot projected along the current
+        z-axis. The crossings, and start point of the curve, can

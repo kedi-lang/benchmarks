@@ -1,0 +1,160 @@
+'''Visualise
+=========
+
+Functions for plotting knots, supporting different toolkits and types
+of plot.
+
+pyknotid primarily supports `Vispy <http://vispy.org/>`__ as the
+plotting mechanism. `Mayavi
+<http://docs.enthought.com/mayavi/mayavi/>`__ is semi-supported but
+may not always work.
+
+Many of these functions can be called in a more convenient way via
+methods of the :doc:`space curve classes <spacecurves/index>`
+(e.g. :class:`~pyknotid.spacecurves.knot.Knot`).
+
+API documentation
+-----------------
+
+'''
+
+from __future__ import division
+
+import vispy
+# vispy.use('PyQt5')
+
+import numpy as n
+import numpy as np
+from colorsys import hsv_to_rgb
+from pyknotid.utils import ensure_shape_tuple, vprint
+import random
+from colorsys import hsv_to_rgb
+
+try:
+    from vispy.visuals.transforms import MatrixTransform
+except (AttributeError, ImportError):
+    from vispy.visuals.transforms import AffineTransform as MatrixTransform
+
+vispy_canvas = None
+
+def plot_vispy_cube():
+    ensure_vispy_canvas()
+    clear_vispy_canvas()
+    canvas = vispy_canvas
+
+    from vispy import app, scene, color
+
+    c = scene.visuals.Cube((5, 2, 10),
+                           color='blue',
+                           edge_color='red')
+    canvas.view.add(c)
+    canvas.view.camera = scene.ArcballCamera(fov=30, distance=20)
+    canvas.show()
+
+def plot_line(points, mode='auto', clf=True, **kwargs):
+    '''
+    Plots the given line, using the toolkit given by mode.
+
+    kwargs are passed to the toolkit specific function, except for:
+
+    Parameters
+    ----------
+    points : ndarray
+        The nx3 array to plot.
+    mode : str
+        The toolkit to draw with. Defaults to 'auto', which will
+        automatically pick the first available toolkit from
+        ['mayavi', 'matplotlib', 'vispy'], or raise an exception
+        if none can be imported.
+    clf : bool
+        Whether the existing figure should be cleared
+        before drawing the new one.
+    '''
+    if mode == 'auto':
+        try:
+            import vispy
+            mode = 'vispy'
+        except ImportError:
+            pass
+    if mode == 'auto':
+        try:
+            import mayavi.mlab as may
+            mode = 'mayavi'
+        except ImportError:
+            pass
+    if mode == 'auto':
+        try:
+            import matplotlib.pyplot as plt
+            from mpl_toolkits.mplot3d import Axes3D
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='3d')
+            mode = 'matplotlib'
+        except (ImportError, ValueError):
+            pass
+    if mode == 'auto':
+        raise ImportError('Couldn\'t import any of mayavi, vispy, '
+                          'or matplotlib\'s 3d axes.')
+            
+    if mode == 'mayavi':
+        plot_line_mayavi(points, clf=clf, **kwargs)
+    elif mode == 'vispy':
+        plot_line_vispy(points, clf=clf, **kwargs)
+    elif mode == 'matplotlib':
+        plot_line_matplotlib(points, clf=clf, **kwargs)
+    else:
+        raise Exception('invalid toolkit/mode')
+
+    
+def plot_line_mayavi(points, clf=True, tube_radius=1., colormap='hsv',
+                     closed=True,
+                     zero_centroid=False,
+                     mus=None,
+                     **kwargs):
+    import mayavi.mlab as may
+    if clf:
+        may.clf()
+    if mus is None:
+        mus = n.linspace(0, 1, len(points))
+    may.plot3d(points[:, 0], points[:, 1], points[:, 2], mus,
+               colormap=colormap, tube_radius=tube_radius, **kwargs)
+
+def plot_line_matplotlib(points, **kwargs):
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.plot(points[:, 0], points[:, 1], points[:, 2])
+    fig.show()
+
+def ensure_vispy_canvas():
+    global vispy_canvas
+    if vispy_canvas is None:
+        from vispy import app, scene
+        canvas = scene.SceneCanvas(keys='interactive', bgcolor='white')
+        try:
+            canvas.unfreeze()
+        except AttributeError:  # depends on Vispy version
+            pass
+        canvas.view = canvas.central_widget.add_view()
+        vispy_canvas = canvas
+    # if not vispy_canvas.central_widget.children:
+    #     vispy_canvas.view = vispy_canvas.central_widget.add_view()
+        
+
+def clear_vispy_canvas():
+    global vispy_canvas
+    if vispy_canvas is None:
+        return
+    try:
+        vispy_canvas.unfreeze()
+    except AttributeError:  # depends on Vispy version
+        pass
+    vispy_canvas.central_widget.remove_widget(vispy_canvas.view)
+    vispy_canvas.view = vispy_canvas.central_widget.add_view()
+
+def vispy_rotate(elevation=0, max_angle=360):
+    global vispy_canvas
+    cam = vispy_canvas.view.camera
+    from vispy.scene import TurntableCamera
+    from time import sleep
+    vispy_canvas.view.camera = TurntableCamera(

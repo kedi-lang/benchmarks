@@ -1,0 +1,77 @@
+{
+  "results": {
+    "summary": {
+      "failed": 1,
+      "other": 0,
+      "passed": 5,
+      "pending": 0,
+      "skipped": 0,
+      "start": 1788207163.8412843,
+      "stop": 1788207177.088628,
+      "tests": 6
+    },
+    "tests": [
+      {
+        "duration": 0.001069292000124733,
+        "file_path": "test_outputs.py",
+        "name": "test_outputs.py::test_run_py_file_exists",
+        "retries": 0,
+        "start": 1788207163.874974,
+        "status": "passed",
+        "stop": 1788207163.8767092
+      },
+      {
+        "duration": 3.229498542999977,
+        "file_path": "test_outputs.py",
+        "name": "test_outputs.py::test_tasks_run_concurrently",
+        "retries": 0,
+        "start": 1788207163.8770275,
+        "status": "passed",
+        "stop": 1788207167.1080365
+      },
+      {
+        "duration": 6.277413836999926,
+        "file_path": "test_outputs.py",
+        "name": "test_outputs.py::test_tasks_obey_max_concurrent",
+        "retries": 0,
+        "start": 1788207167.1085658,
+        "status": "passed",
+        "stop": 1788207173.3878407
+      },
+      {
+        "duration": 1.5781654990000789,
+        "file_path": "test_outputs.py",
+        "name": "test_outputs.py::test_tasks_cancel_below_max_concurrent",
+        "retries": 0,
+        "start": 1788207173.3889964,
+        "status": "passed",
+        "stop": 1788207174.967391
+      },
+      {
+        "duration": 1.5449607909998804,
+        "file_path": "test_outputs.py",
+        "name": "test_outputs.py::test_tasks_cancel_at_max_concurrent",
+        "retries": 0,
+        "start": 1788207174.968589,
+        "status": "passed",
+        "stop": 1788207176.5150743
+      },
+      {
+        "duration": 0.548149125000009,
+        "file_path": "test_outputs.py",
+        "message": "The test failed in the call phase due to an assertion error",
+        "name": "test_outputs.py::test_tasks_cancel_above_max_concurrent",
+        "raw_status": "call_failed",
+        "retries": 0,
+        "start": 1788207176.5156755,
+        "status": "failed",
+        "stop": 1788207177.0876808,
+        "trace": "def test_tasks_cancel_above_max_concurrent():\n        \"\"\"\n        Test that cancellation occurs and only the first two tasks are started and\n        cancelled.\n    \n        This is a common gotcha in Python because asyncio.gather doesn't properly cancel\n        existing tasks if there are still tasks in the queue.\n        \"\"\"\n        proc = subprocess.Popen(\n            [\n                \"python\",\n                \"test.py\",\n                \"--n-tasks\",\n                \"3\",\n                \"--max-concurrent\",\n                \"2\",\n            ],\n            stdout=subprocess.PIPE,\n            stderr=subprocess.PIPE,\n        )\n    \n        # Wait 500ms, then send SIGINT (KeyboardInterrupt)\n        time.sleep(0.5)\n        proc.send_signal(signal.SIGINT)\n    \n        try:\n            stdout, stderr = proc.communicate(timeout=5)\n        finally:\n            proc.kill()\n    \n        stdout = stdout.decode(\"utf-8\")\n    \n        assert stdout.count(\"Task started.\") == 2\n>       assert stdout.count(\"Cleaned up.\") == 2\nE       AssertionError: assert 0 == 2\nE        +  where 0 = <built-in method count of str object at 0x7ffffdcfa830>('Cleaned up.')\nE        +    where <built-in method count of str object at 0x7ffffdcfa830> = 'Task started.\\nTask started.\\n'.count\n\n/tests/test_outputs.py:172: AssertionError"
+      }
+    ],
+    "tool": {
+      "name": "pytest",
+      "version": "8.4.1"
+    }
+  }
+}

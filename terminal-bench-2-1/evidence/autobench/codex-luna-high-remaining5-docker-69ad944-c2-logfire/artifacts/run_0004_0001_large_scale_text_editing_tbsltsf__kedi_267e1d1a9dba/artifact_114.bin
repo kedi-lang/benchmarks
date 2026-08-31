@@ -1,0 +1,7 @@
+call setreg('a', ":s/^\\s*\\(\\S\\+\\)\\s*,\\s*\\(\\S\\+\\)\\s*,\\s*\\(\\S\\+\\)\\s*$/\\3;\\2;\\1\\r")
+call setreg('b', "gUU")
+call setreg('c', "A;OK\e")
+:%normal! @a
+:%normal! @b
+:%normal! @c
+:x

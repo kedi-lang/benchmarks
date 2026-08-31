@@ -1,0 +1,140 @@
+'''
+SpaceCurve
+----------
+
+The :class:`SpaceCurve` class is the base for all space-curve analysis
+in pyknotid. It provides methods for geometrical manipulation
+(translation, rotation etc.), calculating geometrical characteristics
+such as the writhe, and obtaining topological representations of the
+curve by analysing its crossings in projection.
+
+pyknotid provides other classes for topological analysis of the curves:
+
+- :class:`~pyknotid.spacecurves.knot.Knot` for calculating knot invariants of the space-curve.
+- :class:`~pyknotid.spacecurves.link.Link` to handle multiple SpaceCurves and calculate linking invariants.
+- :class:`~pyknotid.spacecurves.periodiccell.Cell` for handling multiple space-curves in a box with periodic boundaries.
+
+API documentation
+~~~~~~~~~~~~~~~~~
+
+'''
+
+import numpy as n
+import numpy as np
+import sys
+
+try:
+    from pyknotid.spacecurves import chelpers
+except ImportError:
+    print('Could not import cythonised chelpers, using Python '
+          'alternative. This will '
+          'give the same result, but is slower.')
+    from pyknotid.spacecurves import helpers as chelpers
+from pyknotid.spacecurves import helpers as helpers
+from pyknotid.spacecurves.geometry import arclength, radius_of_gyration
+from pyknotid.spacecurves.smooth import smooth
+
+# We must be careful only to import modules that do not depend on this one, to
+# prevent import loops
+from pyknotid.visualise import plot_line, plot_projection
+from pyknotid.io import to_json_file, from_json_file, from_csv
+from pyknotid.utils import (mag, get_rotation_matrix,
+                           ensure_shape_tuple)
+
+
+class SpaceCurve(object):
+    '''
+    Class for holding the vertices of a single line, providing helper
+    methods for convenient manipulation and analysis.
+
+    The methods of this class are largely geometrical (though this
+    includes listing the crossings in projection and extracting a
+    Gauss code etc.). For topological measurements, you should use
+    a :class:`~pyknotid.spacecurves.knot.Knot`.
+
+    This class deliberately combines methods to do many different kinds
+    of measurements or manipulations. Some of these are externally
+    available through other modules in pyknotid - if so, this is usually
+    indicated in the method docstrings.
+
+    Parameters
+    ----------
+    points : array-like
+        The 3d points (vertices) of a piecewise
+        linear curve representation
+    verbose : bool
+        Indicates whether the SpaceCurve should print
+        information during processing
+    add_closure : bool
+        If True, adds a final point to the knot near to the start point,
+        so that it will appear visually to close when plotted.
+    zero_centroid : bool
+        If True, shifts the coordinates of the points so that their centre
+        of mass is at the origin.
+    '''
+
+    def __init__(self, points, verbose=True, add_closure=False,
+                 zero_centroid=False):
+        if isinstance(points, SpaceCurve):
+            points = points.points.copy()
+        self._points = n.zeros((0, 3))
+        self._crossings = None  # Will store a list of crossings if
+                                # self.crossings() has been called
+        self.points = n.array(points).astype(n.float)
+        self.verbose = verbose
+
+        self._cached_writhe_and_crossing_numbers = None
+        self._gauss_code = None
+        self._representation = None
+
+        self._recent_octree = None
+
+        if add_closure:
+            self._add_closure()
+        if zero_centroid:
+            self.zero_centroid()
+
+    def copy(self):
+        '''Returns another knot with the same points and verbosity
+        as self. Other attributes (e.g. cached crossings) are not
+        preserved.'''
+        return SpaceCurve(self.points.copy(), verbose=self.verbose)
+
+    def tangents(self, closed=False):
+        ts = np.roll(self.points, -1, axis=0) - self.points
+        if not closed:
+            ts = ts[:-1]
+        return ts
+
+    @property
+    def points(self):
+        '''
+        The points of the spacecurve, as an Nx3 numpy array.
+        '''
+        return self._points
+
+    @points.setter
+    def points(self, points):
+        self._points = points
+        # Changing the points may change the crossings, so
+        # reset any cached crossing attributes.
+        self._crossings = None
+        self._cached_writhe_and_crossing_numbers = None
+        self._gauss_code = None
+
+    def roll(self, distance, fix_endpoints=True):
+        # if fix_endpoints, adds a point at the end that matches the
+        # point at the start
+        points = self.points
+        if mag(points[-1] - points[0]) < 0.000001 and fix_endpoints:
+            points = self.points[:-1]
+        points = np.roll(points, distance, axis=0)
+        if fix_endpoints:
+            points = np.vstack([points, points[:1]])
+        self.points = points
+
+    def _vprint(self, s, newline=True):
+        '''Prints s, with optional newline. Intended for internal use
+        in displaying progress.'''
+        if self.verbose:
+            sys.stdout.write(s)

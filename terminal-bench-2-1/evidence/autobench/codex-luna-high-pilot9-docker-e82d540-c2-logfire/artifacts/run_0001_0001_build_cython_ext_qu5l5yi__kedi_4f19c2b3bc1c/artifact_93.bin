@@ -1,0 +1,72 @@
+        so that it will appear visually to close when plotted.
+    zero_centroid : bool
+        If True, shifts the coordinates of the points so that their centre
+        of mass is at the origin.
+    '''
+
+    def __init__(self, points, verbose=True, add_closure=False,
+                 zero_centroid=False):
+        if isinstance(points, SpaceCurve):
+            points = points.points.copy()
+        self._points = n.zeros((0, 3))
+        self._crossings = None  # Will store a list of crossings if
+                                # self.crossings() has been called
+        self.points = n.array(points).astype(n.float)
+        self.verbose = verbose
+
+        self._cached_writhe_and_crossing_numbers = None
+        self._gauss_code = None
+        self._representation = None
+
+        self._recent_octree = None
+        the curve along the z axis.
+        '''
+        from pyknotid.invariants import second_order_writhe
+        gc = self.gauss_code(**kwargs)
+        return second_order_writhe(gc)
+
+    def second_order_twist(self, z):
+        from pyknotid.spacecurves import complexity as com
+        z = np.array(z).astype(np.float)
+        assert len(z) == 3
+        return com.second_order_twist(self.points, z)
+
+    def average_crossing_number(self, samples=10, recalculate=False,
+                                **kwargs):
+        '''
+        The (approximate) average crossing number of the space curve,
+        interp_xs = interp1d(range(len(self.points)+1),
+                             n.hstack((self.points[:, 0],
+                                      self.points[:, 0][:1])))
+        interp_ys = interp1d(range(len(self.points)+1),
+                             n.hstack((self.points[:, 1],
+                                      self.points[:, 1][:1])))
+        interp_zs = interp1d(range(len(self.points)+1),
+                             n.hstack((self.points[:, 2],
+                                      self.points[:, 2][:1])))
+
+        new_points = n.zeros((len(indices), 3), dtype=n.float)
+        new_points[:, 0] = interp_xs(indices)
+        new_points[:, 1] = interp_ys(indices)
+        new_points[:, 2] = interp_zs(indices)
+
+        return SpaceCurve(new_points)
+
+    def _new_indices_by_arclength(self, number, step=None, gap=0):
+        if number is None:
+
+    def simplify_straight_segments(self, closed=False):
+        '''Replaces successive curve segments with identical tangents with a
+        single longer segment.'''
+
+        points = self.points
+        ts = np.roll(points, -1, axis=0) - points
+
+        keep_points = np.ones(len(points), dtype=np.bool)
+
+        ts_range = ts[:-2] if not closed else ts
+
+        for i1, t1 in enumerate(ts_range):
+            t1 /= np.sqrt(np.sum(t1**2))
+            t2 = ts[(i1 + 1) % len(ts)]
+            t2 /= np.sqrt(np.sum(t2**2))

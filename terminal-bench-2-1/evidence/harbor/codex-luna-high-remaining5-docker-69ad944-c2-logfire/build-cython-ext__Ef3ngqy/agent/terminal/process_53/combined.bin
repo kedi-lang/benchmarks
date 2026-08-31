@@ -1,0 +1,53 @@
+sed: can't read pyknotid/representations/representation.py; sed: No such file or directory
+sed: can't read 440,480p: No such file or directory
+        g = planarity.networkx_graph(pg)
+
+
+        node_labels = {}
+        xs = []
+        ys = []
+
+        nodes_by_height = {}
+        node_xs_by_y = {}
+        node_xs_ys = {}
+        node_lefts_rights = {}
+
+        for node, data in g.nodes(data=True):
+            # planarity renamed these attributes in version 1.0.
+            y = data.get('pos', data.get('vertex_position'))
+            xb = data.get('start', data.get('vertex_start'))
+            xe = data.get('end', data.get('vertex_end'))
+            x = int((xe + xb) / 2.)
+
+            node_labels[node] = (x, y)
+            xs.extend([xb, xe])
+            ys.append(y)
+
+            nodes_by_height[y] = node
+            node_xs_by_y[y] = x
+            node_xs_ys[node] = (x, y)
+            node_lefts_rights[node] = (xb, xe)
+
+        lines = []
+
+        rightmost_x = n.max(xs)
+        leftmost_x = n.min(xs)
+        x_span = rightmost_x - leftmost_x
+        safe_yshift = 0.5 / x_span
+
+        extra_x_shifts = []
+        
+        for n1, n2, data in g.edges(data=True):
+            x = data.get('pos', data.get('edge_position'))
+            yb = data.get('start', data.get('edge_start'))
+            ye = data.get('end', data.get('edge_end'))
+
+            start_node = nodes_by_height[yb]
+            end_node = nodes_by_height[ye]
+            if start_node >= len(self) and end_node >= len(self):
+                continue
+
+            start_left, start_right = node_lefts_rights[start_node]
+            end_left, end_right = node_lefts_rights[end_node]
+
+            start_frac = n.abs((x - start_left) / (start_right - start_left) - 0.5)

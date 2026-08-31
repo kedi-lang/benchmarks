@@ -1,0 +1,11 @@
+syscall_shim.c: In function ‘syscall’:
+syscall_shim.c:11:46: error: ‘NULL’ undeclared (first use in this function)
+   11 |     static long (*real_syscall)(long, ...) = NULL;
+      |                                              ^~~~
+syscall_shim.c:5:1: note: ‘NULL’ is defined in header ‘<stddef.h>’; did you forget to ‘#include <stddef.h>’?
+    4 | #include <stdarg.h>
+  +++ |+#include <stddef.h>
+    5 | 
+syscall_shim.c:11:46: note: each undeclared identifier is reported only once for each function it appears in
+   11 |     static long (*real_syscall)(long, ...) = NULL;
+      |                                              ^~~~

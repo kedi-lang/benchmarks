@@ -1,0 +1,52 @@
+{
+  "agent_setup_timeout_multiplier": 3.0,
+  "agent_timeout_multiplier": 1.0,
+  "agents": [
+    {
+      "kwargs": {
+        "adapter": "pydantic",
+        "artifact_quota_bytes": 256000000,
+        "artifact_threshold_bytes": 16384,
+        "artifacts_enabled": true,
+        "command_timeout_seconds": 120.0,
+        "compaction_mode": "disabled",
+        "effort": "high",
+        "history_enabled": true,
+        "kedi_wheel": "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/dist-c7c3fc9/kedi-0.4.0-py3-none-any.whl",
+        "manifest_digest": "fb34bec65d81282d2009c401e39b2a3d97f65eab45e25c54204255cc2ec55eb2",
+        "prefix_cache_enabled": true,
+        "terminal_output_limit_bytes": 512000000,
+        "terminal_preview_bytes": 32768,
+        "tree_sitter_kedi_revision": "019def7175e8a3f3489af7228d5794661420bc71"
+      },
+      "model_name": "codex/gpt-5.6-luna",
+      "name": "kedi.integrations.harbor:KediAgent"
+    }
+  ],
+  "datasets": [
+    {
+      "name": "terminal-bench/terminal-bench-2-1",
+      "ref": "sha256:7d7bdc1cbedad549fc1140404bd4dc45e5fd0ea7c4186773687d177ad3a0699a",
+      "task_names": [
+        "terminal-bench/fix-git",
+        "terminal-bench/build-cython-ext",
+        "terminal-bench/qemu-startup",
+        "terminal-bench/large-scale-text-editing",
+        "terminal-bench/sqlite-db-truncate",
+        "terminal-bench/polyglot-c-py",
+        "terminal-bench/cancel-async-tasks"
+      ]
+    }
+  ],
+  "environment_build_timeout_multiplier": 1.0,
+  "job_name": "codex-luna-high-continuation7-docker-c7c3fc9-c2-logfire",
+  "jobs_dir": "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/jobs",
+  "n_concurrent_trials": 2,
+  "retry": {
+    "include_exceptions": [
+      "NonZeroAgentExitCodeError"
+    ],
+    "max_retries": 1
+  },
+  "verifier_timeout_multiplier": 1.0
+}

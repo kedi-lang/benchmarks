@@ -1,0 +1,536 @@
+Traceback (most recent call last):
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/integrations/harbor/runner.py", line 221, in run_trial
+    result_summary = solve(instruction)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/api.py", line 647, in sync_wrapper
+    return run(*args, **kwargs)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/api.py", line 627, in run
+    result = _run(*args, **kwargs)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/api.py", line 592, in _run
+    result = cast(R, runtime.run_main())
+                     ~~~~~~~~~~~~~~~~^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 420, in run_main
+    result = self._invoke_procedure(self._main, [])
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 575, in _invoke_procedure
+    result = fn(*args)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/lang/compiler/program_compiler.py", line 978, in _main
+    return self._execute_top_level(prepared, kwargs, self.new_top_level_state())
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/lang/compiler/program_compiler.py", line 991, in _execute_top_level
+    block_result = self._execute_top_level_sequence(
+        prepared,
+    ...<2 lines>...
+        prepared.sequence,
+    )
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/lang/compiler/program_compiler.py", line 1237, in _execute_top_level_sequence
+    self.executor.execute_single_statement(item, env, is_toplevel=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/lang/compiler/statement_compiler.py", line 761, in execute_single_statement
+    self.compiler.compile_template_block(stmt)(**env)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/lang/compiler/statement_compiler.py", line 110, in _fn
+    with self.rt.trace_frame(KediTraceFrame(kind="template", label=label, span=stmt.loc)):
+         ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 633, in trace_frame
+    raise kedi_exc.with_traceback(traceback) from None
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 627, in trace_frame
+    yield
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/lang/compiler/statement_compiler.py", line 150, in _fn
+    return self.rt.m(expr)
+           ~~~~~~~~~^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 394, in m
+    return self._kedi_run(expressions, env)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 1093, in _kedi_run
+    result_map = _produce()  # raises on the main thread, wrapped by the trace frame
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 1075, in _produce
+    return self._run_conversation_call(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        adapter,
+        ^^^^^^^^
+    ...<9 lines>...
+        lane_identity=lane_identity,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 1372, in _run_conversation_call
+    result = execute(
+        request,
+        resume_state=conversation.resume_state,
+        conversation_scope=adapter_scope,
+    )
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 1292, in execute
+    result = call(request)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/core.py", line 1041, in produce_and_validate
+    result = lower_request_sync(adapter, request)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/request/lowering.py", line 28, in lower_request_sync
+    return adapter.produce_sync(
+           ~~~~~~~~~~~~~~~~~~~~^
+        template=request.prompt.content,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        output_schema=dict(request.output.schema),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/adapters/pydantic.py", line 1570, in produce_sync
+    return run_sync(
+        self.produce(template, output_schema=output_schema, output_type=output_type, **kwargs)
+    )
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/utils.py", line 61, in run_sync
+    return _run_awaitable(awaitable, resolve)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/utils.py", line 76, in _run_awaitable
+    return asyncio.run(resolve())
+           ~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/utils.py", line 56, in resolve
+    return await awaitable
+           ^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/hooks/boundary.py", line 60, in async_wrapper
+    return await cast(Callable[..., Awaitable[Any]], fn)(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/adapters/pydantic.py", line 764, in produce
+    await self._run_agent(
+    ...<5 lines>...
+    )
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/adapters/pydantic.py", line 967, in _run_agent
+    result = await agent.run(prompt, **cast(Any, run_kwargs))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/agent/abstract.py", line 664, in run
+    node = await agent_run.next(node)  # pyright: ignore[reportArgumentType]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/run.py", line 470, in next
+    return await self._run_node_with_hooks(node, self._stream_and_advance)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/run.py", line 392, in _run_node_with_hooks
+    return await self._wrap_and_advance(run_context, node, step_fn)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/run.py", line 343, in _wrap_and_advance
+    result = await cap.on_node_run_error(run_context, node=node, error=e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 492, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 489, in on_node_run_error
+    return await capability.on_node_run_error(cap_ctx, node=node, error=error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 766, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 489, in on_node_run_error
+    return await capability.on_node_run_error(cap_ctx, node=node, error=error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 766, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 489, in on_node_run_error
+    return await capability.on_node_run_error(cap_ctx, node=node, error=error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 766, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 489, in on_node_run_error
+    return await capability.on_node_run_error(cap_ctx, node=node, error=error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 766, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 489, in on_node_run_error
+    return await capability.on_node_run_error(cap_ctx, node=node, error=error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 766, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 489, in on_node_run_error
+    return await capability.on_node_run_error(cap_ctx, node=node, error=error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 766, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 489, in on_node_run_error
+    return await capability.on_node_run_error(cap_ctx, node=node, error=error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 766, in on_node_run_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/run.py", line 341, in _wrap_and_advance
+    result = await cap.wrap_node_run(run_context, node=node, handler=step_fn)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 475, in wrap_node_run
+    return await chain(node)
+           ^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 910, in wrapped
+    return await cap.wrap_node_run(_ctx_for_cap(cap, ctx), node=node, handler=inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 745, in wrap_node_run
+    return await handler(node)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 910, in wrapped
+    return await cap.wrap_node_run(_ctx_for_cap(cap, ctx), node=node, handler=inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 745, in wrap_node_run
+    return await handler(node)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 910, in wrapped
+    return await cap.wrap_node_run(_ctx_for_cap(cap, ctx), node=node, handler=inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 745, in wrap_node_run
+    return await handler(node)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 910, in wrapped
+    return await cap.wrap_node_run(_ctx_for_cap(cap, ctx), node=node, handler=inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 745, in wrap_node_run
+    return await handler(node)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 910, in wrapped
+    return await cap.wrap_node_run(_ctx_for_cap(cap, ctx), node=node, handler=inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 745, in wrap_node_run
+    return await handler(node)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 910, in wrapped
+    return await cap.wrap_node_run(_ctx_for_cap(cap, ctx), node=node, handler=inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 745, in wrap_node_run
+    return await handler(node)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 910, in wrapped
+    return await cap.wrap_node_run(_ctx_for_cap(cap, ctx), node=node, handler=inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 745, in wrap_node_run
+    return await handler(node)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/run.py", line 484, in _stream_and_advance
+    return await self._advance_graph(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/run.py", line 318, in _advance_graph
+    task = await self._graph_run.next(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_graph/graph_builder.py", line 584, in next
+    return await anext(self)
+           ^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_graph/graph_builder.py", line 561, in __anext__
+    raise self._next.error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_graph/graph_builder.py", line 860, in _run_tracked_task
+    result = await self._run_task(t_)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_graph/graph_builder.py", line 911, in _run_task
+    output = await node.call(step_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_graph/step.py", line 253, in _call_node
+    return await node.run(GraphRunContext(state=ctx.state, deps=ctx.deps))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_agent_graph.py", line 1874, in run
+    async with self.stream(ctx):
+               ~~~~~~~~~~~^^^^^
+  File "/usr/local/lib/python3.13/contextlib.py", line 221, in __aexit__
+    await anext(self.gen)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_agent_graph.py", line 1895, in stream
+    async for _event in stream:
+        pass
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 508, in wrap_run_event_stream
+    async for event in stream:
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 793, in wrap_run_event_stream
+    async for event in stream:
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 793, in wrap_run_event_stream
+    async for event in stream:
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 793, in wrap_run_event_stream
+    async for event in stream:
+        yield event
+  [Previous line repeated 4 more times]
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_agent_graph.py", line 192, in _with_event_stream_buffer
+    async for event in stream:
+    ...<2 lines>...
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_agent_graph.py", line 2096, in _run_stream
+    async for event in _run_stream():
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_agent_graph.py", line 2061, in _run_stream
+    async for event in self._handle_tool_calls(ctx, tool_calls, response_output=response_output):
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_agent_graph.py", line 2179, in _handle_tool_calls
+    async for event in process_tool_calls(
+    ...<9 lines>...
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_tool_execution.py", line 318, in process_tool_calls
+    async for event in processor.run():
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_tool_execution.py", line 454, in run
+    async for event in self._finalize_deferred():
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_tool_execution.py", line 918, in _finalize_deferred
+    async for event in self._resolve_deferred_calls():
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_tool_execution.py", line 1021, in _resolve_deferred_calls
+    async for event in self._call_tools(
+    ...<6 lines>...
+        yield event
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_tool_execution.py", line 804, in _call_tools
+    if event := await handle_call_or_result(call_tool(index), index):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_tool_execution.py", line 757, in handle_call_or_result
+    (await coro_or_task) if inspect.isawaitable(coro_or_task) else coro_or_task.result()
+     ^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_tool_execution.py", line 671, in _call_tool
+    tool_result = await self.tool_manager.execute_tool_call(validated)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/tool_manager.py", line 733, in execute_tool_call
+    return await self._execute_tool_call_impl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        validated, usage=self.ctx.usage, wrap_validation_errors=wrap_validation_errors
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/tool_manager.py", line 981, in _execute_tool_call_impl
+    tool_result = await self._run_execute_hooks(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        validated, usage=usage, wrap_validation_errors=wrap_validation_errors
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/tool_manager.py", line 472, in _run_execute_hooks
+    tool_result = await cap.on_tool_execute_error(ctx, call=call, tool_def=tool_def, args=args, error=e)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 700, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 695, in on_tool_execute_error
+    return await capability.on_tool_execute_error(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cap_ctx, call=call, tool_def=tool_def, args=args, error=error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1056, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 695, in on_tool_execute_error
+    return await capability.on_tool_execute_error(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cap_ctx, call=call, tool_def=tool_def, args=args, error=error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1056, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 695, in on_tool_execute_error
+    return await capability.on_tool_execute_error(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cap_ctx, call=call, tool_def=tool_def, args=args, error=error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1056, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 695, in on_tool_execute_error
+    return await capability.on_tool_execute_error(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cap_ctx, call=call, tool_def=tool_def, args=args, error=error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1056, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 695, in on_tool_execute_error
+    return await capability.on_tool_execute_error(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cap_ctx, call=call, tool_def=tool_def, args=args, error=error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/adapters/pydantic.py", line 442, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 695, in on_tool_execute_error
+    return await capability.on_tool_execute_error(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cap_ctx, call=call, tool_def=tool_def, args=args, error=error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1056, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 695, in on_tool_execute_error
+    return await capability.on_tool_execute_error(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cap_ctx, call=call, tool_def=tool_def, args=args, error=error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1056, in on_tool_execute_error
+    raise error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/tool_manager.py", line 464, in _run_execute_hooks
+    tool_result = await cap.wrap_tool_execute(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ctx, call=call, tool_def=tool_def, args=args, handler=do_execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 679, in wrap_tool_execute
+    return await chain(args)
+           ^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 923, in wrapped
+    return await cap.wrap_tool_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _ctx_for_cap(cap, ctx), call=call, tool_def=tool_def, args=args, handler=inner
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/instrumentation.py", line 514, in wrap_tool_execute
+    return await self._run_tool_span(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/instrumentation.py", line 451, in _run_tool_span
+    result = await action()
+             ^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 923, in wrapped
+    return await cap.wrap_tool_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _ctx_for_cap(cap, ctx), call=call, tool_def=tool_def, args=args, handler=inner
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1024, in wrap_tool_execute
+    return await handler(args)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 923, in wrapped
+    return await cap.wrap_tool_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _ctx_for_cap(cap, ctx), call=call, tool_def=tool_def, args=args, handler=inner
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1024, in wrap_tool_execute
+    return await handler(args)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 923, in wrapped
+    return await cap.wrap_tool_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _ctx_for_cap(cap, ctx), call=call, tool_def=tool_def, args=args, handler=inner
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1024, in wrap_tool_execute
+    return await handler(args)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 923, in wrapped
+    return await cap.wrap_tool_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _ctx_for_cap(cap, ctx), call=call, tool_def=tool_def, args=args, handler=inner
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/adapters/pydantic.py", line 338, in wrap_tool_execute
+    return await handler(args)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 923, in wrapped
+    return await cap.wrap_tool_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _ctx_for_cap(cap, ctx), call=call, tool_def=tool_def, args=args, handler=inner
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1024, in wrap_tool_execute
+    return await handler(args)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/combined.py", line 923, in wrapped
+    return await cap.wrap_tool_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _ctx_for_cap(cap, ctx), call=call, tool_def=tool_def, args=args, handler=inner
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/capabilities/abstract.py", line 1024, in wrap_tool_execute
+    return await handler(args)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/tool_manager.py", line 449, in do_execute
+    return await self._raw_execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        modified_validated, usage=usage, wrap_validation_errors=wrap_validation_errors
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/tool_manager.py", line 1009, in _raw_execute
+    tool_result = await self.toolset.call_tool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/toolsets/combined.py", line 99, in call_tool
+    return await tool.source_toolset.call_tool(name, tool_args, ctx, tool.source_tool)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/toolsets/_tool_search.py", line 437, in call_tool
+    return await self.wrapped.call_tool(name, tool_args, ctx, tool)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/toolsets/wrapper.py", line 70, in call_tool
+    return await self.wrapped.call_tool(name, tool_args, ctx, tool)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/toolsets/combined.py", line 99, in call_tool
+    return await tool.source_toolset.call_tool(name, tool_args, ctx, tool.source_tool)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/toolsets/approval_required.py", line 32, in call_tool
+    return await super().call_tool(name, tool_args, ctx, tool)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/toolsets/wrapper.py", line 70, in call_tool
+    return await self.wrapped.call_tool(name, tool_args, ctx, tool)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/toolsets/function.py", line 711, in call_tool
+    return await tool.call_func(tool_args, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_function_schema.py", line 89, in call
+    return await await_maybe(await run_in_executor(function, *args, **kwargs))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_utils.py", line 200, in run_in_executor
+    return await run_sync(call_with_sync_agent_guard, abandon_on_cancel=_abandon_on_cancel.get())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 2641, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 1033, in run
+    result = context.run(func, *args)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/pydantic_ai/_utils.py", line 187, in call_with_sync_agent_guard
+    return func(*args, **kwargs)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/adapters/pydantic.py", line 1657, in validated_tool
+    result = tool.fn(**_validated_tool_arguments(tool, kwargs))
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/tool_override.py", line 276, in telemetry_tool
+    result, pending_telemetry = call_context.run(invoke)
+                                ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/tool_override.py", line 266, in invoke
+    result = tool.fn(*args, **kwargs)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/agent_adapter/tool_override.py", line 574, in artifact_tool
+    result = tool.fn(*args, **kwargs)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/api.py", line 1197, in sync_wrapper
+    raise last_error
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/api.py", line 1193, in sync_wrapper
+    return inner(*args, **kwargs)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/integrations/harbor/terminal.py", line 191, in run_command
+    managed = self._start(normalized, cwd=cwd, shell=False)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/integrations/harbor/terminal.py", line 388, in _start
+    resolved_cwd = self._safe_cwd(cwd)
+  File "/installed-agent/kedi/lib/python3.13/site-packages/kedi/integrations/harbor/terminal.py", line 689, in _safe_cwd
+    raise PermissionError(f"working directory escapes task root: {raw}")
+kedi.errors.KediExecutionError: Kedi stack trace:
+  in top-level program
+
+  File "/logs/agent/kedi-harbor-agent-jientha4.kedi", line 18, in template block (3 lines)
+  ❱ 18 >> Complete the following task: <instruction>
+
+Kedi error: PermissionError
+  working directory escapes task root: /tmp
+

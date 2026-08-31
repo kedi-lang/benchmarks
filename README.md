@@ -1,2 +1,9 @@
-# benchmarks
-Benchmark environments and experiments for Kedi Programming Language
+# Kedi Benchmarks
+
+Reproducible benchmark environments and public experiment evidence for the Kedi
+Programming Language.
+
+## Experiments
+
+- [Terminal-Bench 2.1](terminal-bench-2-1/README.md): nine-task Kedi harness
+  dogfood run with Harbor-authoritative results and replayable Autobench records.

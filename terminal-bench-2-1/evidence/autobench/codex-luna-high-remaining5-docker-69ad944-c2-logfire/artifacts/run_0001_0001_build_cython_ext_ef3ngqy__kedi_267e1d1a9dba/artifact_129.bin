@@ -1,0 +1,113 @@
+sed: can't read pyknotid/representations/representation.py; sed: No such file or directory
+sed: can't read 460,560p: No such file or directory
+        length = len(self)
+        array = n.ones((len(self) + 1, len(self) + 1)) * -0
+        
+        for i in range(length + 1):
+            for j in range(length + 1):
+                if i + j > length:
+                    continue
+                new_gc = Representation(self)
+
+                for _ in range(i):
+                    new_gc._remove_crossing(new_gc._gauss_code[0][0, 0])
+                for _ in range(j):
+                    new_gc._remove_crossing(new_gc._gauss_code[0][-1, 0])
+
+                invariant = func(new_gc)
+
+                array[-1*(i + 1), j] = invariant
+
+        import matplotlib.pyplot as plt
+        fig, ax = plt.subplots()
+        ax.imshow(array, interpolation='none', cmap='jet')
+
+        ticks = range(length + 1)
+        ax.set_xticks(ticks)
+        ax.set_yticks(ticks)
+        ax.set_xticklabels([str(t) for t in ticks])
+        ax.set_yticklabels([str(t) for t in ticks])
+
+        ax.plot([0, length+1], [0, length+1], color='black', linewidth=2)
+        ax.set_xlim(-0.5, length+0.5)
+        ax.set_ylim(length+0.5, -0.5)
+
+        
+        fig.show()
+
+        return array, fig, ax
+
+    def _construct_planar_graph(self):
+        pd = self.planar_diagram()
+        g, duplicates, heights, first_edge = pd.as_networkx_extended()
+
+        import planarity
+
+        pg = planarity.PGraph(g)
+        pg.embed_drawplanar()
+        g = planarity.networkx_graph(pg)
+
+
+        node_labels = {}
+        xs = []
+        ys = []
+
+        nodes_by_height = {}
+        node_xs_by_y = {}
+        node_xs_ys = {}
+        node_lefts_rights = {}
+
+        for node, data in g.nodes(data=True):
+            y = data['pos']
+            xb = data['start']
+            xe = data['end']
+            x = int((xe + xb) / 2.)
+
+            node_labels[node] = (x, y)
+            xs.extend([xb, xe])
+            ys.append(y)
+
+            nodes_by_height[data['pos']] = node
+            node_xs_by_y[data['pos']] = x
+            node_xs_ys[node] = (x, y)
+            node_lefts_rights[node] = (xb, xe)
+
+        lines = []
+
+        rightmost_x = n.max(xs)
+        leftmost_x = n.min(xs)
+        x_span = rightmost_x - leftmost_x
+        safe_yshift = 0.5 / x_span
+
+        extra_x_shifts = []
+        
+        for n1, n2, data in g.edges(data=True):
+            x = data['pos']
+            yb = data['start']
+            ye = data['end']
+
+            start_node = nodes_by_height[yb]
+            end_node = nodes_by_height[ye]
+            if start_node >= len(self) and end_node >= len(self):
+                continue
+
+            start_left, start_right = node_lefts_rights[start_node]
+            end_left, end_right = node_lefts_rights[end_node]
+
+            start_frac = n.abs((x - start_left) / (start_right - start_left) - 0.5)
+            start_frac = 0.5 - start_frac
+            if True:  # ye < ys:  # This always evaluated to True - a bug?
+                start_frac *= -1
+            start_shift = start_frac
+
+            end_frac = n.abs((x - end_left) / (end_right - end_left) - 0.5)
+            end_frac = 0.5 - end_frac
+            if False:  # ye > ys:  # This always evaluated to False - a bug?
+                end_frac *= -1
+            end_shift = end_frac
+
+            start_node_x = node_xs_by_y[yb]
+            start_node_y = yb
+            
+            end_node_x = node_xs_by_y[ye]
+            end_node_y = ye

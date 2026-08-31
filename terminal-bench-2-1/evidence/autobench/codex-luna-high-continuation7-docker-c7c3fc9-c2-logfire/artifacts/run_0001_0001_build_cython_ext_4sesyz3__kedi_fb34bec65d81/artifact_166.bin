@@ -1,0 +1,187 @@
+diff --git a/pyknotid/invariants.py b/pyknotid/invariants.py
+index c4ab998..8ed0bbb 100644
+--- a/pyknotid/invariants.py
++++ b/pyknotid/invariants.py
+@@ -134,7 +134,7 @@ def _alexander_numpy(crossings, variable=-1.0, quadrant='lr'):
+     '''
+     import numpy as n
+     num_crossings = int(len(crossings)/2)
+-    dtype = n.complex if isinstance(variable, n.complex) else n.float
++    dtype = complex if isinstance(variable, complex) else float
+     matrix = n.zeros((num_crossings, num_crossings), dtype=dtype)
+     line_num = 0
+     crossing_num_counter = 0
+@@ -174,7 +174,7 @@ def _alexander_numpy(crossings, variable=-1.0, quadrant='lr'):
+         poly_val = n.linalg.det(matrix[:-1:, :-1])
+     elif quadrant == 'll':
+         poly_val = n.linalg.det(matrix[1:, :-1])
+-    if not isinstance(poly_val, n.complex):
++    if not isinstance(poly_val, complex):
+         poly_val = n.abs(poly_val)
+     return poly_val
+ 
+@@ -975,7 +975,7 @@ def _crossing_arrows_and_signs_numpy(gc, crossing_numbers):
+             under_crossing_indices[row[0]] = i
+         signs[row[0]] = row[2]
+ 
+-    arrows = n.zeros((len(crossing_numbers), 3), dtype=n.long)
++    arrows = n.zeros((len(crossing_numbers), 3), dtype=n.int64)
+ 
+     for index, number in enumerate(crossing_numbers):
+         row = arrows[index]
+diff --git a/pyknotid/representations/representation.py b/pyknotid/representations/representation.py
+index 6a40385..c044454 100644
+--- a/pyknotid/representations/representation.py
++++ b/pyknotid/representations/representation.py
+@@ -324,6 +324,22 @@ class Representation(GaussCode):
+         pg.embed_drawplanar()
+         g = planarity.networkx_graph(pg)
+ 
++        # planarity 1.0 renamed the attributes emitted by networkx_graph;
++        # keep the names used by the reconstruction code and older releases.
++        for node, data in g.nodes(data=True):
++            if 'pos' not in data and 'vertex_position' in data:
++                data['pos'] = data['vertex_position']
++            if 'start' not in data and 'vertex_start' in data:
++                data['start'] = data['vertex_start']
++            if 'end' not in data and 'vertex_end' in data:
++                data['end'] = data['vertex_end']
++        for n1, n2, data in g.edges(data=True):
++            if 'pos' not in data and 'edge_position' in data:
++                data['pos'] = data['edge_position']
++            if 'start' not in data and 'edge_start' in data:
++                data['start'] = data['edge_start']
++            if 'end' not in data and 'edge_end' in data:
++                data['end'] = data['edge_end']
+ 
+         node_labels = {}
+         xs = []
+@@ -497,8 +513,8 @@ class Representation(GaussCode):
+ 
+         cg = CrossingGraph()
+         for line in lines:
+-            start_node = nodes_by_height[n.int(n.round(line[0, 1]))]
+-            end_node = nodes_by_height[n.int(n.round(line[-1, 1]))]
++            start_node = nodes_by_height[int(n.round(line[0, 1]))]
++            end_node = nodes_by_height[int(n.round(line[-1, 1]))]
+             cl = CrossingLine(start_node, end_node, line)
+             cg[start_node].append(cl)
+             cg[end_node].append(cl.reversed())
+diff --git a/pyknotid/spacecurves/openknot.py b/pyknotid/spacecurves/openknot.py
+index bfadb6c..66ec48a 100644
+--- a/pyknotid/spacecurves/openknot.py
++++ b/pyknotid/spacecurves/openknot.py
+@@ -302,7 +302,7 @@ class OpenKnot(SpaceCurve):
+         '''
+         polys = self.alexander_polynomials(
+             number_of_samples=number_of_samples, **kwargs)
+-        alexs = n.round(polys[:, 2]).astype(n.int)
++        alexs = n.round(polys[:, 2]).astype(n.int64)
+ 
+         fracs = []
+         length = float(len(alexs))
+@@ -477,7 +477,7 @@ class OpenKnot(SpaceCurve):
+         '''
+         polys = self.virtual_checks(
+             number_of_samples=number_of_samples, **kwargs)
+-        alexs = n.round(polys[:, 2]).astype(n.int)
++        alexs = n.round(polys[:, 2]).astype(n.int64)
+ 
+         fracs = []
+         length = float(len(alexs))
+@@ -680,7 +680,7 @@ class OpenKnot(SpaceCurve):
+         '''
+         self_linkings = self.self_linkings(
+             number_of_samples=number_of_samples, **kwargs)
+-        self_linkings = n.round(self_linkings[:, 2]).astype(n.int)
++        self_linkings = n.round(self_linkings[:, 2]).astype(n.int64)
+ 
+         fracs = []
+         length = float(len(self_linkings))
+@@ -1124,7 +1124,7 @@ class OpenKnot(SpaceCurve):
+ 
+             # Remove closing crossings to calculate self linking
+             xs, ys = n.where(cs[:, :2] > len(k.points) - 1)
+-            keeps = n.ones(len(cs), dtype=n.bool)
++            keeps = n.ones(len(cs), dtype=bool)
+             for x in xs:
+                 keeps[x] = False
+             cs = cs[keeps]
+@@ -1149,7 +1149,7 @@ class OpenKnot(SpaceCurve):
+         polys, self_linkings = self._determinants_and_self_linkings(
+             number_of_samples, **kwargs)
+ 
+-        alexs = n.round(polys[:, 2]).astype(n.int)
++        alexs = n.round(polys[:, 2]).astype(n.int64)
+ 
+         fracs = []
+         length = float(len(alexs))
+@@ -1159,7 +1159,7 @@ class OpenKnot(SpaceCurve):
+         det_fracs = sorted(fracs, key=lambda j: j[1])
+ 
+ 
+-        self_linkings = n.round(self_linkings[:, 2]).astype(n.int)
++        self_linkings = n.round(self_linkings[:, 2]).astype(n.int64)
+ 
+         fracs = []
+         length = float(len(self_linkings))
+@@ -1211,7 +1211,7 @@ class OpenKnot(SpaceCurve):
+ 
+             # Remove closing crossings to calculate self linking
+             xs, ys = n.where(cs[:, :2] > len(k.points) - 1)
+-            keeps = n.ones(len(cs), dtype=n.bool)
++            keeps = n.ones(len(cs), dtype=bool)
+             for x in xs:
+                 keeps[x] = False
+             cs = cs[keeps]
+@@ -1238,8 +1238,8 @@ class OpenKnot(SpaceCurve):
+         ck_fraction = n.average(ck[:, -1])
+         pv_fraction = n.average(pv[:, -1])
+ 
+-        return ck_fraction, pv_fraction, n.average(pv[:, -1].astype(n.bool) |
+-                                                   pk[:, -1].astype(n.bool))
++        return ck_fraction, pv_fraction, n.average(pv[:, -1].astype(bool) |
++                                                   pk[:, -1].astype(bool))
+ 
+     def plot_vassiliev_spectrum(self, angles=100, max_crossings=8):
+         v2 = self.vassiliev_degree_2_average()
+diff --git a/pyknotid/spacecurves/spacecurve.py b/pyknotid/spacecurves/spacecurve.py
+index 449ce04..daf387d 100644
+--- a/pyknotid/spacecurves/spacecurve.py
++++ b/pyknotid/spacecurves/spacecurve.py
+@@ -80,7 +80,7 @@ class SpaceCurve(object):
+         self._points = n.zeros((0, 3))
+         self._crossings = None  # Will store a list of crossings if
+                                 # self.crossings() has been called
+-        self.points = n.array(points).astype(n.float)
++        self.points = n.array(points).astype(n.float64)
+         self.verbose = verbose
+ 
+         self._cached_writhe_and_crossing_numbers = None
+@@ -635,7 +635,7 @@ class SpaceCurve(object):
+ 
+     def second_order_twist(self, z):
+         from pyknotid.spacecurves import complexity as com
+-        z = np.array(z).astype(np.float)
++        z = np.array(z).astype(np.float64)
+         assert len(z) == 3
+         return com.second_order_twist(self.points, z)
+ 
+@@ -987,7 +987,7 @@ class SpaceCurve(object):
+                              n.hstack((self.points[:, 2],
+                                       self.points[:, 2][:1])))
+ 
+-        new_points = n.zeros((len(indices), 3), dtype=n.float)
++        new_points = n.zeros((len(indices), 3), dtype=n.float64)
+         new_points[:, 0] = interp_xs(indices)
+         new_points[:, 1] = interp_ys(indices)
+         new_points[:, 2] = interp_zs(indices)
+@@ -1080,7 +1080,7 @@ class SpaceCurve(object):
+         points = self.points
+         ts = np.roll(points, -1, axis=0) - points
+ 
+-        keep_points = np.ones(len(points), dtype=np.bool)
++        keep_points = np.ones(len(points), dtype=bool)
+ 
+         ts_range = ts[:-2] if not closed else ts
+ 
