@@ -1,0 +1,27 @@
+import asyncio
+from typing import Awaitable, Callable
+
+
+async def run_tasks(
+    tasks: list[Callable[[], Awaitable[None]]], max_concurrent: int
+) -> None:
+    """Run async jobs with at most ``max_concurrent`` jobs active at once."""
+    if max_concurrent <= 0:
+        raise ValueError("max_concurrent must be greater than zero")
+
+    semaphore = asyncio.Semaphore(max_concurrent)
+
+    async def run_one(task: Callable[[], Awaitable[None]]) -> None:
+        async with semaphore:
+            await task()
+
+    workers = [asyncio.create_task(run_one(task)) for task in tasks]
+    try:
+        await asyncio.gather(*workers)
+    except BaseException:
+        # Ensure that an exception or cancellation does not leave jobs running
+        # in the background, and wait for their finally blocks to complete.
+        for worker in workers:
+            worker.cancel()
+        await asyncio.gather(*workers, return_exceptions=True)
+        raise

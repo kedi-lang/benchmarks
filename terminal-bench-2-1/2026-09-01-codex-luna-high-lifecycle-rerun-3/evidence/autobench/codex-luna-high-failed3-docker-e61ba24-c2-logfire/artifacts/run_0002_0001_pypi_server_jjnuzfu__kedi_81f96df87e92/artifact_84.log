@@ -1,0 +1,9 @@
+Running command: apt-get update && apt-get install -y bash git python3 python3-pip python3-venv ripgrep build-essential
+Command outputs captured
+Running command: rm -rf /installed-agent/kedi && if python3 -c 'import sys; raise SystemExit(sys.version_info < (3, 10))'; then python3 -m venv /installed-agent/kedi; else rm -rf /installed-agent/kedi-bootstrap && python3 -m venv /installed-agent/kedi-bootstrap && /installed-agent/kedi-bootstrap/bin/python -m pip install --disable-pip-version-check uv==0.11.21 && /installed-agent/kedi-bootstrap/bin/uv venv --python 3.11 --managed-python --seed /installed-agent/kedi; fi && /installed-agent/kedi/bin/python -m pip install --disable-pip-version-check /installed-agent/kedi-0.4.0-py3-none-any.whl 'pydantic-ai-slim[anthropic,google,openai,openrouter]==2.36.0' 'tree-sitter-kedi @ git+https://github.com/kedi-lang/tree-sitter-kedi.git@019def7175e8a3f3489af7228d5794661420bc71' codex-auth-helper==1.6.1
+Command outputs captured
+Running command: chmod 600 /installed-agent/kedi-codex-auth.json
+Command outputs captured
+Running command: set -o pipefail; trap 'rm -f -- /installed-agent/kedi-codex-auth.json' EXIT; /installed-agent/kedi/bin/python -m kedi.integrations.harbor.runner --instruction-file /installed-agent/kedi-instruction.txt --model codex/gpt-5.6-luna --adapter pydantic --workspace . --result-file /logs/agent/kedi-result.json --trial-id 9bc64556-052f-4b57-bdaa-28793b190829 --compaction-mode disabled --history-enabled --artifacts-enabled --artifact-threshold-bytes 16384 --artifact-quota-bytes 256000000 --command-timeout-seconds 120.0 --terminal-preview-bytes 32768 --terminal-output-limit-bytes 512000000 --retained-process-timeout-seconds 3600.0 --effort high --manifest-digest 81f96df87e92fc9a829314191e7a3fac5ef0e0e746e506ae3fb09b5995deca82 2>&1 | tee /logs/agent/kedi.txt
+Command outputs captured
+Collecting main service artifacts
