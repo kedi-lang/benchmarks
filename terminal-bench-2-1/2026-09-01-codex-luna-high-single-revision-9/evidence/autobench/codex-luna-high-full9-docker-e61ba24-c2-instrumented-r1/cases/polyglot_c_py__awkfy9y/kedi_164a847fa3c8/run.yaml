@@ -1,0 +1,1791 @@
+# yaml-language-server: $schema=/tmp/kedi-autobench-public-schema/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8
+  experiment: exp_kedi_terminal_bench_2_1_20260901T142946259196Z
+  benchmark: kedi-terminal-bench-2.1
+  case: polyglot-c-py__awkfy9y
+  variant: kedi-164a847fa3c8
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: polyglot-c-py__awkfy9y
+  input:
+    job_dir: /private/tmp/kedi-tb21-publication.dbTGSY/harbor/codex-luna-high-full9-docker-e61ba24-c2-instrumented-r1
+    trial_dir: /private/tmp/kedi-tb21-publication.dbTGSY/harbor/codex-luna-high-full9-docker-e61ba24-c2-instrumented-r1/polyglot-c-py__awkfy9y
+    trial_name: polyglot-c-py__awkfy9y
+    task_name: terminal-bench/polyglot-c-py
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-164a847fa3c8
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+      false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 20000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+        false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes":
+        32768}'
+      source: variant
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 20000000
+      source: variant
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 6
+      id: obs_6
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.reward.mean:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.mean
+      kind: metric
+      value: 1.0
+      semantic: quality.score
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.cost_usd:
+      sequence: 22
+      id: obs_22
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.01400128
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.evidence_complete:
+      sequence: 70
+      id: obs_70
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 309.170867
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.environment_setup.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 1.675406
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.agent_setup.duration:
+      sequence: 12
+      id: obs_12
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 151.328264
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.agent_execution.duration:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.agent_execution.duration
+      kind: metric
+      value: 113.775635
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.verifier.duration:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.verifier.duration
+      kind: metric
+      value: 29.39488
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.input_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.input_tokens
+      kind: metric
+      value: 54548
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.cache_read_tokens:
+      sequence: 16
+      id: obs_16
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 15104
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.cache_write_tokens:
+      sequence: 17
+      id: obs_17
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.output_tokens:
+      sequence: 18
+      id: obs_18
+      name: kedi.output_tokens
+      kind: metric
+      value: 4842
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.total_tokens:
+      sequence: 19
+      id: obs_19
+      name: kedi.total_tokens
+      kind: metric
+      value: 59390
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.requests:
+      sequence: 20
+      id: obs_20
+      name: kedi.requests
+      kind: metric
+      value: 10
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.tool_calls:
+      sequence: 21
+      id: obs_21
+      name: kedi.tool_calls
+      kind: metric
+      value: 14
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    kedi.cache_read_ratio:
+      sequence: 23
+      id: obs_23
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.2768937449585686
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+  events:
+    terminal_bench.file.job.config.json:
+      sequence: 24
+      id: obs_24
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.job.log:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.lock.json:
+      sequence: 27
+      id: obs_27
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.result.json:
+      sequence: 28
+      id: obs_28
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.kedi-result.json:
+      sequence: 29
+      id: obs_29
+      name: terminal_bench.file.trial.agent.kedi-result.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi-result.json
+        sha256.source: 519de29fb16115565b71510b14eacef13cbf5f6ce87ebeef54c72a01ccef81fb
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.kedi.txt:
+      sequence: 30
+      id: obs_30
+      name: terminal_bench.file.trial.agent.kedi.txt
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi.txt
+        sha256.source: e0af402f53cd6650371b37ac967f37cbecfb05b3b234eb2790013e9bec874662
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal-events.jsonl:
+      sequence: 31
+      id: obs_31
+      name: terminal_bench.file.trial.agent.terminal-events.jsonl
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal-events.jsonl
+        sha256.source: adbec0dd8b648a960d57c01f9c95d831b2d00640ff411b289e029792af2361e4
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+      sequence: 32
+      id: obs_32
+      name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/combined.bin
+        sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+      sequence: 33
+      id: obs_33
+      name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+      sequence: 34
+      id: obs_34
+      name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stdout.bin
+        sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.combined.bin:
+      sequence: 35
+      id: obs_35
+      name: terminal_bench.file.trial.agent.terminal.process_10.combined.bin
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/combined.bin
+        sha256.source: 0b2bc73c696ea79362a95d4753a3a3d024896d973be00f0ad8a8d5ca013b0aa0
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.stderr.bin:
+      sequence: 36
+      id: obs_36
+      name: terminal_bench.file.trial.agent.terminal.process_10.stderr.bin
+      kind: artifact
+      value: artifact_13
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/stderr.bin
+        sha256.source: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.stdout.bin:
+      sequence: 37
+      id: obs_37
+      name: terminal_bench.file.trial.agent.terminal.process_10.stdout.bin
+      kind: artifact
+      value: artifact_14
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/stdout.bin
+        sha256.source: 3c8de6c1dd3bb154d0b1fa3d48f31a1921be3dffb31e2c656153840c7df92c4a
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+      sequence: 38
+      id: obs_38
+      name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+      kind: artifact
+      value: artifact_15
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/combined.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+      sequence: 39
+      id: obs_39
+      name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+      kind: artifact
+      value: artifact_16
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+      sequence: 40
+      id: obs_40
+      name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+      kind: artifact
+      value: artifact_17
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+      sequence: 41
+      id: obs_41
+      name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+      kind: artifact
+      value: artifact_18
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/combined.bin
+        sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+      sequence: 42
+      id: obs_42
+      name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+      kind: artifact
+      value: artifact_19
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+      sequence: 43
+      id: obs_43
+      name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+      kind: artifact
+      value: artifact_20
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stdout.bin
+        sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+      sequence: 44
+      id: obs_44
+      name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+      kind: artifact
+      value: artifact_21
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/combined.bin
+        sha256.source: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+      sequence: 45
+      id: obs_45
+      name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+      kind: artifact
+      value: artifact_22
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stderr.bin
+        sha256.source: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+      sequence: 46
+      id: obs_46
+      name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+      kind: artifact
+      value: artifact_23
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+      sequence: 47
+      id: obs_47
+      name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+      kind: artifact
+      value: artifact_24
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/combined.bin
+        sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+      sequence: 48
+      id: obs_48
+      name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+      kind: artifact
+      value: artifact_25
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+      sequence: 49
+      id: obs_49
+      name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+      kind: artifact
+      value: artifact_26
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stdout.bin
+        sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+      sequence: 50
+      id: obs_50
+      name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+      kind: artifact
+      value: artifact_27
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/combined.bin
+        sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+      sequence: 51
+      id: obs_51
+      name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+      kind: artifact
+      value: artifact_28
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+      sequence: 52
+      id: obs_52
+      name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+      kind: artifact
+      value: artifact_29
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stdout.bin
+        sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.combined.bin:
+      sequence: 53
+      id: obs_53
+      name: terminal_bench.file.trial.agent.terminal.process_7.combined.bin
+      kind: artifact
+      value: artifact_30
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/combined.bin
+        sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.stderr.bin:
+      sequence: 54
+      id: obs_54
+      name: terminal_bench.file.trial.agent.terminal.process_7.stderr.bin
+      kind: artifact
+      value: artifact_31
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.stdout.bin:
+      sequence: 55
+      id: obs_55
+      name: terminal_bench.file.trial.agent.terminal.process_7.stdout.bin
+      kind: artifact
+      value: artifact_32
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/stdout.bin
+        sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.combined.bin:
+      sequence: 56
+      id: obs_56
+      name: terminal_bench.file.trial.agent.terminal.process_8.combined.bin
+      kind: artifact
+      value: artifact_33
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/combined.bin
+        sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.stderr.bin:
+      sequence: 57
+      id: obs_57
+      name: terminal_bench.file.trial.agent.terminal.process_8.stderr.bin
+      kind: artifact
+      value: artifact_34
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.stdout.bin:
+      sequence: 58
+      id: obs_58
+      name: terminal_bench.file.trial.agent.terminal.process_8.stdout.bin
+      kind: artifact
+      value: artifact_35
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/stdout.bin
+        sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.combined.bin:
+      sequence: 59
+      id: obs_59
+      name: terminal_bench.file.trial.agent.terminal.process_9.combined.bin
+      kind: artifact
+      value: artifact_36
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/combined.bin
+        sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.stderr.bin:
+      sequence: 60
+      id: obs_60
+      name: terminal_bench.file.trial.agent.terminal.process_9.stderr.bin
+      kind: artifact
+      value: artifact_37
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.stdout.bin:
+      sequence: 61
+      id: obs_61
+      name: terminal_bench.file.trial.agent.terminal.process_9.stdout.bin
+      kind: artifact
+      value: artifact_38
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/stdout.bin
+        sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 62
+      id: obs_62
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_39
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.config.json:
+      sequence: 63
+      id: obs_63
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_40
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: 2e1f71711a1367ae85654443045465216ef7fed76ed07b824fd8c23683a78c25
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.lock.json:
+      sequence: 64
+      id: obs_64
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_41
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: b5643dc998fda5f76944934d33261195abae548e2b551a6da8c214d2b2cceb6f
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.result.json:
+      sequence: 65
+      id: obs_65
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_42
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: f5fbdb93733e7ea57d3a7ecf8da31c27ffa3242a975f61099ff7e626ca1c70ff
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.trial.log:
+      sequence: 66
+      id: obs_66
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_43
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: 7d962eb75ad096f2555579769e6a0078e7483ed18f9775b8f9c26d907b1497de
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.ctrf.json:
+      sequence: 67
+      id: obs_67
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      kind: artifact
+      value: artifact_44
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/ctrf.json
+        sha256.source: 1a6cea2066617af9f5ef230c6ba537a136f03fc6b212152cc3cd60d74a5148c2
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.reward.txt:
+      sequence: 68
+      id: obs_68
+      name: terminal_bench.file.trial.verifier.reward.txt
+      kind: artifact
+      value: artifact_45
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/reward.txt
+        sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.test-stdout.txt:
+      sequence: 69
+      id: obs_69
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      kind: artifact
+      value: artifact_46
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/test-stdout.txt
+        sha256.source: 998c426374b5909c552767c81e27eb545c5e729b0f68c7a2707f9229e7d0c058
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+    terminal_bench.evidence_index:
+      sequence: 71
+      id: obs_71
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_47
+      span: span_1
+      source: task_observation
+      case: polyglot-c-py__awkfy9y
+      variant: kedi-164a847fa3c8
+trace:
+  id: 4fc409907209513858b6903681005f4d
+  partial: false
+  spans: 2
+  signals: 123
+  artifact:
+    id: abp_trace
+    name: ABP trace
+    media: application/vnd.autobench.abp-trace+yaml
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/trace.yaml
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-09-01T14:29:49.860851+00:00'
+    ended_at: '2026-09-01T14:29:50.036614+00:00'
+    duration: 0.175765333
+    input:
+      task_name: terminal-bench/polyglot-c-py
+      trial_name: polyglot-c-py__awkfy9y
+    output:
+      task_name: terminal-bench/polyglot-c-py
+      trial_name: polyglot-c-py__awkfy9y
+      rewards:
+        reward: 1.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 15104
+        cache_write_tokens: 0
+        cost_usd: 0.01400128
+        input_tokens: 54548
+        output_tokens: 4842
+        requests: 10
+        tool_calls: 14
+        total_tokens: 59390
+        uncached_input_tokens: 39444
+      evidence_file_count: 46
+      evidence_bytes: 82535
+      skipped_file_count: 0
+    observations:
+      - obs_6
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+      - obs_27
+      - obs_28
+      - obs_29
+      - obs_30
+      - obs_31
+      - obs_32
+      - obs_33
+      - obs_34
+      - obs_35
+      - obs_36
+      - obs_37
+      - obs_38
+      - obs_39
+      - obs_40
+      - obs_41
+      - obs_42
+      - obs_43
+      - obs_44
+      - obs_45
+      - obs_46
+      - obs_47
+      - obs_48
+      - obs_49
+      - obs_50
+      - obs_51
+      - obs_52
+      - obs_53
+      - obs_54
+      - obs_55
+      - obs_56
+      - obs_57
+      - obs_58
+      - obs_59
+      - obs_60
+      - obs_61
+      - obs_62
+      - obs_63
+      - obs_64
+      - obs_65
+      - obs_66
+      - obs_67
+      - obs_68
+      - obs_69
+      - obs_70
+      - obs_71
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+      - artifact_13
+      - artifact_14
+      - artifact_15
+      - artifact_16
+      - artifact_17
+      - artifact_18
+      - artifact_19
+      - artifact_20
+      - artifact_21
+      - artifact_22
+      - artifact_23
+      - artifact_24
+      - artifact_25
+      - artifact_26
+      - artifact_27
+      - artifact_28
+      - artifact_29
+      - artifact_30
+      - artifact_31
+      - artifact_32
+      - artifact_33
+      - artifact_34
+      - artifact_35
+      - artifact_36
+      - artifact_37
+      - artifact_38
+      - artifact_39
+      - artifact_40
+      - artifact_41
+      - artifact_42
+      - artifact_43
+      - artifact_44
+      - artifact_45
+      - artifact_46
+      - artifact_47
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+    source: file
+    state: complete
+    sha256: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+    byte_count: 1926
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+    source: file
+    state: complete
+    sha256: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+    byte_count: 17289
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+    source: file
+    state: complete
+    sha256: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+    byte_count: 2140
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+    source: file
+    state: complete
+    sha256: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+    byte_count: 18828
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+    source: file
+    state: complete
+    sha256: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+    byte_count: 1334
+    filename: result.json
+  terminal_bench.file.trial.agent.kedi-result.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.agent.kedi-result.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi-result.json
+      sha256.source: 519de29fb16115565b71510b14eacef13cbf5f6ce87ebeef54c72a01ccef81fb
+    source: file
+    state: complete
+    sha256: 519de29fb16115565b71510b14eacef13cbf5f6ce87ebeef54c72a01ccef81fb
+    byte_count: 12661
+    filename: kedi-result.json
+  terminal_bench.file.trial.agent.kedi.txt:
+    id: artifact_7
+    name: terminal_bench.file.trial.agent.kedi.txt
+    media: text/plain
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_7.txt
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi.txt
+      sha256.source: e0af402f53cd6650371b37ac967f37cbecfb05b3b234eb2790013e9bec874662
+    source: file
+    state: complete
+    sha256: e0af402f53cd6650371b37ac967f37cbecfb05b3b234eb2790013e9bec874662
+    byte_count: 1476
+    filename: kedi.txt
+  terminal_bench.file.trial.agent.terminal-events.jsonl:
+    id: artifact_8
+    name: terminal_bench.file.trial.agent.terminal-events.jsonl
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_8.jsonl
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal-events.jsonl
+      sha256.source: adbec0dd8b648a960d57c01f9c95d831b2d00640ff411b289e029792af2361e4
+    source: file
+    state: complete
+    sha256: adbec0dd8b648a960d57c01f9c95d831b2d00640ff411b289e029792af2361e4
+    byte_count: 11526
+    filename: terminal-events.jsonl
+  terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+    id: artifact_9
+    name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_9.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/combined.bin
+      sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    source: file
+    state: complete
+    sha256: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    byte_count: 5
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+    id: artifact_10
+    name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_10.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+    id: artifact_11
+    name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_11.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stdout.bin
+      sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    source: file
+    state: complete
+    sha256: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    byte_count: 5
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_10.combined.bin:
+    id: artifact_12
+    name: terminal_bench.file.trial.agent.terminal.process_10.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_12.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/combined.bin
+      sha256.source: 0b2bc73c696ea79362a95d4753a3a3d024896d973be00f0ad8a8d5ca013b0aa0
+    source: file
+    state: complete
+    sha256: 0b2bc73c696ea79362a95d4753a3a3d024896d973be00f0ad8a8d5ca013b0aa0
+    byte_count: 312
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_10.stderr.bin:
+    id: artifact_13
+    name: terminal_bench.file.trial.agent.terminal.process_10.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_13.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/stderr.bin
+      sha256.source: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+    source: file
+    state: complete
+    sha256: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+    byte_count: 189
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_10.stdout.bin:
+    id: artifact_14
+    name: terminal_bench.file.trial.agent.terminal.process_10.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_14.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/stdout.bin
+      sha256.source: 3c8de6c1dd3bb154d0b1fa3d48f31a1921be3dffb31e2c656153840c7df92c4a
+    source: file
+    state: complete
+    sha256: 3c8de6c1dd3bb154d0b1fa3d48f31a1921be3dffb31e2c656153840c7df92c4a
+    byte_count: 123
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+    id: artifact_15
+    name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_15.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/combined.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+    id: artifact_16
+    name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_16.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+    id: artifact_17
+    name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_17.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+    id: artifact_18
+    name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_18.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/combined.bin
+      sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    source: file
+    state: complete
+    sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    byte_count: 2
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+    id: artifact_19
+    name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_19.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+    id: artifact_20
+    name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_20.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stdout.bin
+      sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    source: file
+    state: complete
+    sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    byte_count: 2
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+    id: artifact_21
+    name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_21.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/combined.bin
+      sha256.source: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+    source: file
+    state: complete
+    sha256: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+    byte_count: 189
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+    id: artifact_22
+    name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_22.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stderr.bin
+      sha256.source: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+    source: file
+    state: complete
+    sha256: c0fbd402f7f2937eee45eeaefda8be2790a6b54b243e024c941fd9a71b741627
+    byte_count: 189
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+    id: artifact_23
+    name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_23.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+    id: artifact_24
+    name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_24.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/combined.bin
+      sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    source: file
+    state: complete
+    sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    byte_count: 2
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+    id: artifact_25
+    name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_25.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+    id: artifact_26
+    name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_26.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stdout.bin
+      sha256.source: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    source: file
+    state: complete
+    sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    byte_count: 2
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+    id: artifact_27
+    name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_27.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/combined.bin
+      sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    source: file
+    state: complete
+    sha256: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    byte_count: 3
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+    id: artifact_28
+    name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_28.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+    id: artifact_29
+    name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_29.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stdout.bin
+      sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    source: file
+    state: complete
+    sha256: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    byte_count: 3
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_7.combined.bin:
+    id: artifact_30
+    name: terminal_bench.file.trial.agent.terminal.process_7.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_30.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/combined.bin
+      sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    source: file
+    state: complete
+    sha256: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    byte_count: 22
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_7.stderr.bin:
+    id: artifact_31
+    name: terminal_bench.file.trial.agent.terminal.process_7.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_31.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_7.stdout.bin:
+    id: artifact_32
+    name: terminal_bench.file.trial.agent.terminal.process_7.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_32.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/stdout.bin
+      sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    source: file
+    state: complete
+    sha256: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    byte_count: 22
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_8.combined.bin:
+    id: artifact_33
+    name: terminal_bench.file.trial.agent.terminal.process_8.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_33.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/combined.bin
+      sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    source: file
+    state: complete
+    sha256: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    byte_count: 3
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_8.stderr.bin:
+    id: artifact_34
+    name: terminal_bench.file.trial.agent.terminal.process_8.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_34.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_8.stdout.bin:
+    id: artifact_35
+    name: terminal_bench.file.trial.agent.terminal.process_8.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_35.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/stdout.bin
+      sha256.source: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    source: file
+    state: complete
+    sha256: 4c82a221b575ce7fe118b2e8cdf0764bf4ef570a3017e80b6d3438af9095f376
+    byte_count: 3
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_9.combined.bin:
+    id: artifact_36
+    name: terminal_bench.file.trial.agent.terminal.process_9.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_36.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/combined.bin
+      sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    source: file
+    state: complete
+    sha256: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    byte_count: 22
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_9.stderr.bin:
+    id: artifact_37
+    name: terminal_bench.file.trial.agent.terminal.process_9.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_37.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_9.stdout.bin:
+    id: artifact_38
+    name: terminal_bench.file.trial.agent.terminal.process_9.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_38.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/stdout.bin
+      sha256.source: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    source: file
+    state: complete
+    sha256: e6918f3499d94558fbf906814e4bcb3ea1368494fae732edeb54745ac17e40b4
+    byte_count: 22
+    filename: stdout.bin
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_39
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_39.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    source: file
+    state: complete
+    sha256: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    byte_count: 160
+    filename: manifest.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_40
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_40.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: 2e1f71711a1367ae85654443045465216ef7fed76ed07b824fd8c23683a78c25
+    source: file
+    state: complete
+    sha256: 2e1f71711a1367ae85654443045465216ef7fed76ed07b824fd8c23683a78c25
+    byte_count: 1429
+    filename: config.json
+  terminal_bench.file.trial.lock.json:
+    id: artifact_41
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_41.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: b5643dc998fda5f76944934d33261195abae548e2b551a6da8c214d2b2cceb6f
+    source: file
+    state: complete
+    sha256: b5643dc998fda5f76944934d33261195abae548e2b551a6da8c214d2b2cceb6f
+    byte_count: 1788
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_42
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_42.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: f5fbdb93733e7ea57d3a7ecf8da31c27ffa3242a975f61099ff7e626ca1c70ff
+    source: file
+    state: complete
+    sha256: f5fbdb93733e7ea57d3a7ecf8da31c27ffa3242a975f61099ff7e626ca1c70ff
+    byte_count: 4829
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_43
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_43.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: 7d962eb75ad096f2555579769e6a0078e7483ed18f9775b8f9c26d907b1497de
+    source: file
+    state: complete
+    sha256: 7d962eb75ad096f2555579769e6a0078e7483ed18f9775b8f9c26d907b1497de
+    byte_count: 1921
+    filename: trial.log
+  terminal_bench.file.trial.verifier.ctrf.json:
+    id: artifact_44
+    name: terminal_bench.file.trial.verifier.ctrf.json
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_44.json
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/ctrf.json
+      sha256.source: 1a6cea2066617af9f5ef230c6ba537a136f03fc6b212152cc3cd60d74a5148c2
+    source: file
+    state: complete
+    sha256: 1a6cea2066617af9f5ef230c6ba537a136f03fc6b212152cc3cd60d74a5148c2
+    byte_count: 596
+    filename: ctrf.json
+  terminal_bench.file.trial.verifier.reward.txt:
+    id: artifact_45
+    name: terminal_bench.file.trial.verifier.reward.txt
+    media: text/plain
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_45.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/reward.txt
+      sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    source: file
+    state: complete
+    sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    byte_count: 2
+    filename: reward.txt
+  terminal_bench.file.trial.verifier.test-stdout.txt:
+    id: artifact_46
+    name: terminal_bench.file.trial.verifier.test-stdout.txt
+    media: text/plain
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_46.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/test-stdout.txt
+      sha256.source: 998c426374b5909c552767c81e27eb545c5e729b0f68c7a2707f9229e7d0c058
+    source: file
+    state: complete
+    sha256: 998c426374b5909c552767c81e27eb545c5e729b0f68c7a2707f9229e7d0c058
+    byte_count: 3510
+    filename: test-stdout.txt
+  terminal_bench.evidence_index:
+    id: artifact_47
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0006_0001_polyglot_c_py_awkfy9y__kedi_164a847fa3c8/artifact_47.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 19acbabe90f367532a3e8a43859cda36cf7c85df911a757eaebbaede3125f7e1
+    byte_count: 8528
+output:
+  task_name: terminal-bench/polyglot-c-py
+  trial_name: polyglot-c-py__awkfy9y
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 15104
+    cache_write_tokens: 0
+    cost_usd: 0.01400128
+    input_tokens: 54548
+    output_tokens: 4842
+    requests: 10
+    tool_calls: 14
+    total_tokens: 59390
+    uncached_input_tokens: 39444
+  evidence_file_count: 46
+  evidence_bytes: 82535
+  skipped_file_count: 0

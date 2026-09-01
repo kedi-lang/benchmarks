@@ -1,0 +1,92 @@
+125:     else:
+126:         return _alexander_sympy(crossings, variable, quadrant)
+127: 
+128: 
+129: def _alexander_numpy(crossings, variable=-1.0, quadrant='lr'):
+130:     '''
+131:     Numpy implementation of the Alexander polynomial (evaluated
+132:     at a float), assuming the input has been sanitised by
+133:     :func:`alexander`.
+134:     '''
+135:     import numpy as n
+136:     num_crossings = int(len(crossings)/2)
+137:     dtype = n.complex128 if isinstance(variable, n.complex128) else n.float64
+138:     matrix = n.zeros((num_crossings, num_crossings), dtype=dtype)
+139:     line_num = 0
+140:     crossing_num_counter = 0
+141:     crossing_dict = {}
+142:     crossing_exists = False
+143: 
+144:     over_clock = 1. - 1. / variable
+145:     under_clock_after = 1. / variable
+146:     over_aclock = 1 - variable
+147:     under_aclock_after = variable
+148: 
+149:     for i in range(len(crossings)):
+150:         identifier, over, clockwise = crossings[i]
+151:         if identifier in crossing_dict:
+152:             crossing_num = crossing_dict.pop(identifier)
+153:             crossing_exists = True
+154:         if not crossing_exists:
+155:             crossing_num = crossing_num_counter
+156:             crossing_num_counter += 1
+157:             crossing_dict[identifier] = crossing_num
+158:         crossing_exists = False
+159: 
+160:         if over > 0.99999:
+161:             mat_elt = over_clock if clockwise > 0.999 else over_aclock
+162:             matrix[crossing_num, line_num % num_crossings] = mat_elt
+163:         else:
+164:             new_mat_elt = (under_clock_after if clockwise > 0.999 else
+165:                            under_aclock_after)
+166:             matrix[crossing_num, line_num % num_crossings] = -1
+167:             line_num += 1
+168:             matrix[crossing_num, line_num % num_crossings] = new_mat_elt
+169:     if quadrant == 'lr':
+170:         poly_val = n.linalg.det(matrix[1:, 1:])
+171:     elif quadrant == 'ur':
+172:         poly_val = n.linalg.det(matrix[:-1, 1:])
+173:     elif quadrant == 'ul':
+174:         poly_val = n.linalg.det(matrix[:-1:, :-1])
+175:     elif quadrant == 'll':
+176:         poly_val = n.linalg.det(matrix[1:, :-1])
+177:     if not isinstance(poly_val, n.complex128):
+178:         poly_val = n.abs(poly_val)
+179:     return poly_val
+180: 
+181: 
+182: def _alexander_sympy(crossings, variable=None, quadrant='lr'):
+183:     '''
+184:     Sympy implementation of the Alexander polynomial, evaluated
+185:     with the variable replaced by some sympy expression.
+960:                       under_crossing_indices[index])
+961:               for index in crossing_numbers}
+962: 
+963:     return arrows, signs
+964: 
+965: def _crossing_arrows_and_signs_numpy(gc, crossing_numbers):
+966:     ## Arrow diagram for v_2 is
+967:     ## appear -> leave -> leave -> appear (with crossed arrows)
+968:     over_crossing_indices = {}
+969:     under_crossing_indices = {}
+970:     signs = {}
+971:     for i, row in enumerate(gc):
+972:         if row[1] == 1:
+973:             over_crossing_indices[row[0]] = i
+974:         else:
+975:             under_crossing_indices[row[0]] = i
+976:         signs[row[0]] = row[2]
+977: 
+978:     arrows = n.zeros((len(crossing_numbers), 3), dtype=n.int64)
+979: 
+980:     for index, number in enumerate(crossing_numbers):
+981:         row = arrows[index]
+982:         row[0] = over_crossing_indices[number]
+983:         row[1] = under_crossing_indices[number]
+984:         row[2] = signs[number]
+985: 
+986:     return arrows
+987: 
+988: def second_order_writhe(representation):
+989:     '''Returns the second order writhe (i1,i3,i2,i4) of the
+990:     representation, as defined in Lin and Wang.

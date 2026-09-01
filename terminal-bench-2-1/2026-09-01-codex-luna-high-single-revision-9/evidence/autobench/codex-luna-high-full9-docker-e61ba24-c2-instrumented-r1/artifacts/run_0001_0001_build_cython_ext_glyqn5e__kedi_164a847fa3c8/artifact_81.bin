@@ -1,0 +1,108 @@
+diff --git a/pyknotid/make/torus.py b/pyknotid/make/torus.py
+index 0780cd9..a8f6b7b 100644
+--- a/pyknotid/make/torus.py
++++ b/pyknotid/make/torus.py
+@@ -11,7 +11,7 @@ API documentation
+ from __future__ import division
+ 
+ import numpy as np
+-from fractions import gcd
++from math import gcd
+ 
+ from pyknotid.spacecurves.knot import Knot
+ from pyknotid.spacecurves.link import Link
+diff --git a/pyknotid/spacecurves/ccomplexity.pyx b/pyknotid/spacecurves/ccomplexity.pyx
+index 503ec42..b14479f 100644
+--- a/pyknotid/spacecurves/ccomplexity.pyx
++++ b/pyknotid/spacecurves/ccomplexity.pyx
+@@ -13,7 +13,7 @@ cpdef cython_higher_order_writhe(double [:, :] points,
+                         long [:] order):
+ 
+     cdef long i1, i2, i3, i4
+-    cdef long [:] indices = np.zeros(4, dtype=np.int)
++    cdef long [:] indices = np.zeros(4, dtype=np.int64)
+ 
+     cdef double writhe = 0.0
+ 
+@@ -41,7 +41,7 @@ cpdef cython_second_order_writhes(double [:, :] points,
+                                   double [:, :] contributions):
+ 
+     cdef long i1, i2, i3, i4
+-    cdef long [:] indices = np.zeros(4, dtype=np.int)
++    cdef long [:] indices = np.zeros(4, dtype=np.int64)
+ 
+     cdef double writhe_1 = 0.0
+     cdef double writhe_2 = 0.0
+@@ -72,7 +72,7 @@ cpdef cython_second_order_writhes_no_basepoint(double [:, :] points,
+                                                double [:, :] contributions):
+ 
+     cdef long i1, i2, i3, i4
+-    cdef long [:] indices = np.zeros(4, dtype=np.int)
++    cdef long [:] indices = np.zeros(4, dtype=np.int64)
+ 
+     cdef double writhe_1 = 0.0
+     cdef double writhe_2 = 0.0
+diff --git a/pyknotid/spacecurves/periodiccell.py b/pyknotid/spacecurves/periodiccell.py
+index 4aff56a..b7cf4f4 100644
+--- a/pyknotid/spacecurves/periodiccell.py
++++ b/pyknotid/spacecurves/periodiccell.py
+@@ -391,8 +391,8 @@ class BoundingBox(object):
+             shape = float(shape[0])
+ 
+         # should these have +1 and -1?
+-        steps_mins = np.floor((b2.mins - b1.maxs) / shape).astype(np.int) + 1
+-        steps_maxs = np.floor((b2.maxs - b1.mins) / shape).astype(np.int)
++        steps_mins = np.floor((b2.mins - b1.maxs) / shape).astype(np.int64) + 1
++        steps_maxs = np.floor((b2.maxs - b1.mins) / shape).astype(np.int64)
+ 
+         return steps_mins, steps_maxs
+ 
+@@ -457,7 +457,7 @@ def get_linking_between_loop_and_line(loop, line, shape,
+     line = OpenKnot.from_periodic_line(line, shape)
+ 
+     line_closure = (line.points[-1] - line.points[0]) / shape[0]
+-    line_closure = np.round(line_closure).astype(np.int)
++    line_closure = np.round(line_closure).astype(np.int64)
+ 
+     print('closure is', line_closure)
+ 
+diff --git a/pyknotid/spacecurves/spacecurve.py b/pyknotid/spacecurves/spacecurve.py
+index 449ce04..1318559 100644
+--- a/pyknotid/spacecurves/spacecurve.py
++++ b/pyknotid/spacecurves/spacecurve.py
+@@ -80,7 +80,7 @@ class SpaceCurve(object):
+         self._points = n.zeros((0, 3))
+         self._crossings = None  # Will store a list of crossings if
+                                 # self.crossings() has been called
+-        self.points = n.array(points).astype(n.float)
++        self.points = n.array(points).astype(n.float64)
+         self.verbose = verbose
+ 
+         self._cached_writhe_and_crossing_numbers = None
+@@ -635,7 +635,7 @@ class SpaceCurve(object):
+ 
+     def second_order_twist(self, z):
+         from pyknotid.spacecurves import complexity as com
+-        z = np.array(z).astype(np.float)
++        z = np.array(z).astype(np.float64)
+         assert len(z) == 3
+         return com.second_order_twist(self.points, z)
+ 
+@@ -987,7 +987,7 @@ class SpaceCurve(object):
+                              n.hstack((self.points[:, 2],
+                                       self.points[:, 2][:1])))
+ 
+-        new_points = n.zeros((len(indices), 3), dtype=n.float)
++        new_points = n.zeros((len(indices), 3), dtype=n.float64)
+         new_points[:, 0] = interp_xs(indices)
+         new_points[:, 1] = interp_ys(indices)
+         new_points[:, 2] = interp_zs(indices)
+@@ -1080,7 +1080,7 @@ class SpaceCurve(object):
+         points = self.points
+         ts = np.roll(points, -1, axis=0) - points
+ 
+-        keep_points = np.ones(len(points), dtype=np.bool)
++        keep_points = np.ones(len(points), dtype=np.bool_)
+ 
+         ts_range = ts[:-2] if not closed else ts
+ 

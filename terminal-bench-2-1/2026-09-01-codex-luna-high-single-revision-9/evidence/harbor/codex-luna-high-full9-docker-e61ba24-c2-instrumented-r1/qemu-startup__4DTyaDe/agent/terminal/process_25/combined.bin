@@ -1,0 +1,11 @@
+qemu-syscall-fallback.c: In function ‘syscall’:
+qemu-syscall-fallback.c:12:46: error: ‘NULL’ undeclared (first use in this function)
+   12 |     static long (*real_syscall)(long, ...) = NULL;
+      |                                              ^~~~
+qemu-syscall-fallback.c:6:1: note: ‘NULL’ is defined in header ‘<stddef.h>’; did you forget to ‘#include <stddef.h>’?
+    5 | #include <sys/syscall.h>
+  +++ |+#include <stddef.h>
+    6 | 
+qemu-syscall-fallback.c:12:46: note: each undeclared identifier is reported only once for each function it appears in
+   12 |     static long (*real_syscall)(long, ...) = NULL;
+      |                                              ^~~~

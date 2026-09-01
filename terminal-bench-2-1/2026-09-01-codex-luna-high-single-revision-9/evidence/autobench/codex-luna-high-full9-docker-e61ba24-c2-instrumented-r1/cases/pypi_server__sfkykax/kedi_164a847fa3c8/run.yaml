@@ -1,0 +1,2023 @@
+# yaml-language-server: $schema=/tmp/kedi-autobench-public-schema/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8
+  experiment: exp_kedi_terminal_bench_2_1_20260901T142946259196Z
+  benchmark: kedi-terminal-bench-2.1
+  case: pypi-server__sfkykax
+  variant: kedi-164a847fa3c8
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: pypi-server__sfkykax
+  input:
+    job_dir: /private/tmp/kedi-tb21-publication.dbTGSY/harbor/codex-luna-high-full9-docker-e61ba24-c2-instrumented-r1
+    trial_dir: /private/tmp/kedi-tb21-publication.dbTGSY/harbor/codex-luna-high-full9-docker-e61ba24-c2-instrumented-r1/pypi-server__SFkyKaX
+    trial_name: pypi-server__SFkyKaX
+    task_name: terminal-bench/pypi-server
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-164a847fa3c8
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+      false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 20000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+        false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes":
+        32768}'
+      source: variant
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 20000000
+      source: variant
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 6
+      id: obs_6
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.reward.mean:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.mean
+      kind: metric
+      value: 1.0
+      semantic: quality.score
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.cost_usd:
+      sequence: 22
+      id: obs_22
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.01424772
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.evidence_complete:
+      sequence: 78
+      id: obs_78
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 343.211557
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.environment_setup.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 2.96689
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.agent_setup.duration:
+      sequence: 12
+      id: obs_12
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 212.874993
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.agent_execution.duration:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.agent_execution.duration
+      kind: metric
+      value: 97.349324
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.verifier.duration:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.verifier.duration
+      kind: metric
+      value: 16.660653
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.input_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.input_tokens
+      kind: metric
+      value: 98343
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.cache_read_tokens:
+      sequence: 16
+      id: obs_16
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 45696
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.cache_write_tokens:
+      sequence: 17
+      id: obs_17
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.output_tokens:
+      sequence: 18
+      id: obs_18
+      name: kedi.output_tokens
+      kind: metric
+      value: 2337
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.total_tokens:
+      sequence: 19
+      id: obs_19
+      name: kedi.total_tokens
+      kind: metric
+      value: 100680
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.requests:
+      sequence: 20
+      id: obs_20
+      name: kedi.requests
+      kind: metric
+      value: 17
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.tool_calls:
+      sequence: 21
+      id: obs_21
+      name: kedi.tool_calls
+      kind: metric
+      value: 24
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    kedi.cache_read_ratio:
+      sequence: 23
+      id: obs_23
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.4646594063634422
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+  events:
+    terminal_bench.file.job.config.json:
+      sequence: 24
+      id: obs_24
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.job.log:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.lock.json:
+      sequence: 27
+      id: obs_27
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.result.json:
+      sequence: 28
+      id: obs_28
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.kedi-result.json:
+      sequence: 29
+      id: obs_29
+      name: terminal_bench.file.trial.agent.kedi-result.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi-result.json
+        sha256.source: 6d5b0b1ebe55def912998c2ace14b95b463eec104b685a1b7badb7b6069450b6
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.kedi.txt:
+      sequence: 30
+      id: obs_30
+      name: terminal_bench.file.trial.agent.kedi.txt
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi.txt
+        sha256.source: 8aa5edb925306a0f2e6d5efa6b9f7ece1d50fdb6dca90a57b7942d5d86e0a57a
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal-events.jsonl:
+      sequence: 31
+      id: obs_31
+      name: terminal_bench.file.trial.agent.terminal-events.jsonl
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal-events.jsonl
+        sha256.source: 6d09b9b7434bfb138842d1359dba0495d1ce53c3244df8bfde18dd1e5deeb049
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+      sequence: 32
+      id: obs_32
+      name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/combined.bin
+        sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+      sequence: 33
+      id: obs_33
+      name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+      sequence: 34
+      id: obs_34
+      name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stdout.bin
+        sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.combined.bin:
+      sequence: 35
+      id: obs_35
+      name: terminal_bench.file.trial.agent.terminal.process_10.combined.bin
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/combined.bin
+        sha256.source: 8cec028ac946ad33e839757f7bdc3db0f325d75981e9c79655525be4521e19f0
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.stderr.bin:
+      sequence: 36
+      id: obs_36
+      name: terminal_bench.file.trial.agent.terminal.process_10.stderr.bin
+      kind: artifact
+      value: artifact_13
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.stdout.bin:
+      sequence: 37
+      id: obs_37
+      name: terminal_bench.file.trial.agent.terminal.process_10.stdout.bin
+      kind: artifact
+      value: artifact_14
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/stdout.bin
+        sha256.source: 8cec028ac946ad33e839757f7bdc3db0f325d75981e9c79655525be4521e19f0
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_11.combined.bin:
+      sequence: 38
+      id: obs_38
+      name: terminal_bench.file.trial.agent.terminal.process_11.combined.bin
+      kind: artifact
+      value: artifact_15
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_11/combined.bin
+        sha256.source: 6a208a8e726327e83f56b3a6867fe8f6698ba6a73606065e6eea90c6e5890376
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_11.stderr.bin:
+      sequence: 39
+      id: obs_39
+      name: terminal_bench.file.trial.agent.terminal.process_11.stderr.bin
+      kind: artifact
+      value: artifact_16
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_11/stderr.bin
+        sha256.source: abd6f7249a473f07f501069dde0fe2436ada294e0816606ef6d35309752ff944
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_11.stdout.bin:
+      sequence: 40
+      id: obs_40
+      name: terminal_bench.file.trial.agent.terminal.process_11.stdout.bin
+      kind: artifact
+      value: artifact_17
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_11/stdout.bin
+        sha256.source: 2dc2451406f78fc828afe337b681e7b0efd2cc2e4ff738b4c69fd4ad41e15a1c
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_12.combined.bin:
+      sequence: 41
+      id: obs_41
+      name: terminal_bench.file.trial.agent.terminal.process_12.combined.bin
+      kind: artifact
+      value: artifact_18
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_12/combined.bin
+        sha256.source: 5db3c94804df54cf78b6337cc408443d486206c5c4b935609252262d2ceaa3be
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_12.stderr.bin:
+      sequence: 42
+      id: obs_42
+      name: terminal_bench.file.trial.agent.terminal.process_12.stderr.bin
+      kind: artifact
+      value: artifact_19
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_12/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_12.stdout.bin:
+      sequence: 43
+      id: obs_43
+      name: terminal_bench.file.trial.agent.terminal.process_12.stdout.bin
+      kind: artifact
+      value: artifact_20
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_12/stdout.bin
+        sha256.source: 5db3c94804df54cf78b6337cc408443d486206c5c4b935609252262d2ceaa3be
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+      sequence: 44
+      id: obs_44
+      name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+      kind: artifact
+      value: artifact_21
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/combined.bin
+        sha256.source: e74abf6f790f5e0381d5c8e551ca80496d6f469bb974640c5fad4026aa9e91f1
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+      sequence: 45
+      id: obs_45
+      name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+      kind: artifact
+      value: artifact_22
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+      sequence: 46
+      id: obs_46
+      name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+      kind: artifact
+      value: artifact_23
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stdout.bin
+        sha256.source: e74abf6f790f5e0381d5c8e551ca80496d6f469bb974640c5fad4026aa9e91f1
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+      sequence: 47
+      id: obs_47
+      name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+      kind: artifact
+      value: artifact_24
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/combined.bin
+        sha256.source: 01623849c8d1730b6d859e0d292d5459342aeee8145d1eeb2813bd6cd516419a
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+      sequence: 48
+      id: obs_48
+      name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+      kind: artifact
+      value: artifact_25
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+      sequence: 49
+      id: obs_49
+      name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+      kind: artifact
+      value: artifact_26
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stdout.bin
+        sha256.source: 01623849c8d1730b6d859e0d292d5459342aeee8145d1eeb2813bd6cd516419a
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+      sequence: 50
+      id: obs_50
+      name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+      kind: artifact
+      value: artifact_27
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/combined.bin
+        sha256.source: 6a77d832f1e1105be27eb5a8baff88a22985a6514b6b9441e4f455d63fcc8043
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+      sequence: 51
+      id: obs_51
+      name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+      kind: artifact
+      value: artifact_28
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+      sequence: 52
+      id: obs_52
+      name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+      kind: artifact
+      value: artifact_29
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stdout.bin
+        sha256.source: 6a77d832f1e1105be27eb5a8baff88a22985a6514b6b9441e4f455d63fcc8043
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+      sequence: 53
+      id: obs_53
+      name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+      kind: artifact
+      value: artifact_30
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/combined.bin
+        sha256.source: 46c5d79f001a0d7ac3ddf2a6ce89eb3b201ae2f4f5d907fcc8a51b91e44c7bf0
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+      sequence: 54
+      id: obs_54
+      name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+      kind: artifact
+      value: artifact_31
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+      sequence: 55
+      id: obs_55
+      name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+      kind: artifact
+      value: artifact_32
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stdout.bin
+        sha256.source: 46c5d79f001a0d7ac3ddf2a6ce89eb3b201ae2f4f5d907fcc8a51b91e44c7bf0
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+      sequence: 56
+      id: obs_56
+      name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+      kind: artifact
+      value: artifact_33
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/combined.bin
+        sha256.source: 403524abcb410ab5cc233a383704f253000609405981deda48bf89517dd50250
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+      sequence: 57
+      id: obs_57
+      name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+      kind: artifact
+      value: artifact_34
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+      sequence: 58
+      id: obs_58
+      name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+      kind: artifact
+      value: artifact_35
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stdout.bin
+        sha256.source: 403524abcb410ab5cc233a383704f253000609405981deda48bf89517dd50250
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.combined.bin:
+      sequence: 59
+      id: obs_59
+      name: terminal_bench.file.trial.agent.terminal.process_7.combined.bin
+      kind: artifact
+      value: artifact_36
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/combined.bin
+        sha256.source: 6eb9592982d030cc6c17724eea3d66d7df8f6192ecd64d62b4f2eb5e00119bc5
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.stderr.bin:
+      sequence: 60
+      id: obs_60
+      name: terminal_bench.file.trial.agent.terminal.process_7.stderr.bin
+      kind: artifact
+      value: artifact_37
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/stderr.bin
+        sha256.source: 575d7a2c24af950205c0ef2baedd439a17f85358bda824c0fd961cb93a35f225
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.stdout.bin:
+      sequence: 61
+      id: obs_61
+      name: terminal_bench.file.trial.agent.terminal.process_7.stdout.bin
+      kind: artifact
+      value: artifact_38
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/stdout.bin
+        sha256.source: 09b2d089c21d18a516a8e29afb5d3643fc94027ce9c6583389061536f6696fd0
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.combined.bin:
+      sequence: 62
+      id: obs_62
+      name: terminal_bench.file.trial.agent.terminal.process_8.combined.bin
+      kind: artifact
+      value: artifact_39
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/combined.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.stderr.bin:
+      sequence: 63
+      id: obs_63
+      name: terminal_bench.file.trial.agent.terminal.process_8.stderr.bin
+      kind: artifact
+      value: artifact_40
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.stdout.bin:
+      sequence: 64
+      id: obs_64
+      name: terminal_bench.file.trial.agent.terminal.process_8.stdout.bin
+      kind: artifact
+      value: artifact_41
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.combined.bin:
+      sequence: 65
+      id: obs_65
+      name: terminal_bench.file.trial.agent.terminal.process_9.combined.bin
+      kind: artifact
+      value: artifact_42
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/combined.bin
+        sha256.source: a8ec108e28a08777d58c0cd560efa8ca140ad256023022ad178a286f0cbac8da
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.control.json:
+      sequence: 66
+      id: obs_66
+      name: terminal_bench.file.trial.agent.terminal.process_9.control.json
+      kind: artifact
+      value: artifact_43
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/control.json
+        sha256.source: d9bf70b0db229359a85b1664cff9b83c4724d3fd42bedb4d6363428cdabbda4a
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.state.json:
+      sequence: 67
+      id: obs_67
+      name: terminal_bench.file.trial.agent.terminal.process_9.state.json
+      kind: artifact
+      value: artifact_44
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/state.json
+        sha256.source: 766c8a9389cec2e40c60a3d16a7e521a48e08f796d2bcbc897b4497fec7c86ae
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.stderr.bin:
+      sequence: 68
+      id: obs_68
+      name: terminal_bench.file.trial.agent.terminal.process_9.stderr.bin
+      kind: artifact
+      value: artifact_45
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/stderr.bin
+        sha256.source: 273389f313b5162b0a0a17a6e95ef7fd32a4439a4e217ac75ff36fbd1cca2b9b
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.stdout.bin:
+      sequence: 69
+      id: obs_69
+      name: terminal_bench.file.trial.agent.terminal.process_9.stdout.bin
+      kind: artifact
+      value: artifact_46
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/stdout.bin
+        sha256.source: bb52402d7b97d245d925b8da955f78a6027eeb243fd5f93133bdc105cae5a882
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 70
+      id: obs_70
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_47
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.config.json:
+      sequence: 71
+      id: obs_71
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_48
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: 61fba282973c55cfd6b80e3d2adbcc609dd636333ad501c6653c5e3e5cacedcb
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.lock.json:
+      sequence: 72
+      id: obs_72
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_49
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: 3944b4c9f00fa2fc64ad1e834ba6151f58df5bc92c8c2cd17af2e0e16b5c30ee
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.result.json:
+      sequence: 73
+      id: obs_73
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_50
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: 3b1db948f9325c04a981ed6c34db7150b0a4f0908a732f4497cfaf1ae745f557
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.trial.log:
+      sequence: 74
+      id: obs_74
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_51
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: 65859c09ad4d961d796c4c5453fb317f0b37d415210e59ba3f791109cda28dfd
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.ctrf.json:
+      sequence: 75
+      id: obs_75
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      kind: artifact
+      value: artifact_52
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/ctrf.json
+        sha256.source: c7e1c737f8f2a356f2e0e42eacbb99bce27886ea58452f801148d06303add665
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.reward.txt:
+      sequence: 76
+      id: obs_76
+      name: terminal_bench.file.trial.verifier.reward.txt
+      kind: artifact
+      value: artifact_53
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/reward.txt
+        sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.test-stdout.txt:
+      sequence: 77
+      id: obs_77
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      kind: artifact
+      value: artifact_54
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/test-stdout.txt
+        sha256.source: 936346fa5104bd97c8c2ebf1ed542349831b35b007ba1c33305e92e3d7ced4fc
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+    terminal_bench.evidence_index:
+      sequence: 79
+      id: obs_79
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_55
+      span: span_1
+      source: task_observation
+      case: pypi-server__sfkykax
+      variant: kedi-164a847fa3c8
+trace:
+  id: 2039edee4c48c2399b7f0bcbe91e60f8
+  partial: false
+  spans: 2
+  signals: 139
+  artifact:
+    id: abp_trace
+    name: ABP trace
+    media: application/vnd.autobench.abp-trace+yaml
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/trace.yaml
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-09-01T14:29:50.056503+00:00'
+    ended_at: '2026-09-01T14:29:50.362456+00:00'
+    duration: 0.305961375
+    input:
+      task_name: terminal-bench/pypi-server
+      trial_name: pypi-server__SFkyKaX
+    output:
+      task_name: terminal-bench/pypi-server
+      trial_name: pypi-server__SFkyKaX
+      rewards:
+        reward: 1.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 45696
+        cache_write_tokens: 0
+        cost_usd: 0.01424772
+        input_tokens: 98343
+        output_tokens: 2337
+        requests: 17
+        tool_calls: 24
+        total_tokens: 100680
+        uncached_input_tokens: 52647
+      evidence_file_count: 54
+      evidence_bytes: 98658
+      skipped_file_count: 0
+    observations:
+      - obs_6
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+      - obs_27
+      - obs_28
+      - obs_29
+      - obs_30
+      - obs_31
+      - obs_32
+      - obs_33
+      - obs_34
+      - obs_35
+      - obs_36
+      - obs_37
+      - obs_38
+      - obs_39
+      - obs_40
+      - obs_41
+      - obs_42
+      - obs_43
+      - obs_44
+      - obs_45
+      - obs_46
+      - obs_47
+      - obs_48
+      - obs_49
+      - obs_50
+      - obs_51
+      - obs_52
+      - obs_53
+      - obs_54
+      - obs_55
+      - obs_56
+      - obs_57
+      - obs_58
+      - obs_59
+      - obs_60
+      - obs_61
+      - obs_62
+      - obs_63
+      - obs_64
+      - obs_65
+      - obs_66
+      - obs_67
+      - obs_68
+      - obs_69
+      - obs_70
+      - obs_71
+      - obs_72
+      - obs_73
+      - obs_74
+      - obs_75
+      - obs_76
+      - obs_77
+      - obs_78
+      - obs_79
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+      - artifact_13
+      - artifact_14
+      - artifact_15
+      - artifact_16
+      - artifact_17
+      - artifact_18
+      - artifact_19
+      - artifact_20
+      - artifact_21
+      - artifact_22
+      - artifact_23
+      - artifact_24
+      - artifact_25
+      - artifact_26
+      - artifact_27
+      - artifact_28
+      - artifact_29
+      - artifact_30
+      - artifact_31
+      - artifact_32
+      - artifact_33
+      - artifact_34
+      - artifact_35
+      - artifact_36
+      - artifact_37
+      - artifact_38
+      - artifact_39
+      - artifact_40
+      - artifact_41
+      - artifact_42
+      - artifact_43
+      - artifact_44
+      - artifact_45
+      - artifact_46
+      - artifact_47
+      - artifact_48
+      - artifact_49
+      - artifact_50
+      - artifact_51
+      - artifact_52
+      - artifact_53
+      - artifact_54
+      - artifact_55
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+    source: file
+    state: complete
+    sha256: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+    byte_count: 1926
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+    source: file
+    state: complete
+    sha256: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+    byte_count: 17289
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+    source: file
+    state: complete
+    sha256: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+    byte_count: 2140
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+    source: file
+    state: complete
+    sha256: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+    byte_count: 18828
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+    source: file
+    state: complete
+    sha256: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+    byte_count: 1334
+    filename: result.json
+  terminal_bench.file.trial.agent.kedi-result.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.agent.kedi-result.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi-result.json
+      sha256.source: 6d5b0b1ebe55def912998c2ace14b95b463eec104b685a1b7badb7b6069450b6
+    source: file
+    state: complete
+    sha256: 6d5b0b1ebe55def912998c2ace14b95b463eec104b685a1b7badb7b6069450b6
+    byte_count: 17588
+    filename: kedi-result.json
+  terminal_bench.file.trial.agent.kedi.txt:
+    id: artifact_7
+    name: terminal_bench.file.trial.agent.kedi.txt
+    media: text/plain
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_7.txt
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi.txt
+      sha256.source: 8aa5edb925306a0f2e6d5efa6b9f7ece1d50fdb6dca90a57b7942d5d86e0a57a
+    source: file
+    state: complete
+    sha256: 8aa5edb925306a0f2e6d5efa6b9f7ece1d50fdb6dca90a57b7942d5d86e0a57a
+    byte_count: 2512
+    filename: kedi.txt
+  terminal_bench.file.trial.agent.terminal-events.jsonl:
+    id: artifact_8
+    name: terminal_bench.file.trial.agent.terminal-events.jsonl
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_8.jsonl
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal-events.jsonl
+      sha256.source: 6d09b9b7434bfb138842d1359dba0495d1ce53c3244df8bfde18dd1e5deeb049
+    source: file
+    state: complete
+    sha256: 6d09b9b7434bfb138842d1359dba0495d1ce53c3244df8bfde18dd1e5deeb049
+    byte_count: 16765
+    filename: terminal-events.jsonl
+  terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+    id: artifact_9
+    name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_9.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/combined.bin
+      sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    source: file
+    state: complete
+    sha256: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    byte_count: 5
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+    id: artifact_10
+    name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_10.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+    id: artifact_11
+    name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_11.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stdout.bin
+      sha256.source: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    source: file
+    state: complete
+    sha256: f7894af8cf1b013680208cf56689ad1a460b3ae1b1675aa00d79c953c79ac5d3
+    byte_count: 5
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_10.combined.bin:
+    id: artifact_12
+    name: terminal_bench.file.trial.agent.terminal.process_10.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_12.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/combined.bin
+      sha256.source: 8cec028ac946ad33e839757f7bdc3db0f325d75981e9c79655525be4521e19f0
+    source: file
+    state: complete
+    sha256: 8cec028ac946ad33e839757f7bdc3db0f325d75981e9c79655525be4521e19f0
+    byte_count: 124
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_10.stderr.bin:
+    id: artifact_13
+    name: terminal_bench.file.trial.agent.terminal.process_10.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_13.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_10.stdout.bin:
+    id: artifact_14
+    name: terminal_bench.file.trial.agent.terminal.process_10.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_14.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/stdout.bin
+      sha256.source: 8cec028ac946ad33e839757f7bdc3db0f325d75981e9c79655525be4521e19f0
+    source: file
+    state: complete
+    sha256: 8cec028ac946ad33e839757f7bdc3db0f325d75981e9c79655525be4521e19f0
+    byte_count: 124
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_11.combined.bin:
+    id: artifact_15
+    name: terminal_bench.file.trial.agent.terminal.process_11.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_15.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_11/combined.bin
+      sha256.source: 6a208a8e726327e83f56b3a6867fe8f6698ba6a73606065e6eea90c6e5890376
+    source: file
+    state: complete
+    sha256: 6a208a8e726327e83f56b3a6867fe8f6698ba6a73606065e6eea90c6e5890376
+    byte_count: 616
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_11.stderr.bin:
+    id: artifact_16
+    name: terminal_bench.file.trial.agent.terminal.process_11.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_16.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_11/stderr.bin
+      sha256.source: abd6f7249a473f07f501069dde0fe2436ada294e0816606ef6d35309752ff944
+    source: file
+    state: complete
+    sha256: abd6f7249a473f07f501069dde0fe2436ada294e0816606ef6d35309752ff944
+    byte_count: 364
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_11.stdout.bin:
+    id: artifact_17
+    name: terminal_bench.file.trial.agent.terminal.process_11.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_17.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_11/stdout.bin
+      sha256.source: 2dc2451406f78fc828afe337b681e7b0efd2cc2e4ff738b4c69fd4ad41e15a1c
+    source: file
+    state: complete
+    sha256: 2dc2451406f78fc828afe337b681e7b0efd2cc2e4ff738b4c69fd4ad41e15a1c
+    byte_count: 252
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_12.combined.bin:
+    id: artifact_18
+    name: terminal_bench.file.trial.agent.terminal.process_12.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_18.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_12/combined.bin
+      sha256.source: 5db3c94804df54cf78b6337cc408443d486206c5c4b935609252262d2ceaa3be
+    source: file
+    state: complete
+    sha256: 5db3c94804df54cf78b6337cc408443d486206c5c4b935609252262d2ceaa3be
+    byte_count: 31
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_12.stderr.bin:
+    id: artifact_19
+    name: terminal_bench.file.trial.agent.terminal.process_12.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_19.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_12/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_12.stdout.bin:
+    id: artifact_20
+    name: terminal_bench.file.trial.agent.terminal.process_12.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_20.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_12/stdout.bin
+      sha256.source: 5db3c94804df54cf78b6337cc408443d486206c5c4b935609252262d2ceaa3be
+    source: file
+    state: complete
+    sha256: 5db3c94804df54cf78b6337cc408443d486206c5c4b935609252262d2ceaa3be
+    byte_count: 31
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+    id: artifact_21
+    name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_21.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/combined.bin
+      sha256.source: e74abf6f790f5e0381d5c8e551ca80496d6f469bb974640c5fad4026aa9e91f1
+    source: file
+    state: complete
+    sha256: e74abf6f790f5e0381d5c8e551ca80496d6f469bb974640c5fad4026aa9e91f1
+    byte_count: 95
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+    id: artifact_22
+    name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_22.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+    id: artifact_23
+    name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_23.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stdout.bin
+      sha256.source: e74abf6f790f5e0381d5c8e551ca80496d6f469bb974640c5fad4026aa9e91f1
+    source: file
+    state: complete
+    sha256: e74abf6f790f5e0381d5c8e551ca80496d6f469bb974640c5fad4026aa9e91f1
+    byte_count: 95
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+    id: artifact_24
+    name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_24.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/combined.bin
+      sha256.source: 01623849c8d1730b6d859e0d292d5459342aeee8145d1eeb2813bd6cd516419a
+    source: file
+    state: complete
+    sha256: 01623849c8d1730b6d859e0d292d5459342aeee8145d1eeb2813bd6cd516419a
+    byte_count: 14
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+    id: artifact_25
+    name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_25.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+    id: artifact_26
+    name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_26.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stdout.bin
+      sha256.source: 01623849c8d1730b6d859e0d292d5459342aeee8145d1eeb2813bd6cd516419a
+    source: file
+    state: complete
+    sha256: 01623849c8d1730b6d859e0d292d5459342aeee8145d1eeb2813bd6cd516419a
+    byte_count: 14
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+    id: artifact_27
+    name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_27.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/combined.bin
+      sha256.source: 6a77d832f1e1105be27eb5a8baff88a22985a6514b6b9441e4f455d63fcc8043
+    source: file
+    state: complete
+    sha256: 6a77d832f1e1105be27eb5a8baff88a22985a6514b6b9441e4f455d63fcc8043
+    byte_count: 72
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+    id: artifact_28
+    name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_28.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+    id: artifact_29
+    name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_29.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stdout.bin
+      sha256.source: 6a77d832f1e1105be27eb5a8baff88a22985a6514b6b9441e4f455d63fcc8043
+    source: file
+    state: complete
+    sha256: 6a77d832f1e1105be27eb5a8baff88a22985a6514b6b9441e4f455d63fcc8043
+    byte_count: 72
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+    id: artifact_30
+    name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_30.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/combined.bin
+      sha256.source: 46c5d79f001a0d7ac3ddf2a6ce89eb3b201ae2f4f5d907fcc8a51b91e44c7bf0
+    source: file
+    state: complete
+    sha256: 46c5d79f001a0d7ac3ddf2a6ce89eb3b201ae2f4f5d907fcc8a51b91e44c7bf0
+    byte_count: 7
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+    id: artifact_31
+    name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_31.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+    id: artifact_32
+    name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_32.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stdout.bin
+      sha256.source: 46c5d79f001a0d7ac3ddf2a6ce89eb3b201ae2f4f5d907fcc8a51b91e44c7bf0
+    source: file
+    state: complete
+    sha256: 46c5d79f001a0d7ac3ddf2a6ce89eb3b201ae2f4f5d907fcc8a51b91e44c7bf0
+    byte_count: 7
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+    id: artifact_33
+    name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_33.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/combined.bin
+      sha256.source: 403524abcb410ab5cc233a383704f253000609405981deda48bf89517dd50250
+    source: file
+    state: complete
+    sha256: 403524abcb410ab5cc233a383704f253000609405981deda48bf89517dd50250
+    byte_count: 7
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+    id: artifact_34
+    name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_34.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+    id: artifact_35
+    name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_35.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stdout.bin
+      sha256.source: 403524abcb410ab5cc233a383704f253000609405981deda48bf89517dd50250
+    source: file
+    state: complete
+    sha256: 403524abcb410ab5cc233a383704f253000609405981deda48bf89517dd50250
+    byte_count: 7
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_7.combined.bin:
+    id: artifact_36
+    name: terminal_bench.file.trial.agent.terminal.process_7.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_36.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/combined.bin
+      sha256.source: 6eb9592982d030cc6c17724eea3d66d7df8f6192ecd64d62b4f2eb5e00119bc5
+    source: file
+    state: complete
+    sha256: 6eb9592982d030cc6c17724eea3d66d7df8f6192ecd64d62b4f2eb5e00119bc5
+    byte_count: 1907
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_7.stderr.bin:
+    id: artifact_37
+    name: terminal_bench.file.trial.agent.terminal.process_7.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_37.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/stderr.bin
+      sha256.source: 575d7a2c24af950205c0ef2baedd439a17f85358bda824c0fd961cb93a35f225
+    source: file
+    state: complete
+    sha256: 575d7a2c24af950205c0ef2baedd439a17f85358bda824c0fd961cb93a35f225
+    byte_count: 581
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_7.stdout.bin:
+    id: artifact_38
+    name: terminal_bench.file.trial.agent.terminal.process_7.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_38.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/stdout.bin
+      sha256.source: 09b2d089c21d18a516a8e29afb5d3643fc94027ce9c6583389061536f6696fd0
+    source: file
+    state: complete
+    sha256: 09b2d089c21d18a516a8e29afb5d3643fc94027ce9c6583389061536f6696fd0
+    byte_count: 1326
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_8.combined.bin:
+    id: artifact_39
+    name: terminal_bench.file.trial.agent.terminal.process_8.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_39.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/combined.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_8.stderr.bin:
+    id: artifact_40
+    name: terminal_bench.file.trial.agent.terminal.process_8.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_40.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_8.stdout.bin:
+    id: artifact_41
+    name: terminal_bench.file.trial.agent.terminal.process_8.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_41.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_9.combined.bin:
+    id: artifact_42
+    name: terminal_bench.file.trial.agent.terminal.process_9.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_42.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/combined.bin
+      sha256.source: a8ec108e28a08777d58c0cd560efa8ca140ad256023022ad178a286f0cbac8da
+    source: file
+    state: complete
+    sha256: a8ec108e28a08777d58c0cd560efa8ca140ad256023022ad178a286f0cbac8da
+    byte_count: 641
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_9.control.json:
+    id: artifact_43
+    name: terminal_bench.file.trial.agent.terminal.process_9.control.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_43.json
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/control.json
+      sha256.source: d9bf70b0db229359a85b1664cff9b83c4724d3fd42bedb4d6363428cdabbda4a
+    source: file
+    state: complete
+    sha256: d9bf70b0db229359a85b1664cff9b83c4724d3fd42bedb4d6363428cdabbda4a
+    byte_count: 23
+    filename: control.json
+  terminal_bench.file.trial.agent.terminal.process_9.state.json:
+    id: artifact_44
+    name: terminal_bench.file.trial.agent.terminal.process_9.state.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_44.json
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/state.json
+      sha256.source: 766c8a9389cec2e40c60a3d16a7e521a48e08f796d2bcbc897b4497fec7c86ae
+    source: file
+    state: complete
+    sha256: 766c8a9389cec2e40c60a3d16a7e521a48e08f796d2bcbc897b4497fec7c86ae
+    byte_count: 218
+    filename: state.json
+  terminal_bench.file.trial.agent.terminal.process_9.stderr.bin:
+    id: artifact_45
+    name: terminal_bench.file.trial.agent.terminal.process_9.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_45.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/stderr.bin
+      sha256.source: 273389f313b5162b0a0a17a6e95ef7fd32a4439a4e217ac75ff36fbd1cca2b9b
+    source: file
+    state: complete
+    sha256: 273389f313b5162b0a0a17a6e95ef7fd32a4439a4e217ac75ff36fbd1cca2b9b
+    byte_count: 590
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_9.stdout.bin:
+    id: artifact_46
+    name: terminal_bench.file.trial.agent.terminal.process_9.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_46.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/stdout.bin
+      sha256.source: bb52402d7b97d245d925b8da955f78a6027eeb243fd5f93133bdc105cae5a882
+    source: file
+    state: complete
+    sha256: bb52402d7b97d245d925b8da955f78a6027eeb243fd5f93133bdc105cae5a882
+    byte_count: 51
+    filename: stdout.bin
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_47
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_47.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    source: file
+    state: complete
+    sha256: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    byte_count: 160
+    filename: manifest.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_48
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_48.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: 61fba282973c55cfd6b80e3d2adbcc609dd636333ad501c6653c5e3e5cacedcb
+    source: file
+    state: complete
+    sha256: 61fba282973c55cfd6b80e3d2adbcc609dd636333ad501c6653c5e3e5cacedcb
+    byte_count: 1425
+    filename: config.json
+  terminal_bench.file.trial.lock.json:
+    id: artifact_49
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_49.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: 3944b4c9f00fa2fc64ad1e834ba6151f58df5bc92c8c2cd17af2e0e16b5c30ee
+    source: file
+    state: complete
+    sha256: 3944b4c9f00fa2fc64ad1e834ba6151f58df5bc92c8c2cd17af2e0e16b5c30ee
+    byte_count: 1786
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_50
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_50.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: 3b1db948f9325c04a981ed6c34db7150b0a4f0908a732f4497cfaf1ae745f557
+    source: file
+    state: complete
+    sha256: 3b1db948f9325c04a981ed6c34db7150b0a4f0908a732f4497cfaf1ae745f557
+    byte_count: 4817
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_51
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_51.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: 65859c09ad4d961d796c4c5453fb317f0b37d415210e59ba3f791109cda28dfd
+    source: file
+    state: complete
+    sha256: 65859c09ad4d961d796c4c5453fb317f0b37d415210e59ba3f791109cda28dfd
+    byte_count: 1921
+    filename: trial.log
+  terminal_bench.file.trial.verifier.ctrf.json:
+    id: artifact_52
+    name: terminal_bench.file.trial.verifier.ctrf.json
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_52.json
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/ctrf.json
+      sha256.source: c7e1c737f8f2a356f2e0e42eacbb99bce27886ea58452f801148d06303add665
+    source: file
+    state: complete
+    sha256: c7e1c737f8f2a356f2e0e42eacbb99bce27886ea58452f801148d06303add665
+    byte_count: 583
+    filename: ctrf.json
+  terminal_bench.file.trial.verifier.reward.txt:
+    id: artifact_53
+    name: terminal_bench.file.trial.verifier.reward.txt
+    media: text/plain
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_53.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/reward.txt
+      sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    source: file
+    state: complete
+    sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    byte_count: 2
+    filename: reward.txt
+  terminal_bench.file.trial.verifier.test-stdout.txt:
+    id: artifact_54
+    name: terminal_bench.file.trial.verifier.test-stdout.txt
+    media: text/plain
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_54.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/test-stdout.txt
+      sha256.source: 936346fa5104bd97c8c2ebf1ed542349831b35b007ba1c33305e92e3d7ced4fc
+    source: file
+    state: complete
+    sha256: 936346fa5104bd97c8c2ebf1ed542349831b35b007ba1c33305e92e3d7ced4fc
+    byte_count: 2303
+    filename: test-stdout.txt
+  terminal_bench.evidence_index:
+    id: artifact_55
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0007_0001_pypi_server_sfkykax__kedi_164a847fa3c8/artifact_55.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 6d09df0bdcc3bdba30e1a9aef8171c626aadfd25c0df8d72ed05ba53161338ac
+    byte_count: 10040
+output:
+  task_name: terminal-bench/pypi-server
+  trial_name: pypi-server__SFkyKaX
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 45696
+    cache_write_tokens: 0
+    cost_usd: 0.01424772
+    input_tokens: 98343
+    output_tokens: 2337
+    requests: 17
+    tool_calls: 24
+    total_tokens: 100680
+    uncached_input_tokens: 52647
+  evidence_file_count: 54
+  evidence_bytes: 98658
+  skipped_file_count: 0

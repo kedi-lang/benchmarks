@@ -1,0 +1,3357 @@
+# yaml-language-server: $schema=/tmp/kedi-autobench-public-schema/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8
+  experiment: exp_kedi_terminal_bench_2_1_20260901T142946259196Z
+  benchmark: kedi-terminal-bench-2.1
+  case: fix-git__p8jepbu
+  variant: kedi-164a847fa3c8
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: fix-git__p8jepbu
+  input:
+    job_dir: /private/tmp/kedi-tb21-publication.dbTGSY/harbor/codex-luna-high-full9-docker-e61ba24-c2-instrumented-r1
+    trial_dir: /private/tmp/kedi-tb21-publication.dbTGSY/harbor/codex-luna-high-full9-docker-e61ba24-c2-instrumented-r1/fix-git__P8jEpBu
+    trial_name: fix-git__P8jEpBu
+    task_name: terminal-bench/fix-git
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-164a847fa3c8
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+      false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 20000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+        false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes":
+        32768}'
+      source: variant
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 20000000
+      source: variant
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 6
+      id: obs_6
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.reward.mean:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.mean
+      kind: metric
+      value: 1.0
+      semantic: quality.score
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.cost_usd:
+      sequence: 22
+      id: obs_22
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.01988704
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.evidence_complete:
+      sequence: 124
+      id: obs_124
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 295.581296
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.environment_setup.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 1.875559
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.agent_setup.duration:
+      sequence: 12
+      id: obs_12
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 167.559915
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.agent_execution.duration:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.agent_execution.duration
+      kind: metric
+      value: 84.189505
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.verifier.duration:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.verifier.duration
+      kind: metric
+      value: 29.202942
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.input_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.input_tokens
+      kind: metric
+      value: 149150
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.cache_read_tokens:
+      sequence: 16
+      id: obs_16
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 70912
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.cache_write_tokens:
+      sequence: 17
+      id: obs_17
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.output_tokens:
+      sequence: 18
+      id: obs_18
+      name: kedi.output_tokens
+      kind: metric
+      value: 2351
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.total_tokens:
+      sequence: 19
+      id: obs_19
+      name: kedi.total_tokens
+      kind: metric
+      value: 151501
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.requests:
+      sequence: 20
+      id: obs_20
+      name: kedi.requests
+      kind: metric
+      value: 14
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.tool_calls:
+      sequence: 21
+      id: obs_21
+      name: kedi.tool_calls
+      kind: metric
+      value: 31
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    kedi.cache_read_ratio:
+      sequence: 23
+      id: obs_23
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.47544083137780757
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+  events:
+    terminal_bench.file.job.config.json:
+      sequence: 24
+      id: obs_24
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.job.log:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.lock.json:
+      sequence: 27
+      id: obs_27
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.job.result.json:
+      sequence: 28
+      id: obs_28
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.kedi-result.json:
+      sequence: 29
+      id: obs_29
+      name: terminal_bench.file.trial.agent.kedi-result.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi-result.json
+        sha256.source: dd48999b9d46896c3baac916bc2463cac3938fbcdf9c3310261a66a3a824edd3
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.kedi.txt:
+      sequence: 30
+      id: obs_30
+      name: terminal_bench.file.trial.agent.kedi.txt
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi.txt
+        sha256.source: f86be2f45a57e8d0f3821abc63564da901ebdd416e4d0998713ab5b0da169bca
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal-events.jsonl:
+      sequence: 31
+      id: obs_31
+      name: terminal_bench.file.trial.agent.terminal-events.jsonl
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal-events.jsonl
+        sha256.source: a73373ac965c7f4d2459cf249e72b5528b8b3a55883bc6accc1c022508078ee8
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+      sequence: 32
+      id: obs_32
+      name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/combined.bin
+        sha256.source: 08031b1218f57b51cb81a5e2558e70ca8fe7581fcf2d11f22bc2ace7b973f408
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+      sequence: 33
+      id: obs_33
+      name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stderr.bin
+        sha256.source: 08031b1218f57b51cb81a5e2558e70ca8fe7581fcf2d11f22bc2ace7b973f408
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+      sequence: 34
+      id: obs_34
+      name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.combined.bin:
+      sequence: 35
+      id: obs_35
+      name: terminal_bench.file.trial.agent.terminal.process_10.combined.bin
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/combined.bin
+        sha256.source: cd5bbef2388fdc43349658371b48c07696c0c8bc09daac98bdb5c73093729e22
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.stderr.bin:
+      sequence: 36
+      id: obs_36
+      name: terminal_bench.file.trial.agent.terminal.process_10.stderr.bin
+      kind: artifact
+      value: artifact_13
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_10.stdout.bin:
+      sequence: 37
+      id: obs_37
+      name: terminal_bench.file.trial.agent.terminal.process_10.stdout.bin
+      kind: artifact
+      value: artifact_14
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_10/stdout.bin
+        sha256.source: cd5bbef2388fdc43349658371b48c07696c0c8bc09daac98bdb5c73093729e22
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_11.combined.bin:
+      sequence: 38
+      id: obs_38
+      name: terminal_bench.file.trial.agent.terminal.process_11.combined.bin
+      kind: artifact
+      value: artifact_15
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_11/combined.bin
+        sha256.source: b68c01aeaf205d484ceac4d3850f19894d7794a3f1791a5a85933a898fdeb768
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_11.stderr.bin:
+      sequence: 39
+      id: obs_39
+      name: terminal_bench.file.trial.agent.terminal.process_11.stderr.bin
+      kind: artifact
+      value: artifact_16
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_11/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_11.stdout.bin:
+      sequence: 40
+      id: obs_40
+      name: terminal_bench.file.trial.agent.terminal.process_11.stdout.bin
+      kind: artifact
+      value: artifact_17
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_11/stdout.bin
+        sha256.source: b68c01aeaf205d484ceac4d3850f19894d7794a3f1791a5a85933a898fdeb768
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_12.combined.bin:
+      sequence: 41
+      id: obs_41
+      name: terminal_bench.file.trial.agent.terminal.process_12.combined.bin
+      kind: artifact
+      value: artifact_18
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_12/combined.bin
+        sha256.source: 9c98b280d713d88e6c1b43a4844e589922a7006469de2397a67e20d23e703ffd
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_12.stderr.bin:
+      sequence: 42
+      id: obs_42
+      name: terminal_bench.file.trial.agent.terminal.process_12.stderr.bin
+      kind: artifact
+      value: artifact_19
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_12/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_12.stdout.bin:
+      sequence: 43
+      id: obs_43
+      name: terminal_bench.file.trial.agent.terminal.process_12.stdout.bin
+      kind: artifact
+      value: artifact_20
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_12/stdout.bin
+        sha256.source: 9c98b280d713d88e6c1b43a4844e589922a7006469de2397a67e20d23e703ffd
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_13.combined.bin:
+      sequence: 44
+      id: obs_44
+      name: terminal_bench.file.trial.agent.terminal.process_13.combined.bin
+      kind: artifact
+      value: artifact_21
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_13/combined.bin
+        sha256.source: 2e09260b011012f9f7f491cd02809903449924cf8f825acd369fb8990b04e768
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_13.stderr.bin:
+      sequence: 45
+      id: obs_45
+      name: terminal_bench.file.trial.agent.terminal.process_13.stderr.bin
+      kind: artifact
+      value: artifact_22
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_13/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_13.stdout.bin:
+      sequence: 46
+      id: obs_46
+      name: terminal_bench.file.trial.agent.terminal.process_13.stdout.bin
+      kind: artifact
+      value: artifact_23
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_13/stdout.bin
+        sha256.source: 2e09260b011012f9f7f491cd02809903449924cf8f825acd369fb8990b04e768
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_14.combined.bin:
+      sequence: 47
+      id: obs_47
+      name: terminal_bench.file.trial.agent.terminal.process_14.combined.bin
+      kind: artifact
+      value: artifact_24
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_14/combined.bin
+        sha256.source: 377d6f0f4e4c823c1874a7f1cf1d6e01277236f942c105cf949c02217adc82da
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_14.stderr.bin:
+      sequence: 48
+      id: obs_48
+      name: terminal_bench.file.trial.agent.terminal.process_14.stderr.bin
+      kind: artifact
+      value: artifact_25
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_14/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_14.stdout.bin:
+      sequence: 49
+      id: obs_49
+      name: terminal_bench.file.trial.agent.terminal.process_14.stdout.bin
+      kind: artifact
+      value: artifact_26
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_14/stdout.bin
+        sha256.source: 377d6f0f4e4c823c1874a7f1cf1d6e01277236f942c105cf949c02217adc82da
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_15.combined.bin:
+      sequence: 50
+      id: obs_50
+      name: terminal_bench.file.trial.agent.terminal.process_15.combined.bin
+      kind: artifact
+      value: artifact_27
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_15/combined.bin
+        sha256.source: a9834ea58ccfa9dd5878deac871dee0b21b80e4297605333e24a1056593a241f
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_15.stderr.bin:
+      sequence: 51
+      id: obs_51
+      name: terminal_bench.file.trial.agent.terminal.process_15.stderr.bin
+      kind: artifact
+      value: artifact_28
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_15/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_15.stdout.bin:
+      sequence: 52
+      id: obs_52
+      name: terminal_bench.file.trial.agent.terminal.process_15.stdout.bin
+      kind: artifact
+      value: artifact_29
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_15/stdout.bin
+        sha256.source: a9834ea58ccfa9dd5878deac871dee0b21b80e4297605333e24a1056593a241f
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_16.combined.bin:
+      sequence: 53
+      id: obs_53
+      name: terminal_bench.file.trial.agent.terminal.process_16.combined.bin
+      kind: artifact
+      value: artifact_30
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_16/combined.bin
+        sha256.source: 9906120a72ea17c433ba203960422a6b167a38d49a89f0a86d741cde134e13f4
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_16.stderr.bin:
+      sequence: 54
+      id: obs_54
+      name: terminal_bench.file.trial.agent.terminal.process_16.stderr.bin
+      kind: artifact
+      value: artifact_31
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_16/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_16.stdout.bin:
+      sequence: 55
+      id: obs_55
+      name: terminal_bench.file.trial.agent.terminal.process_16.stdout.bin
+      kind: artifact
+      value: artifact_32
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_16/stdout.bin
+        sha256.source: 9906120a72ea17c433ba203960422a6b167a38d49a89f0a86d741cde134e13f4
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_17.combined.bin:
+      sequence: 56
+      id: obs_56
+      name: terminal_bench.file.trial.agent.terminal.process_17.combined.bin
+      kind: artifact
+      value: artifact_33
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_17/combined.bin
+        sha256.source: 542c1ebeffa0e5f85e7950397db81d8f79ea6c187d97698e68a6418d1899cfaf
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_17.stderr.bin:
+      sequence: 57
+      id: obs_57
+      name: terminal_bench.file.trial.agent.terminal.process_17.stderr.bin
+      kind: artifact
+      value: artifact_34
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_17/stderr.bin
+        sha256.source: 542c1ebeffa0e5f85e7950397db81d8f79ea6c187d97698e68a6418d1899cfaf
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_17.stdout.bin:
+      sequence: 58
+      id: obs_58
+      name: terminal_bench.file.trial.agent.terminal.process_17.stdout.bin
+      kind: artifact
+      value: artifact_35
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_17/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_18.combined.bin:
+      sequence: 59
+      id: obs_59
+      name: terminal_bench.file.trial.agent.terminal.process_18.combined.bin
+      kind: artifact
+      value: artifact_36
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_18/combined.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_18.stderr.bin:
+      sequence: 60
+      id: obs_60
+      name: terminal_bench.file.trial.agent.terminal.process_18.stderr.bin
+      kind: artifact
+      value: artifact_37
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_18/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_18.stdout.bin:
+      sequence: 61
+      id: obs_61
+      name: terminal_bench.file.trial.agent.terminal.process_18.stdout.bin
+      kind: artifact
+      value: artifact_38
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_18/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_19.combined.bin:
+      sequence: 62
+      id: obs_62
+      name: terminal_bench.file.trial.agent.terminal.process_19.combined.bin
+      kind: artifact
+      value: artifact_39
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_19/combined.bin
+        sha256.source: d799bf9ce6c6f1699c1c7c3bc6d0a16a25629a064c0f9668f777ead5e84ccb47
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_19.stderr.bin:
+      sequence: 63
+      id: obs_63
+      name: terminal_bench.file.trial.agent.terminal.process_19.stderr.bin
+      kind: artifact
+      value: artifact_40
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_19/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_19.stdout.bin:
+      sequence: 64
+      id: obs_64
+      name: terminal_bench.file.trial.agent.terminal.process_19.stdout.bin
+      kind: artifact
+      value: artifact_41
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_19/stdout.bin
+        sha256.source: d799bf9ce6c6f1699c1c7c3bc6d0a16a25629a064c0f9668f777ead5e84ccb47
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+      sequence: 65
+      id: obs_65
+      name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+      kind: artifact
+      value: artifact_42
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/combined.bin
+        sha256.source: 9a330d87fa1b2fc43a4a1501f854c8f1a69dce83f1fdab943df85a17bf66ca6c
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+      sequence: 66
+      id: obs_66
+      name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+      kind: artifact
+      value: artifact_43
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+      sequence: 67
+      id: obs_67
+      name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+      kind: artifact
+      value: artifact_44
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stdout.bin
+        sha256.source: 9a330d87fa1b2fc43a4a1501f854c8f1a69dce83f1fdab943df85a17bf66ca6c
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_20.combined.bin:
+      sequence: 68
+      id: obs_68
+      name: terminal_bench.file.trial.agent.terminal.process_20.combined.bin
+      kind: artifact
+      value: artifact_45
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_20/combined.bin
+        sha256.source: c186380b852ee6c15a8e37807b3f113d3bed5fd32d58fd29923e125454cd6c09
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_20.stderr.bin:
+      sequence: 69
+      id: obs_69
+      name: terminal_bench.file.trial.agent.terminal.process_20.stderr.bin
+      kind: artifact
+      value: artifact_46
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_20/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_20.stdout.bin:
+      sequence: 70
+      id: obs_70
+      name: terminal_bench.file.trial.agent.terminal.process_20.stdout.bin
+      kind: artifact
+      value: artifact_47
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_20/stdout.bin
+        sha256.source: c186380b852ee6c15a8e37807b3f113d3bed5fd32d58fd29923e125454cd6c09
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_21.combined.bin:
+      sequence: 71
+      id: obs_71
+      name: terminal_bench.file.trial.agent.terminal.process_21.combined.bin
+      kind: artifact
+      value: artifact_48
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_21/combined.bin
+        sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_21.stderr.bin:
+      sequence: 72
+      id: obs_72
+      name: terminal_bench.file.trial.agent.terminal.process_21.stderr.bin
+      kind: artifact
+      value: artifact_49
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_21/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_21.stdout.bin:
+      sequence: 73
+      id: obs_73
+      name: terminal_bench.file.trial.agent.terminal.process_21.stdout.bin
+      kind: artifact
+      value: artifact_50
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_21/stdout.bin
+        sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_22.combined.bin:
+      sequence: 74
+      id: obs_74
+      name: terminal_bench.file.trial.agent.terminal.process_22.combined.bin
+      kind: artifact
+      value: artifact_51
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_22/combined.bin
+        sha256.source: 2d460bd48c80f9cc0debaca9d1980d317e5494903912587c32a637030b87856b
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_22.stderr.bin:
+      sequence: 75
+      id: obs_75
+      name: terminal_bench.file.trial.agent.terminal.process_22.stderr.bin
+      kind: artifact
+      value: artifact_52
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_22/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_22.stdout.bin:
+      sequence: 76
+      id: obs_76
+      name: terminal_bench.file.trial.agent.terminal.process_22.stdout.bin
+      kind: artifact
+      value: artifact_53
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_22/stdout.bin
+        sha256.source: 2d460bd48c80f9cc0debaca9d1980d317e5494903912587c32a637030b87856b
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_23.combined.bin:
+      sequence: 77
+      id: obs_77
+      name: terminal_bench.file.trial.agent.terminal.process_23.combined.bin
+      kind: artifact
+      value: artifact_54
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_23/combined.bin
+        sha256.source: 1b2ab3e4e6bbb17fdfefa939f22b92e5bd7ad35b3ca4a1ad24bc33cbdb1ca655
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_23.stderr.bin:
+      sequence: 78
+      id: obs_78
+      name: terminal_bench.file.trial.agent.terminal.process_23.stderr.bin
+      kind: artifact
+      value: artifact_55
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_23/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_23.stdout.bin:
+      sequence: 79
+      id: obs_79
+      name: terminal_bench.file.trial.agent.terminal.process_23.stdout.bin
+      kind: artifact
+      value: artifact_56
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_23/stdout.bin
+        sha256.source: 1b2ab3e4e6bbb17fdfefa939f22b92e5bd7ad35b3ca4a1ad24bc33cbdb1ca655
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_24.combined.bin:
+      sequence: 80
+      id: obs_80
+      name: terminal_bench.file.trial.agent.terminal.process_24.combined.bin
+      kind: artifact
+      value: artifact_57
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_24/combined.bin
+        sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_24.stderr.bin:
+      sequence: 81
+      id: obs_81
+      name: terminal_bench.file.trial.agent.terminal.process_24.stderr.bin
+      kind: artifact
+      value: artifact_58
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_24/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_24.stdout.bin:
+      sequence: 82
+      id: obs_82
+      name: terminal_bench.file.trial.agent.terminal.process_24.stdout.bin
+      kind: artifact
+      value: artifact_59
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_24/stdout.bin
+        sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_25.combined.bin:
+      sequence: 83
+      id: obs_83
+      name: terminal_bench.file.trial.agent.terminal.process_25.combined.bin
+      kind: artifact
+      value: artifact_60
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_25/combined.bin
+        sha256.source: 3708d0b9f3d4d465424b9e752573b942979e163a6724d1842e53e8ed44516e5d
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_25.stderr.bin:
+      sequence: 84
+      id: obs_84
+      name: terminal_bench.file.trial.agent.terminal.process_25.stderr.bin
+      kind: artifact
+      value: artifact_61
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_25/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_25.stdout.bin:
+      sequence: 85
+      id: obs_85
+      name: terminal_bench.file.trial.agent.terminal.process_25.stdout.bin
+      kind: artifact
+      value: artifact_62
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_25/stdout.bin
+        sha256.source: 3708d0b9f3d4d465424b9e752573b942979e163a6724d1842e53e8ed44516e5d
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_26.combined.bin:
+      sequence: 86
+      id: obs_86
+      name: terminal_bench.file.trial.agent.terminal.process_26.combined.bin
+      kind: artifact
+      value: artifact_63
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_26/combined.bin
+        sha256.source: bfbf13ab677878039195a05ff41697c9026f60fec36eca3c0c94a1ade7ac6f37
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_26.stderr.bin:
+      sequence: 87
+      id: obs_87
+      name: terminal_bench.file.trial.agent.terminal.process_26.stderr.bin
+      kind: artifact
+      value: artifact_64
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_26/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_26.stdout.bin:
+      sequence: 88
+      id: obs_88
+      name: terminal_bench.file.trial.agent.terminal.process_26.stdout.bin
+      kind: artifact
+      value: artifact_65
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_26/stdout.bin
+        sha256.source: bfbf13ab677878039195a05ff41697c9026f60fec36eca3c0c94a1ade7ac6f37
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_27.combined.bin:
+      sequence: 89
+      id: obs_89
+      name: terminal_bench.file.trial.agent.terminal.process_27.combined.bin
+      kind: artifact
+      value: artifact_66
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_27/combined.bin
+        sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_27.stderr.bin:
+      sequence: 90
+      id: obs_90
+      name: terminal_bench.file.trial.agent.terminal.process_27.stderr.bin
+      kind: artifact
+      value: artifact_67
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_27/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_27.stdout.bin:
+      sequence: 91
+      id: obs_91
+      name: terminal_bench.file.trial.agent.terminal.process_27.stdout.bin
+      kind: artifact
+      value: artifact_68
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_27/stdout.bin
+        sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_28.combined.bin:
+      sequence: 92
+      id: obs_92
+      name: terminal_bench.file.trial.agent.terminal.process_28.combined.bin
+      kind: artifact
+      value: artifact_69
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_28/combined.bin
+        sha256.source: 01f8b4f2c4f5e2be208306a5a5d6f57178ab580a4350f1d6cd854f2763d82f55
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_28.stderr.bin:
+      sequence: 93
+      id: obs_93
+      name: terminal_bench.file.trial.agent.terminal.process_28.stderr.bin
+      kind: artifact
+      value: artifact_70
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_28/stderr.bin
+        sha256.source: 01f8b4f2c4f5e2be208306a5a5d6f57178ab580a4350f1d6cd854f2763d82f55
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_28.stdout.bin:
+      sequence: 94
+      id: obs_94
+      name: terminal_bench.file.trial.agent.terminal.process_28.stdout.bin
+      kind: artifact
+      value: artifact_71
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_28/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+      sequence: 95
+      id: obs_95
+      name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+      kind: artifact
+      value: artifact_72
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/combined.bin
+        sha256.source: 87d4514ddce5446e338c43b6d4fa6d1612eb16ea5d2791580e0ac2df35f48406
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+      sequence: 96
+      id: obs_96
+      name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+      kind: artifact
+      value: artifact_73
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+      sequence: 97
+      id: obs_97
+      name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+      kind: artifact
+      value: artifact_74
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stdout.bin
+        sha256.source: 87d4514ddce5446e338c43b6d4fa6d1612eb16ea5d2791580e0ac2df35f48406
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+      sequence: 98
+      id: obs_98
+      name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+      kind: artifact
+      value: artifact_75
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/combined.bin
+        sha256.source: bc60930a42703ce4a4652635e5018d62fb92cfc6265e653071b1692d71bb4d1d
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+      sequence: 99
+      id: obs_99
+      name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+      kind: artifact
+      value: artifact_76
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+      sequence: 100
+      id: obs_100
+      name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+      kind: artifact
+      value: artifact_77
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stdout.bin
+        sha256.source: bc60930a42703ce4a4652635e5018d62fb92cfc6265e653071b1692d71bb4d1d
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+      sequence: 101
+      id: obs_101
+      name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+      kind: artifact
+      value: artifact_78
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/combined.bin
+        sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+      sequence: 102
+      id: obs_102
+      name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+      kind: artifact
+      value: artifact_79
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+      sequence: 103
+      id: obs_103
+      name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+      kind: artifact
+      value: artifact_80
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stdout.bin
+        sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+      sequence: 104
+      id: obs_104
+      name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+      kind: artifact
+      value: artifact_81
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/combined.bin
+        sha256.source: 13fbbfb952061e63db45f53c5a917d3c0a1100f11309130e48d7f8d1713060ba
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+      sequence: 105
+      id: obs_105
+      name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+      kind: artifact
+      value: artifact_82
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+      sequence: 106
+      id: obs_106
+      name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+      kind: artifact
+      value: artifact_83
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_6/stdout.bin
+        sha256.source: 13fbbfb952061e63db45f53c5a917d3c0a1100f11309130e48d7f8d1713060ba
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.combined.bin:
+      sequence: 107
+      id: obs_107
+      name: terminal_bench.file.trial.agent.terminal.process_7.combined.bin
+      kind: artifact
+      value: artifact_84
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/combined.bin
+        sha256.source: 4625001931713a02ed3bddff1b92b01d71ad12680bc03f6e017347ee4ef8561a
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.stderr.bin:
+      sequence: 108
+      id: obs_108
+      name: terminal_bench.file.trial.agent.terminal.process_7.stderr.bin
+      kind: artifact
+      value: artifact_85
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_7.stdout.bin:
+      sequence: 109
+      id: obs_109
+      name: terminal_bench.file.trial.agent.terminal.process_7.stdout.bin
+      kind: artifact
+      value: artifact_86
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_7/stdout.bin
+        sha256.source: 4625001931713a02ed3bddff1b92b01d71ad12680bc03f6e017347ee4ef8561a
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.combined.bin:
+      sequence: 110
+      id: obs_110
+      name: terminal_bench.file.trial.agent.terminal.process_8.combined.bin
+      kind: artifact
+      value: artifact_87
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/combined.bin
+        sha256.source: 2e3a9d7bd64e4b00aa373cee3ef24bf664f14656790ca59fb2731077747fe937
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.stderr.bin:
+      sequence: 111
+      id: obs_111
+      name: terminal_bench.file.trial.agent.terminal.process_8.stderr.bin
+      kind: artifact
+      value: artifact_88
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_8.stdout.bin:
+      sequence: 112
+      id: obs_112
+      name: terminal_bench.file.trial.agent.terminal.process_8.stdout.bin
+      kind: artifact
+      value: artifact_89
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_8/stdout.bin
+        sha256.source: 2e3a9d7bd64e4b00aa373cee3ef24bf664f14656790ca59fb2731077747fe937
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.combined.bin:
+      sequence: 113
+      id: obs_113
+      name: terminal_bench.file.trial.agent.terminal.process_9.combined.bin
+      kind: artifact
+      value: artifact_90
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/combined.bin
+        sha256.source: c050acda2ff51db72002da29c2dfeff90a6d18090f5e92aa32f103de08b9a26f
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.stderr.bin:
+      sequence: 114
+      id: obs_114
+      name: terminal_bench.file.trial.agent.terminal.process_9.stderr.bin
+      kind: artifact
+      value: artifact_91
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.agent.terminal.process_9.stdout.bin:
+      sequence: 115
+      id: obs_115
+      name: terminal_bench.file.trial.agent.terminal.process_9.stdout.bin
+      kind: artifact
+      value: artifact_92
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_9/stdout.bin
+        sha256.source: c050acda2ff51db72002da29c2dfeff90a6d18090f5e92aa32f103de08b9a26f
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 116
+      id: obs_116
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_93
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.config.json:
+      sequence: 117
+      id: obs_117
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_94
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: 504bb6fe18e480c13579c4870d3bdd9f5d7624d96e8f327ff30f379793b64f4d
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.lock.json:
+      sequence: 118
+      id: obs_118
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_95
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: ada93e658e99371a9ebe14a27d17bf6ce36d0cdcc9d00ebf719a0ec5e3077934
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.result.json:
+      sequence: 119
+      id: obs_119
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_96
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: ee31e96924459d9e6e4627e8e2678d79669a8ba26751b4c3c645576676be1f1b
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.trial.log:
+      sequence: 120
+      id: obs_120
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_97
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: fe551de474805ec2be52f50b4adad8146dfaa3fd661fb143b0a5a2b2acd5d881
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.ctrf.json:
+      sequence: 121
+      id: obs_121
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      kind: artifact
+      value: artifact_98
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/ctrf.json
+        sha256.source: 28f8d4b4472b7a58c39632d10063d8dc8c9f60c07c63b2e6a6e1c8ccf1d1eeba
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.reward.txt:
+      sequence: 122
+      id: obs_122
+      name: terminal_bench.file.trial.verifier.reward.txt
+      kind: artifact
+      value: artifact_99
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/reward.txt
+        sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.file.trial.verifier.test-stdout.txt:
+      sequence: 123
+      id: obs_123
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      kind: artifact
+      value: artifact_100
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/test-stdout.txt
+        sha256.source: 5a860cb22b077c12cbdf04de8f0d3c3e263c69272af52a38d3e14df586401aa4
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+    terminal_bench.evidence_index:
+      sequence: 125
+      id: obs_125
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_101
+      span: span_1
+      source: task_observation
+      case: fix-git__p8jepbu
+      variant: kedi-164a847fa3c8
+trace:
+  id: c429c90a21a14ff27f91d3d2cb511ab0
+  partial: false
+  spans: 2
+  signals: 231
+  artifact:
+    id: abp_trace
+    name: ABP trace
+    media: application/vnd.autobench.abp-trace+yaml
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/trace.yaml
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-09-01T14:29:47.017066+00:00'
+    ended_at: '2026-09-01T14:29:47.929390+00:00'
+    duration: 0.912352041
+    input:
+      task_name: terminal-bench/fix-git
+      trial_name: fix-git__P8jEpBu
+    output:
+      task_name: terminal-bench/fix-git
+      trial_name: fix-git__P8jEpBu
+      rewards:
+        reward: 1.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 70912
+        cache_write_tokens: 0
+        cost_usd: 0.01988704
+        input_tokens: 149150
+        output_tokens: 2351
+        requests: 14
+        tool_calls: 31
+        total_tokens: 151501
+        uncached_input_tokens: 78238
+      evidence_file_count: 100
+      evidence_bytes: 203208
+      skipped_file_count: 0
+    observations:
+      - obs_6
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+      - obs_27
+      - obs_28
+      - obs_29
+      - obs_30
+      - obs_31
+      - obs_32
+      - obs_33
+      - obs_34
+      - obs_35
+      - obs_36
+      - obs_37
+      - obs_38
+      - obs_39
+      - obs_40
+      - obs_41
+      - obs_42
+      - obs_43
+      - obs_44
+      - obs_45
+      - obs_46
+      - obs_47
+      - obs_48
+      - obs_49
+      - obs_50
+      - obs_51
+      - obs_52
+      - obs_53
+      - obs_54
+      - obs_55
+      - obs_56
+      - obs_57
+      - obs_58
+      - obs_59
+      - obs_60
+      - obs_61
+      - obs_62
+      - obs_63
+      - obs_64
+      - obs_65
+      - obs_66
+      - obs_67
+      - obs_68
+      - obs_69
+      - obs_70
+      - obs_71
+      - obs_72
+      - obs_73
+      - obs_74
+      - obs_75
+      - obs_76
+      - obs_77
+      - obs_78
+      - obs_79
+      - obs_80
+      - obs_81
+      - obs_82
+      - obs_83
+      - obs_84
+      - obs_85
+      - obs_86
+      - obs_87
+      - obs_88
+      - obs_89
+      - obs_90
+      - obs_91
+      - obs_92
+      - obs_93
+      - obs_94
+      - obs_95
+      - obs_96
+      - obs_97
+      - obs_98
+      - obs_99
+      - obs_100
+      - obs_101
+      - obs_102
+      - obs_103
+      - obs_104
+      - obs_105
+      - obs_106
+      - obs_107
+      - obs_108
+      - obs_109
+      - obs_110
+      - obs_111
+      - obs_112
+      - obs_113
+      - obs_114
+      - obs_115
+      - obs_116
+      - obs_117
+      - obs_118
+      - obs_119
+      - obs_120
+      - obs_121
+      - obs_122
+      - obs_123
+      - obs_124
+      - obs_125
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+      - artifact_13
+      - artifact_14
+      - artifact_15
+      - artifact_16
+      - artifact_17
+      - artifact_18
+      - artifact_19
+      - artifact_20
+      - artifact_21
+      - artifact_22
+      - artifact_23
+      - artifact_24
+      - artifact_25
+      - artifact_26
+      - artifact_27
+      - artifact_28
+      - artifact_29
+      - artifact_30
+      - artifact_31
+      - artifact_32
+      - artifact_33
+      - artifact_34
+      - artifact_35
+      - artifact_36
+      - artifact_37
+      - artifact_38
+      - artifact_39
+      - artifact_40
+      - artifact_41
+      - artifact_42
+      - artifact_43
+      - artifact_44
+      - artifact_45
+      - artifact_46
+      - artifact_47
+      - artifact_48
+      - artifact_49
+      - artifact_50
+      - artifact_51
+      - artifact_52
+      - artifact_53
+      - artifact_54
+      - artifact_55
+      - artifact_56
+      - artifact_57
+      - artifact_58
+      - artifact_59
+      - artifact_60
+      - artifact_61
+      - artifact_62
+      - artifact_63
+      - artifact_64
+      - artifact_65
+      - artifact_66
+      - artifact_67
+      - artifact_68
+      - artifact_69
+      - artifact_70
+      - artifact_71
+      - artifact_72
+      - artifact_73
+      - artifact_74
+      - artifact_75
+      - artifact_76
+      - artifact_77
+      - artifact_78
+      - artifact_79
+      - artifact_80
+      - artifact_81
+      - artifact_82
+      - artifact_83
+      - artifact_84
+      - artifact_85
+      - artifact_86
+      - artifact_87
+      - artifact_88
+      - artifact_89
+      - artifact_90
+      - artifact_91
+      - artifact_92
+      - artifact_93
+      - artifact_94
+      - artifact_95
+      - artifact_96
+      - artifact_97
+      - artifact_98
+      - artifact_99
+      - artifact_100
+      - artifact_101
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+    source: file
+    state: complete
+    sha256: 2e1846570c87fb9aace28f9f2be3197307d7c78e5f1b3a4e958ccb42749f874d
+    byte_count: 1926
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+    source: file
+    state: complete
+    sha256: a8474fc8d22b7334536c23e11e704490702766da925150a019195c650fa2634c
+    byte_count: 17289
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+    source: file
+    state: complete
+    sha256: d0eaf77bc89d2240256be3a8234c5930db2d9b0ba4074c34982db941d04bc444
+    byte_count: 2140
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+    source: file
+    state: complete
+    sha256: 0df3bedda22b5d3273159f195923ca8db8ec891b5144f9a3b42425fe3e3c09d1
+    byte_count: 18828
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+    source: file
+    state: complete
+    sha256: 4f2c430927c664c53f0fefa18700d39bafa89ca14c3d601831d48e9f11e05e5b
+    byte_count: 1334
+    filename: result.json
+  terminal_bench.file.trial.agent.kedi-result.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.agent.kedi-result.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi-result.json
+      sha256.source: dd48999b9d46896c3baac916bc2463cac3938fbcdf9c3310261a66a3a824edd3
+    source: file
+    state: complete
+    sha256: dd48999b9d46896c3baac916bc2463cac3938fbcdf9c3310261a66a3a824edd3
+    byte_count: 51691
+    filename: kedi-result.json
+  terminal_bench.file.trial.agent.kedi.txt:
+    id: artifact_7
+    name: terminal_bench.file.trial.agent.kedi.txt
+    media: text/plain
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_7.txt
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi.txt
+      sha256.source: f86be2f45a57e8d0f3821abc63564da901ebdd416e4d0998713ab5b0da169bca
+    source: file
+    state: complete
+    sha256: f86be2f45a57e8d0f3821abc63564da901ebdd416e4d0998713ab5b0da169bca
+    byte_count: 2917
+    filename: kedi.txt
+  terminal_bench.file.trial.agent.terminal-events.jsonl:
+    id: artifact_8
+    name: terminal_bench.file.trial.agent.terminal-events.jsonl
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_8.jsonl
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal-events.jsonl
+      sha256.source: a73373ac965c7f4d2459cf249e72b5528b8b3a55883bc6accc1c022508078ee8
+    source: file
+    state: complete
+    sha256: a73373ac965c7f4d2459cf249e72b5528b8b3a55883bc6accc1c022508078ee8
+    byte_count: 51336
+    filename: terminal-events.jsonl
+  terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+    id: artifact_9
+    name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_9.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/combined.bin
+      sha256.source: 08031b1218f57b51cb81a5e2558e70ca8fe7581fcf2d11f22bc2ace7b973f408
+    source: file
+    state: complete
+    sha256: 08031b1218f57b51cb81a5e2558e70ca8fe7581fcf2d11f22bc2ace7b973f408
+    byte_count: 1123
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+    id: artifact_10
+    name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_10.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stderr.bin
+      sha256.source: 08031b1218f57b51cb81a5e2558e70ca8fe7581fcf2d11f22bc2ace7b973f408
+    source: file
+    state: complete
+    sha256: 08031b1218f57b51cb81a5e2558e70ca8fe7581fcf2d11f22bc2ace7b973f408
+    byte_count: 1123
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+    id: artifact_11
+    name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_11.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_10.combined.bin:
+    id: artifact_12
+    name: terminal_bench.file.trial.agent.terminal.process_10.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_12.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/combined.bin
+      sha256.source: cd5bbef2388fdc43349658371b48c07696c0c8bc09daac98bdb5c73093729e22
+    source: file
+    state: complete
+    sha256: cd5bbef2388fdc43349658371b48c07696c0c8bc09daac98bdb5c73093729e22
+    byte_count: 47
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_10.stderr.bin:
+    id: artifact_13
+    name: terminal_bench.file.trial.agent.terminal.process_10.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_13.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_10.stdout.bin:
+    id: artifact_14
+    name: terminal_bench.file.trial.agent.terminal.process_10.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_14.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_10/stdout.bin
+      sha256.source: cd5bbef2388fdc43349658371b48c07696c0c8bc09daac98bdb5c73093729e22
+    source: file
+    state: complete
+    sha256: cd5bbef2388fdc43349658371b48c07696c0c8bc09daac98bdb5c73093729e22
+    byte_count: 47
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_11.combined.bin:
+    id: artifact_15
+    name: terminal_bench.file.trial.agent.terminal.process_11.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_15.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_11/combined.bin
+      sha256.source: b68c01aeaf205d484ceac4d3850f19894d7794a3f1791a5a85933a898fdeb768
+    source: file
+    state: complete
+    sha256: b68c01aeaf205d484ceac4d3850f19894d7794a3f1791a5a85933a898fdeb768
+    byte_count: 1662
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_11.stderr.bin:
+    id: artifact_16
+    name: terminal_bench.file.trial.agent.terminal.process_11.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_16.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_11/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_11.stdout.bin:
+    id: artifact_17
+    name: terminal_bench.file.trial.agent.terminal.process_11.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_17.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_11/stdout.bin
+      sha256.source: b68c01aeaf205d484ceac4d3850f19894d7794a3f1791a5a85933a898fdeb768
+    source: file
+    state: complete
+    sha256: b68c01aeaf205d484ceac4d3850f19894d7794a3f1791a5a85933a898fdeb768
+    byte_count: 1662
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_12.combined.bin:
+    id: artifact_18
+    name: terminal_bench.file.trial.agent.terminal.process_12.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_18.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_12/combined.bin
+      sha256.source: 9c98b280d713d88e6c1b43a4844e589922a7006469de2397a67e20d23e703ffd
+    source: file
+    state: complete
+    sha256: 9c98b280d713d88e6c1b43a4844e589922a7006469de2397a67e20d23e703ffd
+    byte_count: 565
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_12.stderr.bin:
+    id: artifact_19
+    name: terminal_bench.file.trial.agent.terminal.process_12.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_19.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_12/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_12.stdout.bin:
+    id: artifact_20
+    name: terminal_bench.file.trial.agent.terminal.process_12.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_20.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_12/stdout.bin
+      sha256.source: 9c98b280d713d88e6c1b43a4844e589922a7006469de2397a67e20d23e703ffd
+    source: file
+    state: complete
+    sha256: 9c98b280d713d88e6c1b43a4844e589922a7006469de2397a67e20d23e703ffd
+    byte_count: 565
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_13.combined.bin:
+    id: artifact_21
+    name: terminal_bench.file.trial.agent.terminal.process_13.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_21.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_13/combined.bin
+      sha256.source: 2e09260b011012f9f7f491cd02809903449924cf8f825acd369fb8990b04e768
+    source: file
+    state: complete
+    sha256: 2e09260b011012f9f7f491cd02809903449924cf8f825acd369fb8990b04e768
+    byte_count: 332
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_13.stderr.bin:
+    id: artifact_22
+    name: terminal_bench.file.trial.agent.terminal.process_13.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_22.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_13/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_13.stdout.bin:
+    id: artifact_23
+    name: terminal_bench.file.trial.agent.terminal.process_13.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_23.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_13/stdout.bin
+      sha256.source: 2e09260b011012f9f7f491cd02809903449924cf8f825acd369fb8990b04e768
+    source: file
+    state: complete
+    sha256: 2e09260b011012f9f7f491cd02809903449924cf8f825acd369fb8990b04e768
+    byte_count: 332
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_14.combined.bin:
+    id: artifact_24
+    name: terminal_bench.file.trial.agent.terminal.process_14.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_24.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_14/combined.bin
+      sha256.source: 377d6f0f4e4c823c1874a7f1cf1d6e01277236f942c105cf949c02217adc82da
+    source: file
+    state: complete
+    sha256: 377d6f0f4e4c823c1874a7f1cf1d6e01277236f942c105cf949c02217adc82da
+    byte_count: 1438
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_14.stderr.bin:
+    id: artifact_25
+    name: terminal_bench.file.trial.agent.terminal.process_14.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_25.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_14/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_14.stdout.bin:
+    id: artifact_26
+    name: terminal_bench.file.trial.agent.terminal.process_14.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_26.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_14/stdout.bin
+      sha256.source: 377d6f0f4e4c823c1874a7f1cf1d6e01277236f942c105cf949c02217adc82da
+    source: file
+    state: complete
+    sha256: 377d6f0f4e4c823c1874a7f1cf1d6e01277236f942c105cf949c02217adc82da
+    byte_count: 1438
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_15.combined.bin:
+    id: artifact_27
+    name: terminal_bench.file.trial.agent.terminal.process_15.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_27.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_15/combined.bin
+      sha256.source: a9834ea58ccfa9dd5878deac871dee0b21b80e4297605333e24a1056593a241f
+    source: file
+    state: complete
+    sha256: a9834ea58ccfa9dd5878deac871dee0b21b80e4297605333e24a1056593a241f
+    byte_count: 662
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_15.stderr.bin:
+    id: artifact_28
+    name: terminal_bench.file.trial.agent.terminal.process_15.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_28.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_15/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_15.stdout.bin:
+    id: artifact_29
+    name: terminal_bench.file.trial.agent.terminal.process_15.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_29.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_15/stdout.bin
+      sha256.source: a9834ea58ccfa9dd5878deac871dee0b21b80e4297605333e24a1056593a241f
+    source: file
+    state: complete
+    sha256: a9834ea58ccfa9dd5878deac871dee0b21b80e4297605333e24a1056593a241f
+    byte_count: 662
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_16.combined.bin:
+    id: artifact_30
+    name: terminal_bench.file.trial.agent.terminal.process_16.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_30.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_16/combined.bin
+      sha256.source: 9906120a72ea17c433ba203960422a6b167a38d49a89f0a86d741cde134e13f4
+    source: file
+    state: complete
+    sha256: 9906120a72ea17c433ba203960422a6b167a38d49a89f0a86d741cde134e13f4
+    byte_count: 1601
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_16.stderr.bin:
+    id: artifact_31
+    name: terminal_bench.file.trial.agent.terminal.process_16.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_31.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_16/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_16.stdout.bin:
+    id: artifact_32
+    name: terminal_bench.file.trial.agent.terminal.process_16.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_32.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_16/stdout.bin
+      sha256.source: 9906120a72ea17c433ba203960422a6b167a38d49a89f0a86d741cde134e13f4
+    source: file
+    state: complete
+    sha256: 9906120a72ea17c433ba203960422a6b167a38d49a89f0a86d741cde134e13f4
+    byte_count: 1601
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_17.combined.bin:
+    id: artifact_33
+    name: terminal_bench.file.trial.agent.terminal.process_17.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_33.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_17/combined.bin
+      sha256.source: 542c1ebeffa0e5f85e7950397db81d8f79ea6c187d97698e68a6418d1899cfaf
+    source: file
+    state: complete
+    sha256: 542c1ebeffa0e5f85e7950397db81d8f79ea6c187d97698e68a6418d1899cfaf
+    byte_count: 30
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_17.stderr.bin:
+    id: artifact_34
+    name: terminal_bench.file.trial.agent.terminal.process_17.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_34.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_17/stderr.bin
+      sha256.source: 542c1ebeffa0e5f85e7950397db81d8f79ea6c187d97698e68a6418d1899cfaf
+    source: file
+    state: complete
+    sha256: 542c1ebeffa0e5f85e7950397db81d8f79ea6c187d97698e68a6418d1899cfaf
+    byte_count: 30
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_17.stdout.bin:
+    id: artifact_35
+    name: terminal_bench.file.trial.agent.terminal.process_17.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_35.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_17/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_18.combined.bin:
+    id: artifact_36
+    name: terminal_bench.file.trial.agent.terminal.process_18.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_36.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_18/combined.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_18.stderr.bin:
+    id: artifact_37
+    name: terminal_bench.file.trial.agent.terminal.process_18.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_37.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_18/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_18.stdout.bin:
+    id: artifact_38
+    name: terminal_bench.file.trial.agent.terminal.process_18.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_38.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_18/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_19.combined.bin:
+    id: artifact_39
+    name: terminal_bench.file.trial.agent.terminal.process_19.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_39.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_19/combined.bin
+      sha256.source: d799bf9ce6c6f1699c1c7c3bc6d0a16a25629a064c0f9668f777ead5e84ccb47
+    source: file
+    state: complete
+    sha256: d799bf9ce6c6f1699c1c7c3bc6d0a16a25629a064c0f9668f777ead5e84ccb47
+    byte_count: 47
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_19.stderr.bin:
+    id: artifact_40
+    name: terminal_bench.file.trial.agent.terminal.process_19.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_40.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_19/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_19.stdout.bin:
+    id: artifact_41
+    name: terminal_bench.file.trial.agent.terminal.process_19.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_41.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_19/stdout.bin
+      sha256.source: d799bf9ce6c6f1699c1c7c3bc6d0a16a25629a064c0f9668f777ead5e84ccb47
+    source: file
+    state: complete
+    sha256: d799bf9ce6c6f1699c1c7c3bc6d0a16a25629a064c0f9668f777ead5e84ccb47
+    byte_count: 47
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+    id: artifact_42
+    name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_42.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/combined.bin
+      sha256.source: 9a330d87fa1b2fc43a4a1501f854c8f1a69dce83f1fdab943df85a17bf66ca6c
+    source: file
+    state: complete
+    sha256: 9a330d87fa1b2fc43a4a1501f854c8f1a69dce83f1fdab943df85a17bf66ca6c
+    byte_count: 40
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+    id: artifact_43
+    name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_43.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+    id: artifact_44
+    name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_44.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stdout.bin
+      sha256.source: 9a330d87fa1b2fc43a4a1501f854c8f1a69dce83f1fdab943df85a17bf66ca6c
+    source: file
+    state: complete
+    sha256: 9a330d87fa1b2fc43a4a1501f854c8f1a69dce83f1fdab943df85a17bf66ca6c
+    byte_count: 40
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_20.combined.bin:
+    id: artifact_45
+    name: terminal_bench.file.trial.agent.terminal.process_20.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_45.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_20/combined.bin
+      sha256.source: c186380b852ee6c15a8e37807b3f113d3bed5fd32d58fd29923e125454cd6c09
+    source: file
+    state: complete
+    sha256: c186380b852ee6c15a8e37807b3f113d3bed5fd32d58fd29923e125454cd6c09
+    byte_count: 329
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_20.stderr.bin:
+    id: artifact_46
+    name: terminal_bench.file.trial.agent.terminal.process_20.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_46.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_20/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_20.stdout.bin:
+    id: artifact_47
+    name: terminal_bench.file.trial.agent.terminal.process_20.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_47.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_20/stdout.bin
+      sha256.source: c186380b852ee6c15a8e37807b3f113d3bed5fd32d58fd29923e125454cd6c09
+    source: file
+    state: complete
+    sha256: c186380b852ee6c15a8e37807b3f113d3bed5fd32d58fd29923e125454cd6c09
+    byte_count: 329
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_21.combined.bin:
+    id: artifact_48
+    name: terminal_bench.file.trial.agent.terminal.process_21.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_48.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_21/combined.bin
+      sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    source: file
+    state: complete
+    sha256: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    byte_count: 146
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_21.stderr.bin:
+    id: artifact_49
+    name: terminal_bench.file.trial.agent.terminal.process_21.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_49.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_21/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_21.stdout.bin:
+    id: artifact_50
+    name: terminal_bench.file.trial.agent.terminal.process_21.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_50.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_21/stdout.bin
+      sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    source: file
+    state: complete
+    sha256: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    byte_count: 146
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_22.combined.bin:
+    id: artifact_51
+    name: terminal_bench.file.trial.agent.terminal.process_22.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_51.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_22/combined.bin
+      sha256.source: 2d460bd48c80f9cc0debaca9d1980d317e5494903912587c32a637030b87856b
+    source: file
+    state: complete
+    sha256: 2d460bd48c80f9cc0debaca9d1980d317e5494903912587c32a637030b87856b
+    byte_count: 4943
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_22.stderr.bin:
+    id: artifact_52
+    name: terminal_bench.file.trial.agent.terminal.process_22.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_52.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_22/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_22.stdout.bin:
+    id: artifact_53
+    name: terminal_bench.file.trial.agent.terminal.process_22.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_53.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_22/stdout.bin
+      sha256.source: 2d460bd48c80f9cc0debaca9d1980d317e5494903912587c32a637030b87856b
+    source: file
+    state: complete
+    sha256: 2d460bd48c80f9cc0debaca9d1980d317e5494903912587c32a637030b87856b
+    byte_count: 4943
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_23.combined.bin:
+    id: artifact_54
+    name: terminal_bench.file.trial.agent.terminal.process_23.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_54.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_23/combined.bin
+      sha256.source: 1b2ab3e4e6bbb17fdfefa939f22b92e5bd7ad35b3ca4a1ad24bc33cbdb1ca655
+    source: file
+    state: complete
+    sha256: 1b2ab3e4e6bbb17fdfefa939f22b92e5bd7ad35b3ca4a1ad24bc33cbdb1ca655
+    byte_count: 50
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_23.stderr.bin:
+    id: artifact_55
+    name: terminal_bench.file.trial.agent.terminal.process_23.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_55.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_23/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_23.stdout.bin:
+    id: artifact_56
+    name: terminal_bench.file.trial.agent.terminal.process_23.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_56.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_23/stdout.bin
+      sha256.source: 1b2ab3e4e6bbb17fdfefa939f22b92e5bd7ad35b3ca4a1ad24bc33cbdb1ca655
+    source: file
+    state: complete
+    sha256: 1b2ab3e4e6bbb17fdfefa939f22b92e5bd7ad35b3ca4a1ad24bc33cbdb1ca655
+    byte_count: 50
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_24.combined.bin:
+    id: artifact_57
+    name: terminal_bench.file.trial.agent.terminal.process_24.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_57.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_24/combined.bin
+      sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    source: file
+    state: complete
+    sha256: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    byte_count: 10
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_24.stderr.bin:
+    id: artifact_58
+    name: terminal_bench.file.trial.agent.terminal.process_24.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_58.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_24/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_24.stdout.bin:
+    id: artifact_59
+    name: terminal_bench.file.trial.agent.terminal.process_24.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_59.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_24/stdout.bin
+      sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    source: file
+    state: complete
+    sha256: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    byte_count: 10
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_25.combined.bin:
+    id: artifact_60
+    name: terminal_bench.file.trial.agent.terminal.process_25.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_60.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_25/combined.bin
+      sha256.source: 3708d0b9f3d4d465424b9e752573b942979e163a6724d1842e53e8ed44516e5d
+    source: file
+    state: complete
+    sha256: 3708d0b9f3d4d465424b9e752573b942979e163a6724d1842e53e8ed44516e5d
+    byte_count: 136
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_25.stderr.bin:
+    id: artifact_61
+    name: terminal_bench.file.trial.agent.terminal.process_25.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_61.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_25/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_25.stdout.bin:
+    id: artifact_62
+    name: terminal_bench.file.trial.agent.terminal.process_25.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_62.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_25/stdout.bin
+      sha256.source: 3708d0b9f3d4d465424b9e752573b942979e163a6724d1842e53e8ed44516e5d
+    source: file
+    state: complete
+    sha256: 3708d0b9f3d4d465424b9e752573b942979e163a6724d1842e53e8ed44516e5d
+    byte_count: 136
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_26.combined.bin:
+    id: artifact_63
+    name: terminal_bench.file.trial.agent.terminal.process_26.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_63.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_26/combined.bin
+      sha256.source: bfbf13ab677878039195a05ff41697c9026f60fec36eca3c0c94a1ade7ac6f37
+    source: file
+    state: complete
+    sha256: bfbf13ab677878039195a05ff41697c9026f60fec36eca3c0c94a1ade7ac6f37
+    byte_count: 285
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_26.stderr.bin:
+    id: artifact_64
+    name: terminal_bench.file.trial.agent.terminal.process_26.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_64.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_26/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_26.stdout.bin:
+    id: artifact_65
+    name: terminal_bench.file.trial.agent.terminal.process_26.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_65.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_26/stdout.bin
+      sha256.source: bfbf13ab677878039195a05ff41697c9026f60fec36eca3c0c94a1ade7ac6f37
+    source: file
+    state: complete
+    sha256: bfbf13ab677878039195a05ff41697c9026f60fec36eca3c0c94a1ade7ac6f37
+    byte_count: 285
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_27.combined.bin:
+    id: artifact_66
+    name: terminal_bench.file.trial.agent.terminal.process_27.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_66.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_27/combined.bin
+      sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    source: file
+    state: complete
+    sha256: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    byte_count: 146
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_27.stderr.bin:
+    id: artifact_67
+    name: terminal_bench.file.trial.agent.terminal.process_27.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_67.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_27/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_27.stdout.bin:
+    id: artifact_68
+    name: terminal_bench.file.trial.agent.terminal.process_27.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_68.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_27/stdout.bin
+      sha256.source: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    source: file
+    state: complete
+    sha256: 68fe7c3d65bc561681d897fdc2f276d4fbb9f36a984d5add3019e607645a22c3
+    byte_count: 146
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_28.combined.bin:
+    id: artifact_69
+    name: terminal_bench.file.trial.agent.terminal.process_28.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_69.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_28/combined.bin
+      sha256.source: 01f8b4f2c4f5e2be208306a5a5d6f57178ab580a4350f1d6cd854f2763d82f55
+    source: file
+    state: complete
+    sha256: 01f8b4f2c4f5e2be208306a5a5d6f57178ab580a4350f1d6cd854f2763d82f55
+    byte_count: 71
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_28.stderr.bin:
+    id: artifact_70
+    name: terminal_bench.file.trial.agent.terminal.process_28.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_70.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_28/stderr.bin
+      sha256.source: 01f8b4f2c4f5e2be208306a5a5d6f57178ab580a4350f1d6cd854f2763d82f55
+    source: file
+    state: complete
+    sha256: 01f8b4f2c4f5e2be208306a5a5d6f57178ab580a4350f1d6cd854f2763d82f55
+    byte_count: 71
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_28.stdout.bin:
+    id: artifact_71
+    name: terminal_bench.file.trial.agent.terminal.process_28.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_71.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_28/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+    id: artifact_72
+    name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_72.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/combined.bin
+      sha256.source: 87d4514ddce5446e338c43b6d4fa6d1612eb16ea5d2791580e0ac2df35f48406
+    source: file
+    state: complete
+    sha256: 87d4514ddce5446e338c43b6d4fa6d1612eb16ea5d2791580e0ac2df35f48406
+    byte_count: 576
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+    id: artifact_73
+    name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_73.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+    id: artifact_74
+    name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_74.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stdout.bin
+      sha256.source: 87d4514ddce5446e338c43b6d4fa6d1612eb16ea5d2791580e0ac2df35f48406
+    source: file
+    state: complete
+    sha256: 87d4514ddce5446e338c43b6d4fa6d1612eb16ea5d2791580e0ac2df35f48406
+    byte_count: 576
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+    id: artifact_75
+    name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_75.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/combined.bin
+      sha256.source: bc60930a42703ce4a4652635e5018d62fb92cfc6265e653071b1692d71bb4d1d
+    source: file
+    state: complete
+    sha256: bc60930a42703ce4a4652635e5018d62fb92cfc6265e653071b1692d71bb4d1d
+    byte_count: 635
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+    id: artifact_76
+    name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_76.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+    id: artifact_77
+    name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_77.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stdout.bin
+      sha256.source: bc60930a42703ce4a4652635e5018d62fb92cfc6265e653071b1692d71bb4d1d
+    source: file
+    state: complete
+    sha256: bc60930a42703ce4a4652635e5018d62fb92cfc6265e653071b1692d71bb4d1d
+    byte_count: 635
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+    id: artifact_78
+    name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_78.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/combined.bin
+      sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    source: file
+    state: complete
+    sha256: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    byte_count: 10
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+    id: artifact_79
+    name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_79.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+    id: artifact_80
+    name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_80.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stdout.bin
+      sha256.source: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    source: file
+    state: complete
+    sha256: 17e6ea2eae06b24a9dcfdcd91e871a064b2a2bf9cf4c8854457396c1c0fd2d56
+    byte_count: 10
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_6.combined.bin:
+    id: artifact_81
+    name: terminal_bench.file.trial.agent.terminal.process_6.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_81.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/combined.bin
+      sha256.source: 13fbbfb952061e63db45f53c5a917d3c0a1100f11309130e48d7f8d1713060ba
+    source: file
+    state: complete
+    sha256: 13fbbfb952061e63db45f53c5a917d3c0a1100f11309130e48d7f8d1713060ba
+    byte_count: 171
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stderr.bin:
+    id: artifact_82
+    name: terminal_bench.file.trial.agent.terminal.process_6.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_82.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_6.stdout.bin:
+    id: artifact_83
+    name: terminal_bench.file.trial.agent.terminal.process_6.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_83.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_6/stdout.bin
+      sha256.source: 13fbbfb952061e63db45f53c5a917d3c0a1100f11309130e48d7f8d1713060ba
+    source: file
+    state: complete
+    sha256: 13fbbfb952061e63db45f53c5a917d3c0a1100f11309130e48d7f8d1713060ba
+    byte_count: 171
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_7.combined.bin:
+    id: artifact_84
+    name: terminal_bench.file.trial.agent.terminal.process_7.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_84.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/combined.bin
+      sha256.source: 4625001931713a02ed3bddff1b92b01d71ad12680bc03f6e017347ee4ef8561a
+    source: file
+    state: complete
+    sha256: 4625001931713a02ed3bddff1b92b01d71ad12680bc03f6e017347ee4ef8561a
+    byte_count: 221
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_7.stderr.bin:
+    id: artifact_85
+    name: terminal_bench.file.trial.agent.terminal.process_7.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_85.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_7.stdout.bin:
+    id: artifact_86
+    name: terminal_bench.file.trial.agent.terminal.process_7.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_86.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_7/stdout.bin
+      sha256.source: 4625001931713a02ed3bddff1b92b01d71ad12680bc03f6e017347ee4ef8561a
+    source: file
+    state: complete
+    sha256: 4625001931713a02ed3bddff1b92b01d71ad12680bc03f6e017347ee4ef8561a
+    byte_count: 221
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_8.combined.bin:
+    id: artifact_87
+    name: terminal_bench.file.trial.agent.terminal.process_8.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_87.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/combined.bin
+      sha256.source: 2e3a9d7bd64e4b00aa373cee3ef24bf664f14656790ca59fb2731077747fe937
+    source: file
+    state: complete
+    sha256: 2e3a9d7bd64e4b00aa373cee3ef24bf664f14656790ca59fb2731077747fe937
+    byte_count: 5277
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_8.stderr.bin:
+    id: artifact_88
+    name: terminal_bench.file.trial.agent.terminal.process_8.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_88.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_8.stdout.bin:
+    id: artifact_89
+    name: terminal_bench.file.trial.agent.terminal.process_8.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_89.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_8/stdout.bin
+      sha256.source: 2e3a9d7bd64e4b00aa373cee3ef24bf664f14656790ca59fb2731077747fe937
+    source: file
+    state: complete
+    sha256: 2e3a9d7bd64e4b00aa373cee3ef24bf664f14656790ca59fb2731077747fe937
+    byte_count: 5277
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_9.combined.bin:
+    id: artifact_90
+    name: terminal_bench.file.trial.agent.terminal.process_9.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_90.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/combined.bin
+      sha256.source: c050acda2ff51db72002da29c2dfeff90a6d18090f5e92aa32f103de08b9a26f
+    source: file
+    state: complete
+    sha256: c050acda2ff51db72002da29c2dfeff90a6d18090f5e92aa32f103de08b9a26f
+    byte_count: 155
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_9.stderr.bin:
+    id: artifact_91
+    name: terminal_bench.file.trial.agent.terminal.process_9.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_91.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_9.stdout.bin:
+    id: artifact_92
+    name: terminal_bench.file.trial.agent.terminal.process_9.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_92.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_9/stdout.bin
+      sha256.source: c050acda2ff51db72002da29c2dfeff90a6d18090f5e92aa32f103de08b9a26f
+    source: file
+    state: complete
+    sha256: c050acda2ff51db72002da29c2dfeff90a6d18090f5e92aa32f103de08b9a26f
+    byte_count: 155
+    filename: stdout.bin
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_93
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_93.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    source: file
+    state: complete
+    sha256: aa23067bb85285b5671f1d5d8beca7b46b5ddfaa8ca799ce779a4d7a5bdbcf39
+    byte_count: 160
+    filename: manifest.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_94
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_94.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: 504bb6fe18e480c13579c4870d3bdd9f5d7624d96e8f327ff30f379793b64f4d
+    source: file
+    state: complete
+    sha256: 504bb6fe18e480c13579c4870d3bdd9f5d7624d96e8f327ff30f379793b64f4d
+    byte_count: 1417
+    filename: config.json
+  terminal_bench.file.trial.lock.json:
+    id: artifact_95
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_95.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: ada93e658e99371a9ebe14a27d17bf6ce36d0cdcc9d00ebf719a0ec5e3077934
+    source: file
+    state: complete
+    sha256: ada93e658e99371a9ebe14a27d17bf6ce36d0cdcc9d00ebf719a0ec5e3077934
+    byte_count: 1782
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_96
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_96.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: ee31e96924459d9e6e4627e8e2678d79669a8ba26751b4c3c645576676be1f1b
+    source: file
+    state: complete
+    sha256: ee31e96924459d9e6e4627e8e2678d79669a8ba26751b4c3c645576676be1f1b
+    byte_count: 4794
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_97
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_97.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: fe551de474805ec2be52f50b4adad8146dfaa3fd661fb143b0a5a2b2acd5d881
+    source: file
+    state: complete
+    sha256: fe551de474805ec2be52f50b4adad8146dfaa3fd661fb143b0a5a2b2acd5d881
+    byte_count: 1921
+    filename: trial.log
+  terminal_bench.file.trial.verifier.ctrf.json:
+    id: artifact_98
+    name: terminal_bench.file.trial.verifier.ctrf.json
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_98.json
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/ctrf.json
+      sha256.source: 28f8d4b4472b7a58c39632d10063d8dc8c9f60c07c63b2e6a6e1c8ccf1d1eeba
+    source: file
+    state: complete
+    sha256: 28f8d4b4472b7a58c39632d10063d8dc8c9f60c07c63b2e6a6e1c8ccf1d1eeba
+    byte_count: 866
+    filename: ctrf.json
+  terminal_bench.file.trial.verifier.reward.txt:
+    id: artifact_99
+    name: terminal_bench.file.trial.verifier.reward.txt
+    media: text/plain
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_99.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/reward.txt
+      sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    source: file
+    state: complete
+    sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    byte_count: 2
+    filename: reward.txt
+  terminal_bench.file.trial.verifier.test-stdout.txt:
+    id: artifact_100
+    name: terminal_bench.file.trial.verifier.test-stdout.txt
+    media: text/plain
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_100.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/test-stdout.txt
+      sha256.source: 5a860cb22b077c12cbdf04de8f0d3c3e263c69272af52a38d3e14df586401aa4
+    source: file
+    state: complete
+    sha256: 5a860cb22b077c12cbdf04de8f0d3c3e263c69272af52a38d3e14df586401aa4
+    byte_count: 3389
+    filename: test-stdout.txt
+  terminal_bench.evidence_index:
+    id: artifact_101
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0003_0001_fix_git_p8jepbu__kedi_164a847fa3c8/artifact_101.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: ede552eb51b93b491c0bba702e88cbafd773e77d1249beb06b6509b3574000b3
+    byte_count: 18699
+output:
+  task_name: terminal-bench/fix-git
+  trial_name: fix-git__P8jEpBu
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 70912
+    cache_write_tokens: 0
+    cost_usd: 0.01988704
+    input_tokens: 149150
+    output_tokens: 2351
+    requests: 14
+    tool_calls: 31
+    total_tokens: 151501
+    uncached_input_tokens: 78238
+  evidence_file_count: 100
+  evidence_bytes: 203208
+  skipped_file_count: 0
