@@ -1,0 +1,285 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+0040f000 <cht_GetParam+0xc>:
+  40f000:	8c860020 	lw	a2,32(a0)
+  40f004:	2485002c 	addiu	a1,a0,44
+  40f008:	0c10e7a2 	jal	439e88 <memcpy>
+  40f00c:	00202025 	move	a0,at
+  40f010:	8fbf0014 	lw	ra,20(sp)
+  40f014:	03e00008 	jr	ra
+  40f018:	27bd0018 	addiu	sp,sp,24
+  40f01c:	00000000 	nop
+
+0040f020 <M_SetConfigFilenames>:
+  40f020:	3c010048 	lui	at,0x48
+  40f024:	ac25c958 	sw	a1,-13992(at)
+  40f028:	3c010048 	lui	at,0x48
+  40f02c:	03e00008 	jr	ra
+  40f030:	ac24c954 	sw	a0,-13996(at)
+
+0040f034 <M_SaveDefaults>:
+  40f034:	03e00008 	jr	ra
+  40f038:	00000000 	nop
+
+0040f03c <M_SaveDefaultsAlternate>:
+  40f03c:	03e00008 	jr	ra
+  40f040:	00000000 	nop
+
+0040f044 <M_LoadDefaults>:
+  40f044:	27bdffe8 	addiu	sp,sp,-24
+  40f048:	afbf0014 	sw	ra,20(sp)
+  40f04c:	afb00010 	sw	s0,16(sp)
+  40f050:	3c010044 	lui	at,0x44
+  40f054:	24050001 	li	a1,1
+  40f058:	0c103b50 	jal	40ed40 <M_CheckParmWithArgs>
+  40f05c:	24242a18 	addiu	a0,at,10776
+  40f060:	1040000f 	beqz	v0,40f0a0 <M_LoadDefaults+0x5c>
+  40f064:	00000000 	nop
+  40f068:	3c010048 	lui	at,0x48
+  40f06c:	00021080 	sll	v0,v0,0x2
+  40f070:	8c21c944 	lw	at,-14012(at)
+  40f074:	00410821 	addu	at,v0,at
+  40f078:	8c250004 	lw	a1,4(at)
+  40f07c:	3c010047 	lui	at,0x47
+  40f080:	24300d90 	addiu	s0,at,3472
+  40f084:	3c010044 	lui	at,0x44
+  40f088:	24242a20 	addiu	a0,at,10784
+  40f08c:	0c10e64e 	jal	439938 <printf>
+  40f090:	ae050008 	sw	a1,8(s0)
+  40f094:	8e050008 	lw	a1,8(s0)
+  40f098:	08103c32 	j	40f0c8 <M_LoadDefaults+0x84>
+  40f09c:	00000000 	nop
+  40f0a0:	3c010048 	lui	at,0x48
+  40f0a4:	24060000 	li	a2,0
+  40f0a8:	8c25c954 	lw	a1,-13996(at)
+  40f0ac:	3c010048 	lui	at,0x48
+  40f0b0:	0c104bd4 	jal	412f50 <M_StringJoin>
+  40f0b4:	8c24c950 	lw	a0,-14000(at)
+  40f0b8:	3c010047 	lui	at,0x47
+  40f0bc:	00402825 	move	a1,v0
+  40f0c0:	24210d90 	addiu	at,at,3472
+  40f0c4:	ac220008 	sw	v0,8(at)
+  40f0c8:	3c010044 	lui	at,0x44
+  40f0cc:	0c10e64e 	jal	439938 <printf>
+  40f0d0:	24242a33 	addiu	a0,at,10803
+  40f0d4:	3c010044 	lui	at,0x44
+  40f0d8:	24050001 	li	a1,1
+  40f0dc:	0c103b50 	jal	40ed40 <M_CheckParmWithArgs>
+  40f0e0:	24242a48 	addiu	a0,at,10824
+  40f0e4:	1040000e 	beqz	v0,40f120 <M_LoadDefaults+0xdc>
+  40f0e8:	00000000 	nop
+  40f0ec:	3c010048 	lui	at,0x48
+  40f0f0:	00021080 	sll	v0,v0,0x2
+  40f0f4:	8c21c944 	lw	at,-14012(at)
+  40f0f8:	00410821 	addu	at,v0,at
+  40f0fc:	8c250004 	lw	a1,4(at)
+  40f100:	3c010047 	lui	at,0x47
+  40f104:	24210d9c 	addiu	at,at,3484
+  40f108:	ac250008 	sw	a1,8(at)
+  40f10c:	3c010044 	lui	at,0x44
+  40f110:	0c10e64e 	jal	439938 <printf>
+  40f114:	24242a55 	addiu	a0,at,10837
+  40f118:	08103c51 	j	40f144 <M_LoadDefaults+0x100>
+  40f11c:	00000000 	nop
+  40f120:	3c010048 	lui	at,0x48
+  40f124:	24060000 	li	a2,0
+  40f128:	8c25c958 	lw	a1,-13992(at)
+  40f12c:	3c010048 	lui	at,0x48
+  40f130:	0c104bd4 	jal	412f50 <M_StringJoin>
+  40f134:	8c24c950 	lw	a0,-14000(at)
+  40f138:	3c010047 	lui	at,0x47
+  40f13c:	24210d9c 	addiu	at,at,3484
+  40f140:	ac220008 	sw	v0,8(at)
+  40f144:	8fb00010 	lw	s0,16(sp)
+  40f148:	8fbf0014 	lw	ra,20(sp)
+  40f14c:	03e00008 	jr	ra
+  40f150:	27bd0018 	addiu	sp,sp,24
+
+0040f154 <M_BindVariable>:
+  40f154:	27bdfff8 	addiu	sp,sp,-8
+  40f158:	afbf0004 	sw	ra,4(sp)
+  40f15c:	afb00000 	sw	s0,0(sp)
+  40f160:	0c103c61 	jal	40f184 <GetDefaultForName>
+  40f164:	00a08025 	move	s0,a1
+  40f168:	24010001 	li	at,1
+  40f16c:	8fbf0004 	lw	ra,4(sp)
+  40f170:	ac410014 	sw	at,20(v0)
+  40f174:	ac500004 	sw	s0,4(v0)
+  40f178:	8fb00000 	lw	s0,0(sp)
+  40f17c:	03e00008 	jr	ra
+  40f180:	27bd0008 	addiu	sp,sp,8
+
+0040f184 <GetDefaultForName>:
+  40f184:	27bdffe8 	addiu	sp,sp,-24
+  40f188:	afbf0014 	sw	ra,20(sp)
+  40f18c:	afb00010 	sw	s0,16(sp)
+  40f190:	00808025 	move	s0,a0
+  40f194:	3c010047 	lui	at,0x47
+  40f198:	24240d90 	addiu	a0,at,3472
+  40f19c:	0c103d2b 	jal	40f4ac <SearchCollection>
+  40f1a0:	02002825 	move	a1,s0
+  40f1a4:	1440000c 	bnez	v0,40f1d8 <GetDefaultForName+0x54>
+  40f1a8:	00000000 	nop
+  40f1ac:	3c010047 	lui	at,0x47
+  40f1b0:	02002825 	move	a1,s0
+  40f1b4:	0c103d2b 	jal	40f4ac <SearchCollection>
+  40f1b8:	24240d9c 	addiu	a0,at,3484
+  40f1bc:	14400006 	bnez	v0,40f1d8 <GetDefaultForName+0x54>
+  40f1c0:	00000000 	nop
+  40f1c4:	3c010044 	lui	at,0x44
+  40f1c8:	02002825 	move	a1,s0
+  40f1cc:	0c10392e 	jal	40e4b8 <I_Error>
+  40f1d0:	24243461 	addiu	a0,at,13409
+  40f1d4:	24020000 	li	v0,0
+  40f1d8:	8fb00010 	lw	s0,16(sp)
+  40f1dc:	8fbf0014 	lw	ra,20(sp)
+  40f1e0:	03e00008 	jr	ra
+  40f1e4:	27bd0018 	addiu	sp,sp,24
+
+0040f1e8 <M_SetVariable>:
+  40f1e8:	27bdffe0 	addiu	sp,sp,-32
+  40f1ec:	afbf001c 	sw	ra,28(sp)
+  40f1f0:	afb20018 	sw	s2,24(sp)
+  40f1f4:	afb10014 	sw	s1,20(sp)
+  40f1f8:	afb00010 	sw	s0,16(sp)
+  40f1fc:	0c103c61 	jal	40f184 <GetDefaultForName>
+  40f200:	00a09025 	move	s2,a1
+  40f204:	10400029 	beqz	v0,40f2ac <M_SetVariable+0xc4>
+  40f208:	24100000 	li	s0,0
+  40f20c:	8c410014 	lw	at,20(v0)
+  40f210:	10200026 	beqz	at,40f2ac <M_SetVariable+0xc4>
+  40f214:	00408825 	move	s1,v0
+  40f218:	8e220008 	lw	v0,8(s1)
+  40f21c:	2c410005 	sltiu	at,v0,5
+  40f220:	10200022 	beqz	at,40f2ac <M_SetVariable+0xc4>
+  40f224:	24100001 	li	s0,1
+  40f228:	00020880 	sll	at,v0,0x2
+  40f22c:	3c020044 	lui	v0,0x44
+  40f230:	00220821 	addu	at,at,v0
+  40f234:	8c212804 	lw	at,10244(at)
+  40f238:	00200008 	jr	at
+  40f23c:	00000000 	nop
+  40f240:	0c103d51 	jal	40f544 <ParseIntParameter>
+  40f244:	02402025 	move	a0,s2
+  40f248:	8e210004 	lw	at,4(s1)
+  40f24c:	08103cab 	j	40f2ac <M_SetVariable+0xc4>
+  40f250:	ac220000 	sw	v0,0(at)
+  40f254:	0c10e847 	jal	43a11c <strdup>
+  40f258:	02402025 	move	a0,s2
+  40f25c:	8e210004 	lw	at,4(s1)
+  40f260:	08103cab 	j	40f2ac <M_SetVariable+0xc4>
+  40f264:	ac220000 	sw	v0,0(at)
+  40f268:	8e210004 	lw	at,4(s1)
+  40f26c:	08103cab 	j	40f2ac <M_SetVariable+0xc4>
+  40f270:	ac200000 	sw	zero,0(at)
+  40f274:	0c103d51 	jal	40f544 <ParseIntParameter>
+  40f278:	02402025 	move	a0,s2
+  40f27c:	2c410080 	sltiu	at,v0,128
+  40f280:	24030000 	li	v1,0
+  40f284:	10200006 	beqz	at,40f2a0 <M_SetVariable+0xb8>
+  40f288:	ae22000c 	sw	v0,12(s1)
+  40f28c:	00020880 	sll	at,v0,0x2
+  40f290:	3c020044 	lui	v0,0x44
+  40f294:	24422818 	addiu	v0,v0,10264
+  40f298:	00410821 	addu	at,v0,at
+  40f29c:	8c230000 	lw	v1,0(at)
+  40f2a0:	ae230010 	sw	v1,16(s1)
+  40f2a4:	8e210004 	lw	at,4(s1)
+  40f2a8:	ac230000 	sw	v1,0(at)
+  40f2ac:	02001025 	move	v0,s0
+  40f2b0:	8fb00010 	lw	s0,16(sp)
+  40f2b4:	8fb10014 	lw	s1,20(sp)
+  40f2b8:	8fb20018 	lw	s2,24(sp)
+  40f2bc:	8fbf001c 	lw	ra,28(sp)
+  40f2c0:	03e00008 	jr	ra
+  40f2c4:	27bd0020 	addiu	sp,sp,32
+
+0040f2c8 <M_GetIntVariable>:
+  40f2c8:	27bdfff8 	addiu	sp,sp,-8
+  40f2cc:	afbf0004 	sw	ra,4(sp)
+  40f2d0:	0c103c61 	jal	40f184 <GetDefaultForName>
+  40f2d4:	00000000 	nop
+  40f2d8:	00401825 	move	v1,v0
+  40f2dc:	1060000a 	beqz	v1,40f308 <M_GetIntVariable+0x40>
+  40f2e0:	24020000 	li	v0,0
+  40f2e4:	8c610014 	lw	at,20(v1)
+  40f2e8:	10200007 	beqz	at,40f308 <M_GetIntVariable+0x40>
+  40f2ec:	00000000 	nop
+  40f2f0:	8c610008 	lw	at,8(v1)
+  40f2f4:	2c210002 	sltiu	at,at,2
+  40f2f8:	10200003 	beqz	at,40f308 <M_GetIntVariable+0x40>
+  40f2fc:	00000000 	nop
+  40f300:	8c610004 	lw	at,4(v1)
+  40f304:	8c220000 	lw	v0,0(at)
+  40f308:	8fbf0004 	lw	ra,4(sp)
+  40f30c:	03e00008 	jr	ra
+  40f310:	27bd0008 	addiu	sp,sp,8
+
+0040f314 <M_GetStrVariable>:
+  40f314:	27bdfff8 	addiu	sp,sp,-8
+  40f318:	afbf0004 	sw	ra,4(sp)
+  40f31c:	0c103c61 	jal	40f184 <GetDefaultForName>
+  40f320:	00000000 	nop
+  40f324:	00401825 	move	v1,v0
+  40f328:	1060000a 	beqz	v1,40f354 <M_GetStrVariable+0x40>
+  40f32c:	24020000 	li	v0,0
+  40f330:	8c610014 	lw	at,20(v1)
+  40f334:	10200007 	beqz	at,40f354 <M_GetStrVariable+0x40>
+  40f338:	00000000 	nop
+  40f33c:	8c610008 	lw	at,8(v1)
+  40f340:	24040002 	li	a0,2
+  40f344:	14240003 	bne	at,a0,40f354 <M_GetStrVariable+0x40>
+  40f348:	00000000 	nop
+  40f34c:	8c610004 	lw	at,4(v1)
+  40f350:	8c220000 	lw	v0,0(at)
+  40f354:	8fbf0004 	lw	ra,4(sp)
+  40f358:	03e00008 	jr	ra
+  40f35c:	27bd0008 	addiu	sp,sp,8
+
+0040f360 <M_GetFloatVariable>:
+  40f360:	27bdfff8 	addiu	sp,sp,-8
+  40f364:	afbf0004 	sw	ra,4(sp)
+  40f368:	0c103c61 	jal	40f184 <GetDefaultForName>
+  40f36c:	00000000 	nop
+  40f370:	1040000a 	beqz	v0,40f39c <M_GetFloatVariable+0x3c>
+  40f374:	44800000 	mtc1	zero,$f0
+  40f378:	8c410014 	lw	at,20(v0)
+  40f37c:	10200007 	beqz	at,40f39c <M_GetFloatVariable+0x3c>
+  40f380:	00000000 	nop
+  40f384:	8c410008 	lw	at,8(v0)
+  40f388:	24030003 	li	v1,3
+  40f38c:	14230003 	bne	at,v1,40f39c <M_GetFloatVariable+0x3c>
+  40f390:	00000000 	nop
+  40f394:	8c410004 	lw	at,4(v0)
+  40f398:	c4200000 	lwc1	$f0,0(at)
+  40f39c:	8fbf0004 	lw	ra,4(sp)
+  40f3a0:	03e00008 	jr	ra
+  40f3a4:	27bd0008 	addiu	sp,sp,8
+
+0040f3a8 <M_SetConfigDir>:
+  40f3a8:	27bdffe8 	addiu	sp,sp,-24
+  40f3ac:	afbf0014 	sw	ra,20(sp)
+  40f3b0:	afb00010 	sw	s0,16(sp)
+  40f3b4:	14800007 	bnez	a0,40f3d4 <M_SetConfigDir+0x2c>
+  40f3b8:	00000000 	nop
+  40f3bc:	0c10e65c 	jal	439970 <malloc>
+  40f3c0:	24040002 	li	a0,2
+  40f3c4:	00402025 	move	a0,v0
+  40f3c8:	2401002e 	li	at,46
+  40f3cc:	a0400001 	sb	zero,1(v0)
+  40f3d0:	a0410000 	sb	at,0(v0)
+  40f3d4:	3c010044 	lui	at,0x44
+  40f3d8:	3c100048 	lui	s0,0x48
+  40f3dc:	24254cc7 	addiu	a1,at,19655
+  40f3e0:	0c10e7cf 	jal	439f3c <strcmp>
+  40f3e4:	ae04c950 	sw	a0,-14000(s0)
+  40f3e8:	10400005 	beqz	v0,40f400 <M_SetConfigDir+0x58>
+  40f3ec:	00000000 	nop
+  40f3f0:	3c010044 	lui	at,0x44
+  40f3f4:	8e05c950 	lw	a1,-14000(s0)
+  40f3f8:	0c10e64e 	jal	439938 <printf>
+  40f3fc:	24242a7b 	addiu	a0,at,10875

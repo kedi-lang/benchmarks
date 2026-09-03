@@ -1,0 +1,4098 @@
+# yaml-language-server: $schema=/private/tmp/kedi-tb21-public-aa0dee2/home/.autobench/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+  experiment: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+  benchmark: kedi-terminal-bench-2.1
+  case: extract-moves-from-video__syg4332
+  variant: kedi-2406d0e45943
+  status: failed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: failed
+    task: passed
+case:
+  id: extract-moves-from-video__syg4332
+  input:
+    job_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire
+    trial_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire/extract-moves-from-video__sYG4332
+    trial_name: extract-moves-from-video__sYG4332
+    task_name: terminal-bench/extract-moves-from-video
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-2406d0e45943
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+      false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 20000000
+    max_evidence_total_bytes: 50000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+        false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes":
+        32768}'
+      source: variant
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 20000000
+      source: variant
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    max_evidence_total_bytes:
+      sequence: 6
+      id: obs_6
+      name: max_evidence_total_bytes
+      kind: factor
+      value: 50000000
+      source: variant
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.reward.mean:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.reward.mean
+      kind: metric
+      value: 1.0
+      semantic: quality.score
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.grader_completed:
+      sequence: 9
+      id: obs_9
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    kedi.trial_completed:
+      sequence: 10
+      id: obs_10
+      name: kedi.trial_completed
+      kind: metric
+      value: false
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: Kedi result missing
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_complete:
+      sequence: 30
+      id: obs_30
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.duration
+      kind: metric
+      value: 8566.952973
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.environment_setup.duration:
+      sequence: 12
+      id: obs_12
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 2.056374
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.agent_setup.duration:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 47.741159
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.agent_execution.duration:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.agent_execution.duration
+      kind: metric
+      value: 2846.133949
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.verifier.duration:
+      sequence: 15
+      id: obs_15
+      name: terminal_bench.verifier.duration
+      kind: metric
+      value: 919.133891
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    kedi.total_tokens:
+      sequence: 16
+      id: obs_16
+      name: kedi.total_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+  events:
+    terminal_bench.file.job.config.json:
+      sequence: 17
+      id: obs_17
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.job.log:
+      sequence: 18
+      id: obs_18
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 19
+      id: obs_19
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.lock.json:
+      sequence: 20
+      id: obs_20
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.result.json:
+      sequence: 21
+      id: obs_21
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.config.json:
+      sequence: 22
+      id: obs_22
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: 9750d86f2c81a5495cca49b8ec27d4f0e1056a37770dc64dff7c53832f974194
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.lock.json:
+      sequence: 23
+      id: obs_23
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: a79075bbaf33828d883f793298085529bc44ae790b432ab4694a33bbe25d1da8
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.result.json:
+      sequence: 24
+      id: obs_24
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: 7d119c39086eb67aa151d8a746c61b1f6cc82bab94ea07b52e360f4357ec8c25
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.trial.log:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: 3ae91c777ba6f24f55e28419a0da5378c46e86d398b592412a650937e6dd5722
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.ctrf.json:
+      sequence: 27
+      id: obs_27
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/ctrf.json
+        sha256.source: f89075b3eda437e6a255e97beaf8b58abe51607eee02f84f1947e57554b629dd
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.reward.txt:
+      sequence: 28
+      id: obs_28
+      name: terminal_bench.file.trial.verifier.reward.txt
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/reward.txt
+        sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.test-stdout.txt:
+      sequence: 29
+      id: obs_29
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      kind: artifact
+      value: artifact_13
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/test-stdout.txt
+        sha256.source: 0c218c932d58bd4772b464fb21cc8b0d1539e538ddc4ee41321f5d340a03d36a
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_index:
+      sequence: 31
+      id: obs_31
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_14
+      span: span_1
+      source: task_observation
+      case: extract-moves-from-video__syg4332
+      variant: kedi-2406d0e45943
+trace:
+  protocol: abp
+  protocol_version: 1
+  trace_id: b10454eb172808dfcc4bb73795582c27
+  execution:
+    benchmark_id: kedi-terminal-bench-2.1
+    experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+    run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+    case_id: extract-moves-from-video__syg4332
+    variant_id: kedi-2406d0e45943
+  root_span_ids:
+    - c8aa8a6f9b4430e8
+  spans:
+    - trace_id: b10454eb172808dfcc4bb73795582c27
+      span_id: c8aa8a6f9b4430e8
+      operation: benchmark.run
+      kind: task
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-03T10:39:34.434607Z'
+      ended_at: '2026-09-03T10:39:34.495848Z'
+      start_monotonic_ns: 21492843701458
+      end_monotonic_ns: 21492904942916
+      duration_ns: 61241458
+      start_sequence: 1
+      end_sequence: 50
+      attributes:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      output:
+        type: CapturedTrial
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8b8b262b-4093-411a-8b71-598aafaa7d00
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.434698Z'
+          monotonic_ns: 21492843791875
+          sequence: 2
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c8aa8a6f9b4430e8
+          name: model
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 18
+          attributes:
+            observation_id: obs_1
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 039dc068-21ca-42ff-ad22-3c6f5479c96f
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.434750Z'
+          monotonic_ns: 21492843843666
+          sequence: 3
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c8aa8a6f9b4430e8
+          name: adapter
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 8
+          attributes:
+            observation_id: obs_2
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 54fab556-51d0-45e7-8769-40c8640461da
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.434781Z'
+          monotonic_ns: 21492843875083
+          sequence: 4
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c8aa8a6f9b4430e8
+          name: effort
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 4
+          attributes:
+            observation_id: obs_3
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: b497233a-6f4a-402d-b326-3b4d438996f5
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.434810Z'
+          monotonic_ns: 21492843903958
+          sequence: 5
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c8aa8a6f9b4430e8
+          name: harness_policy
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 390
+          attributes:
+            observation_id: obs_4
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 190691ff-225b-4c2f-b8be-1fb73855fda2
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.434832Z'
+          monotonic_ns: 21492843925958
+          sequence: 6
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c8aa8a6f9b4430e8
+          name: max_evidence_file_bytes
+          semantic_type: factor.value
+          body: 20000000
+          attributes:
+            observation_id: obs_5
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 75edf461-08ac-4f22-8884-9239e3a24392
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.434852Z'
+          monotonic_ns: 21492843946000
+          sequence: 7
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c8aa8a6f9b4430e8
+          name: max_evidence_total_bytes
+          semantic_type: factor.value
+          body: 50000000
+          attributes:
+            observation_id: obs_6
+            kind: factor
+            source: variant
+      partial: false
+    - trace_id: b10454eb172808dfcc4bb73795582c27
+      span_id: 39652ff9cdc454df
+      parent_span_id: c8aa8a6f9b4430e8
+      operation: capture terminal-bench trial
+      kind: workflow
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-03T10:39:34.435083Z'
+      ended_at: '2026-09-03T10:39:34.495742Z'
+      start_monotonic_ns: 21492844177125
+      end_monotonic_ns: 21492904836583
+      duration_ns: 60659458
+      start_sequence: 8
+      end_sequence: 49
+      output:
+        type: dict
+        length: 9
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f9eac8fc-55e5-4d22-849e-7fcb4a1ddd25
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435128Z'
+          monotonic_ns: 21492844222083
+          sequence: 9
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: input
+          semantic_type: operation.input
+          body:
+            type: dict
+            length: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: b6dc6e7d-314f-43df-8d45-1a16f2f2a72c
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.440752Z'
+          monotonic_ns: 21492849846666
+          sequence: 21
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.job.config.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_17
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8ed7ba81-ebde-4b58-971f-f83fa1d4be02
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.443821Z'
+          monotonic_ns: 21492852915708
+          sequence: 23
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.job.job.log
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_18
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 11
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f182e434-b27b-4f39-a27f-02c996abba4a
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.449187Z'
+          monotonic_ns: 21492858281291
+          sequence: 25
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.job.kedi-manifest.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_19
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 22
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c9331f93-1043-48ee-86f0-2f8721904acf
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.470749Z'
+          monotonic_ns: 21492879843541
+          sequence: 27
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.job.lock.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_20
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 13
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 54705357-54d4-4123-8da5-421e42667315
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.473437Z'
+          monotonic_ns: 21492882531166
+          sequence: 29
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.job.result.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_21
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5aba89af-2ca1-46da-9132-c2594b07c5de
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.476159Z'
+          monotonic_ns: 21492885253958
+          sequence: 31
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.config.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_22
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 17
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a66af2cf-0b54-48e4-87d5-f2d04d42dfb2
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.478989Z'
+          monotonic_ns: 21492888083750
+          sequence: 33
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.lock.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_23
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9771414c-5ec2-4704-84e1-73774d9df81c
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.483221Z'
+          monotonic_ns: 21492892315125
+          sequence: 35
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.result.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_24
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 17
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9b00a4e7-aadb-44a8-a24d-b7cdffb9f9de
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.485423Z'
+          monotonic_ns: 21492894518041
+          sequence: 37
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.trial.log
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_25
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a5d784a7-22d9-40b6-a2c2-a1a1dbcdd5c1
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.487344Z'
+          monotonic_ns: 21492896438541
+          sequence: 39
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.artifacts.manifest.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_26
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 29
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 6175de07-494f-4be2-a447-e135fe72cc93
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.489553Z'
+          monotonic_ns: 21492898647833
+          sequence: 41
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.verifier.ctrf.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_27
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 24
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 965a326d-5127-45b8-bc7d-e62a061e0082
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.491204Z'
+          monotonic_ns: 21492900298875
+          sequence: 43
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.verifier.reward.txt
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_28
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 25
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3264a442-c04b-4ff5-ade4-8247f7be63f2
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.492906Z'
+          monotonic_ns: 21492902000291
+          sequence: 45
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.file.trial.verifier.test-stdout.txt
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_29
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 30
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a6a91e2f-bdd7-4048-9a05-5dea57ec0958
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.495675Z'
+          monotonic_ns: 21492904769583
+          sequence: 48
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.evidence_index
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_31
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+      measurements:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 0642557c-0fae-4a57-b7fb-e8f68bfa49c6
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435173Z'
+          monotonic_ns: 21492844267333
+          sequence: 10
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.reward.reward
+          semantic_type: quality.correctness
+          value: 1.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_7
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d38d74a8-a6b9-438c-945f-83b231887c1d
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435206Z'
+          monotonic_ns: 21492844300041
+          sequence: 11
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.reward.mean
+          semantic_type: quality.score
+          value: 1.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_8
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8d619642-7c2a-4f27-9e72-eb02328638a1
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435242Z'
+          monotonic_ns: 21492844336333
+          sequence: 12
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.grader_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_9
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 41
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 03e51a09-e6b4-4d8d-8601-4f94540361d7
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435281Z'
+          monotonic_ns: 21492844375083
+          sequence: 13
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: kedi.trial_completed
+          semantic_type: quality.correctness
+          value: false
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_10
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 19
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 321265fb-4cb1-4db7-84b6-35f3ab730b3b
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435310Z'
+          monotonic_ns: 21492844403500
+          sequence: 14
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.duration
+          semantic_type: time.latency
+          value: 8566.952973
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_11
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: bac3c26d-40de-4fb9-9974-ef03e6025355
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435332Z'
+          monotonic_ns: 21492844425750
+          sequence: 15
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.environment_setup.duration
+          semantic_type: time.latency
+          value: 2.056374
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_12
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 734e8688-4069-4fd5-bfac-63d06d2102d1
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435353Z'
+          monotonic_ns: 21492844446875
+          sequence: 16
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.agent_setup.duration
+          semantic_type: time.latency
+          value: 47.741159
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_13
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c6b6eacc-343a-45f2-afeb-35e84969d1a5
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435373Z'
+          monotonic_ns: 21492844466791
+          sequence: 17
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.agent_execution.duration
+          semantic_type: time.latency
+          value: 2846.133949
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_14
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 853eed4a-d078-4f49-bcd2-5b5e6a1f524f
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435393Z'
+          monotonic_ns: 21492844486750
+          sequence: 18
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.verifier.duration
+          semantic_type: time.latency
+          value: 919.133891
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_15
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f2396295-c1f2-4e32-be7d-2a0fe1eacb5e
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.435415Z'
+          monotonic_ns: 21492844508875
+          sequence: 19
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: kedi.total_tokens
+          semantic_type: llm.tokens.total
+          value: 0
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_16
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: b7213790-bdb7-497a-9910-07da9a8c234c
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.495313Z'
+          monotonic_ns: 21492904408291
+          sequence: 46
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 39652ff9cdc454df
+          name: terminal_bench.evidence_complete
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_30
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 43
+      references:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c6e3c95a-22f0-4652-b1aa-4022bfd9ee2c
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.440647Z'
+          monotonic_ns: 21492849742791
+          sequence: 20
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.config.json
+          reference:
+            kind: artifact
+            id: artifact_1
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_1
+            artifact_state: complete
+            artifact_sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+            artifact_byte_count: 2602
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8729ffdb-fb96-4c86-b023-c1731511d553
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.443734Z'
+          monotonic_ns: 21492852829416
+          sequence: 22
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.job.log
+          reference:
+            kind: artifact
+            id: artifact_2
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_2
+            artifact_state: complete
+            artifact_sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+            artifact_byte_count: 50738
+        - protocol: abp
+          protocol_version: 1
+          signal_id: e8b55789-b4ec-4d01-8fba-174002a18e32
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.449069Z'
+          monotonic_ns: 21492858165750
+          sequence: 24
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.kedi-manifest.json
+          reference:
+            kind: artifact
+            id: artifact_3
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_3
+            artifact_state: complete
+            artifact_sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+            artifact_byte_count: 2537
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 58a20706-5b1d-4260-a805-49daa11fe932
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.470623Z'
+          monotonic_ns: 21492879720166
+          sequence: 26
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.lock.json
+          reference:
+            kind: artifact
+            id: artifact_4
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_4
+            artifact_state: complete
+            artifact_sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+            artifact_byte_count: 41732
+        - protocol: abp
+          protocol_version: 1
+          signal_id: edf22e6f-db1b-472c-8bd3-58d2e3396475
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.473354Z'
+          monotonic_ns: 21492882448958
+          sequence: 28
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.result.json
+          reference:
+            kind: artifact
+            id: artifact_5
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_5
+            artifact_state: complete
+            artifact_sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+            artifact_byte_count: 1987
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d773239c-040a-4911-8612-20917b0a920e
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.476071Z'
+          monotonic_ns: 21492885165791
+          sequence: 30
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.config.json
+          reference:
+            kind: artifact
+            id: artifact_6
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_6
+            artifact_state: complete
+            artifact_sha256: 9750d86f2c81a5495cca49b8ec27d4f0e1056a37770dc64dff7c53832f974194
+            artifact_byte_count: 1649
+        - protocol: abp
+          protocol_version: 1
+          signal_id: eadd2bf5-611b-4783-9dd5-7ec19f5f34c2
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.478912Z'
+          monotonic_ns: 21492888006708
+          sequence: 32
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.lock.json
+          reference:
+            kind: artifact
+            id: artifact_7
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_7
+            artifact_state: complete
+            artifact_sha256: a79075bbaf33828d883f793298085529bc44ae790b432ab4694a33bbe25d1da8
+            artifact_byte_count: 1937
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3656a0cc-665b-4bee-99b8-414defebe451
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.483144Z'
+          monotonic_ns: 21492892239208
+          sequence: 34
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.result.json
+          reference:
+            kind: artifact
+            id: artifact_8
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_8
+            artifact_state: complete
+            artifact_sha256: 7d119c39086eb67aa151d8a746c61b1f6cc82bab94ea07b52e360f4357ec8c25
+            artifact_byte_count: 4748
+        - protocol: abp
+          protocol_version: 1
+          signal_id: b9f148e0-44e1-44de-bf61-dc821fd43456
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.485341Z'
+          monotonic_ns: 21492894436583
+          sequence: 36
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.trial.log
+          reference:
+            kind: artifact
+            id: artifact_9
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_9
+            artifact_state: complete
+            artifact_sha256: 3ae91c777ba6f24f55e28419a0da5378c46e86d398b592412a650937e6dd5722
+            artifact_byte_count: 5687
+        - protocol: abp
+          protocol_version: 1
+          signal_id: e3039539-bcb6-4fd2-bc39-d9c4de348168
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.487274Z'
+          monotonic_ns: 21492896369083
+          sequence: 38
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.artifacts.manifest.json
+          reference:
+            kind: artifact
+            id: artifact_10
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_10
+            artifact_state: complete
+            artifact_sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+            artifact_byte_count: 157
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 142742ff-916b-4106-9152-6d5e8ec5a299
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.489487Z'
+          monotonic_ns: 21492898581791
+          sequence: 40
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.verifier.ctrf.json
+          reference:
+            kind: artifact
+            id: artifact_11
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_11
+            artifact_state: complete
+            artifact_sha256: f89075b3eda437e6a255e97beaf8b58abe51607eee02f84f1947e57554b629dd
+            artifact_byte_count: 893
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 918bada3-afa0-409e-b6dc-225c8c05a5c7
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.491133Z'
+          monotonic_ns: 21492900227791
+          sequence: 42
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.verifier.reward.txt
+          reference:
+            kind: artifact
+            id: artifact_12
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_12
+            artifact_state: complete
+            artifact_sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+            artifact_byte_count: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: b54d9baf-bd6e-40bf-86ed-605c2d117dbe
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.492828Z'
+          monotonic_ns: 21492901922375
+          sequence: 44
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.verifier.test-stdout.txt
+          reference:
+            kind: artifact
+            id: artifact_13
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_13
+            artifact_state: complete
+            artifact_sha256: 0c218c932d58bd4772b464fb21cc8b0d1539e538ddc4ee41321f5d340a03d36a
+            artifact_byte_count: 3229
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 68bbc614-9711-4af9-9a81-5628bf58706f
+          trace_id: b10454eb172808dfcc4bb73795582c27
+          emitted_at: '2026-09-03T10:39:34.495639Z'
+          monotonic_ns: 21492904733375
+          sequence: 47
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+            case_id: extract-moves-from-video__syg4332
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 39652ff9cdc454df
+          semantic_type: artifact.content
+          name: terminal_bench.evidence_index
+          reference:
+            kind: artifact
+            id: artifact_4084cea79e8558cedd891de6
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_14
+      partial: false
+  signals:
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b8467758-f3c6-4114-a9e3-48cb39defcf6
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.434607Z'
+      monotonic_ns: 21492843701458
+      sequence: 1
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: c8aa8a6f9b4430e8
+      operation: benchmark.run
+      kind: task
+      attributes:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8b8b262b-4093-411a-8b71-598aafaa7d00
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.434698Z'
+      monotonic_ns: 21492843791875
+      sequence: 2
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c8aa8a6f9b4430e8
+      name: model
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 18
+      attributes:
+        observation_id: obs_1
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 039dc068-21ca-42ff-ad22-3c6f5479c96f
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.434750Z'
+      monotonic_ns: 21492843843666
+      sequence: 3
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c8aa8a6f9b4430e8
+      name: adapter
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 8
+      attributes:
+        observation_id: obs_2
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 54fab556-51d0-45e7-8769-40c8640461da
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.434781Z'
+      monotonic_ns: 21492843875083
+      sequence: 4
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c8aa8a6f9b4430e8
+      name: effort
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 4
+      attributes:
+        observation_id: obs_3
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b497233a-6f4a-402d-b326-3b4d438996f5
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.434810Z'
+      monotonic_ns: 21492843903958
+      sequence: 5
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c8aa8a6f9b4430e8
+      name: harness_policy
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 390
+      attributes:
+        observation_id: obs_4
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 190691ff-225b-4c2f-b8be-1fb73855fda2
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.434832Z'
+      monotonic_ns: 21492843925958
+      sequence: 6
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c8aa8a6f9b4430e8
+      name: max_evidence_file_bytes
+      semantic_type: factor.value
+      body: 20000000
+      attributes:
+        observation_id: obs_5
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 75edf461-08ac-4f22-8884-9239e3a24392
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.434852Z'
+      monotonic_ns: 21492843946000
+      sequence: 7
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c8aa8a6f9b4430e8
+      name: max_evidence_total_bytes
+      semantic_type: factor.value
+      body: 50000000
+      attributes:
+        observation_id: obs_6
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: ba404220-6cb5-435e-b402-6d8abe4fc773
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435083Z'
+      monotonic_ns: 21492844177125
+      sequence: 8
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: 39652ff9cdc454df
+      parent_span_id: c8aa8a6f9b4430e8
+      operation: capture terminal-bench trial
+      kind: workflow
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f9eac8fc-55e5-4d22-849e-7fcb4a1ddd25
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435128Z'
+      monotonic_ns: 21492844222083
+      sequence: 9
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: input
+      semantic_type: operation.input
+      body:
+        type: dict
+        length: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 0642557c-0fae-4a57-b7fb-e8f68bfa49c6
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435173Z'
+      monotonic_ns: 21492844267333
+      sequence: 10
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.reward.reward
+      semantic_type: quality.correctness
+      value: 1.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_7
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d38d74a8-a6b9-438c-945f-83b231887c1d
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435206Z'
+      monotonic_ns: 21492844300041
+      sequence: 11
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.reward.mean
+      semantic_type: quality.score
+      value: 1.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_8
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8d619642-7c2a-4f27-9e72-eb02328638a1
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435242Z'
+      monotonic_ns: 21492844336333
+      sequence: 12
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.grader_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_9
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 41
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 03e51a09-e6b4-4d8d-8601-4f94540361d7
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435281Z'
+      monotonic_ns: 21492844375083
+      sequence: 13
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: kedi.trial_completed
+      semantic_type: quality.correctness
+      value: false
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_10
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 19
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 321265fb-4cb1-4db7-84b6-35f3ab730b3b
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435310Z'
+      monotonic_ns: 21492844403500
+      sequence: 14
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.duration
+      semantic_type: time.latency
+      value: 8566.952973
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_11
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: bac3c26d-40de-4fb9-9974-ef03e6025355
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435332Z'
+      monotonic_ns: 21492844425750
+      sequence: 15
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.environment_setup.duration
+      semantic_type: time.latency
+      value: 2.056374
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_12
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 734e8688-4069-4fd5-bfac-63d06d2102d1
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435353Z'
+      monotonic_ns: 21492844446875
+      sequence: 16
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.agent_setup.duration
+      semantic_type: time.latency
+      value: 47.741159
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_13
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c6b6eacc-343a-45f2-afeb-35e84969d1a5
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435373Z'
+      monotonic_ns: 21492844466791
+      sequence: 17
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.agent_execution.duration
+      semantic_type: time.latency
+      value: 2846.133949
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_14
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 853eed4a-d078-4f49-bcd2-5b5e6a1f524f
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435393Z'
+      monotonic_ns: 21492844486750
+      sequence: 18
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.verifier.duration
+      semantic_type: time.latency
+      value: 919.133891
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_15
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f2396295-c1f2-4e32-be7d-2a0fe1eacb5e
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.435415Z'
+      monotonic_ns: 21492844508875
+      sequence: 19
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: kedi.total_tokens
+      semantic_type: llm.tokens.total
+      value: 0
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_16
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c6e3c95a-22f0-4652-b1aa-4022bfd9ee2c
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.440647Z'
+      monotonic_ns: 21492849742791
+      sequence: 20
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.config.json
+      reference:
+        kind: artifact
+        id: artifact_1
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_1
+        artifact_state: complete
+        artifact_sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+        artifact_byte_count: 2602
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b6dc6e7d-314f-43df-8d45-1a16f2f2a72c
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.440752Z'
+      monotonic_ns: 21492849846666
+      sequence: 21
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.job.config.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_17
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8729ffdb-fb96-4c86-b023-c1731511d553
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.443734Z'
+      monotonic_ns: 21492852829416
+      sequence: 22
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.job.log
+      reference:
+        kind: artifact
+        id: artifact_2
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_2
+        artifact_state: complete
+        artifact_sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+        artifact_byte_count: 50738
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8ed7ba81-ebde-4b58-971f-f83fa1d4be02
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.443821Z'
+      monotonic_ns: 21492852915708
+      sequence: 23
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.job.job.log
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_18
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 11
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e8b55789-b4ec-4d01-8fba-174002a18e32
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.449069Z'
+      monotonic_ns: 21492858165750
+      sequence: 24
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.kedi-manifest.json
+      reference:
+        kind: artifact
+        id: artifact_3
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_3
+        artifact_state: complete
+        artifact_sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+        artifact_byte_count: 2537
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f182e434-b27b-4f39-a27f-02c996abba4a
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.449187Z'
+      monotonic_ns: 21492858281291
+      sequence: 25
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.job.kedi-manifest.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_19
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 22
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 58a20706-5b1d-4260-a805-49daa11fe932
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.470623Z'
+      monotonic_ns: 21492879720166
+      sequence: 26
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.lock.json
+      reference:
+        kind: artifact
+        id: artifact_4
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_4
+        artifact_state: complete
+        artifact_sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+        artifact_byte_count: 41732
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c9331f93-1043-48ee-86f0-2f8721904acf
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.470749Z'
+      monotonic_ns: 21492879843541
+      sequence: 27
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.job.lock.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_20
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 13
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: edf22e6f-db1b-472c-8bd3-58d2e3396475
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.473354Z'
+      monotonic_ns: 21492882448958
+      sequence: 28
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.result.json
+      reference:
+        kind: artifact
+        id: artifact_5
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_5
+        artifact_state: complete
+        artifact_sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+        artifact_byte_count: 1987
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 54705357-54d4-4123-8da5-421e42667315
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.473437Z'
+      monotonic_ns: 21492882531166
+      sequence: 29
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.job.result.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_21
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d773239c-040a-4911-8612-20917b0a920e
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.476071Z'
+      monotonic_ns: 21492885165791
+      sequence: 30
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.config.json
+      reference:
+        kind: artifact
+        id: artifact_6
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_6
+        artifact_state: complete
+        artifact_sha256: 9750d86f2c81a5495cca49b8ec27d4f0e1056a37770dc64dff7c53832f974194
+        artifact_byte_count: 1649
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5aba89af-2ca1-46da-9132-c2594b07c5de
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.476159Z'
+      monotonic_ns: 21492885253958
+      sequence: 31
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.config.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_22
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 17
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: eadd2bf5-611b-4783-9dd5-7ec19f5f34c2
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.478912Z'
+      monotonic_ns: 21492888006708
+      sequence: 32
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.lock.json
+      reference:
+        kind: artifact
+        id: artifact_7
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_7
+        artifact_state: complete
+        artifact_sha256: a79075bbaf33828d883f793298085529bc44ae790b432ab4694a33bbe25d1da8
+        artifact_byte_count: 1937
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a66af2cf-0b54-48e4-87d5-f2d04d42dfb2
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.478989Z'
+      monotonic_ns: 21492888083750
+      sequence: 33
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.lock.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_23
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3656a0cc-665b-4bee-99b8-414defebe451
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.483144Z'
+      monotonic_ns: 21492892239208
+      sequence: 34
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.result.json
+      reference:
+        kind: artifact
+        id: artifact_8
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_8
+        artifact_state: complete
+        artifact_sha256: 7d119c39086eb67aa151d8a746c61b1f6cc82bab94ea07b52e360f4357ec8c25
+        artifact_byte_count: 4748
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9771414c-5ec2-4704-84e1-73774d9df81c
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.483221Z'
+      monotonic_ns: 21492892315125
+      sequence: 35
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.result.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_24
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 17
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b9f148e0-44e1-44de-bf61-dc821fd43456
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.485341Z'
+      monotonic_ns: 21492894436583
+      sequence: 36
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.trial.log
+      reference:
+        kind: artifact
+        id: artifact_9
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_9
+        artifact_state: complete
+        artifact_sha256: 3ae91c777ba6f24f55e28419a0da5378c46e86d398b592412a650937e6dd5722
+        artifact_byte_count: 5687
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9b00a4e7-aadb-44a8-a24d-b7cdffb9f9de
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.485423Z'
+      monotonic_ns: 21492894518041
+      sequence: 37
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.trial.log
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_25
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e3039539-bcb6-4fd2-bc39-d9c4de348168
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.487274Z'
+      monotonic_ns: 21492896369083
+      sequence: 38
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      reference:
+        kind: artifact
+        id: artifact_10
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_10
+        artifact_state: complete
+        artifact_sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+        artifact_byte_count: 157
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a5d784a7-22d9-40b6-a2c2-a1a1dbcdd5c1
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.487344Z'
+      monotonic_ns: 21492896438541
+      sequence: 39
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_26
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 29
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 142742ff-916b-4106-9152-6d5e8ec5a299
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.489487Z'
+      monotonic_ns: 21492898581791
+      sequence: 40
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      reference:
+        kind: artifact
+        id: artifact_11
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_11
+        artifact_state: complete
+        artifact_sha256: f89075b3eda437e6a255e97beaf8b58abe51607eee02f84f1947e57554b629dd
+        artifact_byte_count: 893
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 6175de07-494f-4be2-a447-e135fe72cc93
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.489553Z'
+      monotonic_ns: 21492898647833
+      sequence: 41
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_27
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 24
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 918bada3-afa0-409e-b6dc-225c8c05a5c7
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.491133Z'
+      monotonic_ns: 21492900227791
+      sequence: 42
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.verifier.reward.txt
+      reference:
+        kind: artifact
+        id: artifact_12
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_12
+        artifact_state: complete
+        artifact_sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+        artifact_byte_count: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 965a326d-5127-45b8-bc7d-e62a061e0082
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.491204Z'
+      monotonic_ns: 21492900298875
+      sequence: 43
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.verifier.reward.txt
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_28
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 25
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b54d9baf-bd6e-40bf-86ed-605c2d117dbe
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.492828Z'
+      monotonic_ns: 21492901922375
+      sequence: 44
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      reference:
+        kind: artifact
+        id: artifact_13
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_13
+        artifact_state: complete
+        artifact_sha256: 0c218c932d58bd4772b464fb21cc8b0d1539e538ddc4ee41321f5d340a03d36a
+        artifact_byte_count: 3229
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3264a442-c04b-4ff5-ade4-8247f7be63f2
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.492906Z'
+      monotonic_ns: 21492902000291
+      sequence: 45
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_29
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 30
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b7213790-bdb7-497a-9910-07da9a8c234c
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.495313Z'
+      monotonic_ns: 21492904408291
+      sequence: 46
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.evidence_complete
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_30
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 43
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 68bbc614-9711-4af9-9a81-5628bf58706f
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.495639Z'
+      monotonic_ns: 21492904733375
+      sequence: 47
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 39652ff9cdc454df
+      semantic_type: artifact.content
+      name: terminal_bench.evidence_index
+      reference:
+        kind: artifact
+        id: artifact_4084cea79e8558cedd891de6
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_14
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a6a91e2f-bdd7-4048-9a05-5dea57ec0958
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.495675Z'
+      monotonic_ns: 21492904769583
+      sequence: 48
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 39652ff9cdc454df
+      name: terminal_bench.evidence_index
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_31
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 55d0df77-1839-4dd7-8a33-f37c1eedf8df
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.495742Z'
+      monotonic_ns: 21492904836583
+      sequence: 49
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: 39652ff9cdc454df
+      output:
+        type: dict
+        length: 9
+      status: ok
+      reason: completed
+      partial: false
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3921b5ef-4473-40e3-8378-2ebb3463ecae
+      trace_id: b10454eb172808dfcc4bb73795582c27
+      emitted_at: '2026-09-03T10:39:34.495848Z'
+      monotonic_ns: 21492904942916
+      sequence: 50
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943
+        case_id: extract-moves-from-video__syg4332
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: c8aa8a6f9b4430e8
+      output:
+        type: CapturedTrial
+      status: ok
+      reason: completed
+      partial: false
+  started_at: '2026-09-03T10:39:34.434607Z'
+  ended_at: '2026-09-03T10:39:34.495848Z'
+  partial: false
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-09-03T10:39:34.435083+00:00'
+    ended_at: '2026-09-03T10:39:34.495742+00:00'
+    duration: 0.060659458
+    input:
+      task_name: terminal-bench/extract-moves-from-video
+      trial_name: extract-moves-from-video__sYG4332
+    output:
+      task_name: terminal-bench/extract-moves-from-video
+      trial_name: extract-moves-from-video__sYG4332
+      rewards:
+        reward: 1.0
+      usage:
+        total_tokens: 0
+      evidence_file_count: 13
+      evidence_bytes: 117898
+      skipped_file_count: 0
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+      - obs_27
+      - obs_28
+      - obs_29
+      - obs_30
+      - obs_31
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+      - artifact_13
+      - artifact_14
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    source: file
+    state: complete
+    sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    byte_count: 2602
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    source: file
+    state: complete
+    sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    byte_count: 50738
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    source: file
+    state: complete
+    sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    byte_count: 2537
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    source: file
+    state: complete
+    sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    byte_count: 41732
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    source: file
+    state: complete
+    sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    byte_count: 1987
+    filename: result.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: 9750d86f2c81a5495cca49b8ec27d4f0e1056a37770dc64dff7c53832f974194
+    source: file
+    state: complete
+    sha256: 9750d86f2c81a5495cca49b8ec27d4f0e1056a37770dc64dff7c53832f974194
+    byte_count: 1649
+    filename: config.json
+  terminal_bench.file.trial.lock.json:
+    id: artifact_7
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_7.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: a79075bbaf33828d883f793298085529bc44ae790b432ab4694a33bbe25d1da8
+    source: file
+    state: complete
+    sha256: a79075bbaf33828d883f793298085529bc44ae790b432ab4694a33bbe25d1da8
+    byte_count: 1937
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_8
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_8.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: 7d119c39086eb67aa151d8a746c61b1f6cc82bab94ea07b52e360f4357ec8c25
+    source: file
+    state: complete
+    sha256: 7d119c39086eb67aa151d8a746c61b1f6cc82bab94ea07b52e360f4357ec8c25
+    byte_count: 4748
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_9
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_9.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: 3ae91c777ba6f24f55e28419a0da5378c46e86d398b592412a650937e6dd5722
+    source: file
+    state: complete
+    sha256: 3ae91c777ba6f24f55e28419a0da5378c46e86d398b592412a650937e6dd5722
+    byte_count: 5687
+    filename: trial.log
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_10
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_10.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    source: file
+    state: complete
+    sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    byte_count: 157
+    filename: manifest.json
+  terminal_bench.file.trial.verifier.ctrf.json:
+    id: artifact_11
+    name: terminal_bench.file.trial.verifier.ctrf.json
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_11.json
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/ctrf.json
+      sha256.source: f89075b3eda437e6a255e97beaf8b58abe51607eee02f84f1947e57554b629dd
+    source: file
+    state: complete
+    sha256: f89075b3eda437e6a255e97beaf8b58abe51607eee02f84f1947e57554b629dd
+    byte_count: 893
+    filename: ctrf.json
+  terminal_bench.file.trial.verifier.reward.txt:
+    id: artifact_12
+    name: terminal_bench.file.trial.verifier.reward.txt
+    media: text/plain
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_12.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/reward.txt
+      sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    source: file
+    state: complete
+    sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    byte_count: 2
+    filename: reward.txt
+  terminal_bench.file.trial.verifier.test-stdout.txt:
+    id: artifact_13
+    name: terminal_bench.file.trial.verifier.test-stdout.txt
+    media: text/plain
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_13.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/test-stdout.txt
+      sha256.source: 0c218c932d58bd4772b464fb21cc8b0d1539e538ddc4ee41321f5d340a03d36a
+    source: file
+    state: complete
+    sha256: 0c218c932d58bd4772b464fb21cc8b0d1539e538ddc4ee41321f5d340a03d36a
+    byte_count: 3229
+    filename: test-stdout.txt
+  terminal_bench.evidence_index:
+    id: artifact_14
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0006_0001_extract_moves_from_video_syg4332__kedi_2406d0e45943/artifact_14.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 0a154daaaf887e1f58fb87913b755fd9d24cc7c691358ddba431a90290c0d39f
+    byte_count: 2824
+output:
+  task_name: terminal-bench/extract-moves-from-video
+  trial_name: extract-moves-from-video__sYG4332
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: null
+  usage:
+    input_tokens: null
+    cache_read_tokens: null
+    output_tokens: null
+    cost_usd: null
+    total_tokens: 0
+  evidence_file_count: 13
+  evidence_bytes: 117898
+  skipped_file_count: 0

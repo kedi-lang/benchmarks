@@ -1,0 +1,17 @@
+(* Compatibility lemma: Coq 8.18 no longer provides the former
+   unqualified [Z_div_mod_eq] theorem. *)
+Lemma Z_div_mod_eq: forall (a b : Z),
+  Z.gt b Z.zero -> a = (b * (a / b) + a mod b)%Z.
+Proof.
+  intros a b H.
+  apply Z.div_mod.
+  intro Hb.
+  subst b.
+  apply (Z.lt_irrefl Z.zero).
+  apply Z.gt_lt.
+  exact H.
+Qed.
+
+Notation location := SpecFloat.location (only parsing).
+Notation loc_Exact := SpecFloat.loc_Exact (only parsing).
+Notation loc_Inexact := SpecFloat.loc_Inexact (only parsing).

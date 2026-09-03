@@ -1,0 +1,10 @@
+694:.PHONY: coldstart
+695:coldstart: boot/ocamlrun$(EXE) runtime/libcamlrun.$(A)
+709:core: coldstart
+849:world: coldstart
+853:.PHONY: world.opt
+854:world.opt: checknative
+855:	$(MAKE) coldstart
+1014:# Note: Beware that, since these rules begin with a coldstart, both
+1018:runtop: coldstart
+1024:runtop-with-otherlibs: coldstart

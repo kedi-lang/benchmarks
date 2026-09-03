@@ -1,0 +1,96 @@
+                          $(SRCDIR)/povproto.h \
+                          $(SRCDIR)/texture.h  \
+                          $(SRCDIR)/vector.h   \
+                          $(SRCDIR)/warps.h
+
+xwindowsDEP             = xwindows.c           \
+                          config.h             \
+                          unixconf.h           \
+                          $(SRCDIR)/frame.h    \
+                          xpovicon.xbm         \
+                          xpovmask.xbm         \
+                          $(SRCDIR)/povproto.h
+
+config.h:
+	@echo
+	@echo 'You need to select which executable version you want'
+	@echo 'to make (xwin, svga, or unix), and then use the'
+	@echo 'appropriate make command to create the config.h file.'
+	@echo 'Use "make newunix" to make the text-only version.'
+	@echo 'Use "make newxwin" to make the X Windows version.'
+	@echo 'Use "make newsvga" to make the SVGAlib version.'
+	@echo
+	@echo 'If you want to build the X-Windows version, you should make'
+	@echo 'sure that the X11 variable is set correctly.  It is currently'
+	@echo 'set to '$(X11)'.  By default this is set at the top of the'
+	@echo 'makefile, but can also be set in your shell startup script.'
+	@echo
+	@echo 'Both the X Windows and SVGAlib versions also use the'
+	@echo 'unixconf.h file, so it must still be present when'
+	@echo 'compiling the display capable versions of POV-Ray.'
+	@echo
+	@false
+
+unix:	$(UTARGET)
+	@echo
+
+$(UTARGET):	$(POVOBJS) $(ODIR)/unix$(OBJ)
+	$(CC) $(POVOBJS) $(ODIR)/unix$(OBJ) $(LFLAGS) -o $(UTARGET)
+
+svga:	$(STARGET)
+	@echo
+
+$(STARGET):	$(POVOBJS) $(ODIR)/svga$(OBJ) $(ODIR)/unix$(OBJ)
+	$(CC) $(POVOBJS) $(ODIR)/svga$(OBJ) $(ODIR)/unix$(OBJ) $(LFLAGS) $(SLIBLIB) -o $(STARGET)
+
+xwin:	$(XTARGET)
+	@echo
+
+$(XTARGET):	$(POVOBJS) $(ODIR)/xwindows$(OBJ) $(ODIR)/unix$(OBJ)
+	$(CC) $(POVOBJS) $(ODIR)/xwindows$(OBJ) $(ODIR)/unix$(OBJ) $(LFLAGS) $(XLIBLIB) -o $(XTARGET)
+
+# Only these files need to be rebuilt if the display type was changed
+DISPOBJS = $(ODIR)/povray$(OBJ) $(ODIR)/render$(OBJ) \
+           $(ODIR)/userio$(OBJ) $(ODIR)/vbuffer$(OBJ)
+
+newunix:
+	-@$(RM) $(DISPOBJS)
+	-@cp unixconf.h config.h
+	-@touch $(ODIR)/*$(OBJ)
+	-@$(MAKE) unix
+
+newsvga:
+	-@$(RM) $(DISPOBJS)
+	-@cp svgaconf.h config.h
+	-@touch $(ODIR)/*$(OBJ)
+	-@$(MAKE) svga
+
+newxwin:
+	-@$(RM) $(DISPOBJS)
+	-@cp xwinconf.h config.h
+	-@touch $(ODIR)/*$(OBJ)
+	-@$(MAKE) xwin
+
+clean:
+	-@$(RM) $(POVOBJS) $(ODIR)/unix$(OBJ) $(ODIR)/xwindows$(OBJ)
+	-@$(RM) $(ODIR)/svga$(OBJ) $(UTARGET) $(XTARGET) $(STARGET)
+
+$(ODIR)/atmosph$(OBJ)  : $(atmosphDEP)
+	$(CC) $(CFLAGS) $(SRCDIR)/atmosph.c -o $@
+
+$(ODIR)/bbox$(OBJ)     : $(bboxDEP)
+	$(CC) $(CFLAGS) $(SRCDIR)/bbox.c -o $@
+
+$(ODIR)/bcyl$(OBJ)     : $(bcylDEP)
+	$(CC) $(CFLAGS) $(SRCDIR)/bcyl.c -o $@
+
+$(ODIR)/bezier$(OBJ)   : $(bezierDEP)
+	$(CC) $(CFLAGS) $(SRCDIR)/bezier.c -o $@
+
+$(ODIR)/blob$(OBJ)     : $(blobDEP)
+	$(CC) $(CFLAGS) $(SRCDIR)/blob.c -o $@
+
+$(ODIR)/boxes$(OBJ)    : $(boxesDEP)
+	$(CC) $(CFLAGS) $(SRCDIR)/boxes.c -o $@
+
+$(ODIR)/bsphere$(OBJ)  : $(bsphereDEP)

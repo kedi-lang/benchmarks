@@ -1,0 +1,1366 @@
+# yaml-language-server: $schema=/private/tmp/kedi-tb21-public-aa0dee2/home/.autobench/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943
+  experiment: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+  benchmark: kedi-terminal-bench-2.1
+  case: portfolio-optimization__ng5pzut
+  variant: kedi-2406d0e45943
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: portfolio-optimization__ng5pzut
+  input:
+    job_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire
+    trial_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire/portfolio-optimization__ng5pZUT
+    trial_name: portfolio-optimization__ng5pZUT
+    task_name: terminal-bench/portfolio-optimization
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-2406d0e45943
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+      false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 20000000
+    max_evidence_total_bytes: 50000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+        false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes":
+        32768}'
+      source: variant
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 20000000
+      source: variant
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    max_evidence_total_bytes:
+      sequence: 6
+      id: obs_6
+      name: max_evidence_total_bytes
+      kind: factor
+      value: 50000000
+      source: variant
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.reward.mean:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.reward.mean
+      kind: metric
+      value: 1.0
+      semantic: quality.score
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.grader_completed:
+      sequence: 9
+      id: obs_9
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.trial_completed:
+      sequence: 10
+      id: obs_10
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.cost_usd:
+      sequence: 23
+      id: obs_23
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.01493476
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_complete:
+      sequence: 56
+      id: obs_56
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.duration
+      kind: metric
+      value: 2670.320148
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.environment_setup.duration:
+      sequence: 12
+      id: obs_12
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 2.119056
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.agent_setup.duration:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 1579.514834
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.agent_execution.duration:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.agent_execution.duration
+      kind: metric
+      value: 1013.714692
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.verifier.duration:
+      sequence: 15
+      id: obs_15
+      name: terminal_bench.verifier.duration
+      kind: metric
+      value: 72.699947
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.input_tokens:
+      sequence: 16
+      id: obs_16
+      name: kedi.input_tokens
+      kind: metric
+      value: 57953
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.cache_read_tokens:
+      sequence: 17
+      id: obs_17
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 9728
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.cache_write_tokens:
+      sequence: 18
+      id: obs_18
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.output_tokens:
+      sequence: 19
+      id: obs_19
+      name: kedi.output_tokens
+      kind: metric
+      value: 4246
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.total_tokens:
+      sequence: 20
+      id: obs_20
+      name: kedi.total_tokens
+      kind: metric
+      value: 62199
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.requests:
+      sequence: 21
+      id: obs_21
+      name: kedi.requests
+      kind: metric
+      value: 8
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.tool_calls:
+      sequence: 22
+      id: obs_22
+      name: kedi.tool_calls
+      kind: metric
+      value: 14
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    kedi.cache_read_ratio:
+      sequence: 24
+      id: obs_24
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.167860162545511
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+  events:
+    terminal_bench.file.job.config.json:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.job.log:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 27
+      id: obs_27
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.lock.json:
+      sequence: 28
+      id: obs_28
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.result.json:
+      sequence: 29
+      id: obs_29
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.config.json:
+      sequence: 30
+      id: obs_30
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: 246d3c3ca304cb2a793830f65c35762b54362cde4c2bb103b404e78385ba553a
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.lock.json:
+      sequence: 31
+      id: obs_31
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: 590787ba4502c1c2c71150ed671617d5dbc3b2a23a807f68e8912d17f801104b
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.result.json:
+      sequence: 32
+      id: obs_32
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: 597d25f81053140f10dc3df74047c9dec592e3b945ea669f71a21ea54fc740e8
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.trial.log:
+      sequence: 33
+      id: obs_33
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: 0baf92fdeb95847e0e79d796e5b8f59bc74c49089b8fa11f547cdbf22217111b
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.kedi-result.json:
+      sequence: 34
+      id: obs_34
+      name: terminal_bench.file.trial.agent.kedi-result.json
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi-result.json
+        sha256.source: 047ccec99ff12653b4680762f3c1114f9b1f68d76137c3811d9247f2ed884d99
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.kedi.txt:
+      sequence: 35
+      id: obs_35
+      name: terminal_bench.file.trial.agent.kedi.txt
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/kedi.txt
+        sha256.source: 3eb290ae739cdfe48248f33f48e3782904e7dce0fd7af52990deffa402af137e
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal-events.jsonl:
+      sequence: 36
+      id: obs_36
+      name: terminal_bench.file.trial.agent.terminal-events.jsonl
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal-events.jsonl
+        sha256.source: 184b859afc70659ee6941c4cba5f4014738677401e1eccea7302e9461af60252
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+      sequence: 37
+      id: obs_37
+      name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+      kind: artifact
+      value: artifact_13
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/combined.bin
+        sha256.source: 32e6b7897b9a8e7bcf59fe5a5ab165de20c2b090ae1f2bf3e31fb1dd1417dbe3
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+      sequence: 38
+      id: obs_38
+      name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+      kind: artifact
+      value: artifact_14
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+      sequence: 39
+      id: obs_39
+      name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+      kind: artifact
+      value: artifact_15
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_1/stdout.bin
+        sha256.source: 32e6b7897b9a8e7bcf59fe5a5ab165de20c2b090ae1f2bf3e31fb1dd1417dbe3
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+      sequence: 40
+      id: obs_40
+      name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+      kind: artifact
+      value: artifact_16
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/combined.bin
+        sha256.source: 5606c148465f757656b40c2681e35fa0a358037e13e7d2ca1c74937386ba68c2
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+      sequence: 41
+      id: obs_41
+      name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+      kind: artifact
+      value: artifact_17
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+      sequence: 42
+      id: obs_42
+      name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+      kind: artifact
+      value: artifact_18
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_2/stdout.bin
+        sha256.source: 5606c148465f757656b40c2681e35fa0a358037e13e7d2ca1c74937386ba68c2
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+      sequence: 43
+      id: obs_43
+      name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+      kind: artifact
+      value: artifact_19
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/combined.bin
+        sha256.source: 2e56fbe38a0f2d04f498c6e2c9533899cddf724e9154c8ec3c3c42683ad256b2
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+      sequence: 44
+      id: obs_44
+      name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+      kind: artifact
+      value: artifact_20
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+      sequence: 45
+      id: obs_45
+      name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+      kind: artifact
+      value: artifact_21
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_3/stdout.bin
+        sha256.source: 2e56fbe38a0f2d04f498c6e2c9533899cddf724e9154c8ec3c3c42683ad256b2
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+      sequence: 46
+      id: obs_46
+      name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+      kind: artifact
+      value: artifact_22
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/combined.bin
+        sha256.source: 16fe521de56b762a2ed6bb75c04179b3ceb2f2fe6df0dff877f8df07e5851474
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+      sequence: 47
+      id: obs_47
+      name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+      kind: artifact
+      value: artifact_23
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stderr.bin
+        sha256.source: 16fe521de56b762a2ed6bb75c04179b3ceb2f2fe6df0dff877f8df07e5851474
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+      sequence: 48
+      id: obs_48
+      name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+      kind: artifact
+      value: artifact_24
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_4/stdout.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+      sequence: 49
+      id: obs_49
+      name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+      kind: artifact
+      value: artifact_25
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/combined.bin
+        sha256.source: 292eed89f9100043924edfed4d6d24974c1a7fb1a40cf63929bc9b487fe6b9ef
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+      sequence: 50
+      id: obs_50
+      name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+      kind: artifact
+      value: artifact_26
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stderr.bin
+        sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+      sequence: 51
+      id: obs_51
+      name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+      kind: artifact
+      value: artifact_27
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/agent/terminal/process_5/stdout.bin
+        sha256.source: 292eed89f9100043924edfed4d6d24974c1a7fb1a40cf63929bc9b487fe6b9ef
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 52
+      id: obs_52
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_28
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.ctrf.json:
+      sequence: 53
+      id: obs_53
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      kind: artifact
+      value: artifact_29
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/ctrf.json
+        sha256.source: b35d268932db2c5d5dd04eed9ef67514022ccb9e91c3905bad86fc0819671125
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.reward.txt:
+      sequence: 54
+      id: obs_54
+      name: terminal_bench.file.trial.verifier.reward.txt
+      kind: artifact
+      value: artifact_30
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/reward.txt
+        sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.test-stdout.txt:
+      sequence: 55
+      id: obs_55
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      kind: artifact
+      value: artifact_31
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/test-stdout.txt
+        sha256.source: fc195f9a6d1bd223610ca5c8e192a4f3874ac588ce293210462afa0b3402b388
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_index:
+      sequence: 57
+      id: obs_57
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_32
+      span: span_1
+      source: task_observation
+      case: portfolio-optimization__ng5pzut
+      variant: kedi-2406d0e45943
+trace:
+  id: 9645a8bd557e1ae19b5e31049b067c7e
+  partial: false
+  spans: 2
+  signals: 94
+  artifact:
+    id: abp_trace
+    name: ABP trace
+    media: application/vnd.autobench.abp-trace+yaml
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/trace.yaml
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-09-03T10:39:47.553922+00:00'
+    ended_at: '2026-09-03T10:39:47.700393+00:00'
+    duration: 0.146471583
+    input:
+      task_name: terminal-bench/portfolio-optimization
+      trial_name: portfolio-optimization__ng5pZUT
+    output:
+      task_name: terminal-bench/portfolio-optimization
+      trial_name: portfolio-optimization__ng5pZUT
+      rewards:
+        reward: 1.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 9728
+        cache_write_tokens: 0
+        cost_usd: 0.01493476
+        input_tokens: 57953
+        output_tokens: 4246
+        requests: 8
+        tool_calls: 14
+        total_tokens: 62199
+        uncached_input_tokens: 48225
+      evidence_file_count: 31
+      evidence_bytes: 167355
+      skipped_file_count: 0
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+      - obs_27
+      - obs_28
+      - obs_29
+      - obs_30
+      - obs_31
+      - obs_32
+      - obs_33
+      - obs_34
+      - obs_35
+      - obs_36
+      - obs_37
+      - obs_38
+      - obs_39
+      - obs_40
+      - obs_41
+      - obs_42
+      - obs_43
+      - obs_44
+      - obs_45
+      - obs_46
+      - obs_47
+      - obs_48
+      - obs_49
+      - obs_50
+      - obs_51
+      - obs_52
+      - obs_53
+      - obs_54
+      - obs_55
+      - obs_56
+      - obs_57
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+      - artifact_13
+      - artifact_14
+      - artifact_15
+      - artifact_16
+      - artifact_17
+      - artifact_18
+      - artifact_19
+      - artifact_20
+      - artifact_21
+      - artifact_22
+      - artifact_23
+      - artifact_24
+      - artifact_25
+      - artifact_26
+      - artifact_27
+      - artifact_28
+      - artifact_29
+      - artifact_30
+      - artifact_31
+      - artifact_32
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    source: file
+    state: complete
+    sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    byte_count: 2602
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    source: file
+    state: complete
+    sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    byte_count: 50738
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    source: file
+    state: complete
+    sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    byte_count: 2537
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    source: file
+    state: complete
+    sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    byte_count: 41732
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    source: file
+    state: complete
+    sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    byte_count: 1987
+    filename: result.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: 246d3c3ca304cb2a793830f65c35762b54362cde4c2bb103b404e78385ba553a
+    source: file
+    state: complete
+    sha256: 246d3c3ca304cb2a793830f65c35762b54362cde4c2bb103b404e78385ba553a
+    byte_count: 1645
+    filename: config.json
+  terminal_bench.file.trial.lock.json:
+    id: artifact_7
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_7.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: 590787ba4502c1c2c71150ed671617d5dbc3b2a23a807f68e8912d17f801104b
+    source: file
+    state: complete
+    sha256: 590787ba4502c1c2c71150ed671617d5dbc3b2a23a807f68e8912d17f801104b
+    byte_count: 1935
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_8
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_8.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: 597d25f81053140f10dc3df74047c9dec592e3b945ea669f71a21ea54fc740e8
+    source: file
+    state: complete
+    sha256: 597d25f81053140f10dc3df74047c9dec592e3b945ea669f71a21ea54fc740e8
+    byte_count: 5051
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_9
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_9.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: 0baf92fdeb95847e0e79d796e5b8f59bc74c49089b8fa11f547cdbf22217111b
+    source: file
+    state: complete
+    sha256: 0baf92fdeb95847e0e79d796e5b8f59bc74c49089b8fa11f547cdbf22217111b
+    byte_count: 1823
+    filename: trial.log
+  terminal_bench.file.trial.agent.kedi-result.json:
+    id: artifact_10
+    name: terminal_bench.file.trial.agent.kedi-result.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_10.json
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi-result.json
+      sha256.source: 047ccec99ff12653b4680762f3c1114f9b1f68d76137c3811d9247f2ed884d99
+    source: file
+    state: complete
+    sha256: 047ccec99ff12653b4680762f3c1114f9b1f68d76137c3811d9247f2ed884d99
+    byte_count: 16818
+    filename: kedi-result.json
+  terminal_bench.file.trial.agent.kedi.txt:
+    id: artifact_11
+    name: terminal_bench.file.trial.agent.kedi.txt
+    media: text/plain
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_11.txt
+    span: span_1
+    tags:
+      harbor.path: trial/agent/kedi.txt
+      sha256.source: 3eb290ae739cdfe48248f33f48e3782904e7dce0fd7af52990deffa402af137e
+    source: file
+    state: complete
+    sha256: 3eb290ae739cdfe48248f33f48e3782904e7dce0fd7af52990deffa402af137e
+    byte_count: 1679
+    filename: kedi.txt
+  terminal_bench.file.trial.agent.terminal-events.jsonl:
+    id: artifact_12
+    name: terminal_bench.file.trial.agent.terminal-events.jsonl
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_12.jsonl
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal-events.jsonl
+      sha256.source: 184b859afc70659ee6941c4cba5f4014738677401e1eccea7302e9461af60252
+    source: file
+    state: complete
+    sha256: 184b859afc70659ee6941c4cba5f4014738677401e1eccea7302e9461af60252
+    byte_count: 15756
+    filename: terminal-events.jsonl
+  terminal_bench.file.trial.agent.terminal.process_1.combined.bin:
+    id: artifact_13
+    name: terminal_bench.file.trial.agent.terminal.process_1.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_13.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/combined.bin
+      sha256.source: 32e6b7897b9a8e7bcf59fe5a5ab165de20c2b090ae1f2bf3e31fb1dd1417dbe3
+    source: file
+    state: complete
+    sha256: 32e6b7897b9a8e7bcf59fe5a5ab165de20c2b090ae1f2bf3e31fb1dd1417dbe3
+    byte_count: 709
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stderr.bin:
+    id: artifact_14
+    name: terminal_bench.file.trial.agent.terminal.process_1.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_14.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_1.stdout.bin:
+    id: artifact_15
+    name: terminal_bench.file.trial.agent.terminal.process_1.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_15.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_1/stdout.bin
+      sha256.source: 32e6b7897b9a8e7bcf59fe5a5ab165de20c2b090ae1f2bf3e31fb1dd1417dbe3
+    source: file
+    state: complete
+    sha256: 32e6b7897b9a8e7bcf59fe5a5ab165de20c2b090ae1f2bf3e31fb1dd1417dbe3
+    byte_count: 709
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_2.combined.bin:
+    id: artifact_16
+    name: terminal_bench.file.trial.agent.terminal.process_2.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_16.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/combined.bin
+      sha256.source: 5606c148465f757656b40c2681e35fa0a358037e13e7d2ca1c74937386ba68c2
+    source: file
+    state: complete
+    sha256: 5606c148465f757656b40c2681e35fa0a358037e13e7d2ca1c74937386ba68c2
+    byte_count: 107
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stderr.bin:
+    id: artifact_17
+    name: terminal_bench.file.trial.agent.terminal.process_2.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_17.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_2.stdout.bin:
+    id: artifact_18
+    name: terminal_bench.file.trial.agent.terminal.process_2.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_18.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_2/stdout.bin
+      sha256.source: 5606c148465f757656b40c2681e35fa0a358037e13e7d2ca1c74937386ba68c2
+    source: file
+    state: complete
+    sha256: 5606c148465f757656b40c2681e35fa0a358037e13e7d2ca1c74937386ba68c2
+    byte_count: 107
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_3.combined.bin:
+    id: artifact_19
+    name: terminal_bench.file.trial.agent.terminal.process_3.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_19.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/combined.bin
+      sha256.source: 2e56fbe38a0f2d04f498c6e2c9533899cddf724e9154c8ec3c3c42683ad256b2
+    source: file
+    state: complete
+    sha256: 2e56fbe38a0f2d04f498c6e2c9533899cddf724e9154c8ec3c3c42683ad256b2
+    byte_count: 876
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stderr.bin:
+    id: artifact_20
+    name: terminal_bench.file.trial.agent.terminal.process_3.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_20.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_3.stdout.bin:
+    id: artifact_21
+    name: terminal_bench.file.trial.agent.terminal.process_3.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_21.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_3/stdout.bin
+      sha256.source: 2e56fbe38a0f2d04f498c6e2c9533899cddf724e9154c8ec3c3c42683ad256b2
+    source: file
+    state: complete
+    sha256: 2e56fbe38a0f2d04f498c6e2c9533899cddf724e9154c8ec3c3c42683ad256b2
+    byte_count: 876
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_4.combined.bin:
+    id: artifact_22
+    name: terminal_bench.file.trial.agent.terminal.process_4.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_22.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/combined.bin
+      sha256.source: 16fe521de56b762a2ed6bb75c04179b3ceb2f2fe6df0dff877f8df07e5851474
+    source: file
+    state: complete
+    sha256: 16fe521de56b762a2ed6bb75c04179b3ceb2f2fe6df0dff877f8df07e5851474
+    byte_count: 7268
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stderr.bin:
+    id: artifact_23
+    name: terminal_bench.file.trial.agent.terminal.process_4.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_23.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stderr.bin
+      sha256.source: 16fe521de56b762a2ed6bb75c04179b3ceb2f2fe6df0dff877f8df07e5851474
+    source: file
+    state: complete
+    sha256: 16fe521de56b762a2ed6bb75c04179b3ceb2f2fe6df0dff877f8df07e5851474
+    byte_count: 7268
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_4.stdout.bin:
+    id: artifact_24
+    name: terminal_bench.file.trial.agent.terminal.process_4.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_24.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_4/stdout.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stdout.bin
+  terminal_bench.file.trial.agent.terminal.process_5.combined.bin:
+    id: artifact_25
+    name: terminal_bench.file.trial.agent.terminal.process_5.combined.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_25.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/combined.bin
+      sha256.source: 292eed89f9100043924edfed4d6d24974c1a7fb1a40cf63929bc9b487fe6b9ef
+    source: file
+    state: complete
+    sha256: 292eed89f9100043924edfed4d6d24974c1a7fb1a40cf63929bc9b487fe6b9ef
+    byte_count: 35
+    filename: combined.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stderr.bin:
+    id: artifact_26
+    name: terminal_bench.file.trial.agent.terminal.process_5.stderr.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_26.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stderr.bin
+      sha256.source: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    source: file
+    state: complete
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    byte_count: 0
+    filename: stderr.bin
+  terminal_bench.file.trial.agent.terminal.process_5.stdout.bin:
+    id: artifact_27
+    name: terminal_bench.file.trial.agent.terminal.process_5.stdout.bin
+    media: application/octet-stream
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_27.bin
+    span: span_1
+    tags:
+      harbor.path: trial/agent/terminal/process_5/stdout.bin
+      sha256.source: 292eed89f9100043924edfed4d6d24974c1a7fb1a40cf63929bc9b487fe6b9ef
+    source: file
+    state: complete
+    sha256: 292eed89f9100043924edfed4d6d24974c1a7fb1a40cf63929bc9b487fe6b9ef
+    byte_count: 35
+    filename: stdout.bin
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_28
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_28.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    source: file
+    state: complete
+    sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    byte_count: 157
+    filename: manifest.json
+  terminal_bench.file.trial.verifier.ctrf.json:
+    id: artifact_29
+    name: terminal_bench.file.trial.verifier.ctrf.json
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_29.json
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/ctrf.json
+      sha256.source: b35d268932db2c5d5dd04eed9ef67514022ccb9e91c3905bad86fc0819671125
+    source: file
+    state: complete
+    sha256: b35d268932db2c5d5dd04eed9ef67514022ccb9e91c3905bad86fc0819671125
+    byte_count: 1526
+    filename: ctrf.json
+  terminal_bench.file.trial.verifier.reward.txt:
+    id: artifact_30
+    name: terminal_bench.file.trial.verifier.reward.txt
+    media: text/plain
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_30.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/reward.txt
+      sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    source: file
+    state: complete
+    sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    byte_count: 2
+    filename: reward.txt
+  terminal_bench.file.trial.verifier.test-stdout.txt:
+    id: artifact_31
+    name: terminal_bench.file.trial.verifier.test-stdout.txt
+    media: text/plain
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_31.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/test-stdout.txt
+      sha256.source: fc195f9a6d1bd223610ca5c8e192a4f3874ac588ce293210462afa0b3402b388
+    source: file
+    state: complete
+    sha256: fc195f9a6d1bd223610ca5c8e192a4f3874ac588ce293210462afa0b3402b388
+    byte_count: 3377
+    filename: test-stdout.txt
+  terminal_bench.evidence_index:
+    id: artifact_32
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0014_0001_portfolio_optimization_ng5pzut__kedi_2406d0e45943/artifact_32.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 2eac3be1484e7fb7fb809c15bbd499a56b0523cd9b2e06f802f54b23c1887d3a
+    byte_count: 6672
+output:
+  task_name: terminal-bench/portfolio-optimization
+  trial_name: portfolio-optimization__ng5pZUT
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 9728
+    cache_write_tokens: 0
+    cost_usd: 0.01493476
+    input_tokens: 57953
+    output_tokens: 4246
+    requests: 8
+    tool_calls: 14
+    total_tokens: 62199
+    uncached_input_tokens: 48225
+  evidence_file_count: 31
+  evidence_bytes: 167355
+  skipped_file_count: 0

@@ -1,0 +1,36 @@
+cc -I../zlib -O   -c -o png.o png.c
+cc -I../zlib -O   -c -o pngrcb.o pngrcb.c
+cc -I../zlib -O   -c -o pngrutil.o pngrutil.c
+cc -I../zlib -O   -c -o pngtrans.o pngtrans.c
+cc -I../zlib -O   -c -o pngwutil.o pngwutil.c
+cc -I../zlib -O   -c -o pngread.o pngread.c
+cc -I../zlib -O   -c -o pngrio.o pngrio.c
+cc -I../zlib -O   -c -o pngwio.o pngwio.c
+cc -I../zlib -O   -c -o pngwrite.o pngwrite.c
+cc -I../zlib -O   -c -o pngrtran.o pngrtran.c
+pngwutil.c: In function ‘png_check_keyword’:
+pngwutil.c:567:63: warning: ‘ keyword length must be 1 - ...’ directive writing 41 bytes into a region of size between 36 and 40 [-Wformat-overflow=]
+  567 |       sprintf(msg, "%s keyword length must be 1 - 79 characters",
+      |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+In file included from /usr/include/stdio.h:980,
+                 from pngconf.h:54,
+                 from png.h:74,
+                 from pngwutil.c:10:
+In function ‘sprintf’,
+    inlined from ‘png_check_keyword’ at pngwutil.c:567:7:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:10: note: ‘__builtin___sprintf_chk’ output between 42 and 46 bytes into a destination of size 40
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+cc -I../zlib -O   -c -o pngwtran.o pngwtran.c
+cc -I../zlib -O   -c -o pngmem.o pngmem.c
+cc -I../zlib -O   -c -o pngerror.o pngerror.c
+cc -I../zlib -O   -c -o pngpread.o pngpread.c
+cc -I../zlib -O   -c -o pngtest.o pngtest.c
+ar rc libpng.a  png.o pngrcb.o pngrutil.o pngtrans.o pngwutil.o pngread.o pngrio.o pngwio.o pngwrite.o pngrtran.o pngwtran.o pngmem.o pngerror.o pngpread.o
+echo libpng.a
+libpng.a
+cc -o pngtest  pngtest.o -L. -L../zlib/ -lpng -lz -lm

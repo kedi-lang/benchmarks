@@ -1,0 +1,45 @@
+(* *********************************************************************)
+(*                                                                     *)
+(*              The Compcert verified compiler                         *)
+(*                                                                     *)
+(*          Xavier Leroy, INRIA Paris-Rocquencourt                     *)
+(*                                                                     *)
+(*  Copyright Institut National de Recherche en Informatique et en     *)
+(*  Automatique.  All rights reserved.  This file is distributed       *)
+(*  under the terms of the GNU Lesser General Public License as        *)
+(*  published by the Free Software Foundation, either version 2.1 of   *)
+(*  the License, or  (at your option) any later version.               *)
+(*  This file is also distributed under the terms of the               *)
+(*  INRIA Non-Commercial License Agreement.                            *)
+(*                                                                     *)
+(* *********************************************************************)
+
+(** This file collects a number of definitions and theorems that are
+    used throughout the development.  It complements the Coq standard
+    library. *)
+
+Require Export String.
+Require Export ZArith.
+Require Export Znumtheory.
+Require Export List.
+Require Export Bool.
+Require Export Lia.
+
+(** * Useful tactics *)
+
+Ltac inv H := inversion H; clear H; subst.
+
+Ltac predSpec pred predspec x y :=
+  generalize (predspec x y); case (pred x y); intro.
+
+Ltac caseEq name :=
+  generalize (eq_refl name); pattern name at -1 in |- *; case name.
+
+Ltac destructEq name :=
+  destruct name eqn:?.
+
+Ltac decEq :=
+  match goal with
+  | [ |- _ = _ ] => f_equal
+  | [ |- (?X ?A <> ?X ?B) ] =>
+      cut (A <> B); [intro; congruence | try discriminate]

@@ -1,0 +1,83 @@
+1319-  runRTypeInstruction(instruction) {
+1320-    // Process R-type instruction
+1321-    const rs = (instruction >> 21) & 0x1F;
+1322-    const rt = (instruction >> 16) & 0x1F;
+1323-    const rd = (instruction >> 11) & 0x1F;
+1324-    const sa = (instruction >> 6) & 0x1F;
+1325-    const funct = instruction & 0x3F;
+1326-    
+1327-    switch (funct) {
+1328-      case 0x20: this.add(rs, rt, rd); break;      // ADD
+1329-      case 0x21: this.addu(rs, rt, rd); break;     // ADDU
+1330-      case 0x24: this.and(rs, rt, rd); break;      // AND
+1331-      case 0x27: this.nor(rs, rt, rd); break;      // NOR
+1332-      case 0x25: this.or(rs, rt, rd); break;       // OR
+1333-      case 0x2a: this.slt(rs, rt, rd); break;      // SLT
+1334-      case 0x2b: this.sltu(rs, rt, rd); break;     // SLTU
+1335-      case 0x22: this.sub(rs, rt, rd); break;      // SUB
+1336-      case 0x23: this.subu(rs, rt, rd); break;     // SUBU
+1337-      case 0x26: this.xor(rs, rt, rd); break;      // XOR
+1338-      case 0x00: this.sll(rt, rd, sa); break;      // SLL
+1339:      case 0x04: this.sllv(rs, rt, rd); break;     // SLLV
+1340-      case 0x03: this.sra(rt, rd, sa); break;      // SRA
+1341-      case 0x07: this.srav(rs, rt, rd); break;     // SRAV
+1342-      case 0x02: this.srl(rt, rd, sa); break;      // SRL
+1343-      case 0x06: this.srlv(rs, rt, rd); break;     // SRLV
+1344-      case 0x1a: this.div(rs, rt); break;          // DIV
+1345-      case 0x1b: this.divu(rs, rt); break;         // DIVU
+1346-      case 0x10: this.mfhi(rd); break;             // MFHI
+1347-      case 0x12: this.mflo(rd); break;             // MFLO
+1348-      case 0x11: this.mthi(rs); break;             // MTHI
+1349-      case 0x13: this.mtlo(rs); break;             // MTLO
+1350-      case 0x18: this.mult(rs, rt); break;         // MULT
+1351-      case 0x19: this.multu(rs, rt); break;        // MULTU
+1352-      case 0x08: this.jr(rs); break;               // JR
+1353-      case 0x09: this.jalr(rs, rd); break;         // JALR
+1354-      case 0x0d: this.break(((rd << 5) | sa)); break; // BREAK
+1355-      case 0x0c: return this.syscall(); break;     // SYSCALL
+1356-      case 0x0f: break;                            // SYNC (single-threaded VM)
+1357-      case 0x0a: this.movz(rs, rt, rd); break;     // MOVZ
+1358-      case 0x0b: this.movn(rs, rt, rd); break;     // MOVN
+1359-      case 0x34: this.teq(rs, rt, ((rd << 5) | sa)); break; // TEQ
+--
+1430-        break;
+1431-        
+1432-      case 0x0b: // SLTIU
+1433-        {
+1434-          const rs = (instruction >> 21) & 0x1F;
+1435-          const rt = (instruction >> 16) & 0x1F;
+1436-          const imm = instruction & 0xFFFF;
+1437-          this.sltiu(rt, rs, imm);
+1438-        }
+1439-        break;
+1440-        
+1441-      case 0x0e: // XORI
+1442-        {
+1443-          const rs = (instruction >> 21) & 0x1F;
+1444-          const rt = (instruction >> 16) & 0x1F;
+1445-          const imm = instruction & 0xFFFF;
+1446-          this.xori(rt, rs, imm);
+1447-        }
+1448-        break;
+1449-        
+1450:      case 0x04: // BEQ
+1451-        {
+1452-          const rs = (instruction >> 21) & 0x1F;
+1453-          const rt = (instruction >> 16) & 0x1F;
+1454-          const offset = this.signExtend16(instruction & 0xFFFF);
+1455-          this.beq(rs, rt, offset);
+1456-        }
+1457-        break;
+1458-        
+1459-      case 0x01: // BGEZ, BLTZ family
+1460-        {
+1461-          const rs = (instruction >> 21) & 0x1F;
+1462-          const op = (instruction >> 16) & 0x1F; // Actually the operation code
+1463-          const offset = this.signExtend16(instruction & 0xFFFF);
+1464-          
+1465-          switch (op) {
+1466-            case 0x00: this.bltz(rs, offset); break;     // BLTZ
+1467-            case 0x01: this.bgez(rs, offset); break;     // BGEZ
+1468-            case 0x10: this.bltzal(rs, offset); break;   // BLTZAL
+1469-            case 0x11: this.bgezal(rs, offset); break;   // BGEZAL
+1470-            default:

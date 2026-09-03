@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "045d06bdd619dad3eaf9e725097b1e7bbb6348d052fc0cf24e8e6c604653c00b",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 18000,
+    "created_at": "2026-09-02T22:35:18.845561Z",
+    "expires_at": "2026-09-02T23:35:18.845561Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": " Count Leading Zeros\n  let value = this.registers[rs] >>> 0; // Force to unsigned 32-bit\n  let count = 0;\n  \n  // Count leading zeros using bit manipulation\n  if (value === 0) {\n    count = 32; // Special case: if value is 0, result is 32\n  } else {\n    // Count leading zeros by checking bit positions from MSB to LSB\n    for (let i = 31; i >= 0; i--) {\n      if ((value & (1 << i)) === 0) {\n        count++;\n      } else {\n        break; // Stop counting once we find first '1' bit\n      }\n    }\n  }\n  \n  this.registers[rd] = count;\n}\n  \n  // ---- System Call Handler ----\n  \nhandleSyscall() {\n  // Store the address of the current instruction in case we need it\n  this.epc = this.pc - 4;\n  \n  // Get syscall number from $v0 (register 2)\n  const syscallNum = this.registers[2];\n  \n  // Ensure Node.js fs and process modules are available\n  // This assumes the code is running in a Node.js environment\n  const fs = require('fs');\n  const process = require('process');\n  \n  // Initialize file descriptors tracking if not already done\n  if (syscallNum === 0) {  // SYS_read\n    // Get arguments from registers\n    const fd = this.fileDescriptors[this.registers[4]];            // File descriptor\n    …",
+    "ref_id": "tool_call_result_6",
+    "sensitive": false,
+    "size_bytes": 18000,
+    "summary": "str value with 18000 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_ea93e909-5e32-4810-908b-ace7437b9a5f",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

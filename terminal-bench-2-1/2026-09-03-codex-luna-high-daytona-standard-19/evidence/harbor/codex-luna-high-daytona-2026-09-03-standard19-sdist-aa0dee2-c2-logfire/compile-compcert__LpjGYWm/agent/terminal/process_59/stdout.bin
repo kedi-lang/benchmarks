@@ -1,0 +1,41 @@
+(** * Locations: where a real number is positioned with respect to its rounded-down value in an arbitrary format. *)
+
+From Coq Require Import ZArith Reals Lia.
+From Coq Require SpecFloat.
+
+Require Import Zaux Raux Defs Float_prop.
+
+(* Compatibility lemma: Coq 8.18 no longer provides the former
+   unqualified [Z_div_mod_eq] theorem. *)
+Lemma Z_div_mod_eq: forall a b,
+  b > 0 -> a = (b * (a / b) + a mod b).
+Proof.
+  intros. apply Z.div_mod. lia.
+Qed.
+
+Notation location := SpecFloat.location (only parsing).
+Notation loc_Exact := SpecFloat.loc_Exact (only parsing).
+Notation loc_Inexact := SpecFloat.loc_Inexact (only parsing).
+
+Section Fcalc_bracket.
+
+Variable d u : R.
+Hypothesis Hdu : (d < u)%R.
+
+Variable x : R.
+
+Definition inbetween_loc :=
+  match Rcompare x d with
+  | Gt => loc_Inexact (Rcompare x ((d + u) / 2))
+  | _ => loc_Exact
+  end.
+apply Z.lt_gt.
+apply Zpower_gt_0.
+now apply Zlt_le_weak.
+(* . *)
+rewrite 2!Hr.
+rewrite Zmult_plus_distr_l, Zmult_1_l.
+unfold F2R at 2. simpl.
+rewrite plus_IZR, Rmult_plus_distr_r.
+apply new_location_correct; unfold F2R; simpl.
+apply bpow_gt_0.

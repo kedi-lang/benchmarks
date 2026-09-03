@@ -1,0 +1,115 @@
+runtime/blake2.c:146:  /* If data was left in buffer, pad it with fresh data and compress */
+runtime/blake2.c:150:      /* Not enough fresh data to compress.  Buffer the data. */
+runtime/caml/fiber.h:138:   contain at least one free bucket, whenever we are running OCaml
+runtime/caml/intext.h:31:#define Intext_magic_number_compressed 0x8495A6BD
+runtime/caml/intext.h:49:  Header format for the "compressed" model: 10 to 55 bytes
+runtime/caml/intext.h:50:       0   "compressed" magic number
+runtime/caml/intext.h:55:           - length of compressed marshaled data, in bytes
+runtime/caml/intext.h:56:           - length of uncompressed marshaled data, in bytes
+runtime/caml/intext.h:141:CAMLextern _Bool (*caml_extern_compress_output)(struct caml_output_block **);
+runtime/caml/intext.h:142:CAMLextern size_t (*caml_intern_decompress_input)(unsigned char *,
+runtime/caml/misc.h:731:#define Debug_free_truncate  Debug_tag (0x04) /* obsolete */
+runtime/extern.c:46:  COMPRESSED = 8                /* Flag to request compression if available */
+runtime/extern.c:164:/* Hook for compression */
+runtime/extern.c:166:_Bool (*caml_extern_compress_output)(struct caml_output_block **) = NULL;
+runtime/extern.c:816:           compressibility. */
+runtime/extern.c:930:  /* Turn compression off if Zlib missing or if called from
+runtime/extern.c:947:    uintnat uncompressed_len = extern_output_length(s);
+runtime/extern.c:948:    if (!caml_extern_compress_output(&(s->extern_output_first)))
+runtime/extern.c:954:        && (uncompressed_len >= (uintnat)1 << 32
+runtime/extern.c:963:    /* Write the header in compressed format */
+runtime/extern.c:964:    store32(header, Intext_magic_number_compressed);
+runtime/extern.c:967:    len = storevlq(header + pos, uncompressed_len); pos += len;
+runtime/intern.c:91:  char compressed;
+runtime/intern.c:92:  /* 1 if the compressed format is in use, 0 otherwise */
+runtime/intern.c:566:        if (!s->compressed) ofs = s->obj_counter - ofs;
+runtime/intern.c:753:  uintnat uncompressed_data_len;
+runtime/intern.c:756:  int compressed;
+runtime/intern.c:767:    h->compressed = 0;
+runtime/intern.c:768:    h->data_len = h->uncompressed_data_len = read32u(s);
+runtime/intern.c:781:    h->compressed = 0;
+runtime/intern.c:783:    h->data_len = h->uncompressed_data_len = read64u(s);
+runtime/intern.c:791:  case Intext_magic_number_compressed:
+runtime/intern.c:793:    h->compressed = 1;
+runtime/intern.c:796:    overflow |= readvlq(s, &h->uncompressed_data_len);
+runtime/intern.c:815:/* Decompress the input if needed.
+runtime/intern.c:818:   when the memory block for the compressed input can be freed
+runtime/intern.c:821:size_t (*caml_intern_decompress_input)(unsigned char *,
+runtime/intern.c:826:static void intern_decompress_input(struct caml_intern_state * s,
+runtime/intern.c:830:  s->compressed = h->compressed;
+runtime/intern.c:831:  if (! h->compressed) return;
+runtime/intern.c:832:  if (caml_intern_decompress_input != NULL) {
+runtime/intern.c:833:    unsigned char * blk = malloc(h->uncompressed_data_len);
+runtime/intern.c:839:      caml_intern_decompress_input(blk,
+runtime/intern.c:840:                                   h->uncompressed_data_len,
+runtime/intern.c:843:    if (res != h->uncompressed_data_len) {
+runtime/intern.c:846:      intern_failwith2(fun_name, "decompression error");
+runtime/intern.c:853:    intern_failwith2(fun_name, "compressed object, cannot decompress");
+runtime/intern.c:880:  case Intext_magic_number_compressed:
+runtime/intern.c:907:  intern_decompress_input(s, "input_value", &h);
+runtime/intern.c:949:  /* Decompress if needed */
+runtime/intern.c:950:  intern_decompress_input(s, "input_val_from_string", &h);
+runtime/intern.c:965:  /* Decompress if needed */
+runtime/intern.c:966:  intern_decompress_input(s, "input_val_from_block", h);
+runtime/intern.c:1008:   - for the "compressed" model: the length is at positions 5 to at most 14
+runtime/intern.c:1010:   is 20 bytes long (a small integer in the "compressed" model),
+runtime/intern.c:1038:  case Intext_magic_number_compressed:
+runtime/major_gc.c:938:   2. the compressed stack - a bitset of fields that need to be marked.
+runtime/major_gc.c:941:   overflows the bound, then entries from the stack are compressed and
+runtime/major_gc.c:942:   transferred into the compressed stack, expect for "large" entries,
+runtime/major_gc.c:944:   represented as spans and remain on the uncompressed stack.
+runtime/major_gc.c:946:   When the stack is empty, the compressed stack is processed.
+runtime/major_gc.c:947:   The compressed stack iterator marks the point up to which
+runtime/major_gc.c:948:   compressed stack entries have already been processed.
+runtime/major_gc.c:960:  struct addrmap compressed_stack;
+runtime/major_gc.c:961:  addrmap_iterator compressed_stack_iter;
+runtime/major_gc.c:1014:     new compressed stack entries into an existing, partially-processed
+runtime/major_gc.c:1015:     compressed stack. Thus, we create a new compressed stack and insert the
+runtime/major_gc.c:1016:     unprocessed entries of the existing compressed stack into the new one. */
+runtime/major_gc.c:1017:  uintnat old_compressed_entries = 0;
+runtime/major_gc.c:1018:  struct addrmap new_compressed_stack = ADDRMAP_INIT;
+runtime/major_gc.c:1019:  for (addrmap_iterator it = stk->compressed_stack_iter;
+runtime/major_gc.c:1020:       caml_addrmap_iter_ok(&stk->compressed_stack, it);
+runtime/major_gc.c:1021:       it = caml_addrmap_next(&stk->compressed_stack, it)) {
+runtime/major_gc.c:1022:    value k = caml_addrmap_iter_key(&stk->compressed_stack, it);
+runtime/major_gc.c:1023:    value v = caml_addrmap_iter_value(&stk->compressed_stack, it);
+runtime/major_gc.c:1024:    caml_addrmap_insert(&new_compressed_stack, k, v);
+runtime/major_gc.c:1025:    ++old_compressed_entries;
+runtime/major_gc.c:1027:  if (old_compressed_entries > 0) {
+runtime/major_gc.c:1028:    caml_gc_log("Preserved %" CAML_PRIdNAT " compressed entries",
+runtime/major_gc.c:1029:                old_compressed_entries);
+runtime/major_gc.c:1031:  caml_addrmap_clear(&stk->compressed_stack);
+runtime/major_gc.c:1032:  stk->compressed_stack = new_compressed_stack;
+runtime/major_gc.c:1034:  /* scan mark stack and compress entries */
+runtime/major_gc.c:1035:  uintnat new_stk_count = 0, compressed_entries = 0, total_words = 0;
+runtime/major_gc.c:1044:        compressed_entries += add_addr(&stk->compressed_stack,
+runtime/major_gc.c:1053:              "%" CAML_PRIdNAT " compressed entries",
+runtime/major_gc.c:1055:              compressed_entries+old_compressed_entries);
+runtime/major_gc.c:1060:  /* setup the compressed stack iterator */
+runtime/major_gc.c:1061:  stk->compressed_stack_iter = caml_addrmap_iterator(&stk->compressed_stack);
+runtime/major_gc.c:1073:     will not compress and because we are using a domain local heap bound we
+runtime/major_gc.c:1386:      addrmap_iterator it = mstk->compressed_stack_iter;
+runtime/major_gc.c:1387:      if (caml_addrmap_iter_ok(&mstk->compressed_stack, it)) {
+runtime/major_gc.c:1388:        uintnat chunk = caml_addrmap_iter_key(&mstk->compressed_stack, it);
+runtime/major_gc.c:1389:        uintnat bitset = caml_addrmap_iter_value(&mstk->compressed_stack, it);
+runtime/major_gc.c:1394:        mstk->compressed_stack_iter =
+runtime/major_gc.c:1395:                      caml_addrmap_next(&mstk->compressed_stack, it);
+runtime/major_gc.c:1661:      !caml_addrmap_iter_ok(&domain->mark_stack->compressed_stack,
+runtime/major_gc.c:1662:                            domain->mark_stack->compressed_stack_iter)
+runtime/major_gc.c:2184:  caml_addrmap_init(&d->mark_stack->compressed_stack);
+runtime/major_gc.c:2185:  d->mark_stack->compressed_stack_iter =
+runtime/major_gc.c:2186:                  caml_addrmap_iterator(&d->mark_stack->compressed_stack);
+runtime/major_gc.c:2224:  CAMLassert(!caml_addrmap_iter_ok(&d->mark_stack->compressed_stack,
+runtime/major_gc.c:2225:                                   d->mark_stack->compressed_stack_iter));
+runtime/major_gc.c:2226:  caml_addrmap_clear(&d->mark_stack->compressed_stack);
+runtime/memprof.c:129: * Mostly threads and domains are free to run callbacks on their own
+runtime/startup_byt.c:380:   freed, since the runtime will terminate after calling this. */
+runtime/zstd.c:31:static bool caml_zstd_compress(struct caml_output_block **extern_output_first)
+runtime/zstd.c:72:    rc = ZSTD_compressStream2(ctx, &out, &in,
+runtime/zstd.c:80:  /* The old uncompressed blocks that remain to be freed */
+runtime/zstd.c:82:  /* Free the newly-allocated compressed blocks */
+runtime/zstd.c:93:static size_t caml_zstd_decompress(unsigned char * blk,
+runtime/zstd.c:94:                                   uintnat uncompressed_data_len,
+runtime/zstd.c:98:  return ZSTD_decompress(blk, uncompressed_data_len, intern_src, data_len);
+runtime/zstd.c:103:  caml_extern_compress_output = caml_zstd_compress;
+runtime/zstd.c:104:  caml_intern_decompress_input = caml_zstd_decompress;

@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py", line 953, in setup
+    await self.install(environment)
+  File "<KEDI_WORKSPACE>/src/kedi/integrations/harbor/agent.py", line 168, in install
+    await self.ensure_system_dependencies(
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py", line 651, in ensure_system_dependencies
+    manager = await self._get_system_package_manager(environment)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py", line 607, in _get_system_package_manager
+    result = await environment.exec(
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py", line 1926, in exec
+    return await self._strategy.exec(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py", line 376, in exec
+    return await self._env._sandbox_exec(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py", line 1716, in _sandbox_exec
+    response = await self._sandbox.process.execute_session_command(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/daytona/_utils/errors.py", line 222, in async_wrapper
+    process_n_raise_exception(e)
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/daytona/_utils/errors.py", line 176, in process_n_raise_exception
+    raise daytona_error_cls(_prefix_message(message_prefix, str(e))) from None
+daytona.common.errors.DaytonaConnectionError: Failed to execute session command: [Errno 54] Connection reset by peer
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 406, in run
+    await self._prepare()
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 450, in _prepare
+    await self._setup_agent()
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 1455, in _setup_agent
+    await asyncio.wait_for(
+  File "<HOME>/.local/share/uv/python/cpython-3.12-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py", line 957, in setup
+    raise RuntimeError(f"Agent install failed: {exc}") from exc
+RuntimeError: Agent install failed: Failed to execute session command: [Errno 54] Connection reset by peer

@@ -1,0 +1,101 @@
+  caml_gc_log("Compacting heap start");
+  CAML_EV_BEGIN(EV_COMPACT);
+  /* Warning: caml_compact_heap must only be called from
+     [stw_cycle_all_domains] in major_gc.c as there are
+     very specific conditions the compaction algorithm expects.
+
+    The following code implements a compaction algorithm that is similar to
+    Edward's Two-Finger algorithm from the original 1974 LISP book (The
+    Programming Language LISP). At a high level the algorithm works as a series
+    of parallel (using all running domains) phases separated by global barriers:
+
+    1. For each size class
+      a. Compute the number of live blocks in partially filled pools
+      b. Keep enough pools to fully contain the number of live blocks and
+         set the rest to be evacuated
+      c. For each live block in each pool in the evacuation list,
+         allocate and copy into a non-evacuating pool.
+    2. Proceed through the roots and the heap, updating pointers to evacuated
+       blocks to point to the new location of the block. Update finalisers and
+       ephemerons too.
+    3. Go through pools evacuated and release them. Finally free all but
+        one pool in the freelist.
+    4. One domain needs to release the pools in the freelist back to the OS.
+
+    The algorithm requires one full pass through the whole heap (pools and large
+    allocations) to rewrite pointers, as well as two passes through the
+    partially-occupied pools in the heap to compute the number of live blocks
+    and evacuate them.
+  */
+
+  /* First phase. Here we compute the number of live blocks in partially
+  filled pools, determine pools to be evacuated and then evacuate from them.
+  For the first phase we need not consider full pools, they
+  cannot be evacuated to or from. */
+  caml_global_barrier(participating_count);
+  CAML_EV_BEGIN(EV_COMPACT_EVACUATE);
+
+  struct caml_heap_state* heap = Caml_state->shared_heap;
+
+  #ifdef DEBUG
+  /* Check preconditions for the heap: */
+  for (int sz_class = 1; sz_class < NUM_SIZECLASSES; sz_class++) {
+    /* No sweeping has happened yet */
+    CAMLassert(heap->avail_pools[sz_class] == NULL);
+    CAMLassert(heap->full_pools[sz_class] == NULL);
+    CAMLassert(heap->swept_large == NULL);
+    /* No pools waiting for adoption */
+    if (participants[0] == Caml_state) {
+      CAMLassert(
+          atomic_load_relaxed(&pool_freelist.global_avail_pools[sz_class]) ==
+            NULL);
+      CAMLassert(
+          atomic_load_relaxed(&pool_freelist.global_full_pools[sz_class]) ==
+            NULL);
+    }
+    /* The minor heap is empty */
+    CAMLassert(Caml_state->young_ptr == Caml_state->young_end);
+    /* The mark stack is empty */
+    CAMLassert(caml_mark_stack_is_empty());
+  }
+  #endif
+
+  /* All evacuated pools (of every size class) */
+  pool *evacuated_pools = NULL;
+
+  for (int sz_class = 1; sz_class < NUM_SIZECLASSES; sz_class++) {
+    /* We only care about moving things in pools that aren't full (we cannot
+    evacuate to or from a full pool) */
+    pool* cur_pool = heap->unswept_avail_pools[sz_class];
+
+    if (!cur_pool) {
+      /* No partially filled pools for this size, nothing to do */
+      continue;
+    }
+
+    /* count the number of pools */
+    int num_pools = 0;
+
+    while (cur_pool) {
+      num_pools++;
+      cur_pool = cur_pool->next;
+    }
+
+    struct compact_pool_stat* pool_stats = caml_stat_alloc_noexc(
+      sizeof(struct compact_pool_stat) * num_pools);
+
+    /* if we're unable to allocate pool_stats here then we should avoid
+      evacuating this size class. It's unlikely but it may be that we had
+      better success with an earlier size class and that results in some
+      memory being freed up. */
+    if( pool_stats == NULL ) {
+      caml_gc_log("Unable to allocate pool_stats for size class %d", sz_class);
+
+      continue;
+    }
+
+    cur_pool = heap->unswept_avail_pools[sz_class];
+
+    /* Count the number of free and live blocks in each pool. Note that a live
+       block here currently has the header status UNMARKED (because it was
+       MARKED in the previous cycle). After compaction the shared pools will

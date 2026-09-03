@@ -1,0 +1,9 @@
+/tmp/CompCert/Makefile:33:COQINCLUDES := $(foreach d, $(DIRS), -R $(d) compcert.$(d))
+/tmp/CompCert/Makefile:37:COQINCLUDES += -R flocq Flocq
+/tmp/CompCert/Makefile:42:COQINCLUDES += -R MenhirLib MenhirLib
+/tmp/CompCert/Makefile:63:COQC="$(COQBIN)coqc" -q $(COQINCLUDES) $(COQCOPTS)
+/tmp/CompCert/Makefile:64:COQDEP="$(COQBIN)coqdep" $(COQINCLUDES)
+/tmp/CompCert/Makefile:66:COQEXEC="$(COQBIN)coqtop" $(COQINCLUDES) -batch -load-vernac-source
+/tmp/CompCert/Makefile:67:COQCHK="$(COQBIN)coqchk" $(COQINCLUDES)
+/tmp/CompCert/Makefile:371:	@echo $(COQINCLUDES)
+/tmp/CompCert/Makefile:374:	@echo $(COQINCLUDES) > _CoqProject

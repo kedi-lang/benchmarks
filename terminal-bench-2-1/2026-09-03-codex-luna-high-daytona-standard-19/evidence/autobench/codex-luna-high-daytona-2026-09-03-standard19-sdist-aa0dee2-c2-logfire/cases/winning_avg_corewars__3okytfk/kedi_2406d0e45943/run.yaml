@@ -1,0 +1,3485 @@
+# yaml-language-server: $schema=/private/tmp/kedi-tb21-public-aa0dee2/home/.autobench/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+  experiment: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+  benchmark: kedi-terminal-bench-2.1
+  case: winning-avg-corewars__3okytfk
+  variant: kedi-2406d0e45943
+  status: failed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: failed
+    task: passed
+case:
+  id: winning-avg-corewars__3okytfk
+  input:
+    job_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire
+    trial_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire/winning-avg-corewars__3okytfk
+    trial_name: winning-avg-corewars__3okytfk
+    task_name: terminal-bench/winning-avg-corewars
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-2406d0e45943
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+      false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 20000000
+    max_evidence_total_bytes: 50000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+        false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes":
+        32768}'
+      source: variant
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 20000000
+      source: variant
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    max_evidence_total_bytes:
+      sequence: 6
+      id: obs_6
+      name: max_evidence_total_bytes
+      kind: factor
+      value: 50000000
+      source: variant
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+  measurements:
+    terminal_bench.grader_completed:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: false
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier did not produce rewards
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    kedi.trial_completed:
+      sequence: 8
+      id: obs_8
+      name: kedi.trial_completed
+      kind: metric
+      value: false
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: Kedi result missing
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_complete:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 9
+      id: obs_9
+      name: terminal_bench.duration
+      kind: metric
+      value: 6297.471293
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.environment_setup.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 2647.441229
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.agent_setup.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 1942.043004
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    kedi.total_tokens:
+      sequence: 12
+      id: obs_12
+      name: kedi.total_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+  events:
+    terminal_bench.exception:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.exception
+      kind: event
+      value: RuntimeError
+      semantic: error.type
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.config.json:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.job.log:
+      sequence: 15
+      id: obs_15
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 16
+      id: obs_16
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.lock.json:
+      sequence: 17
+      id: obs_17
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.result.json:
+      sequence: 18
+      id: obs_18
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.config.json:
+      sequence: 19
+      id: obs_19
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: 7e082880b11e08ecf006e45056248a2c28b77cc781b2a40285184b61a3cd6127
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.exception.txt:
+      sequence: 20
+      id: obs_20
+      name: terminal_bench.file.trial.exception.txt
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/exception.txt
+        sha256.source: e8efdce7663da775de4c41f80fdd7effbb1127c5031ada886f441415e6f6f9d5
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.lock.json:
+      sequence: 21
+      id: obs_21
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: d722b567d99669cf4ade12abbe1007d3e127855f47386eb4d2da27091b7858ad
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.result.json:
+      sequence: 22
+      id: obs_22
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: 1b5c76fb9f3bc43b9050cf47d343a4d755bc2de8400ac48f4f667a0062d2583c
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.trial.log:
+      sequence: 23
+      id: obs_23
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: 0e7c5c6d31175373d36b7b5c36ffe021122a55695f1fd44905e2167872c51639
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 24
+      id: obs_24
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_index:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      case: winning-avg-corewars__3okytfk
+      variant: kedi-2406d0e45943
+trace:
+  protocol: abp
+  protocol_version: 1
+  trace_id: 313e018cc24c883f2b85ea116a15785c
+  execution:
+    benchmark_id: kedi-terminal-bench-2.1
+    experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+    run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+    case_id: winning-avg-corewars__3okytfk
+    variant_id: kedi-2406d0e45943
+  root_span_ids:
+    - d3718b25503dcc9e
+  spans:
+    - trace_id: 313e018cc24c883f2b85ea116a15785c
+      span_id: d3718b25503dcc9e
+      operation: benchmark.run
+      kind: task
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-03T10:39:54.047712Z'
+      ended_at: '2026-09-03T10:39:54.103383Z'
+      start_monotonic_ns: 21512456977583
+      end_monotonic_ns: 21512512647875
+      duration_ns: 55670292
+      start_sequence: 1
+      end_sequence: 43
+      attributes:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      output:
+        type: CapturedTrial
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9a187b90-f7f0-4303-8e7a-5b1d26589ca3
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.047812Z'
+          monotonic_ns: 21512457077000
+          sequence: 2
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d3718b25503dcc9e
+          name: model
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 18
+          attributes:
+            observation_id: obs_1
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 1b3bfe10-f640-47d4-8cad-c130b86735ff
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.047870Z'
+          monotonic_ns: 21512457134250
+          sequence: 3
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d3718b25503dcc9e
+          name: adapter
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 8
+          attributes:
+            observation_id: obs_2
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9a9fcc8d-6c6b-46c4-b0a6-097e450787f6
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.047903Z'
+          monotonic_ns: 21512457166916
+          sequence: 4
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d3718b25503dcc9e
+          name: effort
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 4
+          attributes:
+            observation_id: obs_3
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 71ecb7db-1eef-46d1-aaa4-5e399790042b
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.047934Z'
+          monotonic_ns: 21512457198333
+          sequence: 5
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d3718b25503dcc9e
+          name: harness_policy
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 390
+          attributes:
+            observation_id: obs_4
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c13627c9-9965-4d5e-96b9-1f36d917cd87
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.047957Z'
+          monotonic_ns: 21512457221791
+          sequence: 6
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d3718b25503dcc9e
+          name: max_evidence_file_bytes
+          semantic_type: factor.value
+          body: 20000000
+          attributes:
+            observation_id: obs_5
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 44ecc0d4-abb4-498a-b555-91fe5b150324
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.047979Z'
+          monotonic_ns: 21512457242833
+          sequence: 7
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d3718b25503dcc9e
+          name: max_evidence_total_bytes
+          semantic_type: factor.value
+          body: 50000000
+          attributes:
+            observation_id: obs_6
+            kind: factor
+            source: variant
+      partial: false
+    - trace_id: 313e018cc24c883f2b85ea116a15785c
+      span_id: 29edc17b1fc1496a
+      parent_span_id: d3718b25503dcc9e
+      operation: capture terminal-bench trial
+      kind: workflow
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-03T10:39:54.048865Z'
+      ended_at: '2026-09-03T10:39:54.103288Z'
+      start_monotonic_ns: 21512458129458
+      end_monotonic_ns: 21512512553083
+      duration_ns: 54423625
+      start_sequence: 8
+      end_sequence: 42
+      output:
+        type: dict
+        length: 9
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: bf7e4fbe-f25c-4ce4-87ec-06767644e730
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.048910Z'
+          monotonic_ns: 21512458174250
+          sequence: 9
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: input
+          semantic_type: operation.input
+          body:
+            type: dict
+            length: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8a09d3e8-119d-4186-bc79-289d0c38a09f
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.049153Z'
+          monotonic_ns: 21512458416875
+          sequence: 16
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.exception
+          semantic_type: error.type
+          body: RuntimeError
+          attributes:
+            observation_id: obs_13
+            kind: event
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3cf7b541-f8e6-43c2-a046-edcc51a7074c
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.054113Z'
+          monotonic_ns: 21512463377458
+          sequence: 18
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.job.config.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_14
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c35d01ba-4679-461a-9b27-29331bdfa3b2
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.057674Z'
+          monotonic_ns: 21512466938250
+          sequence: 20
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.job.job.log
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_15
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 11
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 40daa5f7-e7a2-4006-a62a-b1169439c3f7
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.061714Z'
+          monotonic_ns: 21512470978458
+          sequence: 22
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.job.kedi-manifest.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_16
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 22
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: ae7394ef-b967-48e9-a856-2e1cff99847b
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.082766Z'
+          monotonic_ns: 21512492030541
+          sequence: 24
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.job.lock.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_17
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 13
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 76de6a19-6569-4a46-b499-96ebdf68eb90
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.085547Z'
+          monotonic_ns: 21512494811916
+          sequence: 26
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.job.result.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_18
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8347a9d3-9513-4ebe-a405-19037d3c267d
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.088292Z'
+          monotonic_ns: 21512497556750
+          sequence: 28
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.trial.config.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_19
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 17
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: df932f1a-7240-4ee2-8c10-b5915237c05d
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.090205Z'
+          monotonic_ns: 21512499470125
+          sequence: 30
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.trial.exception.txt
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_20
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 19
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 6aac3ec7-4cfc-4788-8bd1-688aed203f68
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.092928Z'
+          monotonic_ns: 21512502192750
+          sequence: 32
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.trial.lock.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_21
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: bc48cada-b79a-4004-ae7b-95116513733d
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.097342Z'
+          monotonic_ns: 21512506606791
+          sequence: 34
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.trial.result.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_22
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 17
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a2fd739b-1ea2-4cdf-9931-85187a3e285e
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.098570Z'
+          monotonic_ns: 21512507835208
+          sequence: 36
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.trial.trial.log
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_23
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 6b1f6e12-bd84-4798-9a5f-c301ab477505
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.100549Z'
+          monotonic_ns: 21512509814083
+          sequence: 38
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.file.trial.artifacts.manifest.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_24
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 29
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 2d2c42f1-9fef-4b46-826f-cac1dde50be8
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.103230Z'
+          monotonic_ns: 21512512494500
+          sequence: 41
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.evidence_index
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_26
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+      measurements:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 70d03a4c-be58-4b27-8f6b-fea066b9cefe
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.048968Z'
+          monotonic_ns: 21512458232375
+          sequence: 10
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.grader_completed
+          semantic_type: quality.correctness
+          value: false
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_7
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 48
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5e474f12-e6b5-4084-af98-3b2e4dcd753b
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.049016Z'
+          monotonic_ns: 21512458280000
+          sequence: 11
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 29edc17b1fc1496a
+          name: kedi.trial_completed
+          semantic_type: quality.correctness
+          value: false
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_8
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 19
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 91a82453-af74-437b-873c-70fcfb32b3a8
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.049048Z'
+          monotonic_ns: 21512458312333
+          sequence: 12
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.duration
+          semantic_type: time.latency
+          value: 6297.471293
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_9
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: b62110e9-ff51-45fd-ac90-725611b36ee7
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.049073Z'
+          monotonic_ns: 21512458337708
+          sequence: 13
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.environment_setup.duration
+          semantic_type: time.latency
+          value: 2647.441229
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_10
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5e68fcd4-42f7-47ae-b180-f504eaf86537
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.049095Z'
+          monotonic_ns: 21512458359333
+          sequence: 14
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.agent_setup.duration
+          semantic_type: time.latency
+          value: 1942.043004
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_11
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f84b0d02-b19e-4d4b-ad44-4d12293696f0
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.049119Z'
+          monotonic_ns: 21512458383083
+          sequence: 15
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 29edc17b1fc1496a
+          name: kedi.total_tokens
+          semantic_type: llm.tokens.total
+          value: 0
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_12
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 75583738-f134-4795-9296-fbd0404dd579
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.102939Z'
+          monotonic_ns: 21512512204708
+          sequence: 39
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 29edc17b1fc1496a
+          name: terminal_bench.evidence_complete
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_25
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 43
+      references:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 11344408-2c4e-46ae-b43a-0ef77684fe40
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.054022Z'
+          monotonic_ns: 21512463288041
+          sequence: 17
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.config.json
+          reference:
+            kind: artifact
+            id: artifact_1
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_1
+            artifact_state: complete
+            artifact_sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+            artifact_byte_count: 2602
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9dbde95d-f7da-4bd9-9c79-f1d447c81e0f
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.057596Z'
+          monotonic_ns: 21512466860666
+          sequence: 19
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.job.log
+          reference:
+            kind: artifact
+            id: artifact_2
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_2
+            artifact_state: complete
+            artifact_sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+            artifact_byte_count: 50738
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 069222ea-3e3d-4e30-86dc-2c487b13d8cd
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.061632Z'
+          monotonic_ns: 21512470897500
+          sequence: 21
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.kedi-manifest.json
+          reference:
+            kind: artifact
+            id: artifact_3
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_3
+            artifact_state: complete
+            artifact_sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+            artifact_byte_count: 2537
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 0040bcd4-d44c-46bf-8b4c-479dfbd754dc
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.082657Z'
+          monotonic_ns: 21512491924333
+          sequence: 23
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.lock.json
+          reference:
+            kind: artifact
+            id: artifact_4
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_4
+            artifact_state: complete
+            artifact_sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+            artifact_byte_count: 41732
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 4093fe5a-3018-4a76-9525-bd7cecfd847f
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.085467Z'
+          monotonic_ns: 21512494732416
+          sequence: 25
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.result.json
+          reference:
+            kind: artifact
+            id: artifact_5
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_5
+            artifact_state: complete
+            artifact_sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+            artifact_byte_count: 1987
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 48b26a10-a35f-48bb-8635-581cc9ebf2c8
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.088217Z'
+          monotonic_ns: 21512497482375
+          sequence: 27
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.config.json
+          reference:
+            kind: artifact
+            id: artifact_6
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_6
+            artifact_state: complete
+            artifact_sha256: 7e082880b11e08ecf006e45056248a2c28b77cc781b2a40285184b61a3cd6127
+            artifact_byte_count: 1641
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d9c77e4a-0702-4000-92cd-18bdc7e4a14d
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.090134Z'
+          monotonic_ns: 21512499399666
+          sequence: 29
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.exception.txt
+          reference:
+            kind: artifact
+            id: artifact_7
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_7
+            artifact_state: complete
+            artifact_sha256: e8efdce7663da775de4c41f80fdd7effbb1127c5031ada886f441415e6f6f9d5
+            artifact_byte_count: 3253
+        - protocol: abp
+          protocol_version: 1
+          signal_id: bf9fc18b-0d0e-4563-86b7-9eb58757dce4
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.092846Z'
+          monotonic_ns: 21512502111333
+          sequence: 31
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.lock.json
+          reference:
+            kind: artifact
+            id: artifact_8
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_8
+            artifact_state: complete
+            artifact_sha256: d722b567d99669cf4ade12abbe1007d3e127855f47386eb4d2da27091b7858ad
+            artifact_byte_count: 1933
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3deabb03-60c2-43e6-823d-2cef442820cd
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.097268Z'
+          monotonic_ns: 21512506533583
+          sequence: 33
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.result.json
+          reference:
+            kind: artifact
+            id: artifact_9
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_9
+            artifact_state: complete
+            artifact_sha256: 1b5c76fb9f3bc43b9050cf47d343a4d755bc2de8400ac48f4f667a0062d2583c
+            artifact_byte_count: 7809
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 2784aade-bc00-4b4f-b80f-23c83c652fd1
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.098501Z'
+          monotonic_ns: 21512507766041
+          sequence: 35
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.trial.log
+          reference:
+            kind: artifact
+            id: artifact_10
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_10
+            artifact_state: complete
+            artifact_sha256: 0e7c5c6d31175373d36b7b5c36ffe021122a55695f1fd44905e2167872c51639
+            artifact_byte_count: 267
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 1e579d8a-ec8d-46b3-a7a9-02a562da030e
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.100464Z'
+          monotonic_ns: 21512509729416
+          sequence: 37
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.artifacts.manifest.json
+          reference:
+            kind: artifact
+            id: artifact_11
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_11
+            artifact_state: complete
+            artifact_sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+            artifact_byte_count: 157
+        - protocol: abp
+          protocol_version: 1
+          signal_id: e22f29ba-9367-4b16-b420-a710156c8e04
+          trace_id: 313e018cc24c883f2b85ea116a15785c
+          emitted_at: '2026-09-03T10:39:54.103196Z'
+          monotonic_ns: 21512512461375
+          sequence: 40
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+            case_id: winning-avg-corewars__3okytfk
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 29edc17b1fc1496a
+          semantic_type: artifact.content
+          name: terminal_bench.evidence_index
+          reference:
+            kind: artifact
+            id: artifact_f3c3719d44afd43f8eed65bb
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_12
+      partial: false
+  signals:
+    - protocol: abp
+      protocol_version: 1
+      signal_id: ed390007-5aac-43c5-b05e-f4db2716f01d
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.047712Z'
+      monotonic_ns: 21512456977583
+      sequence: 1
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: d3718b25503dcc9e
+      operation: benchmark.run
+      kind: task
+      attributes:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9a187b90-f7f0-4303-8e7a-5b1d26589ca3
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.047812Z'
+      monotonic_ns: 21512457077000
+      sequence: 2
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d3718b25503dcc9e
+      name: model
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 18
+      attributes:
+        observation_id: obs_1
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1b3bfe10-f640-47d4-8cad-c130b86735ff
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.047870Z'
+      monotonic_ns: 21512457134250
+      sequence: 3
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d3718b25503dcc9e
+      name: adapter
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 8
+      attributes:
+        observation_id: obs_2
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9a9fcc8d-6c6b-46c4-b0a6-097e450787f6
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.047903Z'
+      monotonic_ns: 21512457166916
+      sequence: 4
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d3718b25503dcc9e
+      name: effort
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 4
+      attributes:
+        observation_id: obs_3
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 71ecb7db-1eef-46d1-aaa4-5e399790042b
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.047934Z'
+      monotonic_ns: 21512457198333
+      sequence: 5
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d3718b25503dcc9e
+      name: harness_policy
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 390
+      attributes:
+        observation_id: obs_4
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c13627c9-9965-4d5e-96b9-1f36d917cd87
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.047957Z'
+      monotonic_ns: 21512457221791
+      sequence: 6
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d3718b25503dcc9e
+      name: max_evidence_file_bytes
+      semantic_type: factor.value
+      body: 20000000
+      attributes:
+        observation_id: obs_5
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 44ecc0d4-abb4-498a-b555-91fe5b150324
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.047979Z'
+      monotonic_ns: 21512457242833
+      sequence: 7
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d3718b25503dcc9e
+      name: max_evidence_total_bytes
+      semantic_type: factor.value
+      body: 50000000
+      attributes:
+        observation_id: obs_6
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3957bc6b-09df-44f5-817f-98d2025a549b
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.048865Z'
+      monotonic_ns: 21512458129458
+      sequence: 8
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: 29edc17b1fc1496a
+      parent_span_id: d3718b25503dcc9e
+      operation: capture terminal-bench trial
+      kind: workflow
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: bf7e4fbe-f25c-4ce4-87ec-06767644e730
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.048910Z'
+      monotonic_ns: 21512458174250
+      sequence: 9
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: input
+      semantic_type: operation.input
+      body:
+        type: dict
+        length: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 70d03a4c-be58-4b27-8f6b-fea066b9cefe
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.048968Z'
+      monotonic_ns: 21512458232375
+      sequence: 10
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.grader_completed
+      semantic_type: quality.correctness
+      value: false
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_7
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 48
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5e474f12-e6b5-4084-af98-3b2e4dcd753b
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.049016Z'
+      monotonic_ns: 21512458280000
+      sequence: 11
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 29edc17b1fc1496a
+      name: kedi.trial_completed
+      semantic_type: quality.correctness
+      value: false
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_8
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 19
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 91a82453-af74-437b-873c-70fcfb32b3a8
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.049048Z'
+      monotonic_ns: 21512458312333
+      sequence: 12
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.duration
+      semantic_type: time.latency
+      value: 6297.471293
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_9
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b62110e9-ff51-45fd-ac90-725611b36ee7
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.049073Z'
+      monotonic_ns: 21512458337708
+      sequence: 13
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.environment_setup.duration
+      semantic_type: time.latency
+      value: 2647.441229
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_10
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5e68fcd4-42f7-47ae-b180-f504eaf86537
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.049095Z'
+      monotonic_ns: 21512458359333
+      sequence: 14
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.agent_setup.duration
+      semantic_type: time.latency
+      value: 1942.043004
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_11
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f84b0d02-b19e-4d4b-ad44-4d12293696f0
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.049119Z'
+      monotonic_ns: 21512458383083
+      sequence: 15
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 29edc17b1fc1496a
+      name: kedi.total_tokens
+      semantic_type: llm.tokens.total
+      value: 0
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_12
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8a09d3e8-119d-4186-bc79-289d0c38a09f
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.049153Z'
+      monotonic_ns: 21512458416875
+      sequence: 16
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.exception
+      semantic_type: error.type
+      body: RuntimeError
+      attributes:
+        observation_id: obs_13
+        kind: event
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 11344408-2c4e-46ae-b43a-0ef77684fe40
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.054022Z'
+      monotonic_ns: 21512463288041
+      sequence: 17
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.config.json
+      reference:
+        kind: artifact
+        id: artifact_1
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_1
+        artifact_state: complete
+        artifact_sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+        artifact_byte_count: 2602
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3cf7b541-f8e6-43c2-a046-edcc51a7074c
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.054113Z'
+      monotonic_ns: 21512463377458
+      sequence: 18
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.job.config.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_14
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9dbde95d-f7da-4bd9-9c79-f1d447c81e0f
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.057596Z'
+      monotonic_ns: 21512466860666
+      sequence: 19
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.job.log
+      reference:
+        kind: artifact
+        id: artifact_2
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_2
+        artifact_state: complete
+        artifact_sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+        artifact_byte_count: 50738
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c35d01ba-4679-461a-9b27-29331bdfa3b2
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.057674Z'
+      monotonic_ns: 21512466938250
+      sequence: 20
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.job.job.log
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_15
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 11
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 069222ea-3e3d-4e30-86dc-2c487b13d8cd
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.061632Z'
+      monotonic_ns: 21512470897500
+      sequence: 21
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.kedi-manifest.json
+      reference:
+        kind: artifact
+        id: artifact_3
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_3
+        artifact_state: complete
+        artifact_sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+        artifact_byte_count: 2537
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 40daa5f7-e7a2-4006-a62a-b1169439c3f7
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.061714Z'
+      monotonic_ns: 21512470978458
+      sequence: 22
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.job.kedi-manifest.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_16
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 22
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 0040bcd4-d44c-46bf-8b4c-479dfbd754dc
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.082657Z'
+      monotonic_ns: 21512491924333
+      sequence: 23
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.lock.json
+      reference:
+        kind: artifact
+        id: artifact_4
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_4
+        artifact_state: complete
+        artifact_sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+        artifact_byte_count: 41732
+    - protocol: abp
+      protocol_version: 1
+      signal_id: ae7394ef-b967-48e9-a856-2e1cff99847b
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.082766Z'
+      monotonic_ns: 21512492030541
+      sequence: 24
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.job.lock.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_17
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 13
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 4093fe5a-3018-4a76-9525-bd7cecfd847f
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.085467Z'
+      monotonic_ns: 21512494732416
+      sequence: 25
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.result.json
+      reference:
+        kind: artifact
+        id: artifact_5
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_5
+        artifact_state: complete
+        artifact_sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+        artifact_byte_count: 1987
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 76de6a19-6569-4a46-b499-96ebdf68eb90
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.085547Z'
+      monotonic_ns: 21512494811916
+      sequence: 26
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.job.result.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_18
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 48b26a10-a35f-48bb-8635-581cc9ebf2c8
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.088217Z'
+      monotonic_ns: 21512497482375
+      sequence: 27
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.config.json
+      reference:
+        kind: artifact
+        id: artifact_6
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_6
+        artifact_state: complete
+        artifact_sha256: 7e082880b11e08ecf006e45056248a2c28b77cc781b2a40285184b61a3cd6127
+        artifact_byte_count: 1641
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8347a9d3-9513-4ebe-a405-19037d3c267d
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.088292Z'
+      monotonic_ns: 21512497556750
+      sequence: 28
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.trial.config.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_19
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 17
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d9c77e4a-0702-4000-92cd-18bdc7e4a14d
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.090134Z'
+      monotonic_ns: 21512499399666
+      sequence: 29
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.exception.txt
+      reference:
+        kind: artifact
+        id: artifact_7
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_7
+        artifact_state: complete
+        artifact_sha256: e8efdce7663da775de4c41f80fdd7effbb1127c5031ada886f441415e6f6f9d5
+        artifact_byte_count: 3253
+    - protocol: abp
+      protocol_version: 1
+      signal_id: df932f1a-7240-4ee2-8c10-b5915237c05d
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.090205Z'
+      monotonic_ns: 21512499470125
+      sequence: 30
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.trial.exception.txt
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_20
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 19
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: bf9fc18b-0d0e-4563-86b7-9eb58757dce4
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.092846Z'
+      monotonic_ns: 21512502111333
+      sequence: 31
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.lock.json
+      reference:
+        kind: artifact
+        id: artifact_8
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_8
+        artifact_state: complete
+        artifact_sha256: d722b567d99669cf4ade12abbe1007d3e127855f47386eb4d2da27091b7858ad
+        artifact_byte_count: 1933
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 6aac3ec7-4cfc-4788-8bd1-688aed203f68
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.092928Z'
+      monotonic_ns: 21512502192750
+      sequence: 32
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.trial.lock.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_21
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3deabb03-60c2-43e6-823d-2cef442820cd
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.097268Z'
+      monotonic_ns: 21512506533583
+      sequence: 33
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.result.json
+      reference:
+        kind: artifact
+        id: artifact_9
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_9
+        artifact_state: complete
+        artifact_sha256: 1b5c76fb9f3bc43b9050cf47d343a4d755bc2de8400ac48f4f667a0062d2583c
+        artifact_byte_count: 7809
+    - protocol: abp
+      protocol_version: 1
+      signal_id: bc48cada-b79a-4004-ae7b-95116513733d
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.097342Z'
+      monotonic_ns: 21512506606791
+      sequence: 34
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.trial.result.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_22
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 17
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 2784aade-bc00-4b4f-b80f-23c83c652fd1
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.098501Z'
+      monotonic_ns: 21512507766041
+      sequence: 35
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.trial.log
+      reference:
+        kind: artifact
+        id: artifact_10
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_10
+        artifact_state: complete
+        artifact_sha256: 0e7c5c6d31175373d36b7b5c36ffe021122a55695f1fd44905e2167872c51639
+        artifact_byte_count: 267
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a2fd739b-1ea2-4cdf-9931-85187a3e285e
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.098570Z'
+      monotonic_ns: 21512507835208
+      sequence: 36
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.trial.trial.log
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_23
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1e579d8a-ec8d-46b3-a7a9-02a562da030e
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.100464Z'
+      monotonic_ns: 21512509729416
+      sequence: 37
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      reference:
+        kind: artifact
+        id: artifact_11
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_11
+        artifact_state: complete
+        artifact_sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+        artifact_byte_count: 157
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 6b1f6e12-bd84-4798-9a5f-c301ab477505
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.100549Z'
+      monotonic_ns: 21512509814083
+      sequence: 38
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_24
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 29
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 75583738-f134-4795-9296-fbd0404dd579
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.102939Z'
+      monotonic_ns: 21512512204708
+      sequence: 39
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.evidence_complete
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_25
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 43
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e22f29ba-9367-4b16-b420-a710156c8e04
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.103196Z'
+      monotonic_ns: 21512512461375
+      sequence: 40
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 29edc17b1fc1496a
+      semantic_type: artifact.content
+      name: terminal_bench.evidence_index
+      reference:
+        kind: artifact
+        id: artifact_f3c3719d44afd43f8eed65bb
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_12
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 2d2c42f1-9fef-4b46-826f-cac1dde50be8
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.103230Z'
+      monotonic_ns: 21512512494500
+      sequence: 41
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 29edc17b1fc1496a
+      name: terminal_bench.evidence_index
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_26
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b49c2c3c-cbb5-4bb6-af47-49fc5f507251
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.103288Z'
+      monotonic_ns: 21512512553083
+      sequence: 42
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: 29edc17b1fc1496a
+      output:
+        type: dict
+        length: 9
+      status: ok
+      reason: completed
+      partial: false
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5f5749bb-c9e8-4595-9849-066c9ebd39cd
+      trace_id: 313e018cc24c883f2b85ea116a15785c
+      emitted_at: '2026-09-03T10:39:54.103383Z'
+      monotonic_ns: 21512512647875
+      sequence: 43
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943
+        case_id: winning-avg-corewars__3okytfk
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: d3718b25503dcc9e
+      output:
+        type: CapturedTrial
+      status: ok
+      reason: completed
+      partial: false
+  started_at: '2026-09-03T10:39:54.047712Z'
+  ended_at: '2026-09-03T10:39:54.103383Z'
+  partial: false
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-09-03T10:39:54.048865+00:00'
+    ended_at: '2026-09-03T10:39:54.103288+00:00'
+    duration: 0.054423625
+    input:
+      task_name: terminal-bench/winning-avg-corewars
+      trial_name: winning-avg-corewars__3okytfk
+    output:
+      task_name: terminal-bench/winning-avg-corewars
+      trial_name: winning-avg-corewars__3okytfk
+      harbor_exception: RuntimeError
+      usage:
+        total_tokens: 0
+      evidence_file_count: 11
+      evidence_bytes: 114656
+      skipped_file_count: 0
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    source: file
+    state: complete
+    sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    byte_count: 2602
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    source: file
+    state: complete
+    sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    byte_count: 50738
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    source: file
+    state: complete
+    sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    byte_count: 2537
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    source: file
+    state: complete
+    sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    byte_count: 41732
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    source: file
+    state: complete
+    sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    byte_count: 1987
+    filename: result.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: 7e082880b11e08ecf006e45056248a2c28b77cc781b2a40285184b61a3cd6127
+    source: file
+    state: complete
+    sha256: 7e082880b11e08ecf006e45056248a2c28b77cc781b2a40285184b61a3cd6127
+    byte_count: 1641
+    filename: config.json
+  terminal_bench.file.trial.exception.txt:
+    id: artifact_7
+    name: terminal_bench.file.trial.exception.txt
+    media: text/plain
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_7.txt
+    span: span_1
+    tags:
+      harbor.path: trial/exception.txt
+      sha256.source: e8efdce7663da775de4c41f80fdd7effbb1127c5031ada886f441415e6f6f9d5
+    source: file
+    state: complete
+    sha256: e8efdce7663da775de4c41f80fdd7effbb1127c5031ada886f441415e6f6f9d5
+    byte_count: 3253
+    filename: exception.txt
+  terminal_bench.file.trial.lock.json:
+    id: artifact_8
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_8.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: d722b567d99669cf4ade12abbe1007d3e127855f47386eb4d2da27091b7858ad
+    source: file
+    state: complete
+    sha256: d722b567d99669cf4ade12abbe1007d3e127855f47386eb4d2da27091b7858ad
+    byte_count: 1933
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_9
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_9.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: 1b5c76fb9f3bc43b9050cf47d343a4d755bc2de8400ac48f4f667a0062d2583c
+    source: file
+    state: complete
+    sha256: 1b5c76fb9f3bc43b9050cf47d343a4d755bc2de8400ac48f4f667a0062d2583c
+    byte_count: 7809
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_10
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_10.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: 0e7c5c6d31175373d36b7b5c36ffe021122a55695f1fd44905e2167872c51639
+    source: file
+    state: complete
+    sha256: 0e7c5c6d31175373d36b7b5c36ffe021122a55695f1fd44905e2167872c51639
+    byte_count: 267
+    filename: trial.log
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_11
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_11.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    source: file
+    state: complete
+    sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    byte_count: 157
+    filename: manifest.json
+  terminal_bench.evidence_index:
+    id: artifact_12
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0019_0001_winning_avg_corewars_3okytfk__kedi_2406d0e45943/artifact_12.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 1fbbaeb002312b768966ef2af698f3fd213758ab0b961b3f42a65c2c5e4307ce
+    byte_count: 2416
+output:
+  task_name: terminal-bench/winning-avg-corewars
+  trial_name: winning-avg-corewars__3okytfk
+  harbor_exception: RuntimeError
+  rewards: {}
+  kedi_state: null
+  usage:
+    total_tokens: 0
+  evidence_file_count: 11
+  evidence_bytes: 114656
+  skipped_file_count: 0

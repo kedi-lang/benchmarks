@@ -1,0 +1,73 @@
+runtime/shared_heap.c:84:} pool_freelist = {
+runtime/shared_heap.c:115:/* You need to hold the [pool_freelist] lock to call these functions. */
+runtime/shared_heap.c:158:  caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:162:                     &pool_freelist.global_avail_pools[i], NULL);
+runtime/shared_heap.c:166:                     &pool_freelist.global_full_pools[i], NULL);
+runtime/shared_heap.c:176:    a->next = pool_freelist.global_large;
+runtime/shared_heap.c:177:    pool_freelist.global_large = a;
+runtime/shared_heap.c:181:  caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:188:  caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:191:        (pool**)&pool_freelist.global_avail_pools[i],
+runtime/shared_heap.c:195:        (pool**)&pool_freelist.global_full_pools[i],
+runtime/shared_heap.c:199:  while (pool_freelist.global_large) {
+runtime/shared_heap.c:200:    large_alloc* a = pool_freelist.global_large;
+runtime/shared_heap.c:201:    pool_freelist.global_large = a->next;
+runtime/shared_heap.c:210:  caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:234:/* Allocating and deallocating pools from the global freelist. */
+runtime/shared_heap.c:239:  caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:240:  if (!pool_freelist.free) {
+runtime/shared_heap.c:244:      CAMLassert(pool_freelist.free == NULL);
+runtime/shared_heap.c:247:      r->next = pool_freelist.free;
+runtime/shared_heap.c:249:      pool_freelist.free = r;
+runtime/shared_heap.c:252:  r = pool_freelist.free;
+runtime/shared_heap.c:254:    pool_freelist.free = r->next;
+runtime/shared_heap.c:255:  caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:261:/* release [pool] to the current free list of pools */
+runtime/shared_heap.c:270:  caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:271:  pool->next = pool_freelist.free;
+runtime/shared_heap.c:272:  pool_freelist.free = pool;
+runtime/shared_heap.c:273:  caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:310:/* Initialize a pool and its object freelist */
+runtime/shared_heap.c:342:/* Adopt pool from the pool_freelist avail and full pools
+runtime/shared_heap.c:350:  if( !atomic_load_relaxed(&pool_freelist.global_avail_pools[sz]) &&
+runtime/shared_heap.c:351:      !atomic_load_relaxed(&pool_freelist.global_full_pools[sz]) )
+runtime/shared_heap.c:355:  caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:356:  if( atomic_load_relaxed(&pool_freelist.global_avail_pools[sz]) ) {
+runtime/shared_heap.c:357:    r = atomic_load_relaxed(&pool_freelist.global_avail_pools[sz]);
+runtime/shared_heap.c:360:      atomic_store_relaxed(&pool_freelist.global_avail_pools[sz], r->next);
+runtime/shared_heap.c:382:    r = atomic_load_relaxed(&pool_freelist.global_full_pools[sz]);
+runtime/shared_heap.c:385:      atomic_store_relaxed(&pool_freelist.global_full_pools[sz], r->next);
+runtime/shared_heap.c:396:  caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:587:        /* add to freelist. This could be optimised, we don't need
+runtime/shared_heap.c:637:            the pool (which indicates the start of the freelist) */
+runtime/shared_heap.c:647:            freelist */
+runtime/shared_heap.c:841:/* Heap and freelist stats */
+runtime/shared_heap.c:844:   You need to hold the [pool_freelist] lock. */
+runtime/shared_heap.c:846:  caml_accum_heap_stats(&pool_freelist.stats, &heap->stats);
+runtime/shared_heap.c:852:   You need to hold the [pool_freelist] lock. */
+runtime/shared_heap.c:860:    caml_remove_heap_stats(&pool_freelist.stats, &pool_stats);
+runtime/shared_heap.c:864:   You need to hold the [pool_freelist] lock. */
+runtime/shared_heap.c:866:  caml_accum_heap_stats(&adopter->stats, &pool_freelist.stats);
+runtime/shared_heap.c:867:  memset(&pool_freelist.stats, 0, sizeof(pool_freelist.stats));
+runtime/shared_heap.c:880:  caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:881:  caml_accum_heap_stats(acc, &pool_freelist.stats);
+runtime/shared_heap.c:882:  caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:1181:        one pool in the freelist.
+runtime/shared_heap.c:1182:    4. One domain needs to release the pools in the freelist back to the OS.
+runtime/shared_heap.c:1209:          atomic_load_relaxed(&pool_freelist.global_avail_pools[sz_class]) ==
+runtime/shared_heap.c:1212:          atomic_load_relaxed(&pool_freelist.global_full_pools[sz_class]) ==
+runtime/shared_heap.c:1520:  /* Fourth phase: one domain also needs to release the free list */
+runtime/shared_heap.c:1525:    caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:1526:    cur_pool = pool_freelist.free;
+runtime/shared_heap.c:1535:    pool_freelist.free = NULL;
+runtime/shared_heap.c:1537:    caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:1671:void caml_finalise_freelist(void) {
+runtime/shared_heap.c:1674:  caml_plat_lock_blocking(&pool_freelist.lock);
+runtime/shared_heap.c:1675:  while (pool_freelist.global_large) {
+runtime/shared_heap.c:1676:    large_alloc* a = pool_freelist.global_large;
+runtime/shared_heap.c:1677:    pool_freelist.global_large = a->next;
+runtime/shared_heap.c:1681:  caml_plat_unlock(&pool_freelist.lock);
+runtime/shared_heap.c:1682:  caml_gc_log("Finalise freelist. Freed %d large", freed_large);
+runtime/caml/shared_heap.h:124:void caml_finalise_freelist(void);
+runtime/major_gc.c:748:     Free memory at the start of the GC cycle (garbage + free list) (assumed):
+runtime/major_gc.c:753:     FM is divided in 2/3 for garbage and 1/3 for free list.

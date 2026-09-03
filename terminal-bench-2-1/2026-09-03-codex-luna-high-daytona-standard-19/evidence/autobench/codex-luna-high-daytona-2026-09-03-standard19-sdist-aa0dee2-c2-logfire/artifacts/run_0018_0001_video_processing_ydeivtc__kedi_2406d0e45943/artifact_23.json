@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "1ab49ccd27ce462f5f71893bb675965987bb5d48d8b74a669ef483c7700349de",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 36539,
+    "created_at": "2026-09-02T23:10:55.318911Z",
+    "expires_at": "2026-09-03T00:10:55.318911Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"combined_path\":\"/logs/agent/terminal/process_12/combined.bin\",\"command\":\"python3 -c 'import cv2,numpy as np\\nc=cv2.VideoCapture('\\\"'\\\"'/app/example_video.mp4'\\\"'\\\"'); fs=[]\\nwhile 1:\\n ok,f=c.read()\\n if not ok: break\\n fs.append(f)\\nc.release(); bg=fs[45]\\nfor t in [25,40]:\\n print('\\\"'\\\"'THRESH'\\\"'\\\"',t)\\n for i in range(50,57):\\n  d=cv2.cvtColor(cv2.absdiff(fs[i],bg),cv2.COLOR_BGR2GRAY); m=(d>t).astype(np.uint8)[180:370,580:900]\\n  s=cv2.resize(m,(64,38),interpolation=cv2.INTER_AREA)\\n  print('\\\"'\\\"'frame'\\\"'\\\"',i)\\n  for r in s: print('\\\"'\\\"''\\\"'\\\"'.join('\\\"'\\\"'#'\\\"'\\\"' if z>.25 else '\\\"'\\\"'+'\\\"'\\\"' if z>.03 else '\\\"'\\\"' '\\\"'\\\"' for z in r))\\n'\",\"cwd\":\"/app\",\"duration_seconds\":0.7242619367316365,\"exit_code\":0,\"handed_off\":false,\"lifetime\":\"session\",\"output_limited\":false,\"pid\":3485,\"process_id\":\"process_12\",\"retained\":false,\"shell\":false,\"started_at\":\"2026-09-02T23:10:54.593007+00:00\",\"status\":\"finished\",\"stderr\":\"\",\"stderr_bytes\":0,\"stderr_invalid_utf8\":false,\"stderr_path\":\"/logs/agent/terminal/process_12/stderr.bin\",\"stderr_truncated\":false,\"stdout\":\"THRESH 25\\nframe 50\\n                                                              # \\n                                     …",
+    "ref_id": "tool_call_result_5",
+    "sensitive": false,
+    "size_bytes": 36539,
+    "summary": "builtins.dict value with 36539 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_d660568c-3ad8-4801-8a87-3342329a49b8",
+  "source": "tool:run_command",
+  "status": "active"
+}

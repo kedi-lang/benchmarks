@@ -1,0 +1,30 @@
+int strncasecmp(const char* s1, const char* s2, size_t n) {
+    // Early return if no characters to compare
+    if (n == 0) {
+        return 0;
+    }
+    
+    // Compare at most n characters
+    while (n > 0) {
+        // If characters differ or we hit the end of either string
+        if (toupper(*s1) != toupper(*s2) || *s1 == '\0') {
+            return toupper(*(const unsigned char*)s1) - toupper(*(const unsigned char*)s2);
+        }
+        s1++;
+        s2++;
+        n--;
+    }
+    
+    // If we compared exactly n characters with no differences
+    return 0;
+}
+
+
+char* strdup(const char* s) {
+    size_t len = strlen(s) + 1;
+    char* new_str = (char*)malloc(len);
+    if (new_str) {
+        memcpy(new_str, s, len);
+    }
+    return new_str;
+}

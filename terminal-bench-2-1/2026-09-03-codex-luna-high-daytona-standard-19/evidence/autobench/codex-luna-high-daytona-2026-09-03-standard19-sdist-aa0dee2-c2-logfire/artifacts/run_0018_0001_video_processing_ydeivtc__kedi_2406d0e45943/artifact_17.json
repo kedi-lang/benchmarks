@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "1cc1d36584c3ae0d01836f836bf1c86690a01ccca00a70aba21c11babc736228",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 28660,
+    "created_at": "2026-09-02T23:07:48.273006Z",
+    "expires_at": "2026-09-03T00:07:48.273006Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"combined_path\":\"/logs/agent/terminal/process_5/combined.bin\",\"command\":\"python3 -c 'import cv2,numpy as np\\nc=cv2.VideoCapture('\\\"'\\\"'/app/example_video.mp4'\\\"'\\\"'); fs=[]\\nwhile 1:\\n ok,f=c.read()\\n if not ok: break\\n fs.append(f)\\nc.release(); bg=fs[0]\\nfor i in range(40,80):\\n d=cv2.cvtColor(cv2.absdiff(fs[i],bg),cv2.COLOR_BGR2GRAY)\\n m=(d>35).astype(np.uint8)\\n # athlete likely x based on large contiguous moving changes, show stats in y<410 and x broad\\n ys,xs=np.where(m & (np.indices(m.shape)[0]<420))\\n # top 3 components >100\\n n,l,st,cen=cv2.connectedComponentsWithStats(m)\\n co=[]\\n for j in range(1,n):\\n  x,y,w,h,a=st[j]\\n  if a>=80: co.append((a,x,y,w,h))\\n print(i,'\\\"'\\\"'area'\\\"'\\\"',len(xs),'\\\"'\\\"'bbox'\\\"'\\\"', (xs.min(),ys.min(),xs.max(),ys.max()) if len(xs) else None,'\\\"'\\\"'comps'\\\"'\\\"',sorted(co,reverse=True)[:8])\\n'\",\"cwd\":\"/app\",\"duration_seconds\":0.9386272625997663,\"exit_code\":0,\"handed_off\":false,\"lifetime\":\"session\",\"output_limited\":false,\"pid\":3021,\"process_id\":\"process_5\",\"retained\":false,\"shell\":false,\"started_at\":\"2026-09-02T23:07:47.332197+00:00\",\"status\":\"finished\",\"stderr\":\"\",\"stderr_bytes\":0,\"stderr_invalid_utf8\":false,\"stderr_path\":\"/logs/agent/terminal…",
+    "ref_id": "tool_call_result_3",
+    "sensitive": false,
+    "size_bytes": 28660,
+    "summary": "builtins.dict value with 28660 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_d660568c-3ad8-4801-8a87-3342329a49b8",
+  "source": "tool:run_command",
+  "status": "active"
+}

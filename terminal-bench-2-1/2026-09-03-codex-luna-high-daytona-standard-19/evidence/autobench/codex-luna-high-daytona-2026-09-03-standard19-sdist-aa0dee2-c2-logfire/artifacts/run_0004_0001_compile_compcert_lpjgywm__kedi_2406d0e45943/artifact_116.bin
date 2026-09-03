@@ -1,0 +1,20 @@
+25:ifeq ($(wildcard $(ARCH)_$(BITSIZE)),)
+26:ARCHDIRS=$(ARCH)
+28:ARCHDIRS=$(ARCH)_$(BITSIZE) $(ARCH)
+31:DIRS := lib common $(ARCHDIRS) backend cfrontend driver export cparser
+102:# Back-end modules (in backend/, $(ARCH)/)
+175:  $(ARCH)/ConstpropOp.v $(ARCH)/SelectOp.v $(ARCH)/SelectLong.v \
+179:all:
+183:	$(MAKE) ccomp
+204:extraction/STAMP: $(FILES:.v=.vo) extraction/extraction.v $(ARCH)/extractionMachdep.v
+217:ccomp: .depend.extr compcert.ini driver/Version.ml FORCE
+218:	$(MAKE) -f Makefile.extr ccomp
+219:ccomp.byte: .depend.extr compcert.ini driver/Version.ml FORCE
+220:	$(MAKE) -f Makefile.extr ccomp.byte
+276:         echo "arch=$(ARCH)"; \
+289:        echo "COMPCERT_ARCH=$(ARCH)"; \
+312:depend: $(GENERATED) depend1
+314:depend1: $(FILES) export/Clightdefs.v
+318:install:
+320:	install -m 0755 ./ccomp $(DESTDIR)$(BINDIR)
+324:	install -m 0644 ./doc/ccomp.1 $(DESTDIR)$(MANDIR)/man1

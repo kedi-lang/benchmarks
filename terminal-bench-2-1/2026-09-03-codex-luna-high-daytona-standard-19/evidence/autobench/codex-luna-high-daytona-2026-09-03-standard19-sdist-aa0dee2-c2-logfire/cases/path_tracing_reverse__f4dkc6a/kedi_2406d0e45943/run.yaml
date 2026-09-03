@@ -1,0 +1,4098 @@
+# yaml-language-server: $schema=/private/tmp/kedi-tb21-public-aa0dee2/home/.autobench/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+  experiment: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+  benchmark: kedi-terminal-bench-2.1
+  case: path-tracing-reverse__f4dkc6a
+  variant: kedi-2406d0e45943
+  status: failed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: failed
+    task: passed
+case:
+  id: path-tracing-reverse__f4dkc6a
+  input:
+    job_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire
+    trial_dir: /private/tmp/kedi-tb21-public-aa0dee2/harbor/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire/path-tracing-reverse__F4DKc6A
+    trial_name: path-tracing-reverse__F4DKc6A
+    task_name: terminal-bench/path-tracing-reverse
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+variant:
+  id: kedi-2406d0e45943
+  factors:
+    model: codex/gpt-5.6-luna
+    adapter: pydantic
+    effort: high
+    harness_policy: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes":
+      16384, "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode":
+      "disabled", "compaction_threshold": null, "dynamic_workflows": false, "history":
+      true, "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+      false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes": 32768}'
+    max_evidence_file_bytes: 20000000
+    max_evidence_total_bytes: 50000000
+metrics:
+  factors:
+    model:
+      sequence: 1
+      id: obs_1
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    effort:
+      sequence: 3
+      id: obs_3
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    harness_policy:
+      sequence: 4
+      id: obs_4
+      name: harness_policy
+      kind: factor
+      value: '{"artifact_quota_bytes": 256000000, "artifact_threshold_bytes": 16384,
+        "artifacts": true, "command_timeout_seconds": 120.0, "compaction_mode": "disabled",
+        "compaction_threshold": null, "dynamic_workflows": false, "history": true,
+        "prefix_cache": true, "retained_process_timeout_seconds": 3600.0, "subagents":
+        false, "terminal_output_limit_bytes": 512000000, "terminal_preview_bytes":
+        32768}'
+      source: variant
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    max_evidence_file_bytes:
+      sequence: 5
+      id: obs_5
+      name: max_evidence_file_bytes
+      kind: factor
+      value: 20000000
+      source: variant
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    max_evidence_total_bytes:
+      sequence: 6
+      id: obs_6
+      name: max_evidence_total_bytes
+      kind: factor
+      value: 50000000
+      source: variant
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.reward.mean:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.reward.mean
+      kind: metric
+      value: 1.0
+      semantic: quality.score
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.grader_completed:
+      sequence: 9
+      id: obs_9
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    kedi.trial_completed:
+      sequence: 10
+      id: obs_10
+      name: kedi.trial_completed
+      kind: metric
+      value: false
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: Kedi result missing
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_complete:
+      sequence: 30
+      id: obs_30
+      name: terminal_bench.evidence_complete
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: all discovered evidence files were attached
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 11
+      id: obs_11
+      name: terminal_bench.duration
+      kind: metric
+      value: 17412.236551
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.environment_setup.duration:
+      sequence: 12
+      id: obs_12
+      name: terminal_bench.environment_setup.duration
+      kind: metric
+      value: 1835.392596
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.agent_setup.duration:
+      sequence: 13
+      id: obs_13
+      name: terminal_bench.agent_setup.duration
+      kind: metric
+      value: 1920.772679
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.agent_execution.duration:
+      sequence: 14
+      id: obs_14
+      name: terminal_bench.agent_execution.duration
+      kind: metric
+      value: 964.291807
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.verifier.duration:
+      sequence: 15
+      id: obs_15
+      name: terminal_bench.verifier.duration
+      kind: metric
+      value: 936.66267
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    kedi.total_tokens:
+      sequence: 16
+      id: obs_16
+      name: kedi.total_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+  events:
+    terminal_bench.file.job.config.json:
+      sequence: 17
+      id: obs_17
+      name: terminal_bench.file.job.config.json
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/config.json
+        sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.job.log:
+      sequence: 18
+      id: obs_18
+      name: terminal_bench.file.job.job.log
+      kind: artifact
+      value: artifact_2
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/job.log
+        sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.kedi-manifest.json:
+      sequence: 19
+      id: obs_19
+      name: terminal_bench.file.job.kedi-manifest.json
+      kind: artifact
+      value: artifact_3
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/kedi-manifest.json
+        sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.lock.json:
+      sequence: 20
+      id: obs_20
+      name: terminal_bench.file.job.lock.json
+      kind: artifact
+      value: artifact_4
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/lock.json
+        sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.job.result.json:
+      sequence: 21
+      id: obs_21
+      name: terminal_bench.file.job.result.json
+      kind: artifact
+      value: artifact_5
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: job/result.json
+        sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.config.json:
+      sequence: 22
+      id: obs_22
+      name: terminal_bench.file.trial.config.json
+      kind: artifact
+      value: artifact_6
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/config.json
+        sha256.source: f33a486c71957e9e4ffc918b611777c87551a0079aaef4c8636adf200ce86f17
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.lock.json:
+      sequence: 23
+      id: obs_23
+      name: terminal_bench.file.trial.lock.json
+      kind: artifact
+      value: artifact_7
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/lock.json
+        sha256.source: 8032fe9eda4eda962d74328c729c1814cca8764fa33d2e592d70b9857e99d6b3
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.result.json:
+      sequence: 24
+      id: obs_24
+      name: terminal_bench.file.trial.result.json
+      kind: artifact
+      value: artifact_8
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/result.json
+        sha256.source: 199f176cdc90df14a73723079915bde411942b138600b76986e2cde6fe1e3d73
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.trial.log:
+      sequence: 25
+      id: obs_25
+      name: terminal_bench.file.trial.trial.log
+      kind: artifact
+      value: artifact_9
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/trial.log
+        sha256.source: eb7531a29d84f06ccb16beb05f47a89b70f2e7e4469c5c896dfa4724c364e437
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.artifacts.manifest.json:
+      sequence: 26
+      id: obs_26
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      kind: artifact
+      value: artifact_10
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/artifacts/manifest.json
+        sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.ctrf.json:
+      sequence: 27
+      id: obs_27
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      kind: artifact
+      value: artifact_11
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/ctrf.json
+        sha256.source: d74c5fb8ce995ff734ff3f22e095335faf9440a01406c00fdb33fdff44420c0c
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.reward.txt:
+      sequence: 28
+      id: obs_28
+      name: terminal_bench.file.trial.verifier.reward.txt
+      kind: artifact
+      value: artifact_12
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/reward.txt
+        sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.file.trial.verifier.test-stdout.txt:
+      sequence: 29
+      id: obs_29
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      kind: artifact
+      value: artifact_13
+      span: span_1
+      source: task_observation
+      tags:
+        harbor.path: trial/verifier/test-stdout.txt
+        sha256.source: 67254932fb171f311a6429ecb509018d036b14bd9a881e6ba3364b588c8964e3
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+    terminal_bench.evidence_index:
+      sequence: 31
+      id: obs_31
+      name: terminal_bench.evidence_index
+      kind: artifact
+      value: artifact_14
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__f4dkc6a
+      variant: kedi-2406d0e45943
+trace:
+  protocol: abp
+  protocol_version: 1
+  trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+  execution:
+    benchmark_id: kedi-terminal-bench-2.1
+    experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+    run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+    case_id: path-tracing-reverse__f4dkc6a
+    variant_id: kedi-2406d0e45943
+  root_span_ids:
+    - 43321cffd08f1f39
+  spans:
+    - trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      span_id: 43321cffd08f1f39
+      operation: benchmark.run
+      kind: task
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-03T10:39:46.705740Z'
+      ended_at: '2026-09-03T10:39:46.766870Z'
+      start_monotonic_ns: 21505114941375
+      end_monotonic_ns: 21505176070791
+      duration_ns: 61129416
+      start_sequence: 1
+      end_sequence: 50
+      attributes:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      output:
+        type: CapturedTrial
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 093fa1e4-c234-4502-b77c-de4c0c7e44e9
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.706334Z'
+          monotonic_ns: 21505115534958
+          sequence: 2
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 43321cffd08f1f39
+          name: model
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 18
+          attributes:
+            observation_id: obs_1
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 29b6f005-67ba-4a55-a94f-48995ec3bbba
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.706386Z'
+          monotonic_ns: 21505115586208
+          sequence: 3
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 43321cffd08f1f39
+          name: adapter
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 8
+          attributes:
+            observation_id: obs_2
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5049f452-4bb4-4cc0-82f2-50a57db5da1f
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.706417Z'
+          monotonic_ns: 21505115617375
+          sequence: 4
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 43321cffd08f1f39
+          name: effort
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 4
+          attributes:
+            observation_id: obs_3
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 78e955a1-9aed-4d2f-a560-1c60e2e6b3c5
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.706446Z'
+          monotonic_ns: 21505115647000
+          sequence: 5
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 43321cffd08f1f39
+          name: harness_policy
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 390
+          attributes:
+            observation_id: obs_4
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 63448f05-30b8-4bc1-ad5b-179d0e6d3f44
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.706468Z'
+          monotonic_ns: 21505115668916
+          sequence: 6
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 43321cffd08f1f39
+          name: max_evidence_file_bytes
+          semantic_type: factor.value
+          body: 20000000
+          attributes:
+            observation_id: obs_5
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9c898a2f-2109-451c-b76f-309490e3f709
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.706490Z'
+          monotonic_ns: 21505115690166
+          sequence: 7
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 43321cffd08f1f39
+          name: max_evidence_total_bytes
+          semantic_type: factor.value
+          body: 50000000
+          attributes:
+            observation_id: obs_6
+            kind: factor
+            source: variant
+      partial: false
+    - trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      span_id: a173618c115a30c6
+      parent_span_id: 43321cffd08f1f39
+      operation: capture terminal-bench trial
+      kind: workflow
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-03T10:39:46.707256Z'
+      ended_at: '2026-09-03T10:39:46.766768Z'
+      start_monotonic_ns: 21505116457375
+      end_monotonic_ns: 21505175968666
+      duration_ns: 59511291
+      start_sequence: 8
+      end_sequence: 49
+      output:
+        type: dict
+        length: 9
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5ab25872-d9e2-413b-b7d3-7645e40efb48
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707313Z'
+          monotonic_ns: 21505116514083
+          sequence: 9
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: input
+          semantic_type: operation.input
+          body:
+            type: dict
+            length: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 6ad5bc03-bb0a-4931-ba05-86dd74b15a69
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.712566Z'
+          monotonic_ns: 21505121767041
+          sequence: 21
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.job.config.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_17
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 576484ae-edbd-4a5f-85ca-51f6889b7e66
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.715608Z'
+          monotonic_ns: 21505124808541
+          sequence: 23
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.job.job.log
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_18
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 11
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 531c0960-8c75-4d67-ae8b-97043e10d73f
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.719796Z'
+          monotonic_ns: 21505128996583
+          sequence: 25
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.job.kedi-manifest.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_19
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 22
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 17e0bef5-2f80-4580-8c9a-340eef29e072
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.740675Z'
+          monotonic_ns: 21505149876250
+          sequence: 27
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.job.lock.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_20
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 13
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5939ca38-4386-4509-9dfa-030bf3fc4add
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.743756Z'
+          monotonic_ns: 21505152957083
+          sequence: 29
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.job.result.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_21
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a8845ba1-4f25-468c-ae98-3beb8998af52
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.746574Z'
+          monotonic_ns: 21505155775083
+          sequence: 31
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.config.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_22
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 17
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 7993db5b-47e3-4277-a637-e309e11d1581
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.749035Z'
+          monotonic_ns: 21505158236583
+          sequence: 33
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.lock.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_23
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 01082082-e1ff-4f2b-b1f1-74fc66ef2f4d
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.753257Z'
+          monotonic_ns: 21505162458083
+          sequence: 35
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.result.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_24
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 17
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: fac81643-84d0-4b7d-89d7-a42171c7671d
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.755443Z'
+          monotonic_ns: 21505164643875
+          sequence: 37
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.trial.log
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_25
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 15
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 0cb05c99-f00b-4ca5-a877-d162e3416f71
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.757474Z'
+          monotonic_ns: 21505166675500
+          sequence: 39
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.artifacts.manifest.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_26
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 29
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8e518d2b-2a0f-4f62-b3b4-836274c039bd
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.759452Z'
+          monotonic_ns: 21505168653208
+          sequence: 41
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.verifier.ctrf.json
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_27
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 24
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 443f4f65-60f0-485d-91ef-9c30f637cccb
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.761125Z'
+          monotonic_ns: 21505170326708
+          sequence: 43
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.verifier.reward.txt
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_28
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 25
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 240501fe-b749-400e-b57b-46c03b75eabc
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.763610Z'
+          monotonic_ns: 21505172811666
+          sequence: 45
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.file.trial.verifier.test-stdout.txt
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_29
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              harbor.path:
+                type: str
+                length: 30
+              sha256.source:
+                type: str
+                length: 64
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 7ecf1467-68e0-4202-954e-3053005536dd
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.766702Z'
+          monotonic_ns: 21505175903583
+          sequence: 48
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: a173618c115a30c6
+          name: terminal_bench.evidence_index
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 11
+          attributes:
+            observation_id: obs_31
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+      measurements:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 972aa814-1315-4544-bc64-b832ed359444
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707367Z'
+          monotonic_ns: 21505116567875
+          sequence: 10
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.reward.reward
+          semantic_type: quality.correctness
+          value: 1.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_7
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 81bfdcb9-a194-40a4-b263-8b708410bb4d
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707401Z'
+          monotonic_ns: 21505116601708
+          sequence: 11
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.reward.mean
+          semantic_type: quality.score
+          value: 1.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_8
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 03ce86cd-a2ec-4da9-91dd-72c5cf4d371d
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707439Z'
+          monotonic_ns: 21505116639958
+          sequence: 12
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.grader_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_9
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 41
+        - protocol: abp
+          protocol_version: 1
+          signal_id: dc28efaf-f730-47b3-ad87-72f3218f9217
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707479Z'
+          monotonic_ns: 21505116679625
+          sequence: 13
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: kedi.trial_completed
+          semantic_type: quality.correctness
+          value: false
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_10
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 19
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f46c3dfe-9f94-4ccc-a8c5-b89e50bd6a73
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707508Z'
+          monotonic_ns: 21505116708958
+          sequence: 14
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.duration
+          semantic_type: time.latency
+          value: 17412.236551
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_11
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: ab31ad10-d346-4921-aaaf-66cf487eecc7
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707532Z'
+          monotonic_ns: 21505116732458
+          sequence: 15
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.environment_setup.duration
+          semantic_type: time.latency
+          value: 1835.392596
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_12
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 97ec2451-8154-4e9f-8843-e92b4b2562bc
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707553Z'
+          monotonic_ns: 21505116753416
+          sequence: 16
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.agent_setup.duration
+          semantic_type: time.latency
+          value: 1920.772679
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_13
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: aebd1c59-6192-46b3-80ac-3a33660a3f95
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707573Z'
+          monotonic_ns: 21505116773750
+          sequence: 17
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.agent_execution.duration
+          semantic_type: time.latency
+          value: 964.291807
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_14
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d401de0a-b4a0-4955-8c7b-4400baafb681
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707594Z'
+          monotonic_ns: 21505116794333
+          sequence: 18
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.verifier.duration
+          semantic_type: time.latency
+          value: 936.66267
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_15
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d798a3f3-f9db-4a66-a5d6-ccadd592bc22
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.707617Z'
+          monotonic_ns: 21505116817166
+          sequence: 19
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: kedi.total_tokens
+          semantic_type: llm.tokens.total
+          value: 0
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_16
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8f611bb7-e170-4d6c-b9d1-a24430303a1d
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.766353Z'
+          monotonic_ns: 21505175555583
+          sequence: 46
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: a173618c115a30c6
+          name: terminal_bench.evidence_complete
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_30
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 43
+      references:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 312f4bb0-6cff-49e8-8a38-d1a6f3e3a0ef
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.712464Z'
+          monotonic_ns: 21505121668000
+          sequence: 20
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.config.json
+          reference:
+            kind: artifact
+            id: artifact_1
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_1
+            artifact_state: complete
+            artifact_sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+            artifact_byte_count: 2602
+        - protocol: abp
+          protocol_version: 1
+          signal_id: cce15076-0a8e-48f1-b1ff-5a28ec8266b0
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.715534Z'
+          monotonic_ns: 21505124735375
+          sequence: 22
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.job.log
+          reference:
+            kind: artifact
+            id: artifact_2
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_2
+            artifact_state: complete
+            artifact_sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+            artifact_byte_count: 50738
+        - protocol: abp
+          protocol_version: 1
+          signal_id: aa3a7c1b-d3e3-417f-9020-359d2500b2a3
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.719712Z'
+          monotonic_ns: 21505128914083
+          sequence: 24
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.kedi-manifest.json
+          reference:
+            kind: artifact
+            id: artifact_3
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_3
+            artifact_state: complete
+            artifact_sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+            artifact_byte_count: 2537
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 95b0f68b-6be0-469b-8a93-8750389b8d81
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.740586Z'
+          monotonic_ns: 21505149788541
+          sequence: 26
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.lock.json
+          reference:
+            kind: artifact
+            id: artifact_4
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_4
+            artifact_state: complete
+            artifact_sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+            artifact_byte_count: 41732
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 7a7205a2-a202-421c-b920-bd17b91982d2
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.743668Z'
+          monotonic_ns: 21505152870041
+          sequence: 28
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.job.result.json
+          reference:
+            kind: artifact
+            id: artifact_5
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_5
+            artifact_state: complete
+            artifact_sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+            artifact_byte_count: 1987
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 6eecaafb-9a78-4bda-84b5-0dd93e52cb58
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.746502Z'
+          monotonic_ns: 21505155703875
+          sequence: 30
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.config.json
+          reference:
+            kind: artifact
+            id: artifact_6
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_6
+            artifact_state: complete
+            artifact_sha256: f33a486c71957e9e4ffc918b611777c87551a0079aaef4c8636adf200ce86f17
+            artifact_byte_count: 1641
+        - protocol: abp
+          protocol_version: 1
+          signal_id: ed91ec66-59bc-48b7-98fd-792e354fe292
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.748961Z'
+          monotonic_ns: 21505158162625
+          sequence: 32
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.lock.json
+          reference:
+            kind: artifact
+            id: artifact_7
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_7
+            artifact_state: complete
+            artifact_sha256: 8032fe9eda4eda962d74328c729c1814cca8764fa33d2e592d70b9857e99d6b3
+            artifact_byte_count: 1933
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 711cd6ed-0334-46e8-9f51-b018c5a5124f
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.753164Z'
+          monotonic_ns: 21505162365958
+          sequence: 34
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.result.json
+          reference:
+            kind: artifact
+            id: artifact_8
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_8
+            artifact_state: complete
+            artifact_sha256: 199f176cdc90df14a73723079915bde411942b138600b76986e2cde6fe1e3d73
+            artifact_byte_count: 4724
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3d2f4e25-d100-4ff0-9677-38b3f0245acb
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.755347Z'
+          monotonic_ns: 21505164550041
+          sequence: 36
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.trial.log
+          reference:
+            kind: artifact
+            id: artifact_9
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_9
+            artifact_state: complete
+            artifact_sha256: eb7531a29d84f06ccb16beb05f47a89b70f2e7e4469c5c896dfa4724c364e437
+            artifact_byte_count: 5679
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 74393ec4-48fd-4874-8abb-1204c0a6c2d9
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.757404Z'
+          monotonic_ns: 21505166605333
+          sequence: 38
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.artifacts.manifest.json
+          reference:
+            kind: artifact
+            id: artifact_10
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_10
+            artifact_state: complete
+            artifact_sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+            artifact_byte_count: 157
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 65736dc1-d70e-488f-a72a-fea41830c37d
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.759385Z'
+          monotonic_ns: 21505168586291
+          sequence: 40
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.verifier.ctrf.json
+          reference:
+            kind: artifact
+            id: artifact_11
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_11
+            artifact_state: complete
+            artifact_sha256: d74c5fb8ce995ff734ff3f22e095335faf9440a01406c00fdb33fdff44420c0c
+            artifact_byte_count: 1149
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5d9eec6e-12d4-4645-a4a1-9d5f08037d00
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.761055Z'
+          monotonic_ns: 21505170256083
+          sequence: 42
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.verifier.reward.txt
+          reference:
+            kind: artifact
+            id: artifact_12
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_12
+            artifact_state: complete
+            artifact_sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+            artifact_byte_count: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: e57f9c11-e3bc-4103-a9ae-47031cca9b33
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.763509Z'
+          monotonic_ns: 21505172711791
+          sequence: 44
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.file.trial.verifier.test-stdout.txt
+          reference:
+            kind: artifact
+            id: artifact_13
+            media_type: text/plain
+          attributes:
+            artifact_id: artifact_13
+            artifact_state: complete
+            artifact_sha256: 67254932fb171f311a6429ecb509018d036b14bd9a881e6ba3364b588c8964e3
+            artifact_byte_count: 21662
+        - protocol: abp
+          protocol_version: 1
+          signal_id: b13127ad-bc76-403d-8f87-97ea65eae730
+          trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+          emitted_at: '2026-09-03T10:39:46.766665Z'
+          monotonic_ns: 21505175866875
+          sequence: 47
+          execution:
+            benchmark_id: kedi-terminal-bench-2.1
+            experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+            run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+            case_id: path-tracing-reverse__f4dkc6a
+            variant_id: kedi-2406d0e45943
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: a173618c115a30c6
+          semantic_type: artifact.content
+          name: terminal_bench.evidence_index
+          reference:
+            kind: artifact
+            id: artifact_2f14c275385cca418a7a0f5c
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_14
+      partial: false
+  signals:
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9762270d-afe3-4f3e-bbbb-077f36d627d6
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.705740Z'
+      monotonic_ns: 21505114941375
+      sequence: 1
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: 43321cffd08f1f39
+      operation: benchmark.run
+      kind: task
+      attributes:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 093fa1e4-c234-4502-b77c-de4c0c7e44e9
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.706334Z'
+      monotonic_ns: 21505115534958
+      sequence: 2
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 43321cffd08f1f39
+      name: model
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 18
+      attributes:
+        observation_id: obs_1
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 29b6f005-67ba-4a55-a94f-48995ec3bbba
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.706386Z'
+      monotonic_ns: 21505115586208
+      sequence: 3
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 43321cffd08f1f39
+      name: adapter
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 8
+      attributes:
+        observation_id: obs_2
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5049f452-4bb4-4cc0-82f2-50a57db5da1f
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.706417Z'
+      monotonic_ns: 21505115617375
+      sequence: 4
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 43321cffd08f1f39
+      name: effort
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 4
+      attributes:
+        observation_id: obs_3
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 78e955a1-9aed-4d2f-a560-1c60e2e6b3c5
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.706446Z'
+      monotonic_ns: 21505115647000
+      sequence: 5
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 43321cffd08f1f39
+      name: harness_policy
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 390
+      attributes:
+        observation_id: obs_4
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 63448f05-30b8-4bc1-ad5b-179d0e6d3f44
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.706468Z'
+      monotonic_ns: 21505115668916
+      sequence: 6
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 43321cffd08f1f39
+      name: max_evidence_file_bytes
+      semantic_type: factor.value
+      body: 20000000
+      attributes:
+        observation_id: obs_5
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9c898a2f-2109-451c-b76f-309490e3f709
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.706490Z'
+      monotonic_ns: 21505115690166
+      sequence: 7
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 43321cffd08f1f39
+      name: max_evidence_total_bytes
+      semantic_type: factor.value
+      body: 50000000
+      attributes:
+        observation_id: obs_6
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e1e07954-bd12-4f29-bf99-75fde67a1675
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707256Z'
+      monotonic_ns: 21505116457375
+      sequence: 8
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: a173618c115a30c6
+      parent_span_id: 43321cffd08f1f39
+      operation: capture terminal-bench trial
+      kind: workflow
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5ab25872-d9e2-413b-b7d3-7645e40efb48
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707313Z'
+      monotonic_ns: 21505116514083
+      sequence: 9
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: input
+      semantic_type: operation.input
+      body:
+        type: dict
+        length: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 972aa814-1315-4544-bc64-b832ed359444
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707367Z'
+      monotonic_ns: 21505116567875
+      sequence: 10
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.reward.reward
+      semantic_type: quality.correctness
+      value: 1.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_7
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 81bfdcb9-a194-40a4-b263-8b708410bb4d
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707401Z'
+      monotonic_ns: 21505116601708
+      sequence: 11
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.reward.mean
+      semantic_type: quality.score
+      value: 1.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_8
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 03ce86cd-a2ec-4da9-91dd-72c5cf4d371d
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707439Z'
+      monotonic_ns: 21505116639958
+      sequence: 12
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.grader_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_9
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 41
+    - protocol: abp
+      protocol_version: 1
+      signal_id: dc28efaf-f730-47b3-ad87-72f3218f9217
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707479Z'
+      monotonic_ns: 21505116679625
+      sequence: 13
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: kedi.trial_completed
+      semantic_type: quality.correctness
+      value: false
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_10
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 19
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f46c3dfe-9f94-4ccc-a8c5-b89e50bd6a73
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707508Z'
+      monotonic_ns: 21505116708958
+      sequence: 14
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.duration
+      semantic_type: time.latency
+      value: 17412.236551
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_11
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: ab31ad10-d346-4921-aaaf-66cf487eecc7
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707532Z'
+      monotonic_ns: 21505116732458
+      sequence: 15
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.environment_setup.duration
+      semantic_type: time.latency
+      value: 1835.392596
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_12
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 97ec2451-8154-4e9f-8843-e92b4b2562bc
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707553Z'
+      monotonic_ns: 21505116753416
+      sequence: 16
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.agent_setup.duration
+      semantic_type: time.latency
+      value: 1920.772679
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_13
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: aebd1c59-6192-46b3-80ac-3a33660a3f95
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707573Z'
+      monotonic_ns: 21505116773750
+      sequence: 17
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.agent_execution.duration
+      semantic_type: time.latency
+      value: 964.291807
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_14
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d401de0a-b4a0-4955-8c7b-4400baafb681
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707594Z'
+      monotonic_ns: 21505116794333
+      sequence: 18
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.verifier.duration
+      semantic_type: time.latency
+      value: 936.66267
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_15
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d798a3f3-f9db-4a66-a5d6-ccadd592bc22
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.707617Z'
+      monotonic_ns: 21505116817166
+      sequence: 19
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: kedi.total_tokens
+      semantic_type: llm.tokens.total
+      value: 0
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_16
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 312f4bb0-6cff-49e8-8a38-d1a6f3e3a0ef
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.712464Z'
+      monotonic_ns: 21505121668000
+      sequence: 20
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.config.json
+      reference:
+        kind: artifact
+        id: artifact_1
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_1
+        artifact_state: complete
+        artifact_sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+        artifact_byte_count: 2602
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 6ad5bc03-bb0a-4931-ba05-86dd74b15a69
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.712566Z'
+      monotonic_ns: 21505121767041
+      sequence: 21
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.job.config.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_17
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: cce15076-0a8e-48f1-b1ff-5a28ec8266b0
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.715534Z'
+      monotonic_ns: 21505124735375
+      sequence: 22
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.job.log
+      reference:
+        kind: artifact
+        id: artifact_2
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_2
+        artifact_state: complete
+        artifact_sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+        artifact_byte_count: 50738
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 576484ae-edbd-4a5f-85ca-51f6889b7e66
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.715608Z'
+      monotonic_ns: 21505124808541
+      sequence: 23
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.job.job.log
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_18
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 11
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: aa3a7c1b-d3e3-417f-9020-359d2500b2a3
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.719712Z'
+      monotonic_ns: 21505128914083
+      sequence: 24
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.kedi-manifest.json
+      reference:
+        kind: artifact
+        id: artifact_3
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_3
+        artifact_state: complete
+        artifact_sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+        artifact_byte_count: 2537
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 531c0960-8c75-4d67-ae8b-97043e10d73f
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.719796Z'
+      monotonic_ns: 21505128996583
+      sequence: 25
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.job.kedi-manifest.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_19
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 22
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 95b0f68b-6be0-469b-8a93-8750389b8d81
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.740586Z'
+      monotonic_ns: 21505149788541
+      sequence: 26
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.lock.json
+      reference:
+        kind: artifact
+        id: artifact_4
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_4
+        artifact_state: complete
+        artifact_sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+        artifact_byte_count: 41732
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 17e0bef5-2f80-4580-8c9a-340eef29e072
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.740675Z'
+      monotonic_ns: 21505149876250
+      sequence: 27
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.job.lock.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_20
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 13
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 7a7205a2-a202-421c-b920-bd17b91982d2
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.743668Z'
+      monotonic_ns: 21505152870041
+      sequence: 28
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.job.result.json
+      reference:
+        kind: artifact
+        id: artifact_5
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_5
+        artifact_state: complete
+        artifact_sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+        artifact_byte_count: 1987
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5939ca38-4386-4509-9dfa-030bf3fc4add
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.743756Z'
+      monotonic_ns: 21505152957083
+      sequence: 29
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.job.result.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_21
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 6eecaafb-9a78-4bda-84b5-0dd93e52cb58
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.746502Z'
+      monotonic_ns: 21505155703875
+      sequence: 30
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.config.json
+      reference:
+        kind: artifact
+        id: artifact_6
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_6
+        artifact_state: complete
+        artifact_sha256: f33a486c71957e9e4ffc918b611777c87551a0079aaef4c8636adf200ce86f17
+        artifact_byte_count: 1641
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a8845ba1-4f25-468c-ae98-3beb8998af52
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.746574Z'
+      monotonic_ns: 21505155775083
+      sequence: 31
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.config.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_22
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 17
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: ed91ec66-59bc-48b7-98fd-792e354fe292
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.748961Z'
+      monotonic_ns: 21505158162625
+      sequence: 32
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.lock.json
+      reference:
+        kind: artifact
+        id: artifact_7
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_7
+        artifact_state: complete
+        artifact_sha256: 8032fe9eda4eda962d74328c729c1814cca8764fa33d2e592d70b9857e99d6b3
+        artifact_byte_count: 1933
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 7993db5b-47e3-4277-a637-e309e11d1581
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.749035Z'
+      monotonic_ns: 21505158236583
+      sequence: 33
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.lock.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_23
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 711cd6ed-0334-46e8-9f51-b018c5a5124f
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.753164Z'
+      monotonic_ns: 21505162365958
+      sequence: 34
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.result.json
+      reference:
+        kind: artifact
+        id: artifact_8
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_8
+        artifact_state: complete
+        artifact_sha256: 199f176cdc90df14a73723079915bde411942b138600b76986e2cde6fe1e3d73
+        artifact_byte_count: 4724
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 01082082-e1ff-4f2b-b1f1-74fc66ef2f4d
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.753257Z'
+      monotonic_ns: 21505162458083
+      sequence: 35
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.result.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_24
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 17
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3d2f4e25-d100-4ff0-9677-38b3f0245acb
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.755347Z'
+      monotonic_ns: 21505164550041
+      sequence: 36
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.trial.log
+      reference:
+        kind: artifact
+        id: artifact_9
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_9
+        artifact_state: complete
+        artifact_sha256: eb7531a29d84f06ccb16beb05f47a89b70f2e7e4469c5c896dfa4724c364e437
+        artifact_byte_count: 5679
+    - protocol: abp
+      protocol_version: 1
+      signal_id: fac81643-84d0-4b7d-89d7-a42171c7671d
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.755443Z'
+      monotonic_ns: 21505164643875
+      sequence: 37
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.trial.log
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_25
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 15
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 74393ec4-48fd-4874-8abb-1204c0a6c2d9
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.757404Z'
+      monotonic_ns: 21505166605333
+      sequence: 38
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      reference:
+        kind: artifact
+        id: artifact_10
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_10
+        artifact_state: complete
+        artifact_sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+        artifact_byte_count: 157
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 0cb05c99-f00b-4ca5-a877-d162e3416f71
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.757474Z'
+      monotonic_ns: 21505166675500
+      sequence: 39
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.artifacts.manifest.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_26
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 29
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 65736dc1-d70e-488f-a72a-fea41830c37d
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.759385Z'
+      monotonic_ns: 21505168586291
+      sequence: 40
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      reference:
+        kind: artifact
+        id: artifact_11
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_11
+        artifact_state: complete
+        artifact_sha256: d74c5fb8ce995ff734ff3f22e095335faf9440a01406c00fdb33fdff44420c0c
+        artifact_byte_count: 1149
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8e518d2b-2a0f-4f62-b3b4-836274c039bd
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.759452Z'
+      monotonic_ns: 21505168653208
+      sequence: 41
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.verifier.ctrf.json
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_27
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 24
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5d9eec6e-12d4-4645-a4a1-9d5f08037d00
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.761055Z'
+      monotonic_ns: 21505170256083
+      sequence: 42
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.verifier.reward.txt
+      reference:
+        kind: artifact
+        id: artifact_12
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_12
+        artifact_state: complete
+        artifact_sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+        artifact_byte_count: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 443f4f65-60f0-485d-91ef-9c30f637cccb
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.761125Z'
+      monotonic_ns: 21505170326708
+      sequence: 43
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.verifier.reward.txt
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_28
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 25
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e57f9c11-e3bc-4103-a9ae-47031cca9b33
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.763509Z'
+      monotonic_ns: 21505172711791
+      sequence: 44
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      reference:
+        kind: artifact
+        id: artifact_13
+        media_type: text/plain
+      attributes:
+        artifact_id: artifact_13
+        artifact_state: complete
+        artifact_sha256: 67254932fb171f311a6429ecb509018d036b14bd9a881e6ba3364b588c8964e3
+        artifact_byte_count: 21662
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 240501fe-b749-400e-b57b-46c03b75eabc
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.763610Z'
+      monotonic_ns: 21505172811666
+      sequence: 45
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.file.trial.verifier.test-stdout.txt
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_29
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          harbor.path:
+            type: str
+            length: 30
+          sha256.source:
+            type: str
+            length: 64
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8f611bb7-e170-4d6c-b9d1-a24430303a1d
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.766353Z'
+      monotonic_ns: 21505175555583
+      sequence: 46
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: a173618c115a30c6
+      name: terminal_bench.evidence_complete
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_30
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 43
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b13127ad-bc76-403d-8f87-97ea65eae730
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.766665Z'
+      monotonic_ns: 21505175866875
+      sequence: 47
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: a173618c115a30c6
+      semantic_type: artifact.content
+      name: terminal_bench.evidence_index
+      reference:
+        kind: artifact
+        id: artifact_2f14c275385cca418a7a0f5c
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_14
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 7ecf1467-68e0-4202-954e-3053005536dd
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.766702Z'
+      monotonic_ns: 21505175903583
+      sequence: 48
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: a173618c115a30c6
+      name: terminal_bench.evidence_index
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 11
+      attributes:
+        observation_id: obs_31
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f44100f0-1344-4c2a-b66b-abc6fea20934
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.766768Z'
+      monotonic_ns: 21505175968666
+      sequence: 49
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: a173618c115a30c6
+      output:
+        type: dict
+        length: 9
+      status: ok
+      reason: completed
+      partial: false
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 06e6a1a2-6616-4b99-8265-6318794933e8
+      trace_id: 8196412d8cd9d607c7d17a55ea169ca7
+      emitted_at: '2026-09-03T10:39:46.766870Z'
+      monotonic_ns: 21505176070791
+      sequence: 50
+      execution:
+        benchmark_id: kedi-terminal-bench-2.1
+        experiment_id: exp_kedi_terminal_bench_2_1_20260903T103926952240Z
+        run_id: run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943
+        case_id: path-tracing-reverse__f4dkc6a
+        variant_id: kedi-2406d0e45943
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: 43321cffd08f1f39
+      output:
+        type: CapturedTrial
+      status: ok
+      reason: completed
+      partial: false
+  started_at: '2026-09-03T10:39:46.705740Z'
+  ended_at: '2026-09-03T10:39:46.766870Z'
+  partial: false
+spans:
+  span_1:
+    name: capture terminal-bench trial
+    kind: workflow
+    started_at: '2026-09-03T10:39:46.707256+00:00'
+    ended_at: '2026-09-03T10:39:46.766768+00:00'
+    duration: 0.059511291
+    input:
+      task_name: terminal-bench/path-tracing-reverse
+      trial_name: path-tracing-reverse__F4DKc6A
+    output:
+      task_name: terminal-bench/path-tracing-reverse
+      trial_name: path-tracing-reverse__F4DKc6A
+      rewards:
+        reward: 1.0
+      usage:
+        total_tokens: 0
+      evidence_file_count: 13
+      evidence_bytes: 136543
+      skipped_file_count: 0
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+      - obs_21
+      - obs_22
+      - obs_23
+      - obs_24
+      - obs_25
+      - obs_26
+      - obs_27
+      - obs_28
+      - obs_29
+      - obs_30
+      - obs_31
+    artifacts:
+      - artifact_1
+      - artifact_2
+      - artifact_3
+      - artifact_4
+      - artifact_5
+      - artifact_6
+      - artifact_7
+      - artifact_8
+      - artifact_9
+      - artifact_10
+      - artifact_11
+      - artifact_12
+      - artifact_13
+      - artifact_14
+artifacts:
+  terminal_bench.file.job.config.json:
+    id: artifact_1
+    name: terminal_bench.file.job.config.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_1.json
+    span: span_1
+    tags:
+      harbor.path: job/config.json
+      sha256.source: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    source: file
+    state: complete
+    sha256: b53752df9d3b0c25496968d840ed2a04c1bc835dfeafd416904a87f6c63e08a8
+    byte_count: 2602
+    filename: config.json
+  terminal_bench.file.job.job.log:
+    id: artifact_2
+    name: terminal_bench.file.job.job.log
+    media: text/plain
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_2.log
+    span: span_1
+    tags:
+      harbor.path: job/job.log
+      sha256.source: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    source: file
+    state: complete
+    sha256: ac0d3a890fa7570f4024eb48c9a1be5a526ace2ac8eebce16412a310280d9c10
+    byte_count: 50738
+    filename: job.log
+  terminal_bench.file.job.kedi-manifest.json:
+    id: artifact_3
+    name: terminal_bench.file.job.kedi-manifest.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_3.json
+    span: span_1
+    tags:
+      harbor.path: job/kedi-manifest.json
+      sha256.source: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    source: file
+    state: complete
+    sha256: 71ffd4caa9279ca624ba5d8001fe03511feebb867402002fef67cbcec29d32d1
+    byte_count: 2537
+    filename: kedi-manifest.json
+  terminal_bench.file.job.lock.json:
+    id: artifact_4
+    name: terminal_bench.file.job.lock.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_4.json
+    span: span_1
+    tags:
+      harbor.path: job/lock.json
+      sha256.source: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    source: file
+    state: complete
+    sha256: 975f30078be18d31c1d2ff95630ada1320b71de34a364bae0635ed62cf65708b
+    byte_count: 41732
+    filename: lock.json
+  terminal_bench.file.job.result.json:
+    id: artifact_5
+    name: terminal_bench.file.job.result.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_5.json
+    span: span_1
+    tags:
+      harbor.path: job/result.json
+      sha256.source: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    source: file
+    state: complete
+    sha256: 8b6c3075ac821fa5ad3b8185a0132df0e8ad85c8b8b598132eb3d0f2ea3c1750
+    byte_count: 1987
+    filename: result.json
+  terminal_bench.file.trial.config.json:
+    id: artifact_6
+    name: terminal_bench.file.trial.config.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_6.json
+    span: span_1
+    tags:
+      harbor.path: trial/config.json
+      sha256.source: f33a486c71957e9e4ffc918b611777c87551a0079aaef4c8636adf200ce86f17
+    source: file
+    state: complete
+    sha256: f33a486c71957e9e4ffc918b611777c87551a0079aaef4c8636adf200ce86f17
+    byte_count: 1641
+    filename: config.json
+  terminal_bench.file.trial.lock.json:
+    id: artifact_7
+    name: terminal_bench.file.trial.lock.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_7.json
+    span: span_1
+    tags:
+      harbor.path: trial/lock.json
+      sha256.source: 8032fe9eda4eda962d74328c729c1814cca8764fa33d2e592d70b9857e99d6b3
+    source: file
+    state: complete
+    sha256: 8032fe9eda4eda962d74328c729c1814cca8764fa33d2e592d70b9857e99d6b3
+    byte_count: 1933
+    filename: lock.json
+  terminal_bench.file.trial.result.json:
+    id: artifact_8
+    name: terminal_bench.file.trial.result.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_8.json
+    span: span_1
+    tags:
+      harbor.path: trial/result.json
+      sha256.source: 199f176cdc90df14a73723079915bde411942b138600b76986e2cde6fe1e3d73
+    source: file
+    state: complete
+    sha256: 199f176cdc90df14a73723079915bde411942b138600b76986e2cde6fe1e3d73
+    byte_count: 4724
+    filename: result.json
+  terminal_bench.file.trial.trial.log:
+    id: artifact_9
+    name: terminal_bench.file.trial.trial.log
+    media: text/plain
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_9.log
+    span: span_1
+    tags:
+      harbor.path: trial/trial.log
+      sha256.source: eb7531a29d84f06ccb16beb05f47a89b70f2e7e4469c5c896dfa4724c364e437
+    source: file
+    state: complete
+    sha256: eb7531a29d84f06ccb16beb05f47a89b70f2e7e4469c5c896dfa4724c364e437
+    byte_count: 5679
+    filename: trial.log
+  terminal_bench.file.trial.artifacts.manifest.json:
+    id: artifact_10
+    name: terminal_bench.file.trial.artifacts.manifest.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_10.json
+    span: span_1
+    tags:
+      harbor.path: trial/artifacts/manifest.json
+      sha256.source: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    source: file
+    state: complete
+    sha256: 410ae7cc2fcb1cf23750970ad33becd2d96986618bb442e48b543503233a8396
+    byte_count: 157
+    filename: manifest.json
+  terminal_bench.file.trial.verifier.ctrf.json:
+    id: artifact_11
+    name: terminal_bench.file.trial.verifier.ctrf.json
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_11.json
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/ctrf.json
+      sha256.source: d74c5fb8ce995ff734ff3f22e095335faf9440a01406c00fdb33fdff44420c0c
+    source: file
+    state: complete
+    sha256: d74c5fb8ce995ff734ff3f22e095335faf9440a01406c00fdb33fdff44420c0c
+    byte_count: 1149
+    filename: ctrf.json
+  terminal_bench.file.trial.verifier.reward.txt:
+    id: artifact_12
+    name: terminal_bench.file.trial.verifier.reward.txt
+    media: text/plain
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_12.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/reward.txt
+      sha256.source: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    source: file
+    state: complete
+    sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+    byte_count: 2
+    filename: reward.txt
+  terminal_bench.file.trial.verifier.test-stdout.txt:
+    id: artifact_13
+    name: terminal_bench.file.trial.verifier.test-stdout.txt
+    media: text/plain
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_13.txt
+    span: span_1
+    tags:
+      harbor.path: trial/verifier/test-stdout.txt
+      sha256.source: 67254932fb171f311a6429ecb509018d036b14bd9a881e6ba3364b588c8964e3
+    source: file
+    state: complete
+    sha256: 67254932fb171f311a6429ecb509018d036b14bd9a881e6ba3364b588c8964e3
+    byte_count: 21662
+    filename: test-stdout.txt
+  terminal_bench.evidence_index:
+    id: artifact_14
+    name: terminal_bench.evidence_index
+    media: application/json
+    path: artifacts/run_0013_0001_path_tracing_reverse_f4dkc6a__kedi_2406d0e45943/artifact_14.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: df6077f7bb1f5c05e993005cc7fac9c8bb525bcc2be5a10d5401b406fb0923f5
+    byte_count: 2828
+output:
+  task_name: terminal-bench/path-tracing-reverse
+  trial_name: path-tracing-reverse__F4DKc6A
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: null
+  usage:
+    input_tokens: null
+    cache_read_tokens: null
+    output_tokens: null
+    cost_usd: null
+    total_tokens: 0
+  evidence_file_count: 13
+  evidence_bytes: 136543
+  skipped_file_count: 0

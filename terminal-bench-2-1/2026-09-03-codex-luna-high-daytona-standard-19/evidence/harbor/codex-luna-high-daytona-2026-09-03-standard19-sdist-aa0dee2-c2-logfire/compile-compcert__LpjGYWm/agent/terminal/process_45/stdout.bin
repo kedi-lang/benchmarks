@@ -1,0 +1,56 @@
+(** Specialization of inbetween for two consecutive integers. *)
+
+Definition inbetween_int m x l :=
+  inbetween (IZR m) (IZR (m + 1)) x l.
+
+Theorem inbetween_float_new_location :
+  forall x m e l k,
+  (0 < k)%Z ->
+  inbetween_float m e x l ->
+  inbetween_float (Z.div m (Zpower beta k)) (e + k) x (new_location (Zpower beta k) (Zmod m (Zpower beta k)) l).
+Proof.
+intros x m e l k Hk Hx.
+unfold inbetween_float in *.
+assert (Hr: forall m, F2R (Float beta m (e + k)) = F2R (Float beta (m * Zpower beta k) e)).
+clear -Hk. intros m.
+rewrite (F2R_change_exp beta e).
+apply (f_equal (fun r => F2R (Float beta (m * Zpower _ r) e))).
+ring.
+lia.
+assert (Hp: (Zpower beta k > 0)%Z).
+apply Z.lt_gt.
+apply Zpower_gt_0.
+now apply Zlt_le_weak.
+(* . *)
+rewrite 2!Hr.
+rewrite Zmult_plus_distr_l, Zmult_1_l.
+unfold F2R at 2. simpl.
+rewrite plus_IZR, Rmult_plus_distr_r.
+apply new_location_correct; unfold F2R; simpl.
+apply bpow_gt_0.
+now apply Zpower_gt_1.
+now apply Z_mod_lt.
+rewrite <- 2!Rmult_plus_distr_r, <- 2!plus_IZR.
+rewrite Zmult_comm, Zplus_assoc.
+now rewrite <- Z_div_mod_eq.
+Qed.
+
+Theorem inbetween_float_new_location_single :
+  forall x m e l,
+  inbetween_float m e x l ->
+  inbetween_float (Z.div m beta) (e + 1) x (new_location beta (Zmod m beta) l).
+Proof.
+intros x m e l Hx.
+replace (radix_val beta) with (Zpower beta 1).
+now apply inbetween_float_new_location.
+apply Zmult_1_r.
+Qed.
+
+Theorem inbetween_float_ex :
+  forall m e l,
+  exists x,
+  inbetween_float m e x l.
+Proof.
+intros m e l.
+apply inbetween_ex.
+apply F2R_lt.

@@ -1,0 +1,93 @@
+
+doomgeneric/doomgeneric/doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+00010000 <.pic.system>:
+   10000:	3c190005 	lui	t9,0x5
+   10004:	08013679 	j	4d9e4 <__libc_system>
+   10008:	2739d9e4 	addiu	t9,t9,-9756
+   1000c:	00000000 	nop
+
+00010010 <.pic.malloc>:
+   10010:	3c190007 	lui	t9,0x7
+   10014:	0801b64b 	j	6d92c <__malloc>
+   10018:	2739d92c 	addiu	t9,t9,-9940
+   1001c:	00000000 	nop
+
+00010020 <.pic.vsnprintf>:
+   10020:	3c190006 	lui	t9,0x6
+   10024:	0801861d 	j	61874 <___vsnprintf>
+   10028:	27391874 	addiu	t9,t9,6260
+   1002c:	00000000 	nop
+
+00010030 <.pic.strtol>:
+   10030:	3c190005 	lui	t9,0x5
+   10034:	08013184 	j	4c610 <__strtol>
+   10038:	2739c610 	addiu	t9,t9,-14832
+   1003c:	00000000 	nop
+
+00010040 <.pic.calloc>:
+   10040:	3c190007 	lui	t9,0x7
+   10044:	0801bad4 	j	6eb50 <__calloc>
+   10048:	2739eb50 	addiu	t9,t9,-5296
+   1004c:	00000000 	nop
+
+00010050 <.pic.realloc>:
+   10050:	3c190007 	lui	t9,0x7
+   10054:	0801b900 	j	6e400 <__libc_realloc>
+   10058:	2739e400 	addiu	t9,t9,-7168
+   1005c:	00000000 	nop
+
+00010060 <.pic.fopen>:
+   10060:	3c190006 	lui	t9,0x6
+   10064:	0801716d 	j	5c5b4 <_IO_new_fopen>
+   10068:	2739c5b4 	addiu	t9,t9,-14924
+   1006c:	00000000 	nop
+
+00010070 <.pic.exit>:
+   10070:	3c190005 	lui	t9,0x5
+   10074:	080123ca 	j	48f28 <exit>
+   10078:	27398f28 	addiu	t9,t9,-28888
+   1007c:	00000000 	nop
+
+00010080 <.pic.__ctype_toupper_loc>:
+   10080:	3c190005 	lui	t9,0x5
+   10084:	080122bc 	j	48af0 <__ctype_toupper_loc>
+   10088:	27398af0 	addiu	t9,t9,-29968
+   1008c:	00000000 	nop
+
+00010090 <.pic.mkdir>:
+   10090:	3c190007 	lui	t9,0x7
+   10094:	0801d213 	j	7484c <__mkdir>
+   10098:	2739484c 	addiu	t9,t9,18508
+   1009c:	00000000 	nop
+
+000100a0 <.pic.free>:
+   100a0:	3c190007 	lui	t9,0x7
+   100a4:	0801b82d 	j	6e0b4 <__free>
+   100a8:	2739e0b4 	addiu	t9,t9,-8012
+   100ac:	00000000 	nop
+
+000100b0 <abort>:
+   100b0:	3c1c0020 	lui	gp,0x20
+   100b4:	279c7a70 	addiu	gp,gp,31344
+   100b8:	0399e021 	addu	gp,gp,t9
+   100bc:	8f828018 	lw	v0,-32744(gp)
+   100c0:	27bdff38 	addiu	sp,sp,-200
+   100c4:	afbc0010 	sw	gp,16(sp)
+   100c8:	afbf00c4 	sw	ra,196(sp)
+   100cc:	afb300c0 	sw	s3,192(sp)
+   100d0:	afb200bc 	sw	s2,188(sp)
+   100d4:	afb100b8 	sw	s1,184(sp)
+   100d8:	afb000b4 	sw	s0,180(sp)
+   100dc:	8c420000 	lw	v0,0(v0)
+   100e0:	afa200ac 	sw	v0,172(sp)
+   100e4:	7c03e83b 	rdhwr	v1,$29
+   100e8:	8f91801c 	lw	s1,-32740(gp)
+   100ec:	24728b20 	addiu	s2,v1,-29920
+   100f0:	2630b7a4 	addiu	s0,s1,-18524
+   100f4:	8e020008 	lw	v0,8(s0)
+   100f8:	10520010 	beq	v0,s2,1013c <abort+0x8c>
+   100fc:	00000000 	nop

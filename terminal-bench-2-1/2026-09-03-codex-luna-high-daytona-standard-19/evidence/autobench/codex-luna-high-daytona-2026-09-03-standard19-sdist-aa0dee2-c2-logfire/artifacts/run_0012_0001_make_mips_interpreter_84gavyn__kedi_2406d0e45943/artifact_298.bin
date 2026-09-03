@@ -1,0 +1,9 @@
+951:static size_t heap_pos = 0;  // Current position in the heap
+996:void* basic_malloc(size_t size) {
+1045:    if (heap_pos + total_size > HEAP_SIZE)
+1049:    block_header_t* new_block = (block_header_t*)(heap + heap_pos);
+1051:    heap_pos += total_size;
+1065:    if ((void*)block < (void*)heap || (void*)block >= (void*)(heap + heap_pos))
+1098:        fixed_pools[i].memory = heap + heap_pos;
+1110:        heap_pos += pool_size;
+1174:    return basic_malloc(size);

@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "a4aef929453b2d3def8afeaa3855cd1d14c3497aeed59e8f1729c5e28b54caa9",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 34621,
+    "created_at": "2026-09-02T23:07:09.354886Z",
+    "expires_at": "2026-09-03T00:07:09.354886Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"combined_path\":\"/logs/agent/terminal/process_3/combined.bin\",\"command\":\"python3 -c 'import cv2,numpy as np\\np='\\\"'\\\"'/app/example_video.mp4'\\\"'\\\"'; c=cv2.VideoCapture(p); frames=[]\\nwhile 1:\\n ok,f=c.read()\\n if not ok: break\\n frames.append(f)\\nc.release(); bg=frames[0]\\nfor thr in [15,25,40,60]:\\n print('\\\"'\\\"'THR'\\\"'\\\"',thr)\\n vals=[]\\n for i,f in enumerate(frames):\\n  d=cv2.cvtColor(cv2.absdiff(f,bg),cv2.COLOR_BGR2GRAY)\\n  m=(d>thr).astype(np.uint8); m=cv2.morphologyEx(m,cv2.MORPH_OPEN,np.ones((3,3),np.uint8))\\n  n,lab,st,cen=cv2.connectedComponentsWithStats(m)\\n  comps=[]\\n  for j in range(1,n):\\n   x,y,w,h,a=st[j]\\n   if a>20: comps.append((int(a),int(x),int(y),int(w),int(h)))\\n  vals.append((int(m.sum()),sorted(comps,reverse=True)[:3]))\\n for i,v in enumerate(vals): print(i,v)\\n'\",\"cwd\":\"/app\",\"duration_seconds\":1.8511165780946612,\"exit_code\":0,\"handed_off\":false,\"lifetime\":\"session\",\"output_limited\":false,\"pid\":2887,\"process_id\":\"process_3\",\"retained\":false,\"shell\":false,\"started_at\":\"2026-09-02T23:07:07.501783+00:00\",\"status\":\"finished\",\"stderr\":\"\",\"stderr_bytes\":0,\"stderr_invalid_utf8\":false,\"stderr_path\":\"/logs/agent/terminal/process_3/stderr.bin\",\"stderr_truncated\":f…",
+    "ref_id": "tool_call_result_1",
+    "sensitive": false,
+    "size_bytes": 34621,
+    "summary": "builtins.dict value with 34621 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_d660568c-3ad8-4801-8a87-3342329a49b8",
+  "source": "tool:run_command",
+  "status": "active"
+}

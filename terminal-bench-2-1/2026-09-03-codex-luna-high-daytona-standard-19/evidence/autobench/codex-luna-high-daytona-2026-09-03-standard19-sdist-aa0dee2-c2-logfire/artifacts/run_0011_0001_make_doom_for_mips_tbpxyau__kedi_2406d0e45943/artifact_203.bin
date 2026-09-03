@@ -1,0 +1,56 @@
+        
+      case 0x29: // SH
+        {
+          const rs = (instruction >> 21) & 0x1F;
+          const rt = (instruction >> 16) & 0x1F;
+          const offset = this.signExtend16(instruction & 0xFFFF);
+          this.sh(rt, offset, rs);
+        }
+        break;
+        
+      case 0x2b: // SW
+        {
+          const rs = (instruction >> 21) & 0x1F;
+          const rt = (instruction >> 16) & 0x1F;
+          const offset = this.signExtend16(instruction & 0xFFFF);
+          this.sw(rt, offset, rs);
+        }
+        break;
+        
+      case 0x22: // LWL
+        {
+          const rs = (instruction >> 21) & 0x1F;
+          const rt = (instruction >> 16) & 0x1F;
+          const offset = this.signExtend16(instruction & 0xFFFF);
+          this.lwl(rt, offset, rs);
+        }
+        break;
+        
+      case 0x26: // LWR
+        {
+          const rs = (instruction >> 21) & 0x1F;
+          const rt = (instruction >> 16) & 0x1F;
+          const offset = this.signExtend16(instruction & 0xFFFF);
+          this.lwr(rt, offset, rs);
+        }
+        break;
+        
+      case 0x2a: // SWL
+        {
+          const rs = (instruction >> 21) & 0x1F;
+          const rt = (instruction >> 16) & 0x1F;
+          const offset = this.signExtend16(instruction & 0xFFFF);
+          this.swl(rt, offset, rs);
+        }
+        break;
+        
+      case 0x2e: // SWR
+        {
+          const rs = (instruction >> 21) & 0x1F;
+          const rt = (instruction >> 16) & 0x1F;
+          const offset = this.signExtend16(instruction & 0xFFFF);
+          this.swr(rt, offset, rs);
+        }
+        break;
+
+    case 0x1F: // SPECIAL3

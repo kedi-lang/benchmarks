@@ -1,0 +1,16 @@
+57:COQCOPTS ?= \
+61:cparser/Parser.vo: COQCOPTS += -w -deprecated-instance-without-locality
+63:COQC="$(COQBIN)coqc" -q $(COQINCLUDES) $(COQCOPTS)
+67:COQCHK="$(COQBIN)coqchk" $(COQINCLUDES)
+179:all:
+199:flocq/%.vo: COQCOPTS+=-w -deprecated-syntactic-definition
+200:MenhirLib/%.vo: COQCOPTS+=-w -deprecated-syntactic-definition
+217:ccomp: .depend.extr compcert.ini driver/Version.ml FORCE
+259:	@echo "COQC $*.v"
+260:	@$(COQC) -dump-glob doc/$(*F).glob $*.v
+312:depend: $(GENERATED) depend1
+318:install:
+342:	@(echo "To use, pass the following to coq_makefile or add the following to _CoqProject:"; echo "-R $(COQDEVDIR) compcert") > $(DESTDIR)$(COQDEVDIR)/README
+368:	$(COQCHK) compcert.driver.Complements
+373:CoqProject:
+374:	@echo $(COQINCLUDES) > _CoqProject

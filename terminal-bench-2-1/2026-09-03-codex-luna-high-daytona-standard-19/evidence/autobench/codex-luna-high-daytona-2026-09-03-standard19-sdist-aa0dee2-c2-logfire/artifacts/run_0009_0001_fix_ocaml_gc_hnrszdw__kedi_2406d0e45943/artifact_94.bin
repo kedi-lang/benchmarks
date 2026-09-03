@@ -1,0 +1,161 @@
+  for (large_alloc *la = heap->unswept_large; la != NULL; la = la->next) {
+    header_t* p = (header_t*)((char*)la + LARGE_ALLOC_HEADER_SZ);
+    if (Has_status_val(Val_hp(p), caml_global_heap_state.UNMARKED)) {
+      compact_update_block(p);
+    }
+  }
+
+  /* Ephemerons */
+  struct caml_ephe_info* ephe_info = Caml_state->ephe_info;
+  compact_update_ephe_list(&ephe_info->todo);
+  compact_update_ephe_list(&ephe_info->live);
+
+  CAML_EV_END(EV_COMPACT_FORWARD);
+  caml_global_barrier(participating_count);
+  CAML_EV_BEGIN(EV_COMPACT_RELEASE);
+
+  /* Third phase: free all evacuated pools and release the mappings back to
+      the OS.
+
+      Note that we may have no "available" pools left, if all
+      remaining pools have been filled up by evacuated blocks. */
+
+  pool* cur_pool = evacuated_pools;
+  while (cur_pool) {
+    pool* next_pool = cur_pool->next;
+
+    #ifdef DEBUG
+    for (header_t *p = POOL_FIRST_BLOCK(cur_pool, cur_pool->sz);
+         p < POOL_END(cur_pool); p++) {
+      *p = Debug_free_major;
+    }
+    #endif
+
+    pool_free(heap, cur_pool, cur_pool->sz);
+    cur_pool = next_pool;
+  }
+
+  CAML_EV_END(EV_COMPACT_RELEASE);
+  caml_global_barrier(participating_count);
+
+  /* Fourth phase: one domain also needs to release the free list */
+  if( participants[0] == Caml_state ) {
+    pool* cur_pool;
+    pool* next_pool;
+
+    caml_plat_lock_blocking(&pool_freelist.lock);
+    cur_pool = pool_freelist.free;
+
+    while( cur_pool ) {
+      next_pool = cur_pool->next;
+      /* No stats to update so just unmap */
+      caml_mem_unmap(cur_pool, Bsize_wsize(POOL_WSIZE));
+      cur_pool = next_pool;
+    }
+
+    pool_freelist.free = NULL;
+
+    caml_plat_unlock(&pool_freelist.lock);
+
+    /* We are done, increment our compaction count */
+    atomic_fetch_add(&caml_compactions_count, 1);
+  }
+
+  caml_gc_log("Compacting heap complete");
+  CAML_EV_END(EV_COMPACT);
+}
+
+/* Compaction end */
+
+struct mem_stats {
+  /* unit is words */
+  uintnat allocated;
+  uintnat live;
+  uintnat free;
+  uintnat overhead;
+
+  uintnat live_blocks;
+};
+
+static void verify_pool(pool* a, sizeclass sz, struct mem_stats* s) {
+  for (value *v = a->next_obj; v; v = (value*)v[1]) {
+    CAMLassert(POOL_BLOCK_FREE_HP(v));
+  }
+
+  {
+    header_t* p = POOL_FIRST_BLOCK(a, sz);
+    header_t* end = POOL_END(a);
+    mlsize_t wh = wsize_sizeclass[sz];
+    s->overhead += POOL_SLAB_WOFFSET(sz);
+
+    while (p + wh <= end) {
+      /* This header can be read here and concurrently marked by the GC, but
+         this is fine: marking can only turn UNMARKED objects into MARKED or
+         NOT_MARKABLE, which is of no consequence for this verification
+         (namely, that there is no garbage left). */
+      header_t hd = Hd_hp(p);
+      CAMLassert(
+        POOL_BLOCK_FREE_HD(hd) ||
+          !Has_status_hd(hd, caml_global_heap_state.GARBAGE)
+      );
+      if (!POOL_BLOCK_FREE_HD(hd)) {
+        s->live += Whsize_hd(hd);
+        s->overhead += wh - Whsize_hd(hd);
+        s->live_blocks++;
+      } else {
+        /* count the free block and any that follow it (stored in the
+           size bits in the header)*/
+        s->free += wh * (1 + Wosize_hd(hd));
+        p += Wosize_hd(hd) * wh;
+      }
+      p += wh;
+    }
+    CAMLassert(end == p);
+    s->allocated += POOL_WSIZE;
+  }
+}
+
+static void verify_large(large_alloc* a, struct mem_stats* s) {
+  for (; a; a = a->next) {
+    header_t hd = *(header_t*)((char*)a + LARGE_ALLOC_HEADER_SZ);
+    CAMLassert (!Has_status_hd(hd, caml_global_heap_state.GARBAGE));
+    s->allocated += Wsize_bsize(LARGE_ALLOC_HEADER_SZ) + Whsize_hd(hd);
+    s->overhead += Wsize_bsize(LARGE_ALLOC_HEADER_SZ);
+    s->live_blocks++;
+  }
+}
+
+static void verify_swept (struct caml_heap_state* local) {
+  struct mem_stats pool_stats = {0,}, large_stats = {0,};
+
+  /* sweeping should be done by this point */
+  CAMLassert(local->next_to_sweep == NUM_SIZECLASSES);
+  for (int i = 0; i < NUM_SIZECLASSES; i++) {
+    CAMLassert(local->unswept_avail_pools[i] == NULL);
+    CAMLassert(local->unswept_full_pools[i] == NULL);
+    for (pool *p = local->avail_pools[i]; p; p = p->next)
+      verify_pool(p, i, &pool_stats);
+    for (pool *p = local->full_pools[i]; p; p = p->next) {
+      CAMLassert(p->next_obj == NULL);
+      verify_pool(p, i, &pool_stats);
+    }
+  }
+  caml_gc_log("Pooled memory: %" CAML_PRIuNAT " allocated, "
+              "%" CAML_PRIuNAT " free, %" CAML_PRIuNAT " fragmentation",
+              pool_stats.allocated, pool_stats.free, pool_stats.overhead);
+
+  verify_large(local->swept_large, &large_stats);
+  CAMLassert(local->unswept_large == NULL);
+  caml_gc_log("Large memory: %" CAML_PRIuNAT " allocated, "
+              "%" CAML_PRIuNAT " free, %" CAML_PRIuNAT " fragmentation",
+              large_stats.allocated, large_stats.free, large_stats.overhead);
+
+  /* Check stats are being computed correctly */
+  CAMLassert(local->stats.pool_words == pool_stats.allocated);
+  CAMLassert(local->stats.pool_live_words == pool_stats.live);
+  CAMLassert(local->stats.pool_live_blocks == pool_stats.live_blocks);
+  CAMLassert(local->stats.pool_frag_words == pool_stats.overhead);
+  CAMLassert(local->stats.pool_words -
+         (local->stats.pool_live_words + local->stats.pool_frag_words)
+         == pool_stats.free);
+  CAMLassert(local->stats.large_words == large_stats.allocated);

@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "5fb72f2b44cdfa3fd0ec1c9914dd42f2c7a64c9666507af6c2a035ea48517952",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 30000,
+    "created_at": "2026-09-02T22:27:58.115413Z",
+    "expires_at": "2026-09-02T23:27:58.115413Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": "flags & 0x3;  // Extract access mode bits\n      if (accessMode === O_RDONLY) {\n        fsFlags = \"r\";\n      } else if (accessMode === O_WRONLY) {\n        fsFlags = \"w\";\n      } else if (accessMode === O_RDWR) {\n        fsFlags = \"r+\";\n      }\n      \n      // Handle creation, truncation, and append flags\n      if (flags & O_CREAT) {\n        if (fsFlags === \"r\") fsFlags = \"wx\";\n        else if (fsFlags === \"r+\") fsFlags = \"wx+\";\n      }\n      \n      if (flags & O_TRUNC) {\n        if (fsFlags === \"r+\") fsFlags = \"w+\";  // r+ doesn't truncate, w+ does\n      }\n      \n      if (flags & O_APPEND) {\n        if (fsFlags === \"w\") fsFlags = \"a\";\n        else if (fsFlags === \"w+\") fsFlags = \"a+\";\n      }\n      \n      // Open the file\n      const fd = fs.openSync(pathname, fsFlags, mode);\n\n      this.fileDescriptors[this.fdCounter++]  = fd\n      \n      // For character devices, we'll use the traditional approach\n      if (fs.fstatSync(fd).isCharacterDevice()) {\n        this.fdToStreamMap[this.fileDescriptors[fd]] = fs.createWriteStream(null, { fd });\n      } else {\n        // For regular files, read the entire file into memory\n        const stats = fs.fstatSync(fd);\n        let fileData;\n     …",
+    "ref_id": "tool_call_result_2",
+    "sensitive": false,
+    "size_bytes": 30000,
+    "summary": "str value with 30000 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_ea93e909-5e32-4810-908b-ace7437b9a5f",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

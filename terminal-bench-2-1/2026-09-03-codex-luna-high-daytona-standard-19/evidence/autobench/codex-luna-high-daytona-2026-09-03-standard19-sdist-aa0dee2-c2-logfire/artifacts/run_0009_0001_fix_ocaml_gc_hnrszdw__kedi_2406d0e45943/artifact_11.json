@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "aecb5cc048a2857029bfd1d11ccf5941b82b7ad3bf0f618c4109abb322ea46ba",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 16614,
+    "created_at": "2026-09-02T22:55:59.092199Z",
+    "expires_at": "2026-09-02T23:55:59.092199Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"combined_path\":\"/logs/agent/terminal/process_17/combined.bin\",\"command\":\"sed -n 280,780p runtime/shared_heap.c\",\"cwd\":\"/app/ocaml\",\"duration_seconds\":0.005082163959741592,\"exit_code\":0,\"handed_off\":false,\"lifetime\":\"session\",\"output_limited\":false,\"pid\":1110,\"process_id\":\"process_17\",\"retained\":false,\"shell\":false,\"started_at\":\"2026-09-02T22:55:59.079036+00:00\",\"status\":\"finished\",\"stderr\":\"\",\"stderr_bytes\":0,\"stderr_invalid_utf8\":false,\"stderr_path\":\"/logs/agent/terminal/process_17/stderr.bin\",\"stderr_truncated\":false,\"stdout\":\"{\\n    CAMLassert(pool->sz == sz);\\n    local->stats.pool_words -= POOL_WSIZE;\\n    local->stats.pool_frag_words -= POOL_HEADER_WSIZE + wastage_sizeclass[sz];\\n    caml_mem_unmap(pool, Bsize_wsize(POOL_WSIZE));\\n}\\n\\nstatic void calc_pool_stats(pool* a, sizeclass sz, struct heap_stats* s)\\n{\\n  header_t* p = POOL_FIRST_BLOCK(a, sz);\\n  header_t* end = POOL_END(a);\\n  mlsize_t wh = wsize_sizeclass[sz];\\n  s->pool_frag_words += POOL_SLAB_WOFFSET(sz);\\n\\n  while (p + wh <= end) {\\n    header_t hd = (header_t)atomic_load_relaxed((atomic_uintnat*)p);\\n    if (!POOL_BLOCK_FREE_HD(hd)) {\\n      s->pool_live_words += Whsize_hd(hd);\\n      s->pool_frag_words += w…",
+    "ref_id": "tool_call_result_1",
+    "sensitive": false,
+    "size_bytes": 16614,
+    "summary": "builtins.dict value with 16614 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_8a6d797a-5852-4f63-87cd-7264a9b73bb2",
+  "source": "tool:run_command",
+  "status": "active"
+}

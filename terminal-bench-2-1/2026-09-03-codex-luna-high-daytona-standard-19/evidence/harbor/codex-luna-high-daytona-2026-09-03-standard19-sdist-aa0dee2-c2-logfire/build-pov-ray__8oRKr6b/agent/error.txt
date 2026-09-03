@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/integrations/harbor/runner.py", line 241, in run_trial
+    result_summary = solve(instruction)
+                     ^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/api.py", line 647, in sync_wrapper
+    return run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/api.py", line 627, in run
+    result = _run(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/api.py", line 592, in _run
+    result = cast(R, runtime.run_main())
+                     ^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 420, in run_main
+    result = self._invoke_procedure(self._main, [])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 575, in _invoke_procedure
+    result = fn(*args)
+             ^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/lang/compiler/program_compiler.py", line 978, in _main
+    return self._execute_top_level(prepared, kwargs, self.new_top_level_state())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/lang/compiler/program_compiler.py", line 991, in _execute_top_level
+    block_result = self._execute_top_level_sequence(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/lang/compiler/program_compiler.py", line 1237, in _execute_top_level_sequence
+    self.executor.execute_single_statement(item, env, is_toplevel=True)
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/lang/compiler/statement_compiler.py", line 761, in execute_single_statement
+    self.compiler.compile_template_block(stmt)(**env)
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/lang/compiler/statement_compiler.py", line 110, in _fn
+    with self.rt.trace_frame(KediTraceFrame(kind="template", label=label, span=stmt.loc)):
+  File "/root/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 633, in trace_frame
+    raise kedi_exc.with_traceback(traceback) from None
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 627, in trace_frame
+    yield
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/lang/compiler/statement_compiler.py", line 150, in _fn
+    return self.rt.m(expr)
+           ^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 394, in m
+    return self._kedi_run(expressions, env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 1093, in _kedi_run
+    result_map = _produce()  # raises on the main thread, wrapped by the trace frame
+                 ^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 1075, in _produce
+    return self._run_conversation_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 1372, in _run_conversation_call
+    result = execute(
+             ^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/core.py", line 1300, in execute
+    reservation.finish()
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/agent_adapter/request_budget.py", line 76, in finish
+    return self._budget._finish(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/installed-agent/kedi/lib/python3.11/site-packages/kedi/agent_adapter/request_budget.py", line 166, in _finish
+    raise ModelRequestBudgetError(exceeded)
+kedi.errors.KediExecutionError: Kedi stack trace:
+  in top-level program
+
+  File "/logs/agent/kedi-harbor-agent-mi3fdyla.kedi", line 20, in template block (3 lines)
+  ❱ 20 >> Complete the following task: <instruction>
+
+Kedi error: ModelRequestBudgetError
+  model run used 3077523 cumulative uncached input tokens, exceeding the host limit of 1000000
+

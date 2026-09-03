@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "3572d3347d00abb8751ac9a263883c5412f8a58a4c15f36d94d8317c04ec5e81",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 94457,
+    "created_at": "2026-09-02T23:18:55.536815Z",
+    "expires_at": "2026-09-03T00:18:55.536815Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": "/**\n * my_stdlib.c - Minimal standard library implementation\n * Contains stubs for all functions declared in my_stdlib.h\n */\n\n#include \"my_stdlib.h\"\n\n// System call numbers\n#define SYS_read    0\n#define SYS_write   1\n#define SYS_open    2\n#define SYS_close   3\n#define SYS_lseek   8\n#define SYS_fsync   74\n#define SYS_rename  82\n#define SYS_mkdir   83\n#define SYS_unlink  87\n\n#if defined(ARCH_X86)\n\n// Real syscall function for Linux x86_64\nstatic long real_syscall6(long syscall_num, long arg1, long arg2, long arg3,\n                     long arg4, long arg5, long arg6) {\n    long result;\n    \n    /*\n     * Use a simplified approach that directly specifies which\n     * registers to use for each argument\n     */\n    __asm__ volatile(\n        /* Input arguments are already in the right locations */\n        \"syscall\"\n        : \"=a\" (result)\n        : \"a\" (syscall_num),\n          \"D\" (arg1),\n          \"S\" (arg2),\n          \"d\" (arg3),\n          \"r\" (arg4)   /* r10 */,\n          \"r\" (arg5)   /* r8 */,\n          \"r\" (arg6)   /* r9 */\n        : \"rcx\", \"r11\", \"memory\"\n    );\n    \n    /* Check for error and set errno */\n    if (result < 0 && result > -4096) {\n        errno = -result;\n        re…",
+    "ref_id": "tool_call_result_2",
+    "sensitive": false,
+    "size_bytes": 94457,
+    "summary": "str value with 94457 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_c9f6790f-71b2-4b64-9502-c625ece9a968",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

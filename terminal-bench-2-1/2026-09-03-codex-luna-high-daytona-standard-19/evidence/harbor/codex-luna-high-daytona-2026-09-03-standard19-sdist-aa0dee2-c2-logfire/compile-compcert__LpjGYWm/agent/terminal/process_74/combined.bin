@@ -1,0 +1,54 @@
+Welcome to Coq 8.18.0
+
+Coq < [Loading ML file ltac_plugin.cmxs (using legacy method) ... done]
+[Loading ML file number_string_notation_plugin.cmxs (using legacy method) ... done]
+[Loading ML file tauto_plugin.cmxs (using legacy method) ... done]
+[Loading ML file cc_plugin.cmxs (using legacy method) ... done]
+[Loading ML file firstorder_plugin.cmxs (using legacy method) ... done]
+[Loading ML file ring_plugin.cmxs (using legacy method) ... done]
+[Loading ML file zify_plugin.cmxs (using legacy method) ... done]
+[Loading ML file micromega_plugin.cmxs (using legacy method) ... done]
+[Loading ML file btauto_plugin.cmxs (using legacy method) ... done]
+
+Coq < Toplevel input, characters 6-17:
+> Check Z.gt_not_eq.
+>       ^^^^^^^^^^^
+Error: The reference Z.gt_not_eq was not found in the current environment.
+
+Coq < Toplevel input, characters 6-14:
+> Check Z.gt_neq.
+>       ^^^^^^^^
+Error: The reference Z.gt_neq was not found in the current environment.
+
+Coq < 
+Coq < Z.lt_irrefl
+     : forall x : Z, Logic.not (x < x)%Z
+Toplevel input, characters 6-17:
+> Check Z.lt_not_eq.
+>       ^^^^^^^^^^^
+Error: The reference Z.lt_not_eq was not found in the current environment.
+
+Coq < Z.gt_lt
+     : forall (n m : Z) (_ : (n > m)%Z), (m < n)%Z
+
+Coq < Toplevel input, characters 33-35:
+> Goal forall b : Z, Z.gt b Z.zero -> b <> Z.zero.
+>                                  ^^
+Error: Syntax error: '.' expected after [command] (in [vernac_aux]).
+
+Coq < Toplevel input, characters 0-6:
+> intros b H Hb.
+> ^^^^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 15-20:
+> intros b H Hb. subst b.
+>                ^^^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 24-29:
+> intros b H Hb. subst b. exact (Z.lt_irrefl Z.zero (eq_refl _)).
+>                         ^^^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Coq < 

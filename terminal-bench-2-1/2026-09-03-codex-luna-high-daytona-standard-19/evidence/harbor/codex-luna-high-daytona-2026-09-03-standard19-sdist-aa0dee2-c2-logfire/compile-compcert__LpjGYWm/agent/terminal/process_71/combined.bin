@@ -1,0 +1,44 @@
+Welcome to Coq 8.18.0
+
+Coq < [Loading ML file ring_plugin.cmxs (using legacy method) ... done]
+[Loading ML file zify_plugin.cmxs (using legacy method) ... done]
+[Loading ML file micromega_plugin.cmxs (using legacy method) ... done]
+[Loading ML file btauto_plugin.cmxs (using legacy method) ... done]
+
+Coq < 
+Coq < 
+Coq < Toplevel input, characters 52-53:
+> Lemma test: forall (a b : Z), Z.gt b Z.zero -> a = (b * (a / b) + a mod b).
+>                                                     ^
+Error:
+In environment
+a : Z
+b : Z
+The term "b" has type "Z" while it is expected to have type "nat".
+
+Coq < Toplevel input, characters 0-6:
+> Proof.
+> ^^^^^^
+Error: Command not supported (No proof-editing in progress).
+
+Toplevel input, characters 7-13:
+> Proof. intros.
+>        ^^^^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 15-20:
+> Proof. intros. apply Z.div_mod.
+>                ^^^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 32-35:
+> Proof. intros. apply Z.div_mod. lia.
+>                                 ^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 37-41:
+> Proof. intros. apply Z.div_mod. lia. Qed.
+>                                      ^^^^
+Error: No focused proof (No proof-editing in progress).
+
+Coq < 

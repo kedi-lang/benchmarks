@@ -1,0 +1,132 @@
+27:#include "caml/runtime_events.h"
+44:_Atomic uintnat caml_percent_free = Percent_free_def;
+50:/* [num_domains_to_sweep] records the number of domains to sweep in the current
+54:   Domains created in a given cycle will not have any sweep work in that cycle.
+56:   (not a distinct colour; object header is set to 0) and adds them to the free
+60:   [num_domains_to_sweep].
+62:   Terminating domains terminate after sweeping is complete for their domain.
+64:static atomic_uintnat num_domains_to_sweep;
+77:/* [num_domains_to_ephe_sweep] is set to the [participating_count] at the start
+78:   of the [Phase_sweep_ephe] and strictly decreases. */
+79:static atomic_uintnat num_domains_to_ephe_sweep;
+97:   [Phase_sweep_and_mark_main] when [num_domains_to_final_update_*] counters
+102:   [Phase_sweep_and_mark_main] to determine whether to proceed to
+104:   in [Phase_sweep_and_mark_main] so that the orphaned finalisers can be
+121:   We know of two situations in the runtime that could run in parallel
+124:   - The caml_domain_terminate logic runs after the thread has un-registered
+128:     a STW barrier, so it might race with the code running inside
+130:     the current runtime code would in fact rule out such a race, but
+139:    case Phase_sweep_and_mark_main:
+143:    case Phase_sweep_ephe:
+194:  CAMLassert(v != Debug_free_major);
+412:static intnat ephe_sweep (caml_domain_state* domain_state, intnat budget)
+415:  CAMLassert (caml_gc_phase == Phase_sweep_ephe);
+488:      ephe_info->must_sweep_ephe == 0)
+511:  if (ephe_info->must_sweep_ephe) {
+512:    ephe_info->must_sweep_ephe = 0;
+513:    (void)caml_atomic_counter_decr(&num_domains_to_ephe_sweep);
+515:  CAMLassert (ephe_info->must_sweep_ephe == 0);
+527:    if (caml_gc_phase != Phase_sweep_and_mark_main) {
+533:    CAMLassert(caml_gc_phase == Phase_sweep_and_mark_main);
+597:    CAMLassert (caml_gc_phase == Phase_sweep_and_mark_main);
+598:    /* Since we are in [Phase_sweep_and_mark_main], the current domain has not
+625:    caml_stat_free (temp);
+726:  uintnat heap_words, heap_size, heap_sweep_words, total_cycle_work;
+727:  uintnat percent_free;
+748:     Free memory at the start of the GC cycle (garbage + free list) (assumed):
+749:                 FM = heap_words * caml_percent_free
+750:                      / (100 + caml_percent_free)
+753:     FM is divided in 2/3 for garbage and 1/3 for free list.
+760:                = dom_st->allocated_words * 3 * (100 + caml_percent_free)
+761:                  / (2 * heap_words * caml_percent_free)
+767:              MW = heap_words * 100 / (100 + caml_percent_free)
+768:     Amount of sweeping work for the GC cycle:
+769:              SW = heap_sweep_words
+772:              = heap_words * 100 / (100 + caml_percent_free) + heap_sweep_words
+783:  heap_sweep_words = heap_words;
+784:  percent_free = atomic_load(&caml_percent_free);
+787:    heap_sweep_words
+788:    + (uintnat) ((double) heap_words * 100.0 / (100.0 + percent_free));
+793:      * 3.0 * (100 + percent_free)
+794:      / heap_words / percent_free / 2.0;
+806:      * (100 + percent_free)
+807:        / (double)dom_st->dependent_size / (double)percent_free;
+966:    (CAMLassert (v != Debug_free_major), \
+1011:static void mark_stack_prune(struct mark_stack* stk)
+1104:  mark_stack_prune(stk);
+1186:  mark_entry* shrunk_stack;
+1191:  shrunk_stack = (mark_entry*) caml_stat_resize_noexc ((char*) stk->stack,
+1193:  if (shrunk_stack != NULL) {
+1194:    stk->stack = shrunk_stack;
+1367:        /* We may have just discovered more work when we were about to run out.
+1379:/* mark until the budget runs out or marking is done */
+1392:           mark_slice_darken could lead to the mark stack being pruned
+1535:  caml_atomic_counter_init(&num_domains_to_sweep, num_domains_in_stw);
+1538:  caml_gc_phase = Phase_sweep_and_mark_main;
+1544:  caml_atomic_counter_init(&num_domains_to_ephe_sweep, 0);
+1546:     [Phase_sweep_ephe] */
+1574:   * failures because using caml_try_run_on_all_domains() on it would
+1575:   * mysteriously put all domains back into mark/sweep.
+1587:  CAMLassert(caml_atomic_counter_value(&num_domains_to_sweep) == 0);
+1588:  CAMLassert(caml_atomic_counter_value(&num_domains_to_ephe_sweep) == 0);
+1599:     running OCaml code. */
+1621:  /* Collect domain-local stats to emit to runtime events */
+1638:  domain->sweeping_done = 0;
+1678:  domain->ephe_info->must_sweep_ephe = 0;
+1691:     they should not run while global roots are being marked.*/
+1707:static int is_complete_phase_sweep_and_mark_main (void)
+1711:    caml_gc_phase == Phase_sweep_and_mark_main &&
+1712:    caml_atomic_counter_value (&num_domains_to_sweep) == 0 &&
+1744:static int is_complete_phase_sweep_ephe (void)
+1748:    caml_gc_phase == Phase_sweep_ephe &&
+1749:    caml_atomic_counter_value (&num_domains_to_ephe_sweep) == 0 &&
+1766:    if (is_complete_phase_sweep_and_mark_main()) {
+1769:      caml_gc_phase = Phase_sweep_ephe;
+1770:      caml_atomic_counter_init(&num_domains_to_ephe_sweep, participant_count);
+1772:        participating[i]->ephe_info->must_sweep_ephe = 1;
+1785:  return !domain_state->sweeping_done || !domain_state->marking_done;
+1809:  intnat sweep_work = 0, mark_work = 0;
+1815:  /* Opportunistic slices may run concurrently with gc phase updates. */
+1839:  if (!domain_state->sweeping_done) {
+1842:    while (!domain_state->sweeping_done &&
+1844:      intnat left = caml_sweep(domain_state->shared_heap, budget);
+1847:      sweep_work += work_done;
+1850:        domain_state->sweeping_done = 1;
+1851:        (void)caml_atomic_counter_decr(&num_domains_to_sweep);
+1886:    if (caml_gc_phase == Phase_sweep_ephe &&
+1900:    if (caml_gc_phase != Phase_sweep_ephe) {
+1938:    if (caml_gc_phase == Phase_sweep_ephe) {
+1941:      if (domain_state->ephe_info->must_sweep_ephe) {
+1946:        domain_state->ephe_info->must_sweep_ephe = 0;
+1957:        /* If the todo list is empty, then the ephemeron has no sweeping work
+1960:          (void)caml_atomic_counter_decr(&num_domains_to_ephe_sweep);
+1965:        CAMLassert (domain_state->ephe_info->must_sweep_ephe == 0);
+1971:          intnat left = ephe_sweep (domain_state, budget);
+1978:          (void)caml_atomic_counter_decr(&num_domains_to_ephe_sweep);
+1984:    if (is_complete_phase_sweep_and_mark_main() ||
+1986:      CAMLassert (caml_gc_phase != Phase_sweep_ephe);
+1994:        caml_try_run_on_all_domains (&stw_try_complete_gc_phase, 0, 0);
+2003:  caml_gc_log("Major slice [%c%c%c]: %" CAML_PRIdNAT " sweep, "
+2008:              sweep_work, mark_work,
+2011:  if (mode != Slice_opportunistic && is_complete_phase_sweep_ephe()) {
+2014:       whether [caml_try_run_on_all_domains] succeeds. */
+2026:        caml_try_run_on_all_domains
+2112:    caml_try_run_on_all_domains(&stw_finish_major_cycle, (void*)&params, 0);
+2153:void caml_finish_sweeping (void)
+2155:  if (Caml_state->sweeping_done) return;
+2157:  while (!Caml_state->sweeping_done) {
+2158:    if (caml_sweep(Caml_state->shared_heap, 10) > 0) {
+2159:      /* just finished sweeping */
+2160:      CAMLassert(Caml_state->sweeping_done == 0);
+2161:      Caml_state->sweeping_done = 1;
+2162:      (void)caml_atomic_counter_decr(&num_domains_to_sweep);
+2178:    caml_stat_free(d->mark_stack);
+2188:  /* Fresh domains do not need to performing marking or sweeping. */
+2189:  d->sweeping_done = 1;
+2194:    caml_stat_free(d->mark_stack->stack);
+2195:    caml_stat_free(d->mark_stack);
+2200:    caml_stat_free(d->final_info);
+2201:    caml_stat_free(d->mark_stack->stack);
+2202:    caml_stat_free(d->mark_stack);
+2228:  caml_stat_free(d->mark_stack->stack);
+2229:  caml_stat_free(d->mark_stack);

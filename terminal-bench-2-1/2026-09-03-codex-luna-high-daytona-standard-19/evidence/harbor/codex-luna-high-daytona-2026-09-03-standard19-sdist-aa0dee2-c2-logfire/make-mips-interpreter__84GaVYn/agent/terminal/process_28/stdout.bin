@@ -1,0 +1,199 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+0040e900 <I_GetMemoryValue+0x224>:
+  40e900:	8fb40030 	lw	s4,48(sp)
+  40e904:	8fb50034 	lw	s5,52(sp)
+  40e908:	8fb60038 	lw	s6,56(sp)
+  40e90c:	8fb7003c 	lw	s7,60(sp)
+  40e910:	8fbe0040 	lw	s8,64(sp)
+  40e914:	8fbf0044 	lw	ra,68(sp)
+  40e918:	03e00008 	jr	ra
+  40e91c:	27bd0048 	addiu	sp,sp,72
+
+0040e920 <I_GetTicks>:
+  40e920:	27bdffe8 	addiu	sp,sp,-24
+  40e924:	afbf0014 	sw	ra,20(sp)
+  40e928:	0c10e612 	jal	439848 <DG_GetTicksMs>
+  40e92c:	00000000 	nop
+  40e930:	8fbf0014 	lw	ra,20(sp)
+  40e934:	03e00008 	jr	ra
+  40e938:	27bd0018 	addiu	sp,sp,24
+
+0040e93c <I_GetTime>:
+  40e93c:	27bdffe8 	addiu	sp,sp,-24
+  40e940:	afbf0014 	sw	ra,20(sp)
+  40e944:	0c10e612 	jal	439848 <DG_GetTicksMs>
+  40e948:	00000000 	nop
+  40e94c:	3c030048 	lui	v1,0x48
+  40e950:	8c64c930 	lw	a0,-14032(v1)
+  40e954:	14800003 	bnez	a0,40e964 <I_GetTime+0x28>
+  40e958:	00000000 	nop
+  40e95c:	00402025 	move	a0,v0
+  40e960:	ac62c930 	sw	v0,-14032(v1)
+  40e964:	00440823 	subu	at,v0,a0
+  40e968:	8fbf0014 	lw	ra,20(sp)
+  40e96c:	00011040 	sll	v0,at,0x1
+  40e970:	00411021 	addu	v0,v0,at
+  40e974:	00010940 	sll	at,at,0x5
+  40e978:	00220821 	addu	at,at,v0
+  40e97c:	3c021062 	lui	v0,0x1062
+  40e980:	34424dd3 	ori	v0,v0,0x4dd3
+  40e984:	00220019 	multu	at,v0
+  40e988:	00000810 	mfhi	at
+  40e98c:	00011182 	srl	v0,at,0x6
+  40e990:	03e00008 	jr	ra
+  40e994:	27bd0018 	addiu	sp,sp,24
+
+0040e998 <I_GetTimeMS>:
+  40e998:	27bdffe8 	addiu	sp,sp,-24
+  40e99c:	afbf0014 	sw	ra,20(sp)
+  40e9a0:	0c10e612 	jal	439848 <DG_GetTicksMs>
+  40e9a4:	00000000 	nop
+  40e9a8:	3c030048 	lui	v1,0x48
+  40e9ac:	8c64c930 	lw	a0,-14032(v1)
+  40e9b0:	14800003 	bnez	a0,40e9c0 <I_GetTimeMS+0x28>
+  40e9b4:	00000000 	nop
+  40e9b8:	00402025 	move	a0,v0
+  40e9bc:	ac62c930 	sw	v0,-14032(v1)
+  40e9c0:	8fbf0014 	lw	ra,20(sp)
+  40e9c4:	00441023 	subu	v0,v0,a0
+  40e9c8:	03e00008 	jr	ra
+  40e9cc:	27bd0018 	addiu	sp,sp,24
+
+0040e9d0 <I_Sleep>:
+  40e9d0:	27bdffe8 	addiu	sp,sp,-24
+  40e9d4:	afbf0014 	sw	ra,20(sp)
+  40e9d8:	0c10e5ef 	jal	4397bc <DG_SleepMs>
+  40e9dc:	00000000 	nop
+  40e9e0:	8fbf0014 	lw	ra,20(sp)
+  40e9e4:	03e00008 	jr	ra
+  40e9e8:	27bd0018 	addiu	sp,sp,24
+
+0040e9ec <I_WaitVBL>:
+  40e9ec:	03e00008 	jr	ra
+  40e9f0:	00000000 	nop
+
+0040e9f4 <I_InitTimer>:
+  40e9f4:	03e00008 	jr	ra
+  40e9f8:	00000000 	nop
+  40e9fc:	00000000 	nop
+
+0040ea00 <mem_fopen_read>:
+  40ea00:	27bdffe0 	addiu	sp,sp,-32
+  40ea04:	afbf001c 	sw	ra,28(sp)
+  40ea08:	afb10018 	sw	s1,24(sp)
+  40ea0c:	afb00014 	sw	s0,20(sp)
+  40ea10:	00a08025 	move	s0,a1
+  40ea14:	00808825 	move	s1,a0
+  40ea18:	24040014 	li	a0,20
+  40ea1c:	24050001 	li	a1,1
+  40ea20:	0c10e15b 	jal	43856c <Z_Malloc>
+  40ea24:	24060000 	li	a2,0
+  40ea28:	ac500004 	sw	s0,4(v0)
+  40ea2c:	ac510000 	sw	s1,0(v0)
+  40ea30:	8fb00014 	lw	s0,20(sp)
+  40ea34:	8fb10018 	lw	s1,24(sp)
+  40ea38:	8fbf001c 	lw	ra,28(sp)
+  40ea3c:	ac400010 	sw	zero,16(v0)
+  40ea40:	ac40000c 	sw	zero,12(v0)
+  40ea44:	03e00008 	jr	ra
+  40ea48:	27bd0020 	addiu	sp,sp,32
+
+0040ea4c <mem_fread>:
+  40ea4c:	27bdffe0 	addiu	sp,sp,-32
+  40ea50:	afbf001c 	sw	ra,28(sp)
+  40ea54:	afb20018 	sw	s2,24(sp)
+  40ea58:	afb10014 	sw	s1,20(sp)
+  40ea5c:	afb00010 	sw	s0,16(sp)
+  40ea60:	8ce10010 	lw	at,16(a3)
+  40ea64:	10200006 	beqz	at,40ea80 <mem_fread+0x34>
+  40ea68:	00000000 	nop
+  40ea6c:	3c010044 	lui	at,0x44
+  40ea70:	0c10e64e 	jal	439938 <printf>
+  40ea74:	242427d9 	addiu	a0,at,10201
+  40ea78:	08103ab3 	j	40eacc <mem_fread+0x80>
+  40ea7c:	2410ffff 	li	s0,-1
+  40ea80:	70c59002 	mul	s2,a2,a1
+  40ea84:	8ce2000c 	lw	v0,12(a3)
+  40ea88:	8ce10004 	lw	at,4(a3)
+  40ea8c:	00e08825 	move	s1,a3
+  40ea90:	00221823 	subu	v1,at,v0
+  40ea94:	0072082b 	sltu	at,v1,s2
+  40ea98:	10200005 	beqz	at,40eab0 <mem_fread+0x64>
+  40ea9c:	00c08025 	move	s0,a2
+  40eaa0:	0065001b 	divu	zero,v1,a1
+  40eaa4:	00a001f4 	teq	a1,zero,0x7
+  40eaa8:	00008012 	mflo	s0
+  40eaac:	72059002 	mul	s2,s0,a1
+  40eab0:	8e210000 	lw	at,0(s1)
+  40eab4:	02403025 	move	a2,s2
+  40eab8:	0c10e7a2 	jal	439e88 <memcpy>
+  40eabc:	00222821 	addu	a1,at,v0
+  40eac0:	8e21000c 	lw	at,12(s1)
+  40eac4:	00320821 	addu	at,at,s2
+  40eac8:	ae21000c 	sw	at,12(s1)
+  40eacc:	02001025 	move	v0,s0
+  40ead0:	8fb00010 	lw	s0,16(sp)
+  40ead4:	8fb10014 	lw	s1,20(sp)
+  40ead8:	8fb20018 	lw	s2,24(sp)
+  40eadc:	8fbf001c 	lw	ra,28(sp)
+  40eae0:	03e00008 	jr	ra
+  40eae4:	27bd0020 	addiu	sp,sp,32
+
+0040eae8 <mem_fopen_write>:
+  40eae8:	27bdffe0 	addiu	sp,sp,-32
+  40eaec:	afbf001c 	sw	ra,28(sp)
+  40eaf0:	afb10018 	sw	s1,24(sp)
+  40eaf4:	afb00014 	sw	s0,20(sp)
+  40eaf8:	24040014 	li	a0,20
+  40eafc:	24050001 	li	a1,1
+  40eb00:	24060000 	li	a2,0
+  40eb04:	0c10e15b 	jal	43856c <Z_Malloc>
+  40eb08:	24110001 	li	s1,1
+  40eb0c:	24010400 	li	at,1024
+  40eb10:	24040400 	li	a0,1024
+  40eb14:	24050001 	li	a1,1
+  40eb18:	24060000 	li	a2,0
+  40eb1c:	00408025 	move	s0,v0
+  40eb20:	0c10e15b 	jal	43856c <Z_Malloc>
+  40eb24:	ac410008 	sw	at,8(v0)
+  40eb28:	ae110010 	sw	s1,16(s0)
+  40eb2c:	ae020000 	sw	v0,0(s0)
+  40eb30:	ae00000c 	sw	zero,12(s0)
+  40eb34:	ae000004 	sw	zero,4(s0)
+  40eb38:	02001025 	move	v0,s0
+  40eb3c:	8fb00014 	lw	s0,20(sp)
+  40eb40:	8fb10018 	lw	s1,24(sp)
+  40eb44:	8fbf001c 	lw	ra,28(sp)
+  40eb48:	03e00008 	jr	ra
+  40eb4c:	27bd0020 	addiu	sp,sp,32
+
+0040eb50 <mem_fwrite>:
+  40eb50:	27bdffd8 	addiu	sp,sp,-40
+  40eb54:	afbf0024 	sw	ra,36(sp)
+  40eb58:	afb40020 	sw	s4,32(sp)
+  40eb5c:	afb3001c 	sw	s3,28(sp)
+  40eb60:	afb20018 	sw	s2,24(sp)
+  40eb64:	afb10014 	sw	s1,20(sp)
+  40eb68:	afb00010 	sw	s0,16(sp)
+  40eb6c:	8ce10010 	lw	at,16(a3)
+  40eb70:	24030001 	li	v1,1
+  40eb74:	14230031 	bne	at,v1,40ec3c <mem_fwrite+0xec>
+  40eb78:	2402ffff 	li	v0,-1
+  40eb7c:	70c59802 	mul	s3,a2,a1
+  40eb80:	8ce2000c 	lw	v0,12(a3)
+  40eb84:	8ce30008 	lw	v1,8(a3)
+  40eb88:	00e08825 	move	s1,a3
+  40eb8c:	00c08025 	move	s0,a2
+  40eb90:	00620823 	subu	at,v1,v0
+  40eb94:	0033082b 	sltu	at,at,s3
+  40eb98:	10200018 	beqz	at,40ebfc <mem_fwrite+0xac>
+  40eb9c:	00809025 	move	s2,a0
+  40eba0:	00032040 	sll	a0,v1,0x1
+  40eba4:	24050001 	li	a1,1
+  40eba8:	0c10e15b 	jal	43856c <Z_Malloc>
+  40ebac:	24060000 	li	a2,0

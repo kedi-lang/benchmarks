@@ -1,0 +1,46 @@
+00048774 <doomgeneric_Create>:
+   48774:	3c020021 	lui	v0,0x21
+   48778:	27bdffe8 	addiu	sp,sp,-24
+   4877c:	ac44751c 	sw	a0,29980(v0)
+   48780:	3c020021 	lui	v0,0x21
+   48784:	ac457518 	sw	a1,29976(v0)
+   48788:	afbf0014 	sw	ra,20(sp)
+   4878c:	0c007361 	jal	1cd84 <M_FindResponseFile>
+   48790:	00000000 	nop
+   48794:	3c04000f 	lui	a0,0xf
+   48798:	0c004004 	jal	10010 <.pic.malloc>
+   4879c:	3484a000 	ori	a0,a0,0xa000
+   487a0:	3c030025 	lui	v1,0x25
+   487a4:	0c0121ee 	jal	487b8 <DG_Init>
+   487a8:	ac62ae78 	sw	v0,-20872(v1)
+   487ac:	8fbf0014 	lw	ra,20(sp)
+   487b0:	08005219 	j	14864 <D_DoomMain>
+   487b4:	27bd0018 	addiu	sp,sp,24
+
+000487b8 <DG_Init>:
+   487b8:	3c030025 	lui	v1,0x25
+   487bc:	3c04000e 	lui	a0,0xe
+   487c0:	2462ae88 	addiu	v0,v1,-20856
+   487c4:	2484ccf8 	addiu	a0,a0,-13064
+   487c8:	ac60ae88 	sw	zero,-20856(v1)
+   487cc:	ac400004 	sw	zero,4(v0)
+   487d0:	ac400008 	sw	zero,8(v0)
+   487d4:	ac40000c 	sw	zero,12(v0)
+   487d8:	ac400010 	sw	zero,16(v0)
+   487dc:	ac400014 	sw	zero,20(v0)
+   487e0:	ac400018 	sw	zero,24(v0)
+   487e4:	080173ea 	j	5cfa8 <.pic.puts>
+   487e8:	ac40001c 	sw	zero,28(v0)
+
+000487ec <DG_DrawFrame>:
+   487ec:	3c060025 	lui	a2,0x25
+   487f0:	8cc5ae80 	lw	a1,-20864(a2)
+   487f4:	3c02cccc 	lui	v0,0xcccc
+   487f8:	3442cccd 	ori	v0,v0,0xcccd
+   487fc:	70a22002 	mul	a0,a1,v0
+   48800:	3c031999 	lui	v1,0x1999
+   48804:	34639998 	ori	v1,v1,0x9998
+   48808:	00831021 	addu	v0,a0,v1
+   4880c:	00022042 	srl	a0,v0,0x1
+   48810:	000217c0 	sll	v0,v0,0x1f
+   48814:	24630001 	addiu	v1,v1,1

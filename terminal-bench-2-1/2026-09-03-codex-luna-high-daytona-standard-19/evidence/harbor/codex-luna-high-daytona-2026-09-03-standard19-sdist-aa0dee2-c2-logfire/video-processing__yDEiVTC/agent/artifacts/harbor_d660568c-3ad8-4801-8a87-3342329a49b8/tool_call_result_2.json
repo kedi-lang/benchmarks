@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "039c83547e642ffd739abc4cb6f0ba9439f6e60640c1e61dcba57c0a4e87ae4a",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 55527,
+    "created_at": "2026-09-02T23:07:28.802420Z",
+    "expires_at": "2026-09-03T00:07:28.802420Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"combined_path\":\"/logs/agent/terminal/process_4/combined.bin\",\"command\":\"python3 -c 'import cv2,numpy as np\\nc=cv2.VideoCapture('\\\"'\\\"'/app/example_video.mp4'\\\"'\\\"'); fs=[]\\nwhile 1:\\n ok,f=c.read()\\n if not ok: break\\n fs.append(f)\\nc.release(); bg=fs[0]\\nfor i in range(0,len(fs),3):\\n d=cv2.cvtColor(cv2.absdiff(fs[i],bg),cv2.COLOR_BGR2GRAY); m=(d>35).astype(np.uint8)\\n # pool max in 20x20 blocks and ascii\\n small=cv2.resize(m,(48,27),interpolation=cv2.INTER_AREA)\\n print('\\\"'\\\"'\\\\n%03d'\\\"'\\\"'%i)\\n for row in small: print('\\\"'\\\"''\\\"'\\\"'.join('\\\"'\\\"'#'\\\"'\\\"' if v>.18 else '\\\"'\\\"'+'\\\"'\\\"' if v>.04 else '\\\"'\\\"' '\\\"'\\\"' for v in row))\\n'\",\"cwd\":\"/app\",\"duration_seconds\":0.7302264515310526,\"exit_code\":0,\"handed_off\":false,\"lifetime\":\"session\",\"output_limited\":false,\"pid\":2955,\"process_id\":\"process_4\",\"retained\":false,\"shell\":false,\"started_at\":\"2026-09-02T23:07:28.070495+00:00\",\"status\":\"finished\",\"stderr\":\"\",\"stderr_bytes\":0,\"stderr_invalid_utf8\":false,\"stderr_path\":\"/logs/agent/terminal/process_4/stderr.bin\",\"stderr_truncated\":false,\"stdout\":\"\\n000\\n                                                \\n                                                \\n                                  …",
+    "ref_id": "tool_call_result_2",
+    "sensitive": false,
+    "size_bytes": 55527,
+    "summary": "builtins.dict value with 55527 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. Release when done."
+  },
+  "session_id": "harbor_d660568c-3ad8-4801-8a87-3342329a49b8",
+  "source": "tool:run_command",
+  "status": "active"
+}

@@ -1,0 +1,170 @@
+../octree.c: In function ‘ot_write_block’:
+../octree.c:913:47: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 7 has type ‘long int’ [-Wformat=]
+  913 |     fprintf((FILE *)fd, "C%ld\t%g\t%g\t%g\t%02x%02x%02x\t%.4f\t%.4f\t%.4f\t%g\t%g\t%02x%02x%02x\n",
+      |                                            ~~~^
+      |                                               |
+      |                                               unsigned int
+      |                                            %02lx
+......
+  917 |       (long)((bl->S_Normal[X]+1.)*.5*254.+.499999),
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |       |
+      |       long int
+../octree.c:913:51: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 8 has type ‘long int’ [-Wformat=]
+  913 |     fprintf((FILE *)fd, "C%ld\t%g\t%g\t%g\t%02x%02x%02x\t%.4f\t%.4f\t%.4f\t%g\t%g\t%02x%02x%02x\n",
+      |                                                ~~~^
+      |                                                   |
+      |                                                   unsigned int
+      |                                                %02lx
+......
+  918 |       (long)((bl->S_Normal[Y]+1.)*.5*254.+.499999),
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+      |       |
+      |       long int
+../octree.c:913:55: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 9 has type ‘long int’ [-Wformat=]
+  913 |     fprintf((FILE *)fd, "C%ld\t%g\t%g\t%g\t%02x%02x%02x\t%.4f\t%.4f\t%.4f\t%g\t%g\t%02x%02x%02x\n",
+      |                                                    ~~~^
+      |                                                       |
+      |                                                       unsigned int
+      |                                                    %02lx
+......
+  919 |       (long)((bl->S_Normal[Z]+1.)*.5*254.+.499999),
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     
+      |       |
+      |       long int
+../octree.c:913:87: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 15 has type ‘long int’ [-Wformat=]
+  913 |     fprintf((FILE *)fd, "C%ld\t%g\t%g\t%g\t%02x%02x%02x\t%.4f\t%.4f\t%.4f\t%g\t%g\t%02x%02x%02x\n",
+      |                                                                                    ~~~^
+      |                                                                                       |
+      |                                                                                       unsigned int
+      |                                                                                    %02lx
+......
+  925 |       (long)((bl->To_Nearest_Surface[X]+1.)*.5*254.+.499999),
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                           
+      |       |
+      |       long int
+../octree.c:913:91: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 16 has type ‘long int’ [-Wformat=]
+  913 |     fprintf((FILE *)fd, "C%ld\t%g\t%g\t%g\t%02x%02x%02x\t%.4f\t%.4f\t%.4f\t%g\t%g\t%02x%02x%02x\n",
+      |                                                                                        ~~~^
+      |                                                                                           |
+      |                                                                                           unsigned int
+      |                                                                                        %02lx
+......
+  926 |       (long)((bl->To_Nearest_Surface[Y]+1.)*.5*254.+.499999),
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                               
+      |       |
+      |       long int
+../octree.c:913:95: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 17 has type ‘long int’ [-Wformat=]
+  913 |     fprintf((FILE *)fd, "C%ld\t%g\t%g\t%g\t%02x%02x%02x\t%.4f\t%.4f\t%.4f\t%g\t%g\t%02x%02x%02x\n",
+      |                                                                                            ~~~^
+      |                                                                                               |
+      |                                                                                               unsigned int
+      |                                                                                            %02lx
+......
+  927 |       (long)((bl->To_Nearest_Surface[Z]+1.)*.5*254.+.499999)
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                   
+      |       |
+      |       long int
+../octree.c: In function ‘ot_read_file’:
+../octree.c:1120:35: warning: format ‘%d’ expects argument of type ‘int *’, but argument 3 has type ‘long int *’ [-Wformat=]
+ 1120 |           count = sscanf(line, "C%d %lf %lf %lf %s %f %f %f %f %f %s\n",
+      |                                  ~^
+      |                                   |
+      |                                   int *
+      |                                  %ld
+ 1121 |                      &tempdepth,      /* since you can't scan a short */
+      |                      ~~~~~~~~~~    
+      |                      |
+      |                      long int *
+../pgm.c: In function ‘Read_PGM_Image’:
+../pgm.c:97:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   97 |     fgets(junk,512,infile);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+../pgm.c:110:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  110 |     fgets(junk,512,infile);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+../png_pov.c: In function ‘Open_Png_File’:
+../png_pov.c:281:29: warning: ‘%s’ directive writing up to 149 bytes into a region of size between 1 and 150 [-Wformat-overflow=]
+  281 |       sprintf(tmp_fname, "%s%s.tpn", opts.Output_Path, opts.Scene_Name);
+      |                             ^~                         ~~~~~~~~~~~~~~~
+In file included from /usr/include/stdio.h:980,
+                 from ../frame.h:33,
+                 from ../png_pov.c:48:
+In function ‘sprintf’,
+    inlined from ‘Open_Png_File’ at ../png_pov.c:281:7:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:10: note: ‘__builtin___sprintf_chk’ output between 5 and 303 bytes into a destination of size 150
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+../povray.c: In function ‘setup_output_file_name’:
+../povray.c:1187:5: warning: ignoring return value of ‘getcwd’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+ 1187 |     getcwd (opts.Output_Path, sizeof (opts.Output_Path) - 1) ;
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../ppm.c: In function ‘Open_PPM_File’:
+../ppm.c:175:9: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  175 |         fgets(junk, 512, handle->file);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../ppm.c: In function ‘Read_PPM_Image’:
+../ppm.c:492:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  492 |     fgets(junk, 512, infile);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+../ppm.c:505:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  505 |     fgets(junk, 512, infile);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/string.h:548,
+                 from ../frame.h:34,
+                 from ../povray.c:27:
+In function ‘strncat’,
+    inlined from ‘setup_output_file_name’ at ../povray.c:1194:3,
+    inlined from ‘main’ at ../povray.c:326:10:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:138:10: warning: ‘__builtin___strncat_chk’ specified bound 150 equals destination size [-Wstringop-overflow=]
+  138 |   return __builtin___strncat_chk (__dest, __src, __len,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  139 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+../userio.c: In function ‘PrintToStream’:
+../userio.c:46:5: warning: format not a string literal and no format arguments [-Wformat-security]
+   46 |     fprintf(Stream_Info[stream].handle, s);
+      |     ^~~~~~~
+../userio.c:52:5: warning: format not a string literal and no format arguments [-Wformat-security]
+   52 |     fprintf(Stream_Info[ALL_STREAM].handle, s);
+      |     ^~~~~~~
+../userio.c: In function ‘POV_Std_Banner’:
+../userio.c:405:3: warning: format not a string literal and no format arguments [-Wformat-security]
+  405 |   fprintf(stderr, s);
+      |   ^~~~~~~
+../userio.c: In function ‘POV_Std_Warning’:
+../userio.c:413:3: warning: format not a string literal and no format arguments [-Wformat-security]
+  413 |   fprintf(stderr, s);
+      |   ^~~~~~~
+../userio.c: In function ‘POV_Std_Status_Info’:
+../userio.c:421:3: warning: format not a string literal and no format arguments [-Wformat-security]
+  421 |   fprintf(stderr, s);
+      |   ^~~~~~~
+../userio.c: In function ‘POV_Std_Render_Info’:
+../userio.c:429:3: warning: format not a string literal and no format arguments [-Wformat-security]
+  429 |   fprintf(stderr, s);
+      |   ^~~~~~~
+../userio.c: In function ‘POV_Std_Debug_Info’:
+../userio.c:437:3: warning: format not a string literal and no format arguments [-Wformat-security]
+  437 |   fprintf(stderr, s);
+      |   ^~~~~~~
+../userio.c: In function ‘POV_Std_Fatal’:
+../userio.c:445:3: warning: format not a string literal and no format arguments [-Wformat-security]
+  445 |   fprintf(stderr, s);
+      |   ^~~~~~~
+../userio.c: In function ‘POV_Std_Statistics’:
+../userio.c:453:3: warning: format not a string literal and no format arguments [-Wformat-security]
+  453 |   fprintf(stderr, s);
+      |   ^~~~~~~
+../userio.c: In function ‘POV_Std_Display_Finished’:
+../userio.c:498:5: warning: ignoring return value of ‘fgets’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  498 |     fgets(s, 2, stdin);
+      |     ^~~~~~~~~~~~~~~~~~
+/usr/bin/ld: cannot find -lpng: No such file or directory
+collect2: error: ld returned 1 exit status
+make[1]: *** [makefile:1427: povray] Error 1
+make: [makefile:1449: newunix] Error 2 (ignored)

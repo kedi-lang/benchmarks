@@ -1,0 +1,37 @@
+
+doomgeneric/doomgeneric/doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+00089d40 <getenv+0x1b0>:
+   89d40:	8fb10020 	lw	s1,32(sp)
+   89d44:	8fb0001c 	lw	s0,28(sp)
+   89d48:	03e00008 	jr	ra
+   89d4c:	27bd0040 	addiu	sp,sp,64
+
+00089d50 <getrandom>:
+   89d50:	3c1c0019 	lui	gp,0x19
+   89d54:	279cddd0 	addiu	gp,gp,-8752
+   89d58:	0399e021 	addu	gp,gp,t9
+   89d5c:	27bdffd0 	addiu	sp,sp,-48
+   89d60:	afbc0010 	sw	gp,16(sp)
+   89d64:	afbf002c 	sw	ra,44(sp)
+   89d68:	afb20028 	sw	s2,40(sp)
+   89d6c:	afb10024 	sw	s1,36(sp)
+   89d70:	afb00020 	sw	s0,32(sp)
+   89d74:	7c03e83b 	rdhwr	v1,$29
+   89d78:	8c628b20 	lw	v0,-29920(v1)
+   89d7c:	14400010 	bnez	v0,89dc0 <getrandom+0x70>
+   89d80:	8f9983dc 	lw	t9,-31780(gp)
+   89d84:	24021101 	li	v0,4353
+   89d88:	0000000c 	syscall
+   89d8c:	14e0000a 	bnez	a3,89db8 <getrandom+0x68>
+   89d90:	00000000 	nop
+   89d94:	2c43f001 	sltiu	v1,v0,-4095
+   89d98:	10600026 	beqz	v1,89e34 <getrandom+0xe4>
+   89d9c:	00022023 	negu	a0,v0
+   89da0:	8fbf002c 	lw	ra,44(sp)
+   89da4:	8fb20028 	lw	s2,40(sp)
+   89da8:	8fb10024 	lw	s1,36(sp)
+   89dac:	8fb00020 	lw	s0,32(sp)

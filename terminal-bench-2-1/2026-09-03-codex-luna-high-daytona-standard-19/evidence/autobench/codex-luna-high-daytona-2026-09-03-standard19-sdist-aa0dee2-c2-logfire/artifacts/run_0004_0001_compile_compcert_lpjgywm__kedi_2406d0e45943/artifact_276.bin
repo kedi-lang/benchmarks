@@ -1,0 +1,26 @@
+
+Lemma zeq_true:
+  forall (A: Type) (x: Z) (a b: A), (if zeq x x then a else b) = a.
+Proof.
+  intros. case (zeq x x); intros.
+  auto.
+  elim n; auto.
+Qed.
+
+Lemma zeq_false:
+  forall (A: Type) (x y: Z) (a b: A), x <> y -> (if zeq x y then a else b) = b.
+Proof.
+  intros. case (zeq x y); intros.
+  elim H; auto.
+  auto.
+Qed.
+
+Open Scope Z_scope.
+
+Definition zlt: forall (x y: Z), {x < y} + {x >= y} := Z_lt_dec.
+
+Lemma zlt_true:
+  forall (A: Type) (x y: Z) (a b: A),
+  x < y -> (if zlt x y then a else b) = a.
+Proof.
+  intros. case (zlt x y); intros.

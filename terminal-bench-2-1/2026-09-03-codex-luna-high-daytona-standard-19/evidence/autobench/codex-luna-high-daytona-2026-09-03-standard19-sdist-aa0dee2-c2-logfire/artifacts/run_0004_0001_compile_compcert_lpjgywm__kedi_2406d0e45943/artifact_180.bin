@@ -1,0 +1,31 @@
+  unfold Z.max. rewrite <- (Zcompare_antisym y x).
+  caseEq (y ?= x); intro; simpl.
+  symmetry. apply Z.compare_eq. auto.
+  contradiction. reflexivity.
+Qed.
+
+Lemma Zmax_bound_l:
+  forall x y z, x <= y -> x <= Z.max y z.
+Proof.
+  intros. generalize (Z.le_max_l y z). lia.
+Qed.
+Lemma Zmax_bound_r:
+  forall x y z, x <= z -> x <= Z.max y z.
+Proof.
+  intros. generalize (Z.le_max_r y z). lia.
+Qed.
+
+(** Properties of Euclidean division and modulus. *)
+
+Lemma Z_div_mod_eq: forall a b,
+  b > 0 -> a = (b * (a / b) + a mod b).
+Proof.
+  intros. apply Z.div_mod. lia.
+Qed.
+
+Lemma Zmod_unique:
+  forall x y a b,
+  x = a * y + b -> 0 <= b < y -> x mod y = b.
+Proof.
+  intros. subst x. rewrite Z.add_comm.
+  rewrite Z_mod_plus. apply Z.mod_small. auto. lia.

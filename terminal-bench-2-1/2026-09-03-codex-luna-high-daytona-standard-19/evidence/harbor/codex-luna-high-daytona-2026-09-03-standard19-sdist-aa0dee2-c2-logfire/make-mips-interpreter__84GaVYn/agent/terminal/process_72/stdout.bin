@@ -1,0 +1,39 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+0043a9e0 <fread_unlocked+0x10>:
+  43a9e0:	8fbf0014 	lw	ra,20(sp)
+  43a9e4:	03e00008 	jr	ra
+  43a9e8:	27bd0018 	addiu	sp,sp,24
+
+0043a9ec <fwrite_unlocked>:
+  43a9ec:	27bdffe8 	addiu	sp,sp,-24
+  43a9f0:	afbf0014 	sw	ra,20(sp)
+  43a9f4:	0c10ea54 	jal	43a950 <fwrite>
+  43a9f8:	00000000 	nop
+  43a9fc:	8fbf0014 	lw	ra,20(sp)
+  43aa00:	03e00008 	jr	ra
+  43aa04:	27bd0018 	addiu	sp,sp,24
+
+0043aa08 <fseek>:
+  43aa08:	10800015 	beqz	a0,43aa60 <fseek+0x58>
+  43aa0c:	00000000 	nop
+  43aa10:	00c05825 	move	t3,a2
+  43aa14:	00a06025 	move	t4,a1
+  43aa18:	00805025 	move	t2,a0
+  43aa1c:	8c8d0000 	lw	t5,0(a0)
+  43aa20:	240e0008 	li	t6,8
+  43aa24:	24030000 	li	v1,0
+  43aa28:	01c01025 	move	v0,t6
+  43aa2c:	01a02025 	move	a0,t5
+  43aa30:	01802825 	move	a1,t4
+  43aa34:	01603025 	move	a2,t3
+  43aa38:	00603825 	move	a3,v1
+  43aa3c:	00604025 	move	t0,v1
+  43aa40:	00604825 	move	t1,v1
+  43aa44:	0000000c 	syscall
+  43aa48:	00405825 	move	t3,v0
+  43aa4c:	05600009 	bltz	t3,43aa74 <fseek+0x6c>

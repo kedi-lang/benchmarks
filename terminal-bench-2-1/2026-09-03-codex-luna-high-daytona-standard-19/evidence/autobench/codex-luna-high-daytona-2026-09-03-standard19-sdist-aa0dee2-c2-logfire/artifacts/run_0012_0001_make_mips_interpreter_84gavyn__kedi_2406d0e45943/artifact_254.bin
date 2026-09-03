@@ -1,0 +1,49 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+00439e88 <memcpy>:
+  439e88:	10c00008 	beqz	a2,439eac <memcpy+0x24>
+  439e8c:	00000000 	nop
+  439e90:	00801025 	move	v0,a0
+  439e94:	90a10000 	lbu	at,0(a1)
+  439e98:	24a50001 	addiu	a1,a1,1
+  439e9c:	24c6ffff 	addiu	a2,a2,-1
+  439ea0:	a0410000 	sb	at,0(v0)
+  439ea4:	14c0fffb 	bnez	a2,439e94 <memcpy+0xc>
+  439ea8:	24420001 	addiu	v0,v0,1
+  439eac:	03e00008 	jr	ra
+  439eb0:	00801025 	move	v0,a0
+
+00439eb4 <memchr>:
+  439eb4:	10c00008 	beqz	a2,439ed8 <memchr+0x24>
+  439eb8:	24020000 	li	v0,0
+  439ebc:	30a300ff 	andi	v1,a1,0xff
+  439ec0:	90810000 	lbu	at,0(a0)
+  439ec4:	10230006 	beq	at,v1,439ee0 <memchr+0x2c>
+  439ec8:	00000000 	nop
+  439ecc:	24c6ffff 	addiu	a2,a2,-1
+  439ed0:	14c0fffb 	bnez	a2,439ec0 <memchr+0xc>
+  439ed4:	24840001 	addiu	a0,a0,1
+  439ed8:	03e00008 	jr	ra
+  439edc:	00000000 	nop
+  439ee0:	03e00008 	jr	ra
+  439ee4:	00801025 	move	v0,a0
+
+00439ee8 <memcmp>:
+  439ee8:	10c00009 	beqz	a2,439f10 <memcmp+0x28>
+  439eec:	24020000 	li	v0,0
+  439ef0:	90a30000 	lbu	v1,0(a1)
+  439ef4:	90870000 	lbu	a3,0(a0)
+  439ef8:	14e30007 	bne	a3,v1,439f18 <memcmp+0x30>
+  439efc:	00000000 	nop
+  439f00:	24840001 	addiu	a0,a0,1
+  439f04:	24c6ffff 	addiu	a2,a2,-1
+  439f08:	14c0fff9 	bnez	a2,439ef0 <memcmp+0x8>
+  439f0c:	24a50001 	addiu	a1,a1,1
+  439f10:	03e00008 	jr	ra
+  439f14:	00000000 	nop
+  439f18:	03e00008 	jr	ra
+  439f1c:	00e31023 	subu	v0,a3,v1

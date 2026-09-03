@@ -1,0 +1,12 @@
+Proof.
+intros x e m l m' l' H H'.
+refine ((fun Hm => conj Hm _) _).
+rewrite <- Hm in H'. clear -H H'.
+apply inbetween_unique with (1 := H) (2 := H').
+destruct (inbetween_float_bounds x m e l H) as (H1,H2).
+destruct (inbetween_float_bounds x m' e l' H') as (H3,H4).
+cut (m < m' + 1 /\ m' < m + 1)%Z. clear ; lia.
+now split ; apply lt_F2R with beta e ; apply Rle_lt_trans with x.
+Qed.
+
+End Fcalc_bracket_generic.

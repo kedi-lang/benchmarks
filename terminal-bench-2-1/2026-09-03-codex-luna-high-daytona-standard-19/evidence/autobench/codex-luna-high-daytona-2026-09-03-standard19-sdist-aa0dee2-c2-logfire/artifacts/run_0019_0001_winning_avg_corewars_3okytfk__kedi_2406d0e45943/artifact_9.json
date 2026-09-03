@@ -1,0 +1,124 @@
+{
+  "agent_execution": null,
+  "agent_info": {
+    "model_info": {
+      "name": "gpt-5.6-luna",
+      "provider": "codex"
+    },
+    "name": "kedi",
+    "version": "unknown"
+  },
+  "agent_result": null,
+  "agent_setup": {
+    "finished_at": "2026-09-03T08:40:36.465596Z",
+    "started_at": "2026-09-03T08:08:14.422592Z"
+  },
+  "config": {
+    "agent": {
+      "concurrency_group": null,
+      "extra_allowed_hosts": [],
+      "import_path": null,
+      "kwargs": {
+        "adapter": "pydantic",
+        "artifact_quota_bytes": 256000000,
+        "artifact_threshold_bytes": 16384,
+        "artifacts_enabled": true,
+        "command_timeout_seconds": 120.0,
+        "compaction_mode": "disabled",
+        "effort": "high",
+        "history_enabled": true,
+        "kedi_wheel": "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/dist-aa0dee2/kedi-0.4.0-py3-none-any.whl",
+        "manifest_digest": "2406d0e4594331bad6ecda5bf0e4ab333f52f928a172bdcf4bb018d4aaa16223",
+        "prefix_cache_enabled": true,
+        "retained_process_timeout_seconds": 3600.0,
+        "terminal_output_limit_bytes": 512000000,
+        "terminal_preview_bytes": 32768,
+        "tree_sitter_kedi_distribution": "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/dist-tree-sitter-019def7/tree_sitter_kedi-0.4.0.tar.gz",
+        "tree_sitter_kedi_revision": "019def7175e8a3f3489af7228d5794661420bc71"
+      },
+      "load_trajectory": null,
+      "max_timeout_sec": null,
+      "mcp_servers": [],
+      "model_name": "codex/gpt-5.6-luna",
+      "n_concurrent": null,
+      "name": "kedi.integrations.harbor:KediAgent",
+      "override_setup_timeout_sec": null,
+      "override_timeout_sec": null,
+      "resume_trajectory": false,
+      "skills": []
+    },
+    "agent_setup_timeout_multiplier": 3.0,
+    "agent_timeout_multiplier": 1.0,
+    "artifacts": [],
+    "environment": {
+      "cpu_enforcement_policy": "auto",
+      "delete": true,
+      "extra_allowed_hosts": [],
+      "extra_docker_compose": [],
+      "force_build": false,
+      "import_path": null,
+      "kwargs": {},
+      "memory_enforcement_policy": "auto",
+      "mounts": null,
+      "override_cpus": null,
+      "override_gpus": null,
+      "override_memory_mb": null,
+      "override_storage_mb": null,
+      "override_tpu": null,
+      "type": "daytona"
+    },
+    "environment_build_timeout_multiplier": 1.0,
+    "extra_instruction_paths": [],
+    "extra_instructions": [],
+    "install_only": false,
+    "job_id": "9ca6f106-fc7d-43f4-aee9-a3a60659261b",
+    "source_trial": null,
+    "task": {
+      "download_dir": null,
+      "git_commit_id": null,
+      "git_url": null,
+      "name": "terminal-bench/winning-avg-corewars",
+      "overwrite": false,
+      "path": null,
+      "ref": "sha256:a9f2c630fb7d656e96f3a42ade600a8abcb500631d153d62d5ceb2df073bc256",
+      "source": "terminal-bench/terminal-bench-2-1"
+    },
+    "timeout_multiplier": 1.0,
+    "trial_name": "winning-avg-corewars__3okytfk",
+    "trials_dir": "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/jobs/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire",
+    "user_agent": null,
+    "verifier": {
+      "disable": false,
+      "max_timeout_sec": null,
+      "override_timeout_sec": null
+    },
+    "verifier_timeout_multiplier": 1.0
+  },
+  "environment_setup": {
+    "finished_at": "2026-09-03T08:08:14.422541Z",
+    "started_at": "2026-09-03T07:24:06.981312Z"
+  },
+  "exception_info": {
+    "exception_message": "Agent install failed: Failed to execute session command: [Errno 54] Connection reset by peer",
+    "exception_traceback": "Traceback (most recent call last):\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py\", line 953, in setup\n    await self.install(environment)\n  File \"<KEDI_WORKSPACE>/src/kedi/integrations/harbor/agent.py\", line 168, in install\n    await self.ensure_system_dependencies(\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py\", line 651, in ensure_system_dependencies\n    manager = await self._get_system_package_manager(environment)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py\", line 607, in _get_system_package_manager\n    result = await environment.exec(\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py\", line 1926, in exec\n    return await self._strategy.exec(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py\", line 376, in exec\n    return await self._env._sandbox_exec(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py\", line 1716, in _sandbox_exec\n    response = await self._sandbox.process.execute_session_command(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/daytona/_utils/errors.py\", line 222, in async_wrapper\n    process_n_raise_exception(e)\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/daytona/_utils/errors.py\", line 176, in process_n_raise_exception\n    raise daytona_error_cls(_prefix_message(message_prefix, str(e))) from None\ndaytona.common.errors.DaytonaConnectionError: Failed to execute session command: [Errno 54] Connection reset by peer\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py\", line 406, in run\n    await self._prepare()\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py\", line 450, in _prepare\n    await self._setup_agent()\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py\", line 1455, in _setup_agent\n    await asyncio.wait_for(\n  File \"<HOME>/.local/share/uv/python/cpython-3.12-macos-aarch64-none/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py\", line 957, in setup\n    raise RuntimeError(f\"Agent install failed: {exc}\") from exc\nRuntimeError: Agent install failed: Failed to execute session command: [Errno 54] Connection reset by peer\n",
+    "exception_type": "RuntimeError",
+    "occurred_at": "2026-09-03T08:40:36.469197Z"
+  },
+  "finished_at": "2026-09-03T09:09:04.448211Z",
+  "id": "83279c03-53dd-4bde-aaeb-2183a2970efe",
+  "source": "terminal-bench/terminal-bench-2-1",
+  "started_at": "2026-09-03T07:24:06.976918Z",
+  "step_results": null,
+  "task_checksum": "ef26211fb0bfc03ae2fddb937acce4df425861a40090d627a267edb3fb15e356",
+  "task_id": {
+    "name": "winning-avg-corewars",
+    "org": "terminal-bench",
+    "ref": "sha256:a9f2c630fb7d656e96f3a42ade600a8abcb500631d153d62d5ceb2df073bc256"
+  },
+  "task_name": "terminal-bench/winning-avg-corewars",
+  "trial_name": "winning-avg-corewars__3okytfk",
+  "trial_uri": "file://<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/jobs/codex-luna-high-daytona-2026-09-03-standard19-sdist-aa0dee2-c2-logfire/winning-avg-corewars__3okytfk",
+  "verifier": null,
+  "verifier_environment_mode": "shared",
+  "verifier_result": null
+}

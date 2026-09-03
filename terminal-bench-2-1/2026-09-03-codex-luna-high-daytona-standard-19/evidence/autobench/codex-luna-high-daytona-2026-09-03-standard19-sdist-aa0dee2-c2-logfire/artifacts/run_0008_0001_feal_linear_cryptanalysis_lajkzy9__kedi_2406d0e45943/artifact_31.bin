@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/app/solve.py", line 33, in <module>
+    m=f(R ^ expand(keys[i]))
+  File "/app/solve.py", line 16, in f
+    y[2]=g(x[3]^x[2],x[1]^x[0],1)
+         ~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/solve.py", line 11, in g
+    t=Extract(7,0,ZeroExt(8,a)+ZeroExt(8,b)+bv8(c))
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
+  File "/app/z3pkg/z3/z3.py", line 3691, in __add__
+    return BitVecRef(Z3_mk_bvadd(self.ctx_ref(), a.as_ast(), b.as_ast()), self.ctx)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/z3pkg/z3/z3core.py", line 2146, in Z3_mk_bvadd
+    _elems.Check(a0)
+    ~~~~~~~~~~~~^^^^
+  File "/app/z3pkg/z3/z3core.py", line 1629, in Check
+    raise self.Exception(self.get_error_message(ctx, err))
+z3.z3types.Z3Exception: b'Argument #x01 at position 1 has sort (_ BitVec 8) it does not match declaration (declare-fun bvadd ((_ BitVec 16) (_ BitVec 16)) (_ BitVec 16))'

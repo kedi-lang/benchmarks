@@ -1,0 +1,35 @@
+
+Coq < 
+Coq < 
+Coq < Toplevel input, characters 30-32:
+> Lemma test: forall a b, b > 0 -> a = (b * (a / b) + a mod b).
+>                               ^^
+Error: Syntax error: '.' expected after [gallina] (in [vernac_aux]).
+
+Coq < Toplevel input, characters 0-6:
+> Proof.
+> ^^^^^^
+Error: Command not supported (No proof-editing in progress).
+
+Toplevel input, characters 7-13:
+> Proof. intros.
+>        ^^^^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 15-20:
+> Proof. intros. apply Z.div_mod.
+>                ^^^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 32-35:
+> Proof. intros. apply Z.div_mod. lia.
+>                                 ^^^
+Error: Syntax error: illegal begin of toplevel:vernac_toplevel.
+
+Toplevel input, characters 37-41:
+> Proof. intros. apply Z.div_mod. lia. Qed.
+>                                      ^^^^
+Error: No focused proof (No proof-editing in progress).
+
+Coq < 
+Coq < 

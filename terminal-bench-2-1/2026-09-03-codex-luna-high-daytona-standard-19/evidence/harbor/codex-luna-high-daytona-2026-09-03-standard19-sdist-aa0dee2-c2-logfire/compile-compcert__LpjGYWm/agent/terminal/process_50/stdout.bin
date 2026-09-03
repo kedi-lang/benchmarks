@@ -1,0 +1,80 @@
+(**
+This file is part of the Flocq formalization of floating-point
+arithmetic in Coq: http://flocq.gforge.inria.fr/
+
+Copyright (C) 2010-2018 Sylvie Boldo
+#<br />#
+Copyright (C) 2010-2018 Guillaume Melquiond
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 3 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+COPYING file for more details.
+*)
+
+(** * Locations: where a real number is positioned with respect to its rounded-down value in an arbitrary format. *)
+
+From Coq Require Import ZArith Reals Lia.
+From Coq Require SpecFloat.
+
+Require Import Zaux Raux Defs Float_prop.
+
+Notation location := SpecFloat.location (only parsing).
+Notation loc_Exact := SpecFloat.loc_Exact (only parsing).
+Notation loc_Inexact := SpecFloat.loc_Inexact (only parsing).
+
+Section Fcalc_bracket.
+
+Variable d u : R.
+Hypothesis Hdu : (d < u)%R.
+
+Variable x : R.
+
+Definition inbetween_loc :=
+  match Rcompare x d with
+  | Gt => loc_Inexact (Rcompare x ((d + u) / 2))
+  | _ => loc_Exact
+  end.
+
+(** Locates a real number with respect to the middle of two other numbers. *)
+
+Inductive inbetween : location -> Prop :=
+  | inbetween_Exact : x = d -> inbetween loc_Exact
+  | inbetween_Inexact l : (d < x < u)%R -> Rcompare x ((d + u) / 2)%R = l -> inbetween (loc_Inexact l).
+
+Theorem inbetween_spec :
+  (d <= x < u)%R -> inbetween inbetween_loc.
+Proof.
+intros Hx.
+unfold inbetween_loc.
+destruct (Rcompare_spec x d) as [H|H|H].
+now elim Rle_not_lt with (1 := proj1 Hx).
+now constructor.
+constructor.
+now split.
+easy.
+Qed.
+
+Theorem inbetween_unique :
+  forall l l',
+  inbetween l -> inbetween l' -> l = l'.
+Proof.
+intros l l' Hl Hl'.
+inversion_clear Hl ; inversion_clear Hl'.
+apply refl_equal.
+rewrite H in H0.
+elim Rlt_irrefl with (1 := proj1 H0).
+rewrite H1 in H.
+elim Rlt_irrefl with (1 := proj1 H).
+apply f_equal.
+now rewrite <- H0.
+Qed.
+
+Section Fcalc_bracket_any.
+
+Variable l : location.

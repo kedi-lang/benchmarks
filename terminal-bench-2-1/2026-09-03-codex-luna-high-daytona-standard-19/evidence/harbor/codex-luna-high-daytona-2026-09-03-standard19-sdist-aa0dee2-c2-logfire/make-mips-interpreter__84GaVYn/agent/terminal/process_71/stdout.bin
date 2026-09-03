@@ -1,0 +1,55 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+0043aa40 <fseek+0x38>:
+  43aa40:	00604825 	move	t1,v1
+  43aa44:	0000000c 	syscall
+  43aa48:	00405825 	move	t3,v0
+  43aa4c:	05600009 	bltz	t3,43aa74 <fseek+0x6c>
+  43aa50:	00000000 	nop
+  43aa54:	ad4b000c 	sw	t3,12(t2)
+  43aa58:	0810eaa1 	j	43aa84 <fseek+0x7c>
+  43aa5c:	ad400004 	sw	zero,4(t2)
+  43aa60:	3c01004b 	lui	at,0x4b
+  43aa64:	24020016 	li	v0,22
+  43aa68:	2403ffff 	li	v1,-1
+  43aa6c:	0810eaa1 	j	43aa84 <fseek+0x7c>
+  43aa70:	ac220a80 	sw	v0,2688(at)
+  43aa74:	000b0823 	negu	at,t3
+  43aa78:	3c02004b 	lui	v0,0x4b
+  43aa7c:	2403ffff 	li	v1,-1
+  43aa80:	ac410a80 	sw	at,2688(v0)
+  43aa84:	03e00008 	jr	ra
+  43aa88:	00601025 	move	v0,v1
+
+0043aa8c <ftell>:
+  43aa8c:	10800004 	beqz	a0,43aaa0 <ftell+0x14>
+  43aa90:	00000000 	nop
+  43aa94:	8c82000c 	lw	v0,12(a0)
+  43aa98:	03e00008 	jr	ra
+  43aa9c:	00000000 	nop
+  43aaa0:	3c01004b 	lui	at,0x4b
+  43aaa4:	24020016 	li	v0,22
+  43aaa8:	ac220a80 	sw	v0,2688(at)
+  43aaac:	03e00008 	jr	ra
+  43aab0:	2402ffff 	li	v0,-1
+
+0043aab4 <fflush>:
+  43aab4:	10800015 	beqz	a0,43ab0c <fflush+0x58>
+  43aab8:	00000000 	nop
+  43aabc:	8c830000 	lw	v1,0(a0)
+  43aac0:	240a004a 	li	t2,74
+  43aac4:	240b0000 	li	t3,0
+  43aac8:	01401025 	move	v0,t2
+  43aacc:	00602025 	move	a0,v1
+  43aad0:	01602825 	move	a1,t3
+  43aad4:	01603025 	move	a2,t3
+  43aad8:	01603825 	move	a3,t3
+  43aadc:	01604025 	move	t0,t3
+  43aae0:	01604825 	move	t1,t3
+  43aae4:	0000000c 	syscall
+  43aae8:	00401825 	move	v1,v0
+  43aaec:	04610005 	bgez	v1,43ab04 <fflush+0x50>

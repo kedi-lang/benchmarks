@@ -1,0 +1,40 @@
+Welcome to Coq 8.18.0
+
+Coq < [Loading ML file ring_plugin.cmxs (using legacy method) ... done]
+[Loading ML file zify_plugin.cmxs (using legacy method) ... done]
+[Loading ML file micromega_plugin.cmxs (using legacy method) ... done]
+[Loading ML file btauto_plugin.cmxs (using legacy method) ... done]
+
+Coq < 
+Coq < 
+Coq < 1 goal
+  
+  ============================
+  forall a b : Z, (b > Z.zero)%Z -> a = (b * (a / b) + a mod b)%Z
+
+test < 
+1 goal
+  
+  a, b : Z
+  H : (b > Z.zero)%Z
+  ============================
+  a = (b * (a / b) + a mod b)%Z
+
+1 goal
+  
+  a, b : Z
+  H : (b > Z.zero)%Z
+  ============================
+  b <> 0%Z
+
+Toplevel input, characters 32-35:
+> Proof. intros. apply Z.div_mod. lia.
+>                                 ^^^
+Error: Tactic failure:  Cannot find witness.
+
+Toplevel input, characters 37-41:
+> Proof. intros. apply Z.div_mod. lia. Qed.
+>                                      ^^^^
+Error:  (in proof test): Attempt to save an incomplete proof
+
+test < 

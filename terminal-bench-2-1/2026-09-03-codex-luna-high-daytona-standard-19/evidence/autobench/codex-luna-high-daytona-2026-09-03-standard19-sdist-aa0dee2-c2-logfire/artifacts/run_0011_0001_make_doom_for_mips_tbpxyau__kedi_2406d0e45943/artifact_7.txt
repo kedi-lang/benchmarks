@@ -1,0 +1,48 @@
+Traceback (most recent call last):
+  File "<HOME>/.local/share/uv/python/cpython-3.12-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "<KEDI_WORKSPACE>/src/kedi/integrations/harbor/agent.py", line 313, in run
+    await self.exec_as_agent(
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py", line 898, in exec_as_agent
+    return await self._exec(
+           ^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py", line 849, in _exec
+    result = await environment.exec(
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py", line 1926, in exec
+    return await self._strategy.exec(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py", line 376, in exec
+    return await self._env._sandbox_exec(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py", line 1728, in _sandbox_exec
+    result = await self._poll_response(session_id, response.cmd_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/environments/daytona/environment.py", line 1583, in _poll_response
+    await asyncio.sleep(1)
+  File "<HOME>/.local/share/uv/python/cpython-3.12-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 665, in sleep
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 545, in _run_agent_phase
+    await asyncio.wait_for(
+  File "<HOME>/.local/share/uv/python/cpython-3.12-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 519, in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<HOME>/.local/share/uv/python/cpython-3.12-macos-aarch64-none/lib/python3.12/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/single_step.py", line 77, in _run_agent
+    await self._run_agent_phase(
+  File "<KEDI_WORKSPACE>/tmp/terminal-bench-2.1/.venv-harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 554, in _run_agent_phase
+    raise AgentTimeoutError(
+harbor.trial.errors.AgentTimeoutError: Agent execution timed out after 900.0 seconds

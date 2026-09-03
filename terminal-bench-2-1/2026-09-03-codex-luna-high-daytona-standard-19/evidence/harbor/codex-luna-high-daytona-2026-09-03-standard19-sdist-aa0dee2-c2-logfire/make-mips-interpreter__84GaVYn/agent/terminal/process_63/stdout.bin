@@ -1,0 +1,69 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+00427b90 <R_GetColumn+0x60>:
+  427b90:	18400006 	blez	v0,427bac <R_GetColumn+0x7c>
+  427b94:	00000000 	nop
+  427b98:	3044ffff 	andi	a0,v0,0xffff
+  427b9c:	0c10dff3 	jal	437fcc <W_CacheLumpNum>
+  427ba0:	24050008 	li	a1,8
+  427ba4:	08109ef6 	j	427bd8 <R_GetColumn+0xa8>
+  427ba8:	00000000 	nop
+  427bac:	3c120048 	lui	s2,0x48
+  427bb0:	8e4118f8 	lw	at,6392(s2)
+  427bb4:	00310821 	addu	at,at,s1
+  427bb8:	8c220000 	lw	v0,0(at)
+  427bbc:	14400006 	bnez	v0,427bd8 <R_GetColumn+0xa8>
+  427bc0:	00000000 	nop
+  427bc4:	0c109dba 	jal	4276e8 <R_GenerateComposite>
+  427bc8:	00000000 	nop
+  427bcc:	8e4118f8 	lw	at,6392(s2)
+  427bd0:	00310821 	addu	at,at,s1
+  427bd4:	8c220000 	lw	v0,0(at)
+  427bd8:	00501021 	addu	v0,v0,s0
+  427bdc:	8fb00010 	lw	s0,16(sp)
+  427be0:	8fb10014 	lw	s1,20(sp)
+  427be4:	8fb20018 	lw	s2,24(sp)
+  427be8:	8fbf001c 	lw	ra,28(sp)
+  427bec:	03e00008 	jr	ra
+  427bf0:	27bd0020 	addiu	sp,sp,32
+
+00427bf4 <R_InitTextures>:
+  427bf4:	27bdff98 	addiu	sp,sp,-104
+  427bf8:	afbf0064 	sw	ra,100(sp)
+  427bfc:	afbe0060 	sw	s8,96(sp)
+  427c00:	afb7005c 	sw	s7,92(sp)
+  427c04:	afb60058 	sw	s6,88(sp)
+  427c08:	afb50054 	sw	s5,84(sp)
+  427c0c:	afb40050 	sw	s4,80(sp)
+  427c10:	afb3004c 	sw	s3,76(sp)
+  427c14:	afb20048 	sw	s2,72(sp)
+  427c18:	afb10044 	sw	s1,68(sp)
+  427c1c:	afb00040 	sw	s0,64(sp)
+  427c20:	24010000 	li	at,0
+  427c24:	24050001 	li	a1,1
+  427c28:	a3a0003c 	sb	zero,60(sp)
+  427c2c:	afa10024 	sw	at,36(sp)
+  427c30:	3c010044 	lui	at,0x44
+  427c34:	24324ca5 	addiu	s2,at,19621
+  427c38:	0c10e038 	jal	4380e0 <W_CacheLumpName>
+  427c3c:	02402025 	move	a0,s2
+  427c40:	8c500000 	lw	s0,0(v0)
+  427c44:	24050001 	li	a1,1
+  427c48:	24060000 	li	a2,0
+  427c4c:	00409825 	move	s3,v0
+  427c50:	0c10e15b 	jal	43856c <Z_Malloc>
+  427c54:	00102080 	sll	a0,s0,0x2
+  427c58:	1a00000f 	blez	s0,427c98 <R_InitTextures+0xa4>
+  427c5c:	00408825 	move	s1,v0
+  427c60:	26730004 	addiu	s3,s3,4
+  427c64:	27b40034 	addiu	s4,sp,52
+  427c68:	0220a825 	move	s5,s1
+  427c6c:	02802025 	move	a0,s4
+  427c70:	02602825 	move	a1,s3
+  427c74:	0c104d1c 	jal	413470 <M_StringCopy>
+  427c78:	24060009 	li	a2,9
+  427c7c:	0c10df58 	jal	437d60 <W_CheckNumForName>

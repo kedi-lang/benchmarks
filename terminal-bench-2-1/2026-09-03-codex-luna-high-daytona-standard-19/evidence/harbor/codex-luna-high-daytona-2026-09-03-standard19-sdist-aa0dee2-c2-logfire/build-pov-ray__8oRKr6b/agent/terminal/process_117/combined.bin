@@ -1,0 +1,1754 @@
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o example.o example.c
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o adler32.o adler32.c
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o compress.o compress.c
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o crc32.o crc32.c
+adler32.c: In function ‘adler32’:
+adler32.c:33:13: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+   33 |         k = len < NMAX ? len : NMAX;
+      |             ^~~
+adler32.c:34:13: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   34 |         len -= k;
+      |             ^~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o gzio.o gzio.c
+example.c: In function ‘test_flush’:
+example.c:316:25: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  316 |     c_stream.avail_in = len - 3;
+      |                         ^~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o uncompr.o uncompr.c
+gzio.c: In function ‘get_byte’:
+gzio.c:182:30: warning: conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘uInt’ {aka ‘unsigned int’} may change value [-Wconversion]
+  182 |         s->stream.avail_in = fread(s->inbuf, 1, Z_BUFSIZE, s->file);
+      |                              ^~~~~
+gzio.c: In function ‘gzread’:
+gzio.c:317:40: warning: conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘uInt’ {aka ‘unsigned int’} may change value [-Wconversion]
+  317 |                 s->stream.avail_out -= fread(next_out, 1, s->stream.avail_out,
+      |                                        ^~~~~
+gzio.c:325:34: warning: conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘uInt’ {aka ‘unsigned int’} may change value [-Wconversion]
+  325 |             s->stream.avail_in = fread(s->inbuf, 1, Z_BUFSIZE, s->file);
+      |                                  ^~~~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o deflate.o deflate.c
+deflate.c: In function ‘deflateInit2_’:
+deflate.c:239:17: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  239 |     s->w_bits = windowBits;
+      |                 ^~~~~~~~~~
+deflate.c:243:20: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  243 |     s->hash_bits = memLevel + 7;
+      |                    ^~~~~~~~
+deflate.c: In function ‘deflateSetDictionary’:
+deflate.c:306:29: warning: conversion from ‘IPos’ {aka ‘unsigned int’} to ‘Posf’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  306 |         INSERT_STRING(s, n, hash_head);
+      |                             ^~~~~~~~~
+deflate.c:166:34: note: in definition of macro ‘INSERT_STRING’
+  166 |     s->prev[(str) & s->w_mask] = match_head = s->head[s->ins_h], \
+      |                                  ^~~~~~~~~~
+deflate.c: In function ‘flush_pending’:
+deflate.c:400:20: warning: conversion to ‘unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  400 |     unsigned len = strm->state->pending;
+      |                    ^~~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o trees.o trees.c
+deflate.c:410:26: warning: conversion to ‘unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  410 |     strm->state->pending -= len;
+      |                          ^~
+deflate.c:410:29: warning: conversion to ‘int’ from ‘unsigned int’ may change the sign of the result [-Wsign-conversion]
+  410 |     strm->state->pending -= len;
+      |                             ^~~
+deflate.c: In function ‘deflate’:
+deflate.c:445:28: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  445 |         uInt level_flags = (s->level-1) >> 1;
+      |                            ^
+deflate.c: In function ‘longest_match’:
+deflate.c:669:20: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  669 |     int best_len = s->prev_length;              /* best match length so far */
+      |                    ^
+deflate.c:704:55: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  704 |     if ((uInt)nice_match > s->lookahead) nice_match = s->lookahead;
+      |                                                       ^
+deflate.c:795:48: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  795 |     if ((uInt)best_len <= s->lookahead) return best_len;
+      |                                                ^~~~~~~~
+deflate.c: In function ‘fill_window’:
+deflate.c:908:13: warning: conversion to ‘unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  908 |         n = read_buf(s->strm, (charf *)s->window + s->strstart + s->lookahead,
+      |             ^~~~~~~~
+deflate.c: In function ‘deflate_fast’:
+deflate.c:1025:43: warning: conversion from ‘IPos’ {aka ‘unsigned int’} to ‘Posf’ {aka ‘short unsigned int’} may change value [-Wconversion]
+ 1025 |             INSERT_STRING(s, s->strstart, hash_head);
+      |                                           ^~~~~~~~~
+deflate.c:166:34: note: in definition of macro ‘INSERT_STRING’
+  166 |     s->prev[(str) & s->w_mask] = match_head = s->head[s->ins_h], \
+      |                                  ^~~~~~~~~~
+deflate.c:1057:51: warning: conversion from ‘IPos’ {aka ‘unsigned int’} to ‘Posf’ {aka ‘short unsigned int’} may change value [-Wconversion]
+ 1057 |                     INSERT_STRING(s, s->strstart, hash_head);
+      |                                                   ^~~~~~~~~
+deflate.c:166:34: note: in definition of macro ‘INSERT_STRING’
+  166 |     s->prev[(str) & s->w_mask] = match_head = s->head[s->ins_h], \
+      |                                  ^~~~~~~~~~
+deflate.c: In function ‘deflate_slow’:
+deflate.c:1119:43: warning: conversion from ‘IPos’ {aka ‘unsigned int’} to ‘Posf’ {aka ‘short unsigned int’} may change value [-Wconversion]
+ 1119 |             INSERT_STRING(s, s->strstart, hash_head);
+      |                                           ^~~~~~~~~
+deflate.c:166:34: note: in definition of macro ‘INSERT_STRING’
+  166 |     s->prev[(str) & s->w_mask] = match_head = s->head[s->ins_h], \
+      |                                  ^~~~~~~~~~
+deflate.c:1169:51: warning: conversion from ‘IPos’ {aka ‘unsigned int’} to ‘Posf’ {aka ‘short unsigned int’} may change value [-Wconversion]
+ 1169 |                     INSERT_STRING(s, s->strstart, hash_head);
+      |                                                   ^~~~~~~~~
+deflate.c:166:34: note: in definition of macro ‘INSERT_STRING’
+  166 |     s->prev[(str) & s->w_mask] = match_head = s->head[s->ins_h], \
+      |                                  ^~~~~~~~~~
+trees.c: In function ‘tr_static_init’:
+trees.c:295:32: warning: conversion from ‘unsigned int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  295 |         static_dtree[n].Code = bi_reverse((unsigned)n, 5);
+      |                                ^~~~~~~~~~
+trees.c: In function ‘gen_bitlen’:
+trees.c:449:30: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  449 |         s->opt_len += (ulg)f * (bits + xbits);
+      |                              ^
+trees.c:450:44: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  450 |         if (stree) s->static_len += (ulg)f * (stree[n].Len + xbits);
+      |                                            ^
+trees.c:482:28: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+  482 |                 s->opt_len += ((long)bits - (long)tree[m].Len)
+      |                            ^~
+trees.c: In function ‘gen_codes’:
+trees.c:513:34: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  513 |         next_code[bits] = code = (code + bl_count[bits-1]) << 1;
+      |                                  ^
+trees.c:526:24: warning: conversion from ‘unsigned int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  526 |         tree[n].Code = bi_reverse(next_code[len]++, len);
+      |                        ^~~~~~~~~~
+trees.c: In function ‘scan_tree’:
+trees.c:649:40: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  649 |             s->bl_tree[curlen].Freq += count;
+      |                                        ^~~~~
+trees.c: In function ‘send_tree’:
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:694:18: note: in expansion of macro ‘send_code’
+  694 |             do { send_code(s, curlen, s->bl_tree); } while (--count != 0);
+      |                  ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:694:18: note: in expansion of macro ‘send_code’
+  694 |             do { send_code(s, curlen, s->bl_tree); } while (--count != 0);
+      |                  ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:694:18: note: in expansion of macro ‘send_code’
+  694 |             do { send_code(s, curlen, s->bl_tree); } while (--count != 0);
+      |                  ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:694:18: note: in expansion of macro ‘send_code’
+  694 |             do { send_code(s, curlen, s->bl_tree); } while (--count != 0);
+      |                  ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:694:18: note: in expansion of macro ‘send_code’
+  694 |             do { send_code(s, curlen, s->bl_tree); } while (--count != 0);
+      |                  ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:698:17: note: in expansion of macro ‘send_code’
+  698 |                 send_code(s, curlen, s->bl_tree); count--;
+      |                 ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:698:17: note: in expansion of macro ‘send_code’
+  698 |                 send_code(s, curlen, s->bl_tree); count--;
+      |                 ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:698:17: note: in expansion of macro ‘send_code’
+  698 |                 send_code(s, curlen, s->bl_tree); count--;
+      |                 ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:698:17: note: in expansion of macro ‘send_code’
+  698 |                 send_code(s, curlen, s->bl_tree); count--;
+      |                 ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:698:17: note: in expansion of macro ‘send_code’
+  698 |                 send_code(s, curlen, s->bl_tree); count--;
+      |                 ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:701:13: note: in expansion of macro ‘send_code’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |             ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:701:13: note: in expansion of macro ‘send_code’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |             ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:701:13: note: in expansion of macro ‘send_code’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |             ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:701:13: note: in expansion of macro ‘send_code’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |             ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:701:13: note: in expansion of macro ‘send_code’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |             ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:701:48: note: in expansion of macro ‘send_bits’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |                                                ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:701:48: note: in expansion of macro ‘send_bits’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |                                                ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:701:48: note: in expansion of macro ‘send_bits’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |                                                ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:701:48: note: in expansion of macro ‘send_bits’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |                                                ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:701:48: note: in expansion of macro ‘send_bits’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |                                                ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:701:48: note: in expansion of macro ‘send_bits’
+  701 |             send_code(s, REP_3_6, s->bl_tree); send_bits(s, count-3, 2);
+      |                                                ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:704:13: note: in expansion of macro ‘send_code’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |             ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:704:13: note: in expansion of macro ‘send_code’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |             ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:704:13: note: in expansion of macro ‘send_code’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |             ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:704:13: note: in expansion of macro ‘send_code’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |             ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:704:13: note: in expansion of macro ‘send_code’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |             ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:704:50: note: in expansion of macro ‘send_bits’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |                                                  ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:704:50: note: in expansion of macro ‘send_bits’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |                                                  ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:704:50: note: in expansion of macro ‘send_bits’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |                                                  ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:704:50: note: in expansion of macro ‘send_bits’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |                                                  ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:704:50: note: in expansion of macro ‘send_bits’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |                                                  ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:704:50: note: in expansion of macro ‘send_bits’
+  704 |             send_code(s, REPZ_3_10, s->bl_tree); send_bits(s, count-3, 3);
+      |                                                  ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:707:13: note: in expansion of macro ‘send_code’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |             ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:707:13: note: in expansion of macro ‘send_code’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |             ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:707:13: note: in expansion of macro ‘send_code’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |             ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:707:13: note: in expansion of macro ‘send_code’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |             ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:707:13: note: in expansion of macro ‘send_code’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |             ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:707:52: note: in expansion of macro ‘send_bits’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |                                                    ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:707:52: note: in expansion of macro ‘send_bits’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |                                                    ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:707:52: note: in expansion of macro ‘send_bits’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |                                                    ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:707:52: note: in expansion of macro ‘send_bits’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |                                                    ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:707:52: note: in expansion of macro ‘send_bits’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |                                                    ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:707:52: note: in expansion of macro ‘send_bits’
+  707 |             send_code(s, REPZ_11_138, s->bl_tree); send_bits(s, count-11, 7);
+      |                                                    ^~~~~~~~~
+trees.c: In function ‘build_bl_tree’:
+trees.c:747:16: warning: conversion to ‘ulg’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  747 |     s->opt_len += 3*(max_blindex+1) + 5+5+4;
+      |                ^~
+trees.c: In function ‘send_all_trees’:
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:769:5: note: in expansion of macro ‘send_bits’
+  769 |     send_bits(s, lcodes-257, 5); /* not +255 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:769:5: note: in expansion of macro ‘send_bits’
+  769 |     send_bits(s, lcodes-257, 5); /* not +255 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:769:5: note: in expansion of macro ‘send_bits’
+  769 |     send_bits(s, lcodes-257, 5); /* not +255 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:769:5: note: in expansion of macro ‘send_bits’
+  769 |     send_bits(s, lcodes-257, 5); /* not +255 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:769:5: note: in expansion of macro ‘send_bits’
+  769 |     send_bits(s, lcodes-257, 5); /* not +255 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:769:5: note: in expansion of macro ‘send_bits’
+  769 |     send_bits(s, lcodes-257, 5); /* not +255 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:770:5: note: in expansion of macro ‘send_bits’
+  770 |     send_bits(s, dcodes-1,   5);
+      |     ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:770:5: note: in expansion of macro ‘send_bits’
+  770 |     send_bits(s, dcodes-1,   5);
+      |     ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:770:5: note: in expansion of macro ‘send_bits’
+  770 |     send_bits(s, dcodes-1,   5);
+      |     ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:770:5: note: in expansion of macro ‘send_bits’
+  770 |     send_bits(s, dcodes-1,   5);
+      |     ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:770:5: note: in expansion of macro ‘send_bits’
+  770 |     send_bits(s, dcodes-1,   5);
+      |     ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:770:5: note: in expansion of macro ‘send_bits’
+  770 |     send_bits(s, dcodes-1,   5);
+      |     ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:771:5: note: in expansion of macro ‘send_bits’
+  771 |     send_bits(s, blcodes-4,  4); /* not -3 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:771:5: note: in expansion of macro ‘send_bits’
+  771 |     send_bits(s, blcodes-4,  4); /* not -3 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:771:5: note: in expansion of macro ‘send_bits’
+  771 |     send_bits(s, blcodes-4,  4); /* not -3 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:771:5: note: in expansion of macro ‘send_bits’
+  771 |     send_bits(s, blcodes-4,  4); /* not -3 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:771:5: note: in expansion of macro ‘send_bits’
+  771 |     send_bits(s, blcodes-4,  4); /* not -3 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:771:5: note: in expansion of macro ‘send_bits’
+  771 |     send_bits(s, blcodes-4,  4); /* not -3 as stated in appnote.txt */
+      |     ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:774:9: note: in expansion of macro ‘send_bits’
+  774 |         send_bits(s, s->bl_tree[bl_order[rank]].Len, 3);
+      |         ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:774:9: note: in expansion of macro ‘send_bits’
+  774 |         send_bits(s, s->bl_tree[bl_order[rank]].Len, 3);
+      |         ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:774:9: note: in expansion of macro ‘send_bits’
+  774 |         send_bits(s, s->bl_tree[bl_order[rank]].Len, 3);
+      |         ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:774:9: note: in expansion of macro ‘send_bits’
+  774 |         send_bits(s, s->bl_tree[bl_order[rank]].Len, 3);
+      |         ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:774:9: note: in expansion of macro ‘send_bits’
+  774 |         send_bits(s, s->bl_tree[bl_order[rank]].Len, 3);
+      |         ^~~~~~~~~
+trees.c: In function ‘_tr_stored_block’:
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:794:5: note: in expansion of macro ‘send_bits’
+  794 |     send_bits(s, (STORED_BLOCK<<1)+eof, 3);  /* send block type */
+      |     ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:794:5: note: in expansion of macro ‘send_bits’
+  794 |     send_bits(s, (STORED_BLOCK<<1)+eof, 3);  /* send block type */
+      |     ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:794:5: note: in expansion of macro ‘send_bits’
+  794 |     send_bits(s, (STORED_BLOCK<<1)+eof, 3);  /* send block type */
+      |     ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:794:5: note: in expansion of macro ‘send_bits’
+  794 |     send_bits(s, (STORED_BLOCK<<1)+eof, 3);  /* send block type */
+      |     ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:794:5: note: in expansion of macro ‘send_bits’
+  794 |     send_bits(s, (STORED_BLOCK<<1)+eof, 3);  /* send block type */
+      |     ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:794:5: note: in expansion of macro ‘send_bits’
+  794 |     send_bits(s, (STORED_BLOCK<<1)+eof, 3);  /* send block type */
+      |     ^~~~~~~~~
+trees.c: In function ‘_tr_align’:
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:815:5: note: in expansion of macro ‘send_bits’
+  815 |     send_bits(s, STATIC_TREES<<1, 3);
+      |     ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:815:5: note: in expansion of macro ‘send_bits’
+  815 |     send_bits(s, STATIC_TREES<<1, 3);
+      |     ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:815:5: note: in expansion of macro ‘send_bits’
+  815 |     send_bits(s, STATIC_TREES<<1, 3);
+      |     ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:815:5: note: in expansion of macro ‘send_bits’
+  815 |     send_bits(s, STATIC_TREES<<1, 3);
+      |     ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:815:5: note: in expansion of macro ‘send_bits’
+  815 |     send_bits(s, STATIC_TREES<<1, 3);
+      |     ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:816:5: note: in expansion of macro ‘send_code’
+  816 |     send_code(s, END_BLOCK, static_ltree);
+      |     ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:816:5: note: in expansion of macro ‘send_code’
+  816 |     send_code(s, END_BLOCK, static_ltree);
+      |     ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:816:5: note: in expansion of macro ‘send_code’
+  816 |     send_code(s, END_BLOCK, static_ltree);
+      |     ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:816:5: note: in expansion of macro ‘send_code’
+  816 |     send_code(s, END_BLOCK, static_ltree);
+      |     ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:816:5: note: in expansion of macro ‘send_code’
+  816 |     send_code(s, END_BLOCK, static_ltree);
+      |     ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:825:9: note: in expansion of macro ‘send_bits’
+  825 |         send_bits(s, STATIC_TREES<<1, 3);
+      |         ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:825:9: note: in expansion of macro ‘send_bits’
+  825 |         send_bits(s, STATIC_TREES<<1, 3);
+      |         ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:825:9: note: in expansion of macro ‘send_bits’
+  825 |         send_bits(s, STATIC_TREES<<1, 3);
+      |         ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:825:9: note: in expansion of macro ‘send_bits’
+  825 |         send_bits(s, STATIC_TREES<<1, 3);
+      |         ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:825:9: note: in expansion of macro ‘send_bits’
+  825 |         send_bits(s, STATIC_TREES<<1, 3);
+      |         ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:826:9: note: in expansion of macro ‘send_code’
+  826 |         send_code(s, END_BLOCK, static_ltree);
+      |         ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:826:9: note: in expansion of macro ‘send_code’
+  826 |         send_code(s, END_BLOCK, static_ltree);
+      |         ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:826:9: note: in expansion of macro ‘send_code’
+  826 |         send_code(s, END_BLOCK, static_ltree);
+      |         ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:826:9: note: in expansion of macro ‘send_code’
+  826 |         send_code(s, END_BLOCK, static_ltree);
+      |         ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:826:9: note: in expansion of macro ‘send_code’
+  826 |         send_code(s, END_BLOCK, static_ltree);
+      |         ^~~~~~~~~
+trees.c: In function ‘_tr_flush_block’:
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:923:9: note: in expansion of macro ‘send_bits’
+  923 |         send_bits(s, (STATIC_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:923:9: note: in expansion of macro ‘send_bits’
+  923 |         send_bits(s, (STATIC_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:923:9: note: in expansion of macro ‘send_bits’
+  923 |         send_bits(s, (STATIC_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:923:9: note: in expansion of macro ‘send_bits’
+  923 |         send_bits(s, (STATIC_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:923:9: note: in expansion of macro ‘send_bits’
+  923 |         send_bits(s, (STATIC_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:923:9: note: in expansion of macro ‘send_bits’
+  923 |         send_bits(s, (STATIC_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:927:9: note: in expansion of macro ‘send_bits’
+  927 |         send_bits(s, (DYN_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:927:9: note: in expansion of macro ‘send_bits’
+  927 |         send_bits(s, (DYN_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:927:9: note: in expansion of macro ‘send_bits’
+  927 |         send_bits(s, (DYN_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:927:9: note: in expansion of macro ‘send_bits’
+  927 |         send_bits(s, (DYN_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:927:9: note: in expansion of macro ‘send_bits’
+  927 |         send_bits(s, (DYN_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:927:9: note: in expansion of macro ‘send_bits’
+  927 |         send_bits(s, (DYN_TREES<<1)+eof, 3);
+      |         ^~~~~~~~~
+trees.c: In function ‘_tr_tally’:
+trees.c:979:57: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+  979 |             out_length += (ulg)s->dyn_dtree[dcode].Freq *
+      |                                                         ^
+trees.c: In function ‘compress_block’:
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1013:13: note: in expansion of macro ‘send_code’
+ 1013 |             send_code(s, lc, ltree); /* send a literal byte */
+      |             ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1013:13: note: in expansion of macro ‘send_code’
+ 1013 |             send_code(s, lc, ltree); /* send a literal byte */
+      |             ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1013:13: note: in expansion of macro ‘send_code’
+ 1013 |             send_code(s, lc, ltree); /* send a literal byte */
+      |             ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1013:13: note: in expansion of macro ‘send_code’
+ 1013 |             send_code(s, lc, ltree); /* send a literal byte */
+      |             ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1013:13: note: in expansion of macro ‘send_code’
+ 1013 |             send_code(s, lc, ltree); /* send a literal byte */
+      |             ^~~~~~~~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o zutil.o zutil.c
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1018:13: note: in expansion of macro ‘send_code’
+ 1018 |             send_code(s, code+LITERALS+1, ltree); /* send the length code */
+      |             ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1018:13: note: in expansion of macro ‘send_code’
+ 1018 |             send_code(s, code+LITERALS+1, ltree); /* send the length code */
+      |             ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1018:13: note: in expansion of macro ‘send_code’
+ 1018 |             send_code(s, code+LITERALS+1, ltree); /* send the length code */
+      |             ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1018:13: note: in expansion of macro ‘send_code’
+ 1018 |             send_code(s, code+LITERALS+1, ltree); /* send the length code */
+      |             ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1018:13: note: in expansion of macro ‘send_code’
+ 1018 |             send_code(s, code+LITERALS+1, ltree); /* send the length code */
+      |             ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:1022:17: note: in expansion of macro ‘send_bits’
+ 1022 |                 send_bits(s, lc, extra);       /* send the extra length bits */
+      |                 ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:1022:17: note: in expansion of macro ‘send_bits’
+ 1022 |                 send_bits(s, lc, extra);       /* send the extra length bits */
+      |                 ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:1022:17: note: in expansion of macro ‘send_bits’
+ 1022 |                 send_bits(s, lc, extra);       /* send the extra length bits */
+      |                 ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:1022:17: note: in expansion of macro ‘send_bits’
+ 1022 |                 send_bits(s, lc, extra);       /* send the extra length bits */
+      |                 ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:1022:17: note: in expansion of macro ‘send_bits’
+ 1022 |                 send_bits(s, lc, extra);       /* send the extra length bits */
+      |                 ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:1022:17: note: in expansion of macro ‘send_bits’
+ 1022 |                 send_bits(s, lc, extra);       /* send the extra length bits */
+      |                 ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1028:13: note: in expansion of macro ‘send_code’
+ 1028 |             send_code(s, code, dtree);       /* send the distance code */
+      |             ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1028:13: note: in expansion of macro ‘send_code’
+ 1028 |             send_code(s, code, dtree);       /* send the distance code */
+      |             ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1028:13: note: in expansion of macro ‘send_code’
+ 1028 |             send_code(s, code, dtree);       /* send the distance code */
+      |             ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1028:13: note: in expansion of macro ‘send_code’
+ 1028 |             send_code(s, code, dtree);       /* send the distance code */
+      |             ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1028:13: note: in expansion of macro ‘send_code’
+ 1028 |             send_code(s, code, dtree);       /* send the distance code */
+      |             ^~~~~~~~~
+trees.c:1031:22: warning: conversion to ‘unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+ 1031 |                 dist -= base_dist[code];
+      |                      ^~
+trees.c:1032:30: warning: conversion to ‘int’ from ‘unsigned int’ may change the sign of the result [-Wsign-conversion]
+ 1032 |                 send_bits(s, dist, extra);   /* send the extra distance bits */
+      |                              ^~~~
+trees.c:212:15: note: in definition of macro ‘send_bits’
+  212 |     int val = value;\
+      |               ^~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:1032:17: note: in expansion of macro ‘send_bits’
+ 1032 |                 send_bits(s, dist, extra);   /* send the extra distance bits */
+      |                 ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:1032:17: note: in expansion of macro ‘send_bits’
+ 1032 |                 send_bits(s, dist, extra);   /* send the extra distance bits */
+      |                 ^~~~~~~~~
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:1032:17: note: in expansion of macro ‘send_bits’
+ 1032 |                 send_bits(s, dist, extra);   /* send the extra distance bits */
+      |                 ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:1032:17: note: in expansion of macro ‘send_bits’
+ 1032 |                 send_bits(s, dist, extra);   /* send the extra distance bits */
+      |                 ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:1032:17: note: in expansion of macro ‘send_bits’
+ 1032 |                 send_bits(s, dist, extra);   /* send the extra distance bits */
+      |                 ^~~~~~~~~
+trees.c:218:18: warning: conversion from ‘unsigned int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  218 |     s->bi_buf |= (value) << s->bi_valid;\
+      |                  ^
+trees.c:1032:17: note: in expansion of macro ‘send_bits’
+ 1032 |                 send_bits(s, dist, extra);   /* send the extra distance bits */
+      |                 ^~~~~~~~~
+trees.c:213:18: warning: conversion from ‘int’ to ‘ush’ {aka ‘short unsigned int’} may change value [-Wconversion]
+  213 |     s->bi_buf |= (val << s->bi_valid);\
+      |                  ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1041:5: note: in expansion of macro ‘send_code’
+ 1041 |     send_code(s, END_BLOCK, ltree);
+      |     ^~~~~~~~~
+trees.c:215:39: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  215 |     s->bi_buf = (ush)val >> (Buf_size - s->bi_valid);\
+      |                                       ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1041:5: note: in expansion of macro ‘send_code’
+ 1041 |     send_code(s, END_BLOCK, ltree);
+      |     ^~~~~~~~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o inflate.o inflate.c
+trees.c:216:24: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                        ^
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1041:5: note: in expansion of macro ‘send_code’
+ 1041 |     send_code(s, END_BLOCK, ltree);
+      |     ^~~~~~~~~
+trees.c:216:17: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                 ^~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1041:5: note: in expansion of macro ‘send_code’
+ 1041 |     send_code(s, END_BLOCK, ltree);
+      |     ^~~~~~~~~
+trees.c:216:20: warning: conversion from ‘long unsigned int’ to ‘int’ may change value [-Wconversion]
+  216 |     s->bi_valid += len - Buf_size;\
+      |                    ^~~
+trees.c:152:33: note: in expansion of macro ‘send_bits’
+  152 | #  define send_code(s, c, tree) send_bits(s, tree[c].Code, tree[c].Len)
+      |                                 ^~~~~~~~~
+trees.c:1041:5: note: in expansion of macro ‘send_code’
+ 1041 |     send_code(s, END_BLOCK, ltree);
+      |     ^~~~~~~~~
+In file included from trees.c:34:
+trees.c: In function ‘copy_block’:
+deflate.h:254:56: warning: conversion to ‘Bytef’ {aka ‘unsigned char’} from ‘charf’ {aka ‘char’} may change the sign of the result [-Wsign-conversion]
+  254 | #define put_byte(s, c) {s->pending_buf[s->pending++] = (c);}
+      |                                                        ^
+trees.c:1139:9: note: in expansion of macro ‘put_byte’
+ 1139 |         put_byte(s, *buf++);
+      |         ^~~~~~~~
+inflate.c: In function ‘inflateSetDictionary’:
+inflate.c:289:14: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  289 |     length = (1<<z->state->wbits)-1;
+      |              ^
+inflate.c: In function ‘inflateSync’:
+inflate.c:332:15: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+  332 |   z->total_in += p - z->next_in;
+      |               ^~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o infblock.o infblock.c
+In file included from infblock.c:10:
+infblock.c: In function ‘inflate_blocks’:
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infblock.c:136:7: note: in expansion of macro ‘NEEDBITS’
+  136 |       NEEDBITS(3)
+      |       ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:161:15: note: in expansion of macro ‘LEAVE’
+  161 |               LEAVE
+      |               ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:180:11: note: in expansion of macro ‘LEAVE’
+  180 |           LEAVE
+      |           ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infblock.c:184:7: note: in expansion of macro ‘NEEDBITS’
+  184 |       NEEDBITS(32)
+      |       ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:190:9: note: in expansion of macro ‘LEAVE’
+  190 |         LEAVE
+      |         ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:199:9: note: in expansion of macro ‘LEAVE’
+  199 |         LEAVE
+      |         ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:83:61: note: in expansion of macro ‘LEAVE’
+   83 | #define NEEDOUT {if(m==0){WRAP if(m==0){FLUSH WRAP if(m==0) LEAVE}}r=Z_OK;}
+      |                                                             ^~~~~
+infblock.c:200:7: note: in expansion of macro ‘NEEDOUT’
+  200 |       NEEDOUT
+      |       ^~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infblock.c:215:7: note: in expansion of macro ‘NEEDBITS’
+  215 |       NEEDBITS(14)
+      |       ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:223:9: note: in expansion of macro ‘LEAVE’
+  223 |         LEAVE
+      |         ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:232:9: note: in expansion of macro ‘LEAVE’
+  232 |         LEAVE
+      |         ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infblock.c:241:9: note: in expansion of macro ‘NEEDBITS’
+  241 |         NEEDBITS(3)
+      |         ^~~~~~~~
+infblock.c:248:11: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  248 |       t = inflate_trees_bits(s->sub.trees.blens, &s->sub.trees.bb,
+      |           ^~~~~~~~~~~~~~~~~~
+infblock.c:252:13: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  252 |         r = t;
+      |             ^
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:255:9: note: in expansion of macro ‘LEAVE’
+  255 |         LEAVE
+      |         ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infblock.c:268:9: note: in expansion of macro ‘NEEDBITS’
+  268 |         NEEDBITS(t)
+      |         ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infblock.c:281:11: note: in expansion of macro ‘NEEDBITS’
+  281 |           NEEDBITS(t + i)
+      |           ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:293:13: note: in expansion of macro ‘LEAVE’
+  293 |             LEAVE
+      |             ^~~~~
+infblock.c:315:13: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  315 |         t = inflate_trees_dynamic(257 + (t & 0x1f), 1 + ((t >> 5) & 0x1f),
+      |             ^~~~~~~~~~~~~~~~~~~~~
+infblock.c:321:15: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  321 |           r = t;
+      |               ^
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:322:11: note: in expansion of macro ‘LEAVE’
+  322 |           LEAVE
+      |           ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:331:11: note: in expansion of macro ‘LEAVE’
+  331 |           LEAVE
+      |           ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infblock.c:340:7: note: in expansion of macro ‘UPDATE’
+  340 |       UPDATE
+      |       ^~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:367:9: note: in expansion of macro ‘LEAVE’
+  367 |         LEAVE
+      |         ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:371:7: note: in expansion of macro ‘LEAVE’
+  371 |       LEAVE
+      |       ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:374:7: note: in expansion of macro ‘LEAVE’
+  374 |       LEAVE
+      |       ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infblock.c:377:7: note: in expansion of macro ‘LEAVE’
+  377 |       LEAVE
+      |       ^~~~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o inftrees.o inftrees.c
+inftrees.c: In function ‘huft_build’:
+inftrees.c:154:7: warning: conversion to ‘int’ from ‘uIntf’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  154 |   l = *m;
+      |       ^
+inftrees.c:158:7: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  158 |   k = j;                        /* minimum code length */
+      |       ^
+inftrees.c:160:9: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  160 |     l = j;
+      |         ^
+inftrees.c:164:7: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  164 |   g = i;                        /* maximum code length */
+      |       ^
+inftrees.c:166:9: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  166 |     l = i;
+      |         ^
+inftrees.c:167:8: warning: conversion to ‘uIntf’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  167 |   *m = l;
+      |        ^
+inftrees.c:172:12: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  172 |     if ((y -= c[j]) < 0)
+      |            ^~
+inftrees.c:172:15: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  172 |     if ((y -= c[j]) < 0)
+      |               ^
+inftrees.c:174:10: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  174 |   if ((y -= c[i]) < 0)
+      |          ^~
+inftrees.c:174:13: warning: conversion to ‘int’ from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  174 |   if ((y -= c[i]) < 0)
+      |             ^
+inftrees.c:176:8: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  176 |   c[i] += y;
+      |        ^~
+inftrees.c:218:13: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  218 |         z = g - w;
+      |             ^
+inftrees.c:219:29: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  219 |         z = z > (uInt)l ? l : z;        /* table size upper limit */
+      |                             ^
+inftrees.c:220:28: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  220 |         if ((f = 1 << (j = k - w)) > a + 1)     /* try a k-w bit table */
+      |                            ^
+inftrees.c:287:17: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  287 |       while ((i & ((1 << w) - 1)) != x[h])
+      |                 ^
+inftrees.c: In function ‘falloc’:
+inftrees.c:389:14: warning: conversion to ‘uInt’ {aka ‘unsigned int’} from ‘intf’ {aka ‘int’} may change the sign of the result [-Wsign-conversion]
+  389 |   *(intf *)q -= n+s-s; /* s-s to avoid warning */
+      |              ^~
+inftrees.c:389:17: warning: conversion to ‘intf’ {aka ‘int’} from ‘uInt’ {aka ‘unsigned int’} may change the sign of the result [-Wsign-conversion]
+  389 |   *(intf *)q -= n+s-s; /* s-s to avoid warning */
+      |                 ^
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o infcodes.o infcodes.c
+In file included from infcodes.c:10:
+infcodes.c: In function ‘inflate_codes’:
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infcodes.c:108:9: note: in expansion of macro ‘UPDATE’
+  108 |         UPDATE
+      |         ^~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infcodes.c:123:7: note: in expansion of macro ‘NEEDBITS’
+  123 |       NEEDBITS(j)
+      |       ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infcodes.c:158:7: note: in expansion of macro ‘LEAVE’
+  158 |       LEAVE
+      |       ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infcodes.c:161:7: note: in expansion of macro ‘NEEDBITS’
+  161 |       NEEDBITS(j)
+      |       ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infcodes.c:170:7: note: in expansion of macro ‘NEEDBITS’
+  170 |       NEEDBITS(j)
+      |       ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infcodes.c:190:7: note: in expansion of macro ‘LEAVE’
+  190 |       LEAVE
+      |       ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:74:36: note: in expansion of macro ‘LEAVE’
+   74 | #define NEEDBYTE {if(n)r=Z_OK;else LEAVE}
+      |                                    ^~~~~
+infutil.h:76:35: note: in expansion of macro ‘NEEDBYTE’
+   76 | #define NEEDBITS(j) {while(k<(j)){NEEDBYTE;b|=((uLong)NEXTBYTE)<<k;k+=8;}}
+      |                                   ^~~~~~~~
+infcodes.c:193:7: note: in expansion of macro ‘NEEDBITS’
+  193 |       NEEDBITS(j)
+      |       ^~~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:83:61: note: in expansion of macro ‘LEAVE’
+   83 | #define NEEDOUT {if(m==0){WRAP if(m==0){FLUSH WRAP if(m==0) LEAVE}}r=Z_OK;}
+      |                                                             ^~~~~
+infcodes.c:210:9: note: in expansion of macro ‘NEEDOUT’
+  210 |         NEEDOUT
+      |         ^~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infutil.h:83:61: note: in expansion of macro ‘LEAVE’
+   83 | #define NEEDOUT {if(m==0){WRAP if(m==0){FLUSH WRAP if(m==0) LEAVE}}r=Z_OK;}
+      |                                                             ^~~~~
+infcodes.c:219:7: note: in expansion of macro ‘NEEDOUT’
+  219 |       NEEDOUT
+      |       ^~~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infcodes.c:226:9: note: in expansion of macro ‘LEAVE’
+  226 |         LEAVE
+      |         ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infcodes.c:230:7: note: in expansion of macro ‘LEAVE’
+  230 |       LEAVE
+      |       ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infcodes.c:233:7: note: in expansion of macro ‘LEAVE’
+  233 |       LEAVE
+      |       ^~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+infutil.h:71:16: note: in expansion of macro ‘UPDATE’
+   71 | #define LEAVE {UPDATE return inflate_flush(s,z,r);}
+      |                ^~~~~~
+infcodes.c:236:7: note: in expansion of macro ‘LEAVE’
+  236 |       LEAVE
+      |       ^~~~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o infutil.o infutil.c
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o inffast.o inffast.c
+In file included from inffast.c:10:
+inffast.c: In function ‘inflate_fast’:
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+inffast.c:128:13: note: in expansion of macro ‘UPDATE’
+  128 |             UPDATE
+      |             ^~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+inffast.c:151:9: note: in expansion of macro ‘UPDATE’
+  151 |         UPDATE
+      |         ^~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+inffast.c:158:9: note: in expansion of macro ‘UPDATE’
+  158 |         UPDATE
+      |         ^~~~~~
+infutil.h:68:41: warning: conversion to ‘long unsigned int’ from ‘long int’ may change the sign of the result [-Wsign-conversion]
+   68 | #define UPDIN {z->avail_in=n;z->total_in+=p-z->next_in;z->next_in=p;}
+      |                                         ^~
+infutil.h:70:25: note: in expansion of macro ‘UPDIN’
+   70 | #define UPDATE {UPDBITS UPDIN UPDOUT}
+      |                         ^~~~~
+inffast.c:166:3: note: in expansion of macro ‘UPDATE’
+  166 |   UPDATE
+      |   ^~~~~~
+gcc -O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes   -c -o minigzip.o minigzip.c
+minigzip.c: In function ‘gz_compress’:
+minigzip.c:94:15: warning: conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘int’ may change value [-Wconversion]
+   94 |         len = fread(buf, 1, sizeof(buf), in);
+      |               ^~~~~
+minigzip.c: In function ‘file_uncompress’:
+minigzip.c:173:15: warning: conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘int’ may change value [-Wconversion]
+  173 |     int len = strlen(file);
+      |               ^~~~~~
+gcc -shared -Wl,-soname,libz.so.1 -o libz.so.1.0.4 adler32.o compress.o crc32.o gzio.o uncompr.o deflate.o trees.o zutil.o inflate.o infblock.o inftrees.o infcodes.o infutil.o inffast.o
+/usr/bin/ld: errno: TLS definition in /lib/x86_64-linux-gnu/libc.so.6 section .tbss mismatches non-TLS reference in gzio.o
+/usr/bin/ld: /lib/x86_64-linux-gnu/libc.so.6: error adding symbols: bad value
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:54: libz.so.1.0.4] Error 1

@@ -1,0 +1,45 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+00437d50 <W_AddFile+0x364>:
+  437d50:	27bd0050 	addiu	sp,sp,80
+
+00437d54 <W_NumLumps>:
+  437d54:	3c01004b 	lui	at,0x4b
+  437d58:	03e00008 	jr	ra
+  437d5c:	8c2205c0 	lw	v0,1472(at)
+
+00437d60 <W_CheckNumForName>:
+  437d60:	27bdffd8 	addiu	sp,sp,-40
+  437d64:	afbf0024 	sw	ra,36(sp)
+  437d68:	afb30020 	sw	s3,32(sp)
+  437d6c:	afb2001c 	sw	s2,28(sp)
+  437d70:	afb10018 	sw	s1,24(sp)
+  437d74:	afb00014 	sw	s0,20(sp)
+  437d78:	3c11004b 	lui	s1,0x4b
+  437d7c:	8e2105c8 	lw	at,1480(s1)
+  437d80:	10200019 	beqz	at,437de8 <W_CheckNumForName+0x88>
+  437d84:	00808025 	move	s0,a0
+  437d88:	0c10de60 	jal	437980 <W_LumpNameHash>
+  437d8c:	02002025 	move	a0,s0
+  437d90:	3c01004b 	lui	at,0x4b
+  437d94:	8c2105c0 	lw	at,1472(at)
+  437d98:	0041001b 	divu	zero,v0,at
+  437d9c:	002001f4 	teq	at,zero,0x7
+  437da0:	8e2205c8 	lw	v0,1480(s1)
+  437da4:	00000810 	mfhi	at
+  437da8:	00010880 	sll	at,at,0x2
+  437dac:	00410821 	addu	at,v0,at
+  437db0:	8c320000 	lw	s2,0(at)
+  437db4:	12400028 	beqz	s2,437e58 <W_CheckNumForName+0xf8>
+  437db8:	2411ffff 	li	s1,-1
+  437dbc:	02402025 	move	a0,s2
+  437dc0:	02002825 	move	a1,s0
+  437dc4:	0c10e823 	jal	43a08c <strncasecmp>
+  437dc8:	24060008 	li	a2,8
+  437dcc:	10400019 	beqz	v0,437e34 <W_CheckNumForName+0xd4>
+  437dd0:	00000000 	nop
+  437dd4:	8e520018 	lw	s2,24(s2)

@@ -1,0 +1,211 @@
+
+doomgeneric_mips:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+00403e00 <D_BindVariables+0x128>:
+  403e00:	24256b20 	addiu	a1,at,27424
+  403e04:	3c010044 	lui	at,0x44
+  403e08:	2424e5ad 	addiu	a0,at,-6739
+  403e0c:	3c010046 	lui	at,0x46
+  403e10:	0c103c55 	jal	40f154 <M_BindVariable>
+  403e14:	24256b24 	addiu	a1,at,27428
+  403e18:	3c010044 	lui	at,0x44
+  403e1c:	2424e5c0 	addiu	a0,at,-6720
+  403e20:	3c010046 	lui	at,0x46
+  403e24:	0c103c55 	jal	40f154 <M_BindVariable>
+  403e28:	24256890 	addiu	a1,at,26768
+  403e2c:	3c010046 	lui	at,0x46
+  403e30:	24110000 	li	s1,0
+  403e34:	27b30014 	addiu	s3,sp,20
+  403e38:	2414000a 	li	s4,10
+  403e3c:	24306c50 	addiu	s0,at,27728
+  403e40:	3c010044 	lui	at,0x44
+  403e44:	2432e5cc 	addiu	s2,at,-6708
+  403e48:	02602025 	move	a0,s3
+  403e4c:	2405000c 	li	a1,12
+  403e50:	02403025 	move	a2,s2
+  403e54:	0c104d99 	jal	413664 <M_snprintf>
+  403e58:	02203825 	move	a3,s1
+  403e5c:	02602025 	move	a0,s3
+  403e60:	0c103c55 	jal	40f154 <M_BindVariable>
+  403e64:	02002825 	move	a1,s0
+  403e68:	26310001 	addiu	s1,s1,1
+  403e6c:	1634fff6 	bne	s1,s4,403e48 <D_BindVariables+0x170>
+  403e70:	26100004 	addiu	s0,s0,4
+  403e74:	8fb00020 	lw	s0,32(sp)
+  403e78:	8fb10024 	lw	s1,36(sp)
+  403e7c:	8fb20028 	lw	s2,40(sp)
+  403e80:	8fb3002c 	lw	s3,44(sp)
+  403e84:	8fb40030 	lw	s4,48(sp)
+  403e88:	8fbf0034 	lw	ra,52(sp)
+  403e8c:	03e00008 	jr	ra
+  403e90:	27bd0038 	addiu	sp,sp,56
+
+00403e94 <D_GrabMouseCallback>:
+  403e94:	3c010047 	lui	at,0x47
+  403e98:	8c2150c4 	lw	at,20676(at)
+  403e9c:	10200003 	beqz	at,403eac <D_GrabMouseCallback+0x18>
+  403ea0:	24020000 	li	v0,0
+  403ea4:	03e00008 	jr	ra
+  403ea8:	00000000 	nop
+  403eac:	3c010048 	lui	at,0x48
+  403eb0:	3c030048 	lui	v1,0x48
+  403eb4:	8c21ba2c 	lw	at,-17876(at)
+  403eb8:	8c63cbc0 	lw	v1,-13376(v1)
+  403ebc:	00610825 	or	at,v1,at
+  403ec0:	1420fff8 	bnez	at,403ea4 <D_GrabMouseCallback+0x10>
+  403ec4:	00000000 	nop
+  403ec8:	3c010048 	lui	at,0x48
+  403ecc:	3c020048 	lui	v0,0x48
+  403ed0:	8c21ba38 	lw	at,-17864(at)
+  403ed4:	8c42b558 	lw	v0,-19112(v0)
+  403ed8:	00410825 	or	at,v0,at
+  403edc:	3c020048 	lui	v0,0x48
+  403ee0:	8c42a9c8 	lw	v0,-22072(v0)
+  403ee4:	00220825 	or	at,at,v0
+  403ee8:	03e00008 	jr	ra
+  403eec:	2c220001 	sltiu	v0,at,1
+
+00403ef0 <doomgeneric_Tick>:
+  403ef0:	27bdffe8 	addiu	sp,sp,-24
+  403ef4:	afbf0014 	sw	ra,20(sp)
+  403ef8:	0c10e4a9 	jal	4392a4 <I_StartFrame>
+  403efc:	00000000 	nop
+  403f00:	0c100c9d 	jal	403274 <TryRunTics>
+  403f04:	00000000 	nop
+  403f08:	3c010048 	lui	at,0x48
+  403f0c:	8c21b554 	lw	at,-19116(at)
+  403f10:	00011140 	sll	v0,at,0x5
+  403f14:	00010a00 	sll	at,at,0x8
+  403f18:	00220821 	addu	at,at,v0
+  403f1c:	3c020048 	lui	v0,0x48
+  403f20:	2442b59c 	addiu	v0,v0,-19044
+  403f24:	00410821 	addu	at,v0,at
+  403f28:	8c240000 	lw	a0,0(at)
+  403f2c:	0c10ca11 	jal	432844 <S_UpdateSounds>
+  403f30:	00000000 	nop
+  403f34:	3c01004b 	lui	at,0x4b
+  403f38:	8c210600 	lw	at,1536(at)
+  403f3c:	10200003 	beqz	at,403f4c <doomgeneric_Tick+0x5c>
+  403f40:	00000000 	nop
+  403f44:	0c100df6 	jal	4037d8 <D_Display>
+  403f48:	00000000 	nop
+  403f4c:	8fbf0014 	lw	ra,20(sp)
+  403f50:	03e00008 	jr	ra
+  403f54:	27bd0018 	addiu	sp,sp,24
+
+00403f58 <D_DoomLoop>:
+  403f58:	27bdffe8 	addiu	sp,sp,-24
+  403f5c:	afbf0014 	sw	ra,20(sp)
+  403f60:	3c010048 	lui	at,0x48
+  403f64:	8c21a9cc 	lw	at,-22068(at)
+  403f68:	10200011 	beqz	at,403fb0 <D_DoomLoop+0x58>
+  403f6c:	00000000 	nop
+  403f70:	3c010048 	lui	at,0x48
+  403f74:	8c21ba3c 	lw	at,-17860(at)
+  403f78:	1420000a 	bnez	at,403fa4 <D_DoomLoop+0x4c>
+  403f7c:	00000000 	nop
+  403f80:	3c010048 	lui	at,0x48
+  403f84:	24020005 	li	v0,5
+  403f88:	8c21ba28 	lw	at,-17880(at)
+  403f8c:	10220005 	beq	at,v0,403fa4 <D_DoomLoop+0x4c>
+  403f90:	00000000 	nop
+  403f94:	3c010048 	lui	at,0x48
+  403f98:	8c21ba40 	lw	at,-17856(at)
+  403f9c:	10200004 	beqz	at,403fb0 <D_DoomLoop+0x58>
+  403fa0:	00000000 	nop
+  403fa4:	3c010044 	lui	at,0x44
+  403fa8:	0c10e64e 	jal	439938 <printf>
+  403fac:	2424e5d8 	addiu	a0,at,-6696
+  403fb0:	3c010048 	lui	at,0x48
+  403fb4:	8c21ba3c 	lw	at,-17860(at)
+  403fb8:	10200003 	beqz	at,403fc8 <D_DoomLoop+0x70>
+  403fbc:	00000000 	nop
+  403fc0:	0c10295c 	jal	40a570 <G_BeginRecording>
+  403fc4:	00000000 	nop
+  403fc8:	3c010048 	lui	at,0x48
+  403fcc:	24020001 	li	v0,1
+  403fd0:	0c100c9d 	jal	403274 <TryRunTics>
+  403fd4:	ac22a9c0 	sw	v0,-22080(at)
+  403fd8:	3c010047 	lui	at,0x47
+  403fdc:	0c10e545 	jal	439514 <I_SetWindowTitle>
+  403fe0:	8c245224 	lw	a0,21028(at)
+  403fe4:	0c10e54c 	jal	439530 <I_GraphicsCheckCommandLine>
+  403fe8:	00000000 	nop
+  403fec:	3c010040 	lui	at,0x40
+  403ff0:	0c10e54e 	jal	439538 <I_SetGrabMouseCallback>
+  403ff4:	24243e94 	addiu	a0,at,16020
+  403ff8:	0c10e430 	jal	4390c0 <I_InitGraphics>
+  403ffc:	00000000 	nop
+  404000:	0c10e550 	jal	439540 <I_EnableLoadingDisk>
+  404004:	00000000 	nop
+  404008:	0c10ce73 	jal	4339cc <V_RestoreBuffer>
+  40400c:	00000000 	nop
+  404010:	0c10a956 	jal	42a558 <R_ExecuteSetViewSize>
+  404014:	00000000 	nop
+  404018:	0c100c59 	jal	403164 <D_StartGameLoop>
+  40401c:	00000000 	nop
+  404020:	3c010048 	lui	at,0x48
+  404024:	8c21b350 	lw	at,-19632(at)
+  404028:	10200005 	beqz	at,404040 <D_DoomLoop+0xe8>
+  40402c:	00000000 	nop
+  404030:	3c010048 	lui	at,0x48
+  404034:	3c020046 	lui	v0,0x46
+  404038:	8c21b558 	lw	at,-19112(at)
+  40403c:	ac416894 	sw	at,26772(v0)
+  404040:	0c100fbc 	jal	403ef0 <doomgeneric_Tick>
+  404044:	00000000 	nop
+  404048:	8fbf0014 	lw	ra,20(sp)
+  40404c:	03e00008 	jr	ra
+  404050:	27bd0018 	addiu	sp,sp,24
+
+00404054 <D_PageTicker>:
+  404054:	3c010048 	lui	at,0x48
+  404058:	8c22a9d0 	lw	v0,-22064(at)
+  40405c:	2443ffff 	addiu	v1,v0,-1
+  404060:	18400003 	blez	v0,404070 <D_PageTicker+0x1c>
+  404064:	ac23a9d0 	sw	v1,-22064(at)
+  404068:	03e00008 	jr	ra
+  40406c:	00000000 	nop
+  404070:	3c010048 	lui	at,0x48
+  404074:	24020001 	li	v0,1
+  404078:	03e00008 	jr	ra
+  40407c:	ac22a9c8 	sw	v0,-22072(at)
+
+00404080 <D_AdvanceDemo>:
+  404080:	3c010048 	lui	at,0x48
+  404084:	24020001 	li	v0,1
+  404088:	03e00008 	jr	ra
+  40408c:	ac22a9c8 	sw	v0,-22072(at)
+
+00404090 <D_DoAdvanceDemo>:
+  404090:	27bdffe8 	addiu	sp,sp,-24
+  404094:	afbf0014 	sw	ra,20(sp)
+  404098:	3c010046 	lui	at,0x46
+  40409c:	2402fffe 	li	v0,-2
+  4040a0:	3c030048 	lui	v1,0x48
+  4040a4:	3c040048 	lui	a0,0x48
+  4040a8:	3c050048 	lui	a1,0x48
+  4040ac:	3c060048 	lui	a2,0x48
+  4040b0:	3c070048 	lui	a3,0x48
+  4040b4:	8c216764 	lw	at,26468(at)
+  4040b8:	00220824 	and	at,at,v0
+  4040bc:	24020006 	li	v0,6
+  4040c0:	00220826 	xor	at,at,v0
+  4040c4:	8c62a9d8 	lw	v0,-22056(v1)
+  4040c8:	2c210001 	sltiu	at,at,1
+  4040cc:	34210006 	ori	at,at,0x6
+  4040d0:	24420001 	addiu	v0,v0,1
+  4040d4:	0041001a 	div	zero,v0,at
+  4040d8:	002001f4 	teq	at,zero,0x7
+  4040dc:	ac80bcbc 	sw	zero,-17220(a0)
+  4040e0:	3c040048 	lui	a0,0x48
+  4040e4:	3c010048 	lui	at,0x48
+  4040e8:	ace0a9c8 	sw	zero,-22072(a3)
+  4040ec:	acc0ba28 	sw	zero,-17880(a2)
+  4040f0:	aca0ba2c 	sw	zero,-17876(a1)
+  4040f4:	8c84b554 	lw	a0,-19116(a0)
+  4040f8:	2421b59c 	addiu	at,at,-19044
+  4040fc:	00001010 	mfhi	v0

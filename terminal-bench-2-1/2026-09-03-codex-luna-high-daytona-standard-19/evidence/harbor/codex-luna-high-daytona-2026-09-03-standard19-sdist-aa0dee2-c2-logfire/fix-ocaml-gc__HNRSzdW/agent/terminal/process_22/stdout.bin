@@ -1,0 +1,25 @@
+297:      s->pool_live_words += Whsize_hd(hd);
+298:      s->pool_frag_words += wh - Whsize_hd(hd);
+301:      p += wh * Wosize_hd(hd); /* skip contiguous free blocks */
+581:        CAMLassert(Whsize_hd(hd) <= wh);
+602:        s->pool_live_words -= Whsize_hd(hd);
+603:        local->owner->swept_words += Whsize_hd(hd);
+604:        s->pool_frag_words -= (wh - Whsize_hd(hd));
+627:                                                  + Wosize_hd(hd) + 1);
+644:        p += wh * Wosize_hd(hd);
+650:      p += Whsize_hd(hd);
+697:      Whsize_hd(hd) + Wsize_bsize(LARGE_ALLOC_HEADER_SZ);
+699:      Whsize_hd(hd) + Wsize_bsize(LARGE_ALLOC_HEADER_SZ);
+707:  return Whsize_hd(hd);
+779:        CAMLassert(Whsize_hd(hd) <= wh);
+787:        p += wh * Wosize_hd(hd);
+1100:      mlsize_t wosz = Wosize_hd(hd);
+1401:            memcpy(new_p, p, Whsize_hd(hd) * sizeof(value));
+1420:            heap->stats.pool_live_words -= Whsize_hd(hd);
+1421:            heap->stats.pool_frag_words -= (wh - Whsize_hd(hd));
+1434:          mlsize_t wosize = Wosize_hd(hd);
+1581:        s->live += Whsize_hd(hd);
+1582:        s->overhead += wh - Whsize_hd(hd);
+1587:        s->free += wh * (1 + Wosize_hd(hd));
+1588:        p += Wosize_hd(hd) * wh;
+1601:    s->allocated += Wsize_bsize(LARGE_ALLOC_HEADER_SZ) + Whsize_hd(hd);
