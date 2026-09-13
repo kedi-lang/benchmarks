@@ -3,6 +3,11 @@
 Each directory below is a self-contained Kedi experiment with its environment,
 immutable manifests, Harbor evidence, Autobench records, and validation tools.
 
+- [2026-09-12 Codex Luna high full 89-task single-trial run](2026-09-12-codex-luna-high-daytona-full-89x1/README.md)
+  - Official reward: **68/89 (76.40%)**
+  - Provider-reported cost: **$4.93781512 total**, **$0.05548107 per task**
+  - One replayable Autobench experiment record containing all 89 task runs
+  - Uses infrastructure-only QEMU fixes; not an official leaderboard submission
 - [2026-09-03 Codex Luna high Daytona standard-task run (19 tasks)](2026-09-03-codex-luna-high-daytona-standard-19/README.md)
   - Harbor-scored reward: **11/18 (61.1%)**; one additional trial was unscored after a Daytona connection reset
   - Provider usage is available for 14 trials; the **$4.37852572** recorded cost is intentionally reported as incomplete

@@ -1,0 +1,20 @@
+216-        raw = self.get_starttag_text() or ("<" + tag + ">")
+217-        tag_lower = tag.casefold()
+218-        if self.drop_element is not None:
+219-            return
+220:        if tag_lower in _DROP_ELEMENTS or tag_lower in _ANIMATION_ELEMENTS:
+221-            self.drop_element = tag_lower
+222-            return
+223-        if tag_lower == "style":
+224-            self.style_buffer = [_filtered_start_tag(raw, tag, attrs)]
+225-            return
+226-        self._put(_filtered_start_tag(raw, tag, attrs))
+227-
+228-    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+229-        if self.drop_element is not None:
+230-            return
+231-        raw = self.get_starttag_text() or ("<" + tag + "/>" )
+232-        if tag.casefold() in _DROP_ELEMENTS:
+233-            # HTMLParser treats `<script/>` as self-closing, while HTML
+234-            # browsers historically treat script as a raw-text element.  Keep
+235-            # dropping until an explicit end tag so the latter interpretation

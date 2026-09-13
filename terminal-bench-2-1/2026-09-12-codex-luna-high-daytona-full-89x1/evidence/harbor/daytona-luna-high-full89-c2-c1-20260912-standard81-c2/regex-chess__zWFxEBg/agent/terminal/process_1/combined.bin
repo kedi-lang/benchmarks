@@ -1,0 +1,11 @@
+133:# Castling-right bookkeeping: a right survives precisely when its original
+134-# rook is still on its home square.  (The king's rights are similarly
+135-# invalidated by the king leaving e1, which is implied by the absence of the
+136-# corresponding rook test plus these two explicit tests.)
+137-add(r'(?m)^([CT]\|.{63}[^R])\|([^|\n]*)K([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+138-add(r'(?m)^([CT]\|[^R].{63})\|([^|\n]*)Q([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+139-add(r'(?m)^([CT]\|.{7}[^r].{56})\|([^|\n]*)k([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+140-add(r'(?m)^([CT]\|[^r].{7}.{56})\|([^|\n]*)q([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+141-add(r'(?m)^([CT]\|[^|\n]+)\|\|([^|\n]*)$', r'\g<1>|-|\g<2>')
+142-
+143-# Attack detector.  For each possible white-king square, delete a candidate

@@ -1,0 +1,19 @@
+72:# Integer square root, restoring digit-by-digit, little endian.
+74:root=[z]*16
+81:    # trial = (root << 2) | 1
+82:    trial=[o,z]+root+[z]*(34-2-len(root))
+91:    root=[n.mux(cond, cond if j==0 else root[j-1], z) for j in range(16)]
+106:# The placeholders are overwritten with actual DFF definitions below, but D gates can now refer to them.
+110:# count + j less than root: compare root (17-bit) > count+j.
+111:def less_root_count_plus(j):
+118:    # root > cj, unsigned comparator, scan from MSB; gt = (r & ~c) at first difference
+121:        rb=root[bit] if bit<16 else z
+127:    cond=less_root_count_plus(j)
+131:D_a=A
+159:# Use actual generated outputs; replace reserved placeholders with direct copies of dff outputs.
+160:actual=[]
+161:for D in D_a + D_bbar + D_count:
+162:    actual.append(dff(D))
+163:for p,a in zip(reg_outputs,actual): n.lines[p]=f'out{p} = out{a}'
+164:# Final outputs are the state A bits (F(root)), most significant convention doesn't matter since output bits use index order.
+169:print('lines',len(n.lines),'root logic end',len(n.lines))

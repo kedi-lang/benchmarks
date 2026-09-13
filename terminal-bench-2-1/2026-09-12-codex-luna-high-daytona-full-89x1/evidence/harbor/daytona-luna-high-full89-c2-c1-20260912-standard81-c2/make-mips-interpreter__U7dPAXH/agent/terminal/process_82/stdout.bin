@@ -1,0 +1,41 @@
+38:#define ZONEID	0x1d4a11
+45:    int			id;	// should be ZONEID
+48:} memblock_t;
+57:    memblock_t	blocklist;
+59:    memblock_t*	rover;
+74:    memblock_t*		block;
+79:	block = (memblock_t *)( (byte *)zone + sizeof(memzone_t) );
+100:    memblock_t*	block;
+109:	block = (memblock_t *)( (byte *)mainzone + sizeof(memzone_t) );
+129:    memblock_t*		block;
+130:    memblock_t*		other;
+132:    block = (memblock_t *) ( (byte *)ptr - sizeof(memblock_t));
+134:    if (block->id != ZONEID)
+135:	I_Error ("Z_Free: freed a pointer without ZONEID");
+179:// Z_Malloc
+186:Z_Malloc
+192:    memblock_t*	start;
+193:    memblock_t* rover;
+194:    memblock_t* newblock;
+195:    memblock_t*	base;
+206:    size += sizeof(memblock_t);
+223:            I_Error ("Z_Malloc: failed on allocation of %i bytes", size);
+240:                Z_Free ((byte *)rover+sizeof(memblock_t));
+259:        newblock = (memblock_t *) ((byte *)base + size );
+273:	    I_Error ("Z_Malloc: an owner is required for purgable blocks");
+278:    result  = (void *) ((byte *)base + sizeof(memblock_t));
+288:    base->id = ZONEID;
+303:    memblock_t*	block;
+304:    memblock_t*	next;
+318:	    Z_Free ( (byte *)block+sizeof(memblock_t));
+333:    memblock_t*	block;
+370:    memblock_t*	block;
+403:    memblock_t*	block;
+432:    memblock_t*	block;
+434:    block = (memblock_t *) ((byte *)ptr - sizeof(memblock_t));
+436:    if (block->id != ZONEID)
+437:        I_Error("%s:%i: Z_ChangeTag: block without a ZONEID!",
+449:    memblock_t*	block;
+451:    block = (memblock_t *) ((byte *)ptr - sizeof(memblock_t));
+453:    if (block->id != ZONEID)
+469:    memblock_t*		block;

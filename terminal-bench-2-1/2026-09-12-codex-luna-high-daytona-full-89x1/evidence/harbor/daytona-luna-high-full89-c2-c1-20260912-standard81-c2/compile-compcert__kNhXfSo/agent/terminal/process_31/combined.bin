@@ -1,0 +1,32 @@
+#!/bin/sh
+# Start coqide with the right options
+# Use the Makefile to rebuild dependencies if needed
+# Recompile the modified file after coqide editing
+
+make -q ${1}o || {
+  make -n ${1}o | grep -v "\\b${1}\\b" | \
+  (while read cmd; do
+    sh -c "$cmd" || exit 2
+   done)
+}
+
+"${COQBIN}coqide" -async-proofs off $1 && make ${1}o
+#!/bin/sh
+# Start Proof General with the right Coq version
+# Use the Makefile to rebuild dependencies if needed
+# Recompile the modified file after editing
+
+make -q ${1}o || {
+  make -n ${1}o | grep -v "\\b${1}\\b" | \
+  (while read cmd; do
+    sh -c "$cmd" || exit 2
+   done)
+}
+
+COQPROGNAME="${COQBIN}coqtop"
+
+emacs --eval "(setq coq-prog-name \"$COQPROGNAME\")" $1 \
+&& make ${1}o
+505:coq_ver=$(${COQBIN}coqc -v 2>/dev/null | tr -d '\r' | sed -n -e 's/The Coq Proof Assistant, version \([^ ]*\).*$/\1/p')
+The Coq Proof Assistant, version 8.16.1
+compiled with OCaml 4.14.1

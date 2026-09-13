@@ -1,0 +1,107 @@
+	else \
+	  echo "Fixpoint not reached, try one more bootstrapping cycle."; \
+	  exit 1; \
+	fi
+
+# Promote a compiler
+
+PROMOTE ?= cp
+
+.PHONY: promote-common
+promote-common:
+	$(PROMOTE) ocamlc$(EXE) boot/ocamlc
+	$(PROMOTE) lex/ocamllex$(EXE) boot/ocamllex
+	cd stdlib; cp $(LIBFILES) ../boot
+
+# Promote the newly compiled system to the rank of cross compiler
+# (Runs on the old runtime, produces code for the new runtime)
+.PHONY: promote-cross
+promote-cross: promote-common
+
+# Promote the newly compiled system to the rank of bootstrap compiler
+# (Runs on the new runtime, produces code for the new runtime)
+.PHONY: promote
+promote: PROMOTE = $(OCAMLRUN) tools/stripdebug$(EXE) -all
+promote: promote-common
+	rm -f boot/ocamlrun$(EXE)
+	cp runtime/ocamlrun$(EXE) boot/ocamlrun$(EXE)
+
+# Compile the native-code compiler
+.PHONY: opt-core
+opt-core: runtimeopt
+	$(MAKE) ocamlopt
+	$(MAKE) libraryopt
+
+.PHONY: opt
+opt: checknative
+	$(MAKE) runtimeopt
+	$(MAKE) ocamlopt
+	$(MAKE) libraryopt
+	$(MAKE) otherlibrariesopt ocamltoolsopt
+
+# Native-code versions of the tools
+.PHONY: opt.opt
+opt.opt: checknative
+	$(MAKE) checkstack
+	$(MAKE) coreall
+	$(MAKE) ocaml
+	$(MAKE) opt-core
+ifeq "$(BOOTSTRAPPING_FLEXDLL)" "true"
+	$(MAKE) flexlink.opt$(EXE)
+endif
+	$(MAKE) ocamlc.opt
+# TODO: introduce OPTIONAL_LIBRARIES and OPTIONAL_TOOLS variables to be
+# computed at configure time to keep track of which tools and libraries
+# need to be built
+	$(MAKE) otherlibraries $(WITH_DEBUGGER) $(OCAMLDOC_TARGET) \
+	  $(OCAMLTEST_TARGET)
+	$(MAKE) ocamlopt.opt
+	$(MAKE) otherlibrariesopt
+	$(MAKE) ocamllex.opt ocamltoolsopt ocamltoolsopt.opt \
+	  $(OCAMLDOC_OPT_TARGET) \
+	  $(OCAMLTEST_OPT_TARGET) othertools ocamlnat
+ifeq "$(build_libraries_manpages)" "true"
+	$(MAKE) manpages
+endif
+
+# Core bootstrapping cycle
+.PHONY: coreboot
+ifeq "$(FLAT_FLOAT_ARRAY)" "true"
+coreboot:
+# Promote the new compiler but keep the old runtime
+# This compiler runs on boot/ocamlrun and produces bytecode for
+# runtime/ocamlrun
+	$(MAKE) promote-cross
+# Rebuild ocamlc and ocamllex (run on runtime/ocamlrun)
+# utils/config.ml will have the fixed bootstrap configuration
+	$(MAKE) partialclean
+	$(MAKE) IN_COREBOOT_CYCLE=true ocamlc ocamllex ocamltools
+# Rebuild the library (using runtime/ocamlrun ./ocamlc)
+	$(MAKE) library-cross
+# Promote the new compiler and the new runtime
+bootstrap: coreboot
+# utils/config.ml must be restored to config.status's configuration
+# lex/ocamllex$(EXE) was stripped in order to compare it
+	rm -f utils/config.ml lex/ocamllex$(EXE)
+	$(MAKE) all
+
+# Compile everything the first time
+
+.PHONY: world
+world: coldstart
+	$(MAKE) all
+
+# Compile also native code compiler and libraries, fast
+.PHONY: world.opt
+world.opt: checknative
+	$(MAKE) coldstart
+	$(MAKE) opt.opt
+
+# FlexDLL sources missing error messages
+# Different git mechanism displayed depending on whether this source tree came
+# from a git clone or a source tarball.
+
+.PHONY: flexdll flexlink flexlink.opt
+
+ifeq "$(BOOTSTRAPPING_FLEXDLL)" "true"
+

@@ -1,0 +1,15 @@
+Starting Mailman's master runner
+Generating MTA alias maps
+
+postfix status:
+3045 /usr/lib/postfix/sbin/master -w
+
+mailman status:
+ * mailman3 is not running
+
+listeners:
+
+postfix effective:
+mydestination = $myhostname, localhost, localhost.localdomain, localhost.local, local.edu
+transport_maps = hash:/var/lib/mailman3/data/postfix_lmtp
+relay_domains = ${{$compatibility_level} <level {2} ? {$mydestination} : {}}

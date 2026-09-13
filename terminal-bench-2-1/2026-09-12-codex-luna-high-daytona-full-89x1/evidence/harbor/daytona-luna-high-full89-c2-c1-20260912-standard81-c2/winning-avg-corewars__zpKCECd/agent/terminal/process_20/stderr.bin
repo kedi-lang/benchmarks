@@ -1,0 +1,822 @@
+After pass 0
+Instruction (physical line, instr):
+
+(    6) ;assert CORESIZE == 8000
+(    8) start   add #4, 3
+(    9)         mov 2, @2  
+(   10)         jmp -2
+(   11)         dat #0, #0
+(   13)         end start
+
+***END*OF*PASS***
+
+Parameter checking:
+Current parameter for ';assert': 8000 ==8000
+
+After pass 1
+Instruction (physical line, instr):
+
+(    8) ADD #4,3
+(    9) MOV 2,@2
+(   10) JMP -2
+(   11) DAT #0,#0
+(   13) END 0
+
+***END*OF*PASS***
+
+Label references:
+Group label(s):
+start 
+Reference:
+(LABEL):    0
+
+Group label(s):
+PSPACESIZE 
+Reference:
+(TEXT):
+500
+
+Group label(s):
+WRITELIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+READLIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+ROUNDS 
+Reference:
+(TEXT):
+1
+
+Group label(s):
+WARRIORS 
+Reference:
+(TEXT):
+5
+
+Group label(s):
+VERSION 
+Reference:
+(TEXT):
+94
+
+Group label(s):
+MINDISTANCE 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXLENGTH 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXCYCLES 
+Reference:
+(TEXT):
+80000
+
+Group label(s):
+MAXPROCESSES 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+CORESIZE 
+Reference:
+(TEXT):
+8000
+
+***END*OF*CHART***
+
+After pass 0
+Instruction (physical line, instr):
+
+(    6) ;assert CORESIZE == 8000
+(    8) step    equ 2667    
+(   10) start   spl 1       
+(   12) loop    mov copy, *ptr
+(   13)         add #1, ptr
+(   14)         mov copy, @ptr
+(   15)         add #step, ptr
+(   16)         jmp loop
+(   18) copy    spl 0, 0
+(   19) ptr     dat step, step*2
+(   21)         end start
+
+***END*OF*PASS***
+
+Parameter checking:
+Current parameter for ';assert': 8000 ==8000
+
+After pass 1
+Instruction (physical line, instr):
+
+(   10) SPL 1
+(   12) MOV copy,*ptr
+(   13) ADD #1,ptr
+(   14) MOV copy,@ptr
+(   15) ADD #2667,ptr
+(   16) JMP -4
+(   18) SPL 0,0
+(   19) DAT 2667,2667*2
+(   21) END 0
+
+***END*OF*PASS***
+
+Label references:
+Group label(s):
+ptr 
+Reference:
+(LABEL):    7
+
+Group label(s):
+copy 
+Reference:
+(LABEL):    6
+
+Group label(s):
+loop 
+Reference:
+(LABEL):    1
+
+Group label(s):
+start 
+Reference:
+(LABEL):    0
+
+Group label(s):
+step 
+Reference:
+(TEXT):
+ 2667    
+
+Group label(s):
+PSPACESIZE 
+Reference:
+(TEXT):
+500
+
+Group label(s):
+WRITELIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+READLIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+ROUNDS 
+Reference:
+(TEXT):
+1
+
+Group label(s):
+WARRIORS 
+Reference:
+(TEXT):
+5
+
+Group label(s):
+VERSION 
+Reference:
+(TEXT):
+94
+
+Group label(s):
+MINDISTANCE 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXLENGTH 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXCYCLES 
+Reference:
+(TEXT):
+80000
+
+Group label(s):
+MAXPROCESSES 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+CORESIZE 
+Reference:
+(TEXT):
+8000
+
+***END*OF*CHART***
+
+After pass 0
+Instruction (physical line, instr):
+
+(    6) ;assert CORESIZE == 8000 && MAXCYCLES == 80000
+(    8) const   EQU     7
+(   10)         SPL     0                   
+(   11) main    MOV     ptr, @ptr           
+(   12)         ADD     data, ptr           
+(   13)         DJN     main, <2444         
+(   15) ptr     JMP     trap, ptr           
+(   17) trap    SPL     1, -100             
+(   18)         MOV     data, <-1           
+(   19)         JMP     -2                  
+(   21) data    DAT     #const, #-const
+(   23)         end main
+
+***END*OF*PASS***
+
+Parameter checking:
+Current parameter for ';assert': 8000 ==8000&&80000 ==80000
+
+After pass 1
+Instruction (physical line, instr):
+
+(   10) SPL 0
+(   11) MOV ptr,@ptr 
+(   12) ADD data,ptr 
+(   13) DJN -2,<2444
+(   15) JMP trap,ptr 
+(   17) SPL 1,-100
+(   18) MOV data,<-1
+(   19) JMP -2
+(   21) DAT #7,#-7
+(   23) END 1
+
+***END*OF*PASS***
+
+Label references:
+Group label(s):
+data 
+Reference:
+(LABEL):    8
+
+Group label(s):
+trap 
+Reference:
+(LABEL):    5
+
+Group label(s):
+ptr 
+Reference:
+(LABEL):    4
+
+Group label(s):
+main 
+Reference:
+(LABEL):    1
+
+Group label(s):
+const 
+Reference:
+(TEXT):
+     7
+
+Group label(s):
+PSPACESIZE 
+Reference:
+(TEXT):
+500
+
+Group label(s):
+WRITELIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+READLIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+ROUNDS 
+Reference:
+(TEXT):
+1
+
+Group label(s):
+WARRIORS 
+Reference:
+(TEXT):
+5
+
+Group label(s):
+VERSION 
+Reference:
+(TEXT):
+94
+
+Group label(s):
+MINDISTANCE 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXLENGTH 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXCYCLES 
+Reference:
+(TEXT):
+80000
+
+Group label(s):
+MAXPROCESSES 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+CORESIZE 
+Reference:
+(TEXT):
+8000
+
+***END*OF*CHART***
+
+After pass 0
+Instruction (physical line, instr):
+
+(    6) ;assert CORESIZE == 8000 && MAXCYCLES == 80000
+(   17) dist    equ 121             
+(   18) imp     equ icopy+1800      
+(   19) hide    equ 1600            
+(   22) trap    jmp pit-x-121+2, x+121   
+(   23) x       spl 0,           trap
+(   24)         mov @0,          @trap
+(   25)         sub 4,           @-1
+(   26)         jmp -2
+(   27) pit     mov @dist,       <0-dist
+(   28)         spl 0                     
+(   29)         spl -1                    
+(   32)         dat     <trap,          <1      
+(   33)         dat     <trap,          <1      
+(   34)         dat     <trap,          <1      
+(   35)         dat     <trap,          <1
+(   36)         dat     <trap,          <1
+(   37)         dat     <trap,          <1
+(   38)         dat     <trap,          <1
+(   39)         dat     <trap,          <1
+(   40)         dat     <trap,          <1
+(   41)         dat     <trap,          <1
+(   42)         dat     <trap,          <1
+(   43)         dat     <trap,          <1
+(   44)         dat     <trap,          <1
+(   45)         dat     <trap,          <1
+(   46)         dat     <trap,          <1
+(   47)         dat     <trap,          <1
+(   48)         dat     <trap,          <1
+(   49)         dat     <trap,          <1
+(   50)         dat     <trap,          <1
+(   51)         dat     <trap,          <1
+(   52)         dat     <trap,          <1
+(   53)         dat     <trap,          <1
+(   54)         dat     <trap,          <1
+(   55)         dat     <trap,          <1
+(   56)         dat     <trap,          <1
+(   57)         dat     <trap,          <1
+(   58)         dat     <trap,          <1
+(   59)         dat     <trap,          <1
+(   60)         dat     <trap,          <1
+(   61)         dat     <trap,          <1
+(   62)         dat     <trap,          <1
+(   63)         dat     <trap,          <1
+(   64)         dat     <trap,          <1
+(   65)         dat     <trap,          <1
+(   66)         dat     <trap,          <1
+(   67)         dat     <trap,          <1
+(   68)         dat     <trap,          <1
+(   69)         dat     <trap,          <1
+(   70)         dat     <trap,          <1
+(   71)         dat     <trap,          <1
+(   72)         dat     <trap,          <1
+(   73)         dat     <trap,          <1
+(   74)         dat     <trap,          <1
+(   75)         dat     <trap,          <1
+(   76)         dat     <trap,          <1
+(   77)         dat     <trap,          <1
+(   78)         dat     <trap,          <1
+(   79)         dat     <trap,          <1
+(   80)         dat     <trap,          <1
+(   81)         dat     <trap,          <1
+(   82)         dat     <trap,          <1
+(   83)         dat     <trap,          <1
+(   84)         dat     <trap,          <1
+(   85)         dat     <trap,          <1
+(   86)         dat     <trap,          <1
+(   87)         dat     <trap,          <1
+(   88)         dat     <trap,          <1
+(   89)         dat     <trap,          <1
+(   90)         dat     <trap,          <1
+(   91)         dat     <trap,          <1
+(   92)         dat     <trap,          <1
+(   93)         dat     <trap,          <1
+(   94)         dat     <trap,          <1
+(   97) start   mov     trap+4,         hide            
+(   98)         mov     trap+3,         <start          
+(   99)         mov     trap+2,         <start          
+(  100)         mov     trap+1,         <start
+(  101)         mov     trap,           <start
+(  102)         mov     pit+2,          hide
+(  103)         mov     pit+1,          <-1
+(  104)         mov     pit,            <-2
+(  105)         spl     start+hide-3,   <1              
+(  108) ring    spl     9,              <4050           
+(  109)         spl     5,              <4100           
+(  110)         spl     3,              <4150
+(  111)         mov     icopy,          imp             
+(  112)         jmp     start+hide-3,   <4200           
+(  113)         jmp     imp,            <4250           
+(  114)         spl     2,              <4300
+(  115)         jmp     2667+imp,       <6350           
+(  116)         jmp     5334+imp,       <4400           
+(  117)         spl     4,              <4450
+(  118)         spl     2,              <4500
+(  119)         jmp     1+imp,          <4550           
+(  120)         jmp     2668+imp,       <4600           
+(  121)         spl     2,              <4650
+(  122)         jmp     5335+imp,       <4700           
+(  123)         jmp     2+imp,          <4750           
+(  126) icopy   mov     0,              2667            
+(  128)         end     start
+
+***END*OF*PASS***
+
+Parameter checking:
+Current parameter for ';assert': 8000 ==8000&&80000 ==80000
+
+After pass 1
+Instruction (physical line, instr):
+
+(   22) JMP pit-x-121+2,x+121
+(   23) SPL 0,-1
+(   24) MOV @0,@-2
+(   25) SUB 4,@-1
+(   26) JMP -2
+(   27) MOV @121,<0-121
+(   28) SPL 0
+(   29) SPL -1
+(   32) DAT <-8,<1
+(   33) DAT <-9,<1
+(   34) DAT <-10,<1
+(   35) DAT <-11,<1
+(   36) DAT <-12,<1
+(   37) DAT <-13,<1
+(   38) DAT <-14,<1
+(   39) DAT <-15,<1
+(   40) DAT <-16,<1
+(   41) DAT <-17,<1
+(   42) DAT <-18,<1
+(   43) DAT <-19,<1
+(   44) DAT <-20,<1
+(   45) DAT <-21,<1
+(   46) DAT <-22,<1
+(   47) DAT <-23,<1
+(   48) DAT <-24,<1
+(   49) DAT <-25,<1
+(   50) DAT <-26,<1
+(   51) DAT <-27,<1
+(   52) DAT <-28,<1
+(   53) DAT <-29,<1
+(   54) DAT <-30,<1
+(   55) DAT <-31,<1
+(   56) DAT <-32,<1
+(   57) DAT <-33,<1
+(   58) DAT <-34,<1
+(   59) DAT <-35,<1
+(   60) DAT <-36,<1
+(   61) DAT <-37,<1
+(   62) DAT <-38,<1
+(   63) DAT <-39,<1
+(   64) DAT <-40,<1
+(   65) DAT <-41,<1
+(   66) DAT <-42,<1
+(   67) DAT <-43,<1
+(   68) DAT <-44,<1
+(   69) DAT <-45,<1
+(   70) DAT <-46,<1
+(   71) DAT <-47,<1
+(   72) DAT <-48,<1
+(   73) DAT <-49,<1
+(   74) DAT <-50,<1
+(   75) DAT <-51,<1
+(   76) DAT <-52,<1
+(   77) DAT <-53,<1
+(   78) DAT <-54,<1
+(   79) DAT <-55,<1
+(   80) DAT <-56,<1
+(   81) DAT <-57,<1
+(   82) DAT <-58,<1
+(   83) DAT <-59,<1
+(   84) DAT <-60,<1
+(   85) DAT <-61,<1
+(   86) DAT <-62,<1
+(   87) DAT <-63,<1
+(   88) DAT <-64,<1
+(   89) DAT <-65,<1
+(   90) DAT <-66,<1
+(   91) DAT <-67,<1
+(   92) DAT <-68,<1
+(   93) DAT <-69,<1
+(   94) DAT <-70,<1
+(   97) MOV -71+4,1600 
+(   98) MOV -72+3,<-1 
+(   99) MOV -73+2,<-2 
+(  100) MOV -74+1,<-3
+(  101) MOV -75,<-4
+(  102) MOV -71+2,1600
+(  103) MOV -72+1,<-1
+(  104) MOV -73,<-2
+(  105) SPL -8+1600-3,<1
+(  108) SPL 9,<4050
+(  109) SPL 5,<4100
+(  110) SPL 3,<4150
+(  111) MOV icopy,icopy+1800 
+(  112) JMP -13+1600-3,<4200
+(  113) JMP icopy+1800,<4250
+(  114) SPL 2,<4300
+(  115) JMP 2667+icopy+1800,<6350
+(  116) JMP 5334+icopy+1800,<4400
+(  117) SPL 4,<4450
+(  118) SPL 2,<4500
+(  119) JMP 1+icopy+1800,<4550
+(  120) JMP 2668+icopy+1800,<4600
+(  121) SPL 2,<4650
+(  122) JMP 5335+icopy+1800,<4700
+(  123) JMP 2+icopy+1800,<4750
+(  126) MOV 0,2667
+(  128) END 71
+
+***END*OF*PASS***
+
+Label references:
+Group label(s):
+icopy 
+Reference:
+(LABEL):   96
+
+Group label(s):
+ring 
+Reference:
+(LABEL):   80
+
+Group label(s):
+start 
+Reference:
+(LABEL):   71
+
+Group label(s):
+pit 
+Reference:
+(LABEL):    5
+
+Group label(s):
+x 
+Reference:
+(LABEL):    1
+
+Group label(s):
+trap 
+Reference:
+(LABEL):    0
+
+Group label(s):
+hide 
+Reference:
+(TEXT):
+ 1600            
+
+Group label(s):
+imp 
+Reference:
+(TEXT):
+ icopy+1800      
+
+Group label(s):
+dist 
+Reference:
+(TEXT):
+ 121             
+
+Group label(s):
+PSPACESIZE 
+Reference:
+(TEXT):
+500
+
+Group label(s):
+WRITELIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+READLIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+ROUNDS 
+Reference:
+(TEXT):
+1
+
+Group label(s):
+WARRIORS 
+Reference:
+(TEXT):
+5
+
+Group label(s):
+VERSION 
+Reference:
+(TEXT):
+94
+
+Group label(s):
+MINDISTANCE 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXLENGTH 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXCYCLES 
+Reference:
+(TEXT):
+80000
+
+Group label(s):
+MAXPROCESSES 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+CORESIZE 
+Reference:
+(TEXT):
+8000
+
+***END*OF*CHART***
+
+After pass 0
+Instruction (physical line, instr):
+
+(    6) ;assert CORESIZE == 8000 && MAXCYCLES == 80000
+(    8) dec     equ     2700                
+(    9) gate    equ     clear-4             
+(   11)         org     clear-1             
+(   14) bptr    dat     bomb,       9       
+(   15) bomb    spl     #dec,       11      
+(   16) clear   mov     *bptr,      >gate   
+(   17)         mov     *bptr,      >gate   
+(   18)         djn.f   clear,      }bomb   
+(   20)         end
+
+***END*OF*PASS***
+
+Parameter checking:
+Current parameter for ';assert': 8000 ==8000&&80000 ==80000
+
+After pass 1
+Instruction (physical line, instr):
+
+(   11) ORG clear-1
+(   14) DAT bomb,9
+(   15) SPL #2700,11
+(   16) MOV *-2,>clear-4 
+(   17) MOV *-3,>-1-4 
+(   18) DJN.f -2,}-3 
+(   20) END
+
+***END*OF*PASS***
+
+Label references:
+Group label(s):
+clear 
+Reference:
+(LABEL):    2
+
+Group label(s):
+bomb 
+Reference:
+(LABEL):    1
+
+Group label(s):
+bptr 
+Reference:
+(LABEL):    0
+
+Group label(s):
+gate 
+Reference:
+(TEXT):
+     clear-4             
+
+Group label(s):
+dec 
+Reference:
+(TEXT):
+     2700                
+
+Group label(s):
+PSPACESIZE 
+Reference:
+(TEXT):
+500
+
+Group label(s):
+WRITELIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+READLIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+ROUNDS 
+Reference:
+(TEXT):
+1
+
+Group label(s):
+WARRIORS 
+Reference:
+(TEXT):
+5
+
+Group label(s):
+VERSION 
+Reference:
+(TEXT):
+94
+
+Group label(s):
+MINDISTANCE 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXLENGTH 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXCYCLES 
+Reference:
+(TEXT):
+80000
+
+Group label(s):
+MAXPROCESSES 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+CORESIZE 
+Reference:
+(TEXT):
+8000
+
+***END*OF*CHART***
+

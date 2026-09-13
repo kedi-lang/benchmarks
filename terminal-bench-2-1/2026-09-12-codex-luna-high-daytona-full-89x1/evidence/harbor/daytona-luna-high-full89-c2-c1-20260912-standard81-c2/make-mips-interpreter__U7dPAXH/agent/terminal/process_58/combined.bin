@@ -1,0 +1,51 @@
+  2540	                        }
+  2541	                        
+  2542	                        /* Add zeros for precision */
+  2543	                        for (int i = 0; i < zeros_for_precision; i++) {
+  2544	                            OUT_CHAR('0');
+  2545	                        }
+  2546	                        
+  2547	                        /* Convert to buffer in reverse order */
+  2548	                        while (num > 0) {
+  2549	                            int digit = num % 16;
+  2550	                            buffer[i++] = digit < 10 ? '0' + digit : 'a' + (digit - 10);
+  2551	                            num /= 16;
+  2552	                        }
+  2553	                        
+  2554	                        /* Output digits in correct order */
+  2555	                        while (i > 0) {
+  2556	                            OUT_CHAR(buffer[--i]);
+  2557	                        }
+  2558	                    }
+  2559	                }
+  2560	                break;
+  2561	            }
+  2562	            case '%':
+  2563	                OUT_CHAR('%');
+  2564	                break;
+  2565	            default:
+  2566	                /* Print error message for unknown format specifier and exit */
+  2567	                if (stream) {
+  2568	                    fprintf(stream, "Error: Unknown format specifier '%%%c'\n", *format);
+  2569	                } else {
+  2570	                    printf("Error: Unknown format specifier '%%%c'\n", *format);
+  2571	                }
+  2572	                exit(1);
+  2573	                break;
+  2574	        }
+  2575	        
+  2576	        format++;
+  2577	    }
+  2578	    
+  2579	    /* Null-terminate if writing to a buffer */
+  2580	    if (buffer_mode && size > 0) {
+  2581	        str[pos < size - 1 ? pos : size - 1] = '\0';
+  2582	    }
+  2583	    
+  2584	    return written;
+  2585	}
+  2586	
+  2587	/* printf family implementations */
+  2588	__attribute__((force_align_arg_pointer))
+  2589	int printf(const char* format, ...) {
+  2590	    va_list args;

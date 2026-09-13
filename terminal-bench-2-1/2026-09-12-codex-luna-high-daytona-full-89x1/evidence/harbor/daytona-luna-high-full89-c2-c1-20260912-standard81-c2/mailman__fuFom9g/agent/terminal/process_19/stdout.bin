@@ -1,0 +1,220 @@
+    individual = 1
+    # All of the 'individual' personalization plus recipient header
+    # modification.
+    full = 2
+
+
+@public
+class ReplyToMunging(Enum):
+    # The Reply-To header is passed through untouched
+    no_munging = 0
+    # The mailing list's posting address is appended to the Reply-To header
+    point_to_list = 1
+    # An explicit Reply-To header is added
+    explicit_header = 2
+    # An explicit Reply-To header is added and
+    # the list address is removed from CC
+    explicit_header_only = 3
+
+
+@public
+class SubscriptionPolicy(Enum):
+    """All subscription/unsubscription policies for a mailing list."""
+    # Neither confirmation, nor moderator approval is required.
+    open = 0
+    # The user must confirm the subscription.
+    confirm = 1
+    # The moderator must approve the subscription.
+    moderate = 2
+    # The user must first confirm their subscription, and then if that is
+    # successful, the moderator must also approve it.
+    confirm_then_moderate = 3
+
+
+@public
+class ArchiveRenderingMode(Enum):
+    """Email rendering mode in Archiver."""
+    # Default text.
+    text = 1
+    # Render emails as markdown text.
+    markdown = 2
+
+
+@public
+class IMailingList(Interface):
+    """A mailing list."""
+
+    # List identity
+
+    created_at = Attribute(
+        """The date and time that the mailing list was created.""")
+
+    list_name = Attribute("""\
+        The read-only short name of the mailing list.  Note that where a
+        Mailman installation supports multiple domains, this short name may
+        not be unique.  Use the fqdn_listname attribute for a guaranteed
+        unique id for the mailing list.  This short name is always the local
+        part of the posting email address.  For example, if messages are
+        posted to mylist@example.com, then the list_name is 'mylist'.
+        """)
+
+    mail_host = Attribute("""\
+        The read-only domain name 'hosting' this mailing list.  This is always
+        the domain name part of the posting email address, and it may bear no
+        relationship to the web url used to access this mailing list.  For
+        example, if messages are posted to mylist@example.com, then the
+        mail_host is 'example.com'.
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:282:        if self.mlist.subscription_policy is SubscriptionPolicy.open:
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:287:        if self.mlist.subscription_policy is SubscriptionPolicy.moderate:
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:297:                if self.mlist.subscription_policy is
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:307:        assert self.mlist.subscription_policy in (
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:310:            ), self.mlist.subscription_policy
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:413:                     if self.mlist.subscription_policy in (
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:454:        if self.mlist.unsubscription_policy is SubscriptionPolicy.open:
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:459:        if self.mlist.unsubscription_policy is SubscriptionPolicy.moderate:
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:480:        assert self.mlist.unsubscription_policy in (
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:483:            ), self.mlist.unsubscription_policy
+/usr/lib/python3/dist-packages/mailman/app/subscriptions.py:535:                     if self.mlist.unsubscription_policy in (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:124:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:216:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:234:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:306:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:317:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:329:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:343:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:357:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:371:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:382:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:393:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:405:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:417:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:434:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:453:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:473:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:493:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:526:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:545:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:586:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:693:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:751:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:810:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:862:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:876:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_subscriptions.py:896:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:48:        self._mlist.unsubscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:75:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:119:        self._mlist.unsubscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:129:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:141:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:153:        self._mlist.unsubscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:165:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:174:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:183:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:193:        self._mlist.unsubscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:203:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:218:        self._mlist.unsubscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:233:        self._mlist.unsubscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:250:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:281:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:298:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:326:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:339:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:362:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:389:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:416:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:440:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:468:        self._mlist.unsubscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:518:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_unsubscriptions.py:530:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:63:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:85:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:105:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:125:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:147:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:182:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:219:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:236:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/app/tests/test_workflowmanager.py:256:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_addmembers.py:92:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_notify.py:44:        self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_notify.py:45:        self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_syncmembers.py:121:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_eml_confirm.py:151:        self._mlist.unsubscription_policy = (
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_eml_confirm.py:174:        self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_eml_membership.py:45:        self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_eml_membership.py:145:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_eml_membership.py:239:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/16c2b25c7b_list_subscription_policy.py:24:    if not exists_in_db(op.get_bind(), 'mailinglist', 'subscription_policy'):
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/16c2b25c7b_list_subscription_policy.py:27:            'subscription_policy', Enum(SubscriptionPolicy), nullable=True))
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/16c2b25c7b_list_subscription_policy.py:33:        sa.sql.column('subscription_policy', Enum(SubscriptionPolicy))
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/16c2b25c7b_list_subscription_policy.py:38:        {'subscription_policy': op.inline_literal(SubscriptionPolicy.open)}))
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/16c2b25c7b_list_subscription_policy.py:44:        op.drop_column('mailinglist', 'subscription_policy')
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/448a93984c35_unsubscription_workflow.py:22:    if not exists_in_db(op.get_bind(), 'mailinglist', 'unsubscription_policy'):
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/448a93984c35_unsubscription_workflow.py:25:            'unsubscription_policy', Enum(SubscriptionPolicy), nullable=True))
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/448a93984c35_unsubscription_workflow.py:31:            sa.sql.column('unsubscription_policy', Enum(SubscriptionPolicy))
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/448a93984c35_unsubscription_workflow.py:35:            {'unsubscription_policy':
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/448a93984c35_unsubscription_workflow.py:43:        batch_op.drop_column('unsubscription_policy')
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/7b254d88f122_members_and_list_moderation_action.py:30:    sa.sql.column('default_member_action', Enum(Action)),
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/7b254d88f122_members_and_list_moderation_action.py:53:# where property-name will be either default_member_action or
+/usr/lib/python3/dist-packages/mailman/database/tests/test_migrations.py:247:            default_member_action = ant.default_member_action
+/usr/lib/python3/dist-packages/mailman/database/tests/test_migrations.py:253:            sa.sql.column('default_member_action', Enum(Action)),
+/usr/lib/python3/dist-packages/mailman/database/tests/test_migrations.py:301:        self.assertEqual(action, default_member_action)
+/usr/lib/python3/dist-packages/mailman/interfaces/mailinglist.py:330:    subscription_policy = Attribute(
+/usr/lib/python3/dist-packages/mailman/interfaces/mailinglist.py:333:    unsubscription_policy = Attribute(
+/usr/lib/python3/dist-packages/mailman/interfaces/mailinglist.py:641:    default_member_action = Attribute(
+/usr/lib/python3/dist-packages/mailman/model/mailinglist.py:168:    default_member_action = Column(Enum(Action))
+/usr/lib/python3/dist-packages/mailman/model/mailinglist.py:214:    subscription_policy = Column(Enum(SubscriptionPolicy))
+/usr/lib/python3/dist-packages/mailman/model/mailinglist.py:218:    unsubscription_policy = Column(Enum(SubscriptionPolicy))
+/usr/lib/python3/dist-packages/mailman/rest/listconf.py:197:    default_member_action=GetterSetter(enum_validator(Action)),
+/usr/lib/python3/dist-packages/mailman/rest/listconf.py:258:    subscription_policy=GetterSetter(enum_validator(SubscriptionPolicy)),
+/usr/lib/python3/dist-packages/mailman/rest/listconf.py:259:    unsubscription_policy=GetterSetter(enum_validator(SubscriptionPolicy)),
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:71:    default_member_action='hold',
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:122:    subscription_policy='confirm_then_moderate',
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:123:    unsubscription_policy='confirm',
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:231:    def test_patch_subscription_policy(self):
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:232:        # The new subscription_policy value can be patched.
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:237:        self.assertEqual(resource['subscription_policy'], 'confirm')
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:241:                subscription_policy='confirm_then_moderate'),
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:245:        self.assertEqual(self._mlist.subscription_policy,
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_membership.py:114:            self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_membership.py:345:            self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_membership.py:368:            self._mlist.subscription_policy = (
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_moderation.py:263:            self._mlist.unsubscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_moderation.py:482:            self._mlist.subscription_policy = SubscriptionPolicy.moderate
+/usr/lib/python3/dist-packages/mailman/rules/moderation.py:79:        action = (mlist.default_member_action
+/usr/lib/python3/dist-packages/mailman/rules/tests/test_moderation.py:349:        self._mlist.default_member_action = Action.accept
+/usr/lib/python3/dist-packages/mailman/rules/tests/test_moderation.py:371:        self._mlist.default_member_action = Action.hold
+/usr/lib/python3/dist-packages/mailman/rules/tests/test_moderation.py:406:        self._mlist.default_member_action = Action.accept
+/usr/lib/python3/dist-packages/mailman/runners/tests/test_leave.py:71:            self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/runners/tests/test_leave.py:96:            self._mlist.unsubscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/runners/tests/test_leave.py:126:            self._mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/styles/base.py:73:        mlist.default_member_action = Action.defer
+/usr/lib/python3/dist-packages/mailman/styles/base.py:75:        mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/styles/base.py:76:        mlist.unsubscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/styles/base.py:212:        mlist.subscription_policy = SubscriptionPolicy.confirm_then_moderate
+/usr/lib/python3/dist-packages/mailman/styles/tests/test_styles.py:84:        self.assertEqual(self.mlist.subscription_policy,
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:239:    subscription_policy=SubscriptionPolicy,
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:262:    subscribe_policy='subscription_policy',
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:342:    # The mlist.default_member_action and mlist.default_nonmember_action enum
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:352:        mlist.default_member_action = member_moderation_action_mapping(
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:355:        mlist.default_member_action = Action.defer
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:445:    def test_subscription_policy_open(self):
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:446:        self._mlist.subscription_policy = SubscriptionPolicy.confirm
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:449:        self.assertEqual(self._mlist.subscription_policy,
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:450:                         SubscriptionPolicy.open)
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:452:    def test_subscription_policy_confirm(self):
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:453:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:456:        self.assertEqual(self._mlist.subscription_policy,
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:459:    def test_subscription_policy_moderate(self):
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:460:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:463:        self.assertEqual(self._mlist.subscription_policy,
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:466:    def test_subscription_policy_confirm_then_moderate(self):
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:467:        self._mlist.subscription_policy = SubscriptionPolicy.open
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:470:        self.assertEqual(self._mlist.subscription_policy,
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:723:    # The mlist.default_member_action and mlist.default_nonmember_action enum
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:727:    # For default_member_action, which used to be called
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:739:        self._mlist.default_member_action = DummyEnum.val
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:759:            self._do_test(dict(default_member_action=Action.defer))
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:764:        self._do_test(dict(default_member_action=Action.hold))
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:769:        self._do_test(dict(default_member_action=Action.reject))
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:774:        self._do_test(dict(default_member_action=Action.discard))

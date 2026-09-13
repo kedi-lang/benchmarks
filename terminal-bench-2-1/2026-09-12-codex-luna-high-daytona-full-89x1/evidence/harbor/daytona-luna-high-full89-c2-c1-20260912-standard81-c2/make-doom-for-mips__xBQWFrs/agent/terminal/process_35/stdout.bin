@@ -1,0 +1,128 @@
+
+#include "deh_str.h"
+
+#include "i_swap.h"
+#include "i_system.h"
+#include "i_video.h"
+#include "m_misc.h"
+#include "v_video.h"
+#include "w_wad.h"
+#include "z_zone.h"
+
+//
+// Create a directory
+//
+
+void M_MakeDirectory(char *path)
+{
+#ifdef _WIN32
+    mkdir(path);
+#else
+    mkdir(path, 0755);
+#endif
+}
+
+// Check if a file exists
+
+boolean M_FileExists(char *filename)
+{
+    FILE *fstream;
+
+    fstream = fopen(filename, "r");
+
+    if (fstream != NULL)
+    {
+        fclose(fstream);
+        return true;
+    }
+    else
+    {
+        // If we can't open because the file is a directory, the 
+        // "file" exists at least!
+
+        return errno == EISDIR;
+    }
+}
+
+//
+// Determine the length of an open file.
+//
+
+long M_FileLength(FILE *handle)
+{ 
+    long savedpos;
+    long length;
+
+    // save the current position in the file
+    if (count < length)
+	I_Error ("Couldn't read file %s", name);
+		
+    *buffer = buf;
+    return length;
+}
+
+// Returns the path to a temporary file of the given name, stored
+// inside the system temporary directory.
+//
+// The returned value must be freed with Z_Free after use.
+
+char *M_TempFile(char *s)
+{
+    char *tempdir;
+
+#if defined(_WIN32) || defined(__DJGPP__)
+
+    // Check the TEMP environment variable to find the location.
+
+    tempdir = getenv("TEMP");
+
+    if (tempdir == NULL)
+    {
+        tempdir = ".";
+    }
+#else
+    // In Unix, just use /tmp.
+
+    tempdir = "/tmp";
+#endif
+
+    return M_StringJoin(tempdir, DIR_SEPARATOR_S, s, NULL);
+}
+
+boolean M_StrToInt(const char *str, int *result)
+{
+    return sscanf(str, " 0x%x", result) == 1
+        || sscanf(str, " 0X%x", result) == 1
+        || sscanf(str, " 0%o", result) == 1
+        || sscanf(str, " %d", result) == 1;
+}
+
+void M_ExtractFileBase(char *path, char *dest)
+{
+    char *src;
+    char *filename;
+    int length;
+
+    src = path + strlen(path) - 1;
+
+    printf("zone memory: %p, %x allocated for zone\n", 
+           zonemem, *size);
+
+    return zonemem;
+}
+
+void I_PrintBanner(char *msg)
+{
+    int i;
+    int spaces = 35 - (strlen(msg) / 2);
+
+    for (i=0; i<spaces; ++i)
+        putchar(' ');
+
+    puts(msg);
+}
+
+void I_PrintDivider(void)
+{
+    int i;
+

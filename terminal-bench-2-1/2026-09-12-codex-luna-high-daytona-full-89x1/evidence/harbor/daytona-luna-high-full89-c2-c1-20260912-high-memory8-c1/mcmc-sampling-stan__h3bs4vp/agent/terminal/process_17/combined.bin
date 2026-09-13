@@ -1,0 +1,32 @@
+Loading required package: StanHeaders
+
+rstan version 2.32.7 (Stan version 2.39.0)
+
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+S4 class stanmodel 'anon_model' coded as follows:
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> y;
+  array[N] int<lower=0> n;
+}
+parameters {
+  real<lower=0> alpha;
+  real<lower=0> beta;
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  // Improper prior specified up to proportionality:
+  // p(alpha, beta) proportional to (alpha + beta)^(-5/2).
+  target += -2.5 * log(alpha + beta);
+  for (i in 1:N) {
+    theta[i] ~ beta(alpha, beta);
+    y[i] ~ binomial(n[i], theta[i]);
+  }
+} 

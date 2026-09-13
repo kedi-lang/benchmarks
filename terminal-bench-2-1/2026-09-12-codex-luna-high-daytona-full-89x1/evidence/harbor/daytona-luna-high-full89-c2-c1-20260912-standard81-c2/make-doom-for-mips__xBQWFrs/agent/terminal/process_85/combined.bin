@@ -1,0 +1,46 @@
+0041293c <strncpy>:
+  41293c:	00801025 	move	v0,a0
+  412940:	10c00009 	beqz	a2,412968 <strncpy+0x2c>
+  412944:	00801825 	move	v1,a0
+  412948:	24a50001 	addiu	a1,a1,1
+  41294c:	24630001 	addiu	v1,v1,1
+  412950:	80a7ffff 	lb	a3,-1(a1)
+  412954:	10e00006 	beqz	a3,412970 <strncpy+0x34>
+  412958:	a067ffff 	sb	a3,-1(v1)
+  41295c:	24c6ffff 	addiu	a2,a2,-1
+  412960:	14c0fffa 	bnez	a2,41294c <strncpy+0x10>
+  412964:	24a50001 	addiu	a1,a1,1
+  412968:	03e00008 	jr	ra
+  41296c:	00000000 	nop
+  412970:	10c0fffd 	beqz	a2,412968 <strncpy+0x2c>
+  412974:	00662821 	addu	a1,v1,a2
+  412978:	24630001 	addiu	v1,v1,1
+  41297c:	1465fffe 	bne	v1,a1,412978 <strncpy+0x3c>
+  412980:	a060ffff 	sb	zero,-1(v1)
+  412984:	03e00008 	jr	ra
+  412988:	00000000 	nop
+
+0041298c <strcat>:
+  41298c:	27bdffe0 	addiu	sp,sp,-32
+  412990:	afbf001c 	sw	ra,28(sp)
+  412994:	afb10018 	sw	s1,24(sp)
+  412998:	afb00014 	sw	s0,20(sp)
+  41299c:	00808025 	move	s0,a0
+  4129a0:	0c104909 	jal	412424 <strlen>
+  4129a4:	00a08825 	move	s1,a1
+  4129a8:	02202825 	move	a1,s1
+  4129ac:	0c104a46 	jal	412918 <strcpy>
+  4129b0:	02022021 	addu	a0,s0,v0
+  4129b4:	02001025 	move	v0,s0
+  4129b8:	8fbf001c 	lw	ra,28(sp)
+  4129bc:	8fb10018 	lw	s1,24(sp)
+  4129c0:	8fb00014 	lw	s0,20(sp)
+  4129c4:	03e00008 	jr	ra
+  4129c8:	27bd0020 	addiu	sp,sp,32
+
+004129cc <strcmp>:
+  4129cc:	80820000 	lb	v0,0(a0)
+  4129d0:	10400008 	beqz	v0,4129f4 <strcmp+0x28>
+  4129d4:	00000000 	nop
+  4129d8:	80a30000 	lb	v1,0(a1)
+  4129dc:	14620006 	bne	v1,v0,4129f8 <strcmp+0x2c>

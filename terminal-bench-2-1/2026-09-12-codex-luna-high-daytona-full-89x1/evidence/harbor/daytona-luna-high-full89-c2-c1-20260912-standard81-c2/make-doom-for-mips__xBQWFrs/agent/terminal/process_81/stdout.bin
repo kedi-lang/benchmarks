@@ -1,0 +1,79 @@
+  4339e8:	8fb00014 	lw	s0,20(sp)
+  4339ec:	3c040045 	lui	a0,0x45
+  4339f0:	0c1032d9 	jal	40cb64 <I_Error>
+  4339f4:	248410e8 	addiu	a0,a0,4328
+  4339f8:	1000ffc5 	b	433910 <W_AddFile+0xd8>
+  4339fc:	3c021405 	lui	v0,0x1405
+  433a00:	8e83a254 	lw	v1,-23980(s4)
+  433a04:	00718821 	addu	s1,v1,s1
+  433a08:	8e220018 	lw	v0,24(s1)
+  433a0c:	10400004 	beqz	v0,433a20 <W_AddFile+0x1e8>
+  433a10:	00431023 	subu	v0,v0,v1
+  433a14:	02e21021 	addu	v0,s7,v0
+  433a18:	8fa30020 	lw	v1,32(sp)
+  433a1c:	ac620004 	sw	v0,4(v1)
+  433a20:	26520001 	addiu	s2,s2,1
+  433a24:	8fa20024 	lw	v0,36(sp)
+  433a28:	8c42a250 	lw	v0,-23984(v0)
+  433a2c:	0242102b 	sltu	v0,s2,v0
+  433a30:	10400011 	beqz	v0,433a78 <W_AddFile+0x240>
+  433a34:	00000000 	nop
+  433a38:	12d2000f 	beq	s6,s2,433a78 <W_AddFile+0x240>
+  433a3c:	2610001c 	addiu	s0,s0,28
+  433a40:	03d08821 	addu	s1,s8,s0
+  433a44:	8e85a254 	lw	a1,-23980(s4)
+  433a48:	2406001c 	li	a2,28
+  433a4c:	00b12821 	addu	a1,a1,s1
+  433a50:	0c1048c0 	jal	412300 <memcpy>
+  433a54:	2604ffec 	addiu	a0,s0,-20
+  433a58:	afb00020 	sw	s0,32(sp)
+  433a5c:	8e040000 	lw	a0,0(s0)
+  433a60:	1080ffe7 	beqz	a0,433a00 <W_AddFile+0x1c8>
+  433a64:	00000000 	nop
+  433a68:	0c10deaf 	jal	437abc <Z_ChangeUser>
+  433a6c:	02002825 	move	a1,s0
+  433a70:	1000ffe4 	b	433a04 <W_AddFile+0x1cc>
+  433a74:	8e83a254 	lw	v1,-23980(s4)
+  433a78:	3c101405 	lui	s0,0x1405
+  433a7c:	0c10489a 	jal	412268 <free>
+  433a80:	8e04a254 	lw	a0,-23980(s0)
+  433a84:	ae17a254 	sw	s7,-23980(s0)
+  433a88:	3c021405 	lui	v0,0x1405
+  433a8c:	ac56a250 	sw	s6,-23984(v0)
+  433a90:	001388c0 	sll	s1,s3,0x3
+  433a94:	02338823 	subu	s1,s1,s3
+  433a98:	00118880 	sll	s1,s1,0x2
+  433a9c:	0276b02b 	sltu	s6,s3,s6
+  433aa0:	12c00015 	beqz	s6,433af8 <W_AddFile+0x2c0>
+  433aa4:	02f18821 	addu	s1,s7,s1
+  433aa8:	8fb00028 	lw	s0,40(sp)
+  433aac:	00409025 	move	s2,v0
+  433ab0:	ae350008 	sw	s5,8(s1)
+  433ab4:	8a020003 	lwl	v0,3(s0)
+  433ab8:	9a020000 	lwr	v0,0(s0)
+  433abc:	ae22000c 	sw	v0,12(s1)
+  433ac0:	8a020007 	lwl	v0,7(s0)
+  433ac4:	9a020004 	lwr	v0,4(s0)
+  433ac8:	ae220010 	sw	v0,16(s1)
+  433acc:	ae200014 	sw	zero,20(s1)
+  433ad0:	24060008 	li	a2,8
+  433ad4:	26050008 	addiu	a1,s0,8
+  433ad8:	0c104a4f 	jal	41293c <strncpy>
+  433adc:	02202025 	move	a0,s1
+  433ae0:	2631001c 	addiu	s1,s1,28
+  433ae4:	26730001 	addiu	s3,s3,1
+  433ae8:	8e42a250 	lw	v0,-23984(s2)
+  433aec:	0262102b 	sltu	v0,s3,v0
+  433af0:	1440ffef 	bnez	v0,433ab0 <W_AddFile+0x278>
+  433af4:	26100010 	addiu	s0,s0,16
+  433af8:	0c10dccf 	jal	43733c <Z_Free>
+  433afc:	8fa40028 	lw	a0,40(sp)
+  433b00:	3c021405 	lui	v0,0x1405
+  433b04:	8c44a258 	lw	a0,-23976(v0)
+  433b08:	10800006 	beqz	a0,433b24 <W_AddFile+0x2ec>
+  433b0c:	02a01025 	move	v0,s5
+  433b10:	0c10dccf 	jal	43733c <Z_Free>
+  433b14:	00000000 	nop
+  433b18:	3c021405 	lui	v0,0x1405
+  433b1c:	ac40a258 	sw	zero,-23976(v0)
+  433b20:	02a01025 	move	v0,s5

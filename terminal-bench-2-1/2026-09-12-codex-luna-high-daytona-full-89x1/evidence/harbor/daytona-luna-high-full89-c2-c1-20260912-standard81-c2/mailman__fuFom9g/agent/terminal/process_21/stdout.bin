@@ -1,0 +1,255 @@
+        if self.address.email.lower() == self.mlist.posting_address:
+            raise InvalidEmailAddressError('List posting address not allowed')
+        # Check if there is already a subscription request for this email.
+        pendings = getUtility(IPendings).find(
+            mlist=self.mlist,
+            pend_type='subscription')
+        for token, pendable in pendings:
+            if pendable['email'] == self.address.email:
+                raise SubscriptionPendingError(self.mlist, self.address.email)
+        # Start out with the subscriber being the token owner.
+        self.push('verification_checks')
+
+    def _step_verification_checks(self):
+        # If this is an invitation, send it now.
+        if self.invitation:
+            self.push('send_invitation')
+            return
+        # Is the address already verified, or is the pre-verified flag set?
+        if self.address.verified_on is None:
+            if self.pre_verified:
+                self.address.verified_on = now()
+            else:
+                # The address being subscribed is not yet verified, so we need
+                # to send a validation email that will also confirm that the
+                # user wants to be subscribed to this mailing list.
+                self.push('send_confirmation')
+                return
+        self.push('confirmation_checks')
+
+    def _step_confirmation_checks(self):
+        # If the list's subscription policy is open, then the user can be
+        # subscribed right here and now.
+        if self.mlist.subscription_policy is SubscriptionPolicy.open:
+            self.push('do_subscription')
+            return
+        # If we do not need the user's confirmation, then skip to the
+        # moderation checks.
+        if self.mlist.subscription_policy is SubscriptionPolicy.moderate:
+            self.push('moderation_checks')
+            return
+        # If the subscription has been pre-confirmed, then we can skip the
+        # confirmation check can be skipped.  If moderator approval is
+        # required we need to check that, otherwise we can go straight to
+        # subscription.
+        if self.pre_confirmed:
+            next_step = (
+                'moderation_checks'
+                if self.mlist.subscription_policy is
+                    SubscriptionPolicy.confirm_then_moderate   # noqa: E131
+                else 'do_subscription')
+            self.push(next_step)
+            return
+        # The user must confirm their subscription.
+        self.push('send_confirmation')
+
+    def _step_moderation_checks(self):
+        # Does the moderator need to approve the subscription request?
+        assert self.mlist.subscription_policy in (
+            SubscriptionPolicy.moderate,
+            SubscriptionPolicy.confirm_then_moderate,
+            ), self.mlist.subscription_policy
+        if self.pre_approved:
+            self.push('do_subscription')
+        else:
+            self.push('get_moderator_approval')
+
+    def _step_get_moderator_approval(self):
+        # Here's the next step in the workflow, assuming the moderator
+        # approves of the subscription.  If they don't, the workflow and
+        # subscription request will just be thrown away.
+        self._set_token(TokenOwner.moderator)
+        self.push('subscribe_from_restored')
+        self.save()
+        log.info('{}: held subscription request from {}'.format(
+            self.mlist.fqdn_listname, self.address.email))
+        # Possibly send a notification to the list moderators.
+        if self.mlist.admin_immed_notify:
+            subject = _(
+                'New subscription request to ${self.mlist.display_name} '
+                'from ${self.address.email}')
+            username =\
+                f'{self.subscriber.display_name} <{self.address.email}>'\
+                if self.subscriber.display_name else self.address.email
+            template = getUtility(ITemplateLoader).get(
+                'list:admin:action:subscribe', self.mlist)
+            text = wrap(expand(template, self.mlist, dict(
+        self._set_token(TokenOwner.subscriber)
+        self.push('do_confirm_verify')
+        self.save()
+        # Triggering this event causes the confirmation message to be sent.
+        notify(SubscriptionConfirmationNeededEvent(
+            self.mlist, self.token, self.address.email))
+        # Now we wait for the confirmation.
+        raise StopIteration
+
+    def _step_send_invitation(self):
+        self._set_token(TokenOwner.subscriber)
+        self.push('do_confirm_verify')
+        self.save()
+        # Triggering this event causes the confirmation message to be sent.
+        notify(SubscriptionInvitationNeededEvent(
+            self.mlist, self.token, self.address.email))
+        # Now we wait for the confirmation.
+        raise StopIteration
+
+    def _step_do_confirm_verify(self):
+        # Restore a little extra state that can't be stored in the database
+        # (because the order of setattr() on restore is indeterminate), then
+        # continue with the confirmation/verification step.
+        if self.which is WhichSubscriber.address:
+            self.subscriber = self.address
+        else:
+            assert self.which is WhichSubscriber.user
+            self.subscriber = self.user
+        # Reset the token so it can't be used in a replay attack.
+        self._set_token(TokenOwner.no_one)
+        # The user has confirmed their subscription request, and also verified
+        # their email address if necessary.  This latter needs to be set on the
+        # IAddress, but there's nothing more to do about the confirmation step.
+        # We just continue along with the workflow.
+        if self.address.verified_on is None:
+            self.address.verified_on = now()
+        # The next step depends on the mailing list's subscription policy.
+        next_step = ('moderation_checks'
+                     if self.mlist.subscription_policy in (
+                         SubscriptionPolicy.moderate,
+                         SubscriptionPolicy.confirm_then_moderate,
+                         ) and not self.invitation
+                     else 'do_subscription')
+        self.push(next_step)
+
+
+@public
+class UnSubscriptionWorkflow(_SubscriptionWorkflowCommon):
+    """Workflow of a unsubscription request."""
+
+    PENDABLE_CLASS = PendableUnsubscription
+    INITIAL_STATE = 'subscription_checks'
+    SAVE_ATTRIBUTES = (
+        'pre_approved',
+        'pre_confirmed',
+        'address_key',
+        'user_key',
+        'subscriber_key',
+        'token_owner_key',
+        )
+
+    def __init__(self, mlist, subscriber=None, *,
+                 pre_approved=False, pre_confirmed=False):
+        super().__init__(mlist, subscriber)
+        if IAddress.providedBy(subscriber) or IUser.providedBy(subscriber):
+            self.member = self.mlist.regular_members.get_member(
+                self.address.email)
+        self.pre_confirmed = pre_confirmed
+        self.pre_approved = pre_approved
+
+    def _step_subscription_checks(self):
+        # XXX assert self.member is not None is sufficient, but ...
+        assert (self.member is not None and
+                self.mlist.is_subscribed(self.member.subscriber))
+        self.push('confirmation_checks')
+
+    def _step_confirmation_checks(self):
+        # If list's unsubscription policy is open, the user can unsubscribe
+        # right now.
+        if self.mlist.unsubscription_policy is SubscriptionPolicy.open:
+            self.push('do_unsubscription')
+            return
+        # If we don't need the user's confirmation, then skip to the moderation
+        # checks.
+        if self.mlist.unsubscription_policy is SubscriptionPolicy.moderate:
+            self.push('moderation_checks')
+            return
+        # If the request is pre-confirmed, then the user can unsubscribe right
+        # now.
+        if self.pre_confirmed:
+            self.push('do_unsubscription')
+            return
+        # The user must confirm their un-subsbcription.
+        self.push('send_confirmation')
+
+    def _step_send_confirmation(self):
+        self._set_token(TokenOwner.subscriber)
+        self.push('do_confirm_verify')
+        self.save()
+        notify(UnsubscriptionConfirmationNeededEvent(
+            self.mlist, self.token, self.address.email))
+        raise StopIteration
+
+    def _step_moderation_checks(self):
+        # Does the moderator need to approve the unsubscription request?
+        assert self.mlist.unsubscription_policy in (
+44:    # list posting address and the original From: added to Reply-To: or Cc:.
+47:    # message From: the list posting address.
+70:    # The mailing list's posting address is appended to the Reply-To header
+82:    # Neither confirmation, nor moderator approval is required.
+86:    # The moderator must approve the subscription.
+89:    # successful, the moderator must also approve it.
+116:        part of the posting email address.  For example, if messages are
+122:        the domain name part of the posting email address, and it may bear no
+197:        and replaces these with the list's posting address.
+206:    posting_address = Attribute(
+220:        """The address which reaches the owners and moderators of the mailing
+222:        moderators of a mailing list.
+297:        This does not include the IUsers who are moderators but not owners of
+300:    moderators = Attribute(
+301:        """The IUser moderators of this mailing list.
+303:        This does not include the IUsers who are owners but not moderators of
+309:        This includes the IUsers who are both owners and moderators of the
+321:        """A roster of all the IMembers who are to receive regular postings
+326:        """A roster of all the IMembers who are to receive digests of postings
+330:    subscription_policy = Attribute(
+333:    unsubscription_policy = Attribute(
+356:            moderator of a mailing list).
+370:            moderator of a mailing list).
+380:            the list's posting address.
+397:        list posting.""")
+400:        """The type of personalization that is applied to postings.""")
+409:        view the member list. Options are public, members, or moderators.""")
+476:        to the -owner or -moderator address?
+485:        """The text sent in an autoresponse to the owner or moderator.""")
+487:    autorespond_postings = Attribute(
+489:        to the list's posting address?
+497:    autoresponse_postings_text = Attribute(
+498:        """The text sent in an autoresponse to the list's posting address.""")
+516:    posting_chain = Attribute(
+517:        """This mailing list's posting moderation chain.
+521:        This attribute names a chain for postings, which must exist.
+524:    posting_pipeline = Attribute(
+525:        """This mailing list's posting pipeline.
+528:        through once they've been accepted for posting to the mailing list.
+529:        This attribute names a pipeline for postings, which must exist.
+537:        be accepted.  This attribute names a chain for postings, which must
+542:        """This mailing list's owner posting pipeline.
+545:        through once they've been accepted for posting to the owners of a
+546:        mailing list.  This attribute names a pipeline for postings, which
+561:        posting address or an acceptable alias in To: or Cc: or be held for
+562:        moderator approval.
+575:        Administrivia tests check whether postings to the mailing list are
+580:        general held for moderator approval.
+641:    default_member_action = Attribute(
+642:        """The default action to take for postings from members.
+646:        `Action.defer` (the default), then normal posting decisions are made.
+647:        When the action is `Action.accept`, the postings are accepted without
+652:        """The default action to take for postings from nonmembers.
+656:        is `Action.defer` (the default), then normal posting decisions are
+657:        made.  When the action is `Action.accept`, the postings are accepted
+721:        List moderators normally get daily notices about pending
+722:        administrative requests.  This flag controls whether moderators also
+729:        List moderators can receive notifications for every member that joins
+791:        """Clear the set of acceptable posting aliases."""
+794:        """Add the given address as an acceptable aliases for posting.
+797:            destination posting purposes.  The alias is coerced to lower
+806:        """Remove the given address as an acceptable aliases for posting.
+809:            implicit destination posting purposes.

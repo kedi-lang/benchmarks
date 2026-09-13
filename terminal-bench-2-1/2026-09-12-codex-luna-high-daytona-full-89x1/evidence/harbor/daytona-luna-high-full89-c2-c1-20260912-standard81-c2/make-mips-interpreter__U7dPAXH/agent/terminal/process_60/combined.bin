@@ -1,0 +1,35 @@
+doomgeneric/doomgeneric/i_system.c-386-    fflush(stderr);
+doomgeneric/doomgeneric/i_system.c-387-
+doomgeneric/doomgeneric/i_system.c-388-    // Write a copy of the message into buffer.
+doomgeneric/doomgeneric/i_system.c-389-    va_start(argptr, error);
+doomgeneric/doomgeneric/i_system.c-390-    memset(msgbuf, 0, sizeof(msgbuf));
+doomgeneric/doomgeneric/i_system.c:391:    M_vsnprintf(msgbuf, sizeof(msgbuf), error, argptr);
+doomgeneric/doomgeneric/i_system.c-392-    va_end(argptr);
+doomgeneric/doomgeneric/i_system.c-393-
+doomgeneric/doomgeneric/i_system.c-394-    // Shutdown. Here might be other errors.
+doomgeneric/doomgeneric/i_system.c-395-
+doomgeneric/doomgeneric/i_system.c-396-    entry = exit_funcs;
+--
+doomgeneric/doomgeneric/m_misc.c-478-#define vsnprintf _vsnprintf
+doomgeneric/doomgeneric/m_misc.c-479-#endif
+doomgeneric/doomgeneric/m_misc.c-480-#endif
+doomgeneric/doomgeneric/m_misc.c-481-
+doomgeneric/doomgeneric/m_misc.c-482-// Safe, portable vsnprintf().
+doomgeneric/doomgeneric/m_misc.c:483:int M_vsnprintf(char *buf, size_t buf_len, const char *s, va_list args)
+doomgeneric/doomgeneric/m_misc.c-484-{
+doomgeneric/doomgeneric/m_misc.c-485-    int result;
+doomgeneric/doomgeneric/m_misc.c-486-
+doomgeneric/doomgeneric/m_misc.c-487-    if (buf_len < 1)
+doomgeneric/doomgeneric/m_misc.c-488-    {
+--
+doomgeneric/doomgeneric/m_misc.c-509-int M_snprintf(char *buf, size_t buf_len, const char *s, ...)
+doomgeneric/doomgeneric/m_misc.c-510-{
+doomgeneric/doomgeneric/m_misc.c-511-    va_list args;
+doomgeneric/doomgeneric/m_misc.c-512-    int result;
+doomgeneric/doomgeneric/m_misc.c-513-    va_start(args, s);
+doomgeneric/doomgeneric/m_misc.c:514:    result = M_vsnprintf(buf, buf_len, s, args);
+doomgeneric/doomgeneric/m_misc.c-515-    va_end(args);
+doomgeneric/doomgeneric/m_misc.c-516-    return result;
+doomgeneric/doomgeneric/m_misc.c-517-}
+doomgeneric/doomgeneric/m_misc.c-518-
+doomgeneric/doomgeneric/m_misc.c-519-#ifdef _WIN32

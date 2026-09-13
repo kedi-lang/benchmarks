@@ -1,0 +1,48 @@
+> set.seed(20250308)
+> input <- read.csv('/app/bn_sample_10k.csv', check.names=FALSE)
+> 
+> # DAG recovered from conditional independences after conditioning on U:
+> # U -> Y, U -> R, U -> D, U -> M, Y -> D, R -> M
+> # The two non-U edge directions use the requested alphabetical convention.
+> learned_edges <- data.frame(
++   to   = c('Y', 'R', 'D', 'M', 'D', 'M'),
++   from = c('U', 'U', 'U', 'U', 'Y', 'R'),
++   stringsAsFactors = FALSE
++ )
+> write.csv(learned_edges, '/app/learned_dag.csv', row.names=FALSE, quote=FALSE)
+> 
+> # Fit the Gaussian Bayesian network factorization implied by the DAG.
+> fit_lm <- function(response, parents) {
++   if (length(parents) == 0L) {
++     list(beta=mean(input[[response]]), sigma=sd(input[[response]]))
++   } else {
++     form <- reformulate(parents, response=response)
++     fit <- lm(form, data=input)
++     list(beta=coef(fit), sigma=summary(fit)$sigma)
++   }
++ }
+> model <- list(
++   U = fit_lm('U', character(0)),
++   Y = fit_lm('Y', 'U'),
++   R = fit_lm('R', 'U'),
++   D = fit_lm('D', c('U', 'Y')),
++   M = fit_lm('M', c('U', 'R'))
++ )
+> 
+> # A do(Y=0) intervention deletes the incoming U -> Y edge and fixes Y.
+> intervened_edges <- learned_edges[!(learned_edges$to == 'Y'), , drop=FALSE]
+> write.csv(intervened_edges, '/app/intervened_dag.csv', row.names=FALSE, quote=FALSE)
+> 
+> n <- 10000
+> out <- matrix(NA_real_, nrow=n, ncol=5,
++               dimnames=list(NULL, names(input)))
+> out[, 'U'] <- rnorm(n, model$U$beta, model$U$sigma)
+> out[, 'Y'] <- 0.0
+> out[, 'R'] <- model$R$beta[1] + model$R$beta[2] * out[, 'U'] +
++               rnorm(n, 0, model$R$sigma)
+> out[, 'D'] <- model$D$beta[1] + model$D$beta[2] * out[, 'U'] +
++               model$D$beta[3] * out[, 'Y'] + rnorm(n, 0, model$D$sigma)
+> out[, 'M'] <- model$M$beta[1] + model$M$beta[2] * out[, 'U'] +
++               model$M$beta[3] * out[, 'R'] + rnorm(n, 0, model$M$sigma)
+> write.csv(as.data.frame(out), '/app/final_bn_sample.csv', row.names=FALSE, quote=FALSE)
+> 

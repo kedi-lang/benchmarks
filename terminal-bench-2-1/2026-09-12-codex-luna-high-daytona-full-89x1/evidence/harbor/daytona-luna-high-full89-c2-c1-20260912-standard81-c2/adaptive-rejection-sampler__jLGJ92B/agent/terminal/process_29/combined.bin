@@ -1,0 +1,423 @@
+expression(sample_count <- 1L, .ars_density_evaluator <- function(density_function, 
+    caller) {
+    if (is.function(density_function)) {
+        fun <- density_function
+        return(function(x) {
+            ans <- tryCatch(fun(x), error = function(e) {
+                stop("density_function could not be evaluated: ", 
+                  conditionMessage(e), call. = FALSE)
+            })
+            if (length(ans) != length(x)) {
+                stop("density_function must be vectorized (one value per input x).", 
+                  call. = FALSE)
+            }
+            as.numeric(ans)
+        })
+    }
+    if (is.expression(density_function) || is.call(density_function) || 
+        is.character(density_function)) {
+        expr <- if (is.character(density_function)) {
+            tryCatch(parse(text = density_function), error = function(e) {
+                stop("invalid density expression: ", conditionMessage(e), 
+                  call. = FALSE)
+            })
+        }
+        else density_function
+        return(function(x) {
+            value <- tryCatch(eval(expr, envir = list(x = x), 
+                enclos = caller), error = function(e) {
+                stop("density expression could not be evaluated: ", 
+                  conditionMessage(e), call. = FALSE)
+            })
+            if (length(value) != length(x)) {
+                stop("density expression must return one value per input x.", 
+                  call. = FALSE)
+            }
+            as.numeric(value)
+        })
+    }
+    stop("density_function must be a function, call, expression, or character expression.", 
+        call. = FALSE)
+}, .ars_validate_inputs <- function(density_function, domain, 
+    n) {
+    if (!is.numeric(domain) || length(domain) != 2L || anyNA(domain) || 
+        domain[1L] >= domain[2L] || any(is.nan(domain))) {
+        stop("domain must be a numeric interval c(lower, upper), with lower < upper.", 
+            call. = FALSE)
+    }
+    if (any(!is.finite(domain) & !is.infinite(domain))) {
+        stop("domain endpoints may only be finite numbers or +/-Inf.", 
+            call. = FALSE)
+    }
+    if (!is.numeric(n) || length(n) != 1L || is.na(n) || !is.finite(n) || 
+        n < 0 || n != floor(n)) {
+        stop("n must be one finite, non-negative integer.", call. = FALSE)
+    }
+    invisible(TRUE)
+}, .ars_log_density <- function(evaluator, x) {
+    value <- evaluator(x)
+    if (length(value) != length(x)) {
+        stop("density_function must return one value per input x.", 
+            call. = FALSE)
+    }
+    bad <- !is.na(value) & !is.finite(value) & value != 0
+    if (any(bad) || any(is.nan(value)) || any(value < 0, na.rm = TRUE)) {
+        stop("density_function must return finite, non-negative values (zero is allowed).", 
+            call. = FALSE)
+    }
+    out <- rep(-Inf, length(value))
+    positive <- value > 0
+    out[positive] <- log(value[positive])
+    out
+}, .ars_initial_grid <- function(domain) {
+    lo <- domain[1L]
+    hi <- domain[2L]
+    if (is.finite(lo) && is.finite(hi)) {
+        return(seq(lo, hi, length.out = 121L))
+    }
+    if (is.finite(lo)) {
+        scale <- max(1, abs(lo))
+        return(unique(c(lo, lo + scale * c(1e-08, 1e-06, 1e-04, 
+            0.01, 0.05, 0.1, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 
+            128))))
+    }
+    if (is.finite(hi)) {
+        scale <- max(1, abs(hi))
+        return(unique(c(hi, hi - scale * c(1e-08, 1e-06, 1e-04, 
+            0.01, 0.05, 0.1, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 
+            128))))
+    }
+    c(0, -2^seq(-10, 12, by = 0.25), 2^seq(-10, 12, by = 0.25))
+}, .ars_enrich_grid <- function(grid, log_values, domain, evaluator) {
+    for (pass in seq_len(3L)) {
+        good <- which(is.finite(log_values))
+        if (length(good) == 0L) 
+            break
+        best <- good[which.max(log_values[good])]
+        ordered <- sort(grid)
+        pos <- match(grid[best], ordered)
+        left_gap <- if (pos > 1L) 
+            ordered[pos] - ordered[pos - 1L]
+        else NA_real_
+        right_gap <- if (pos < length(ordered)) 
+            ordered[pos + 1L] - ordered[pos]
+        else NA_real_
+        gap <- max(c(left_gap, right_gap), na.rm = TRUE)
+        if (!is.finite(gap) || gap <= 0) {
+            gap <- if (is.finite(domain[1L]) && is.finite(domain[2L])) 
+                (domain[2L] - domain[1L])/10
+            else max(1, abs(grid[best]))
+        }
+        extra <- grid[best] + gap * seq(-1, 1, length.out = 21L)
+        extra <- extra[extra >= domain[1L] & extra <= domain[2L]]
+        new_grid <- sort(unique(c(grid, extra)))
+        new_values <- .ars_log_density(evaluator, new_grid)
+        grid <- new_grid
+        log_values <- new_values
+    }
+    list(x = grid, log_density = log_values)
+}, .ars_check_concavity <- function(x, log_density, tolerance = 0.001) {
+    keep <- is.finite(log_density) & is.finite(x)
+    x <- x[keep]
+    y <- log_density[keep]
+    if (length(x) < 3L) {
+        stop("at least three points with positive density are required.", 
+            call. = FALSE)
+    }
+    o <- order(x)
+    x <- x[o]
+    y <- y[o]
+    distinct <- c(TRUE, diff(x) > 1e-08 * (1 + abs(x[-length(x)])))
+    x <- x[distinct]
+    y <- y[distinct]
+    if (length(x) < 3L) {
+        stop("at least three distinct points with positive density are required.", 
+            call. = FALSE)
+    }
+    slopes <- diff(y)/diff(x)
+    if (any(!is.finite(slopes))) {
+        stop("the log density has unusable numerical slopes.", 
+            call. = FALSE)
+    }
+    increase <- diff(slopes)
+    scale <- 1 + pmax(abs(slopes[-length(slopes)]), abs(slopes[-1L]))
+    if (any(increase > tolerance * scale)) {
+        stop("density appears to be non-log-concave on the supplied domain.", 
+            call. = FALSE)
+    }
+    invisible(TRUE)
+}, .ars_estimate_derivative <- function(x, evaluator, domain, 
+    fallback = NULL) {
+    h <- 1e-05 * max(1, abs(x))
+    if (is.finite(domain[1L])) 
+        h <- min(h, max(1e-08, (x - domain[1L])/2))
+    if (is.finite(domain[2L])) 
+        h <- min(h, max(1e-08, (domain[2L] - x)/2))
+    for (attempt in seq_len(12L)) {
+        xl <- x - h
+        xr <- x + h
+        if (is.finite(domain[1L])) 
+            xl <- max(xl, domain[1L])
+        if (is.finite(domain[2L])) 
+            xr <- min(xr, domain[2L])
+        if (xr > xl) {
+            yy <- .ars_log_density(evaluator, c(xl, xr))
+            if (all(is.finite(yy))) 
+                return((yy[2L] - yy[1L])/(xr - xl))
+        }
+        h <- h/10
+    }
+    if (!is.null(fallback) && is.finite(fallback)) 
+        return(fallback)
+    stop("could not estimate a finite log-density derivative.", 
+        call. = FALSE)
+}, .ars_derivatives <- function(x, y, evaluator, domain) {
+    o <- order(x)
+    x <- x[o]
+    y <- y[o]
+    distinct <- c(TRUE, diff(x) > 1e-08 * (1 + abs(x[-length(x)])))
+    x <- x[distinct]
+    y <- y[distinct]
+    n <- length(x)
+    secants <- diff(y)/diff(x)
+    fallback <- c(secants[1L], if (n > 2L) {
+        (secants[-length(secants)] + secants[-1L])/2
+    }, secants[length(secants)])
+    h <- 1e-05 * pmax(1, abs(x))
+    if (is.finite(domain[1L])) 
+        h <- pmin(h, pmax(1e-08, (x - domain[1L])/2))
+    if (is.finite(domain[2L])) 
+        h <- pmin(h, pmax(1e-08, (domain[2L] - x)/2))
+    d <- rep(NA_real_, n)
+    pending <- seq_len(n)
+    for (attempt in seq_len(12L)) {
+        if (!length(pending)) 
+            break
+        xl <- x[pending] - h[pending]
+        xr <- x[pending] + h[pending]
+        if (is.finite(domain[1L])) 
+            xl <- pmax(xl, domain[1L])
+        if (is.finite(domain[2L])) 
+            xr <- pmin(xr, domain[2L])
+        ok_range <- xr > xl
+        values <- rep(-Inf, 2L * length(pending))
+        if (any(ok_range)) {
+            ii <- which(ok_range)
+            values[c(ii, ii + length(pending))] <- .ars_log_density(evaluator, 
+                c(xl[ii], xr[ii]))
+        }
+        left_y <- values[seq_along(pending)]
+        right_y <- values[length(pending) + seq_along(pending)]
+        good <- ok_range & is.finite(left_y) & is.finite(right_y)
+        if (any(good)) 
+            d[pending[good]] <- (right_y[good] - left_y[good])/(xr[good] - 
+                xl[good])
+        pending <- pending[!good]
+        if (length(pending)) 
+            h[pending] <- h[pending]/10
+    }
+    d[!is.finite(d)] <- fallback[!is.finite(d)]
+    if (any(!is.finite(d))) 
+        stop("could not estimate finite log-density derivatives.", 
+            call. = FALSE)
+    d <- cummin(d)
+    list(x = x, y = y, derivative = d)
+}, .ars_log_integral <- function(intercept, slope, left, right) {
+    if (slope > 1e-12) {
+        if (!is.finite(right)) 
+            return(-Inf)
+        top <- intercept + slope * right
+        delta <- slope * (left - right)
+        correction <- if (!is.finite(delta) || delta < -35) 
+            1
+        else -expm1(delta)
+        return(top + log(correction) - log(slope))
+    }
+    if (slope < -1e-12) {
+        if (!is.finite(left)) 
+            return(-Inf)
+        top <- intercept + slope * left
+        delta <- slope * (right - left)
+        correction <- if (!is.finite(delta) || delta < -35) 
+            1
+        else -expm1(delta)
+        return(top + log(correction) - log(-slope))
+    }
+    if (!is.finite(left) || !is.finite(right)) 
+        return(-Inf)
+    intercept + log(right - left)
+}, .ars_build_hull <- function(x, y, derivative, domain) {
+    o <- order(x)
+    x <- x[o]
+    y <- y[o]
+    derivative <- derivative[o]
+    n <- length(x)
+    if (n < 3L) 
+        stop("too few knots to construct an ARS envelope.", call. = FALSE)
+    intersections <- numeric(n - 1L)
+    for (i in seq_len(n - 1L)) {
+        den <- derivative[i] - derivative[i + 1L]
+        if (abs(den) < 1e-10) {
+            intersections[i] <- (x[i] + x[i + 1L])/2
+        }
+        else {
+            intersections[i] <- (y[i + 1L] - y[i] + derivative[i] * 
+                x[i] - derivative[i + 1L] * x[i + 1L])/den
+            if (!is.finite(intersections[i]) || intersections[i] <= 
+                x[i] || intersections[i] >= x[i + 1L]) {
+                intersections[i] <- (x[i] + x[i + 1L])/2
+            }
+        }
+    }
+    bounds <- c(domain[1L], intersections, domain[2L])
+    for (i in 2:length(bounds)) {
+        if (bounds[i] <= bounds[i - 1L]) 
+            bounds[i] <- (x[min(i - 1L, n)] + x[min(i, n)])/2
+    }
+    shift <- max(y)
+    intercept <- y - derivative * x - shift
+    log_weights <- vapply(seq_len(n), function(i) .ars_log_integral(intercept[i], 
+        derivative[i], bounds[i], bounds[i + 1L]), numeric(1L))
+    if (any(!is.finite(log_weights))) {
+        stop("could not construct a finite ARS envelope; check tail log-concavity and domain.", 
+            call. = FALSE)
+    }
+    max_log_weight <- max(log_weights)
+    weights <- exp(log_weights - max_log_weight)
+    list(x = x, y = y, derivative = derivative, intercept = intercept, 
+        bounds = bounds, weights = weights, log_weight_shift = max_log_weight, 
+        shift = shift)
+}, .ars_draw_proposal <- function(hull) {
+    p <- hull$weights/sum(hull$weights)
+    i <- sample.int(length(p), 1L, prob = p)
+    a <- hull$bounds[i]
+    b <- hull$bounds[i + 1L]
+    m <- hull$derivative[i]
+    k <- hull$intercept[i]
+    u <- runif(1L)
+    if (abs(m) <= 1e-12) {
+        if (!is.finite(a) || !is.finite(b)) 
+            stop("improper ARS envelope.", call. = FALSE)
+        x <- a + u * (b - a)
+    }
+    else if (m > 0) {
+        if (!is.finite(b)) 
+            stop("right tail of the ARS envelope is not integrable.", 
+                call. = FALSE)
+        if (!is.finite(a)) 
+            x <- b + log(u)/m
+        else x <- b + log(u + (1 - u) * exp(m * (a - b)))/m
+    }
+    else {
+        if (!is.finite(a)) 
+            stop("left tail of the ARS envelope is not integrable.", 
+                call. = FALSE)
+        if (!is.finite(b)) 
+            x <- a + log1p(-u)/m
+        else x <- a + log((1 - u) + u * exp(m * (b - a)))/m
+    }
+    list(x = x, segment = i, upper = k + m * x + hull$shift)
+}, ars <- function(density_function, domain, n = sample_count) {
+    if (missing(n)) 
+        n <- 1L
+    .ars_validate_inputs(density_function, domain, n)
+    evaluator <- .ars_density_evaluator(density_function, parent.frame())
+    if (n == 0L) 
+        return(numeric(0L))
+    grid <- .ars_initial_grid(domain)
+    log_values <- .ars_log_density(evaluator, grid)
+    refined <- .ars_enrich_grid(grid, log_values, domain, evaluator)
+    grid <- refined$x
+    log_values <- refined$log_density
+    keep <- is.finite(log_values)
+    if (sum(keep) < 3L) {
+        stop("fewer than three positive-density starting points were found on domain.", 
+            call. = FALSE)
+    }
+    grid <- grid[keep]
+    log_values <- log_values[keep]
+    .ars_check_concavity(grid, log_values)
+    knots <- .ars_derivatives(grid, log_values, evaluator, domain)
+    hull <- .ars_build_hull(knots$x, knots$y, knots$derivative, 
+        domain)
+    answer <- numeric(n)
+    accepted <- 0L
+    attempts <- 0L
+    max_attempts <- max(10000L, 1000L * n)
+    while (accepted < n && attempts < max_attempts) {
+        attempts <- attempts + 1L
+        proposal <- .ars_draw_proposal(hull)
+        xnew <- proposal$x
+        ynew <- .ars_log_density(evaluator, xnew)[1L]
+        if (!is.finite(ynew)) {
+            next
+        }
+        if (ynew > proposal$upper + 1e-05 * (1 + abs(ynew))) {
+            stop("log-concavity check failed: target exceeded its ARS upper hull.", 
+                call. = FALSE)
+        }
+        new_x <- c(knots$x, xnew)
+        new_y <- c(knots$y, ynew)
+        .ars_check_concavity(new_x, new_y)
+        log_accept <- ynew - proposal$upper
+        if (log(runif(1L)) <= min(0, log_accept)) {
+            accepted <- accepted + 1L
+            answer[accepted] <- xnew
+        }
+        knots <- .ars_derivatives(new_x, new_y, evaluator, domain)
+        hull <- .ars_build_hull(knots$x, knots$y, knots$derivative, 
+            domain)
+    }
+    if (accepted < n) {
+        stop("ARS did not obtain the requested number of samples; density may not be log-concave.", 
+            call. = FALSE)
+    }
+    answer
+}, test <- function() {
+    set.seed(20240229)
+    report <- function(name, ok, x = numeric(0L), detail = "") {
+        if (length(x)) {
+            cat(sprintf("%s: %s (mean=%.4f, sd=%.4f)%s\n", name, 
+                if (ok) 
+                  "PASS"
+                else "FAIL", mean(x), sd(x), detail))
+        }
+        else cat(sprintf("%s: %s%s\n", name, if (ok) 
+            "PASS"
+        else "FAIL", detail))
+        ok
+    }
+    normal <- tryCatch(ars(dnorm, c(-Inf, Inf), n = 4000L), error = identity)
+    normal_ok <- is.numeric(normal) && length(normal) == 4000L && 
+        abs(mean(normal)) < 0.08 && abs(sd(normal) - 1) < 0.08
+    report("NORMAL_SAMPLING", normal_ok, if (is.numeric(normal)) 
+        normal
+    else numeric(0L))
+    if (is.numeric(normal)) 
+        write.table(normal, "/app/normal_samples.txt", row.names = FALSE, 
+            col.names = FALSE)
+    exponential <- tryCatch(ars(dexp, c(0, Inf), n = 4000L), 
+        error = identity)
+    exponential_ok <- is.numeric(exponential) && length(exponential) == 
+        4000L && abs(mean(exponential) - 1) < 0.08 && abs(sd(exponential) - 
+        1) < 0.08
+    report("EXPONENTIAL_SAMPLING", exponential_ok, if (is.numeric(exponential)) 
+        exponential
+    else numeric(0L))
+    if (is.numeric(exponential)) 
+        write.table(exponential, "/app/exponential_samples.txt", 
+            row.names = FALSE, col.names = FALSE)
+    bad_n <- inherits(tryCatch(ars(dnorm, c(-Inf, Inf), n = -1), 
+        error = identity), "error")
+    bad_domain <- inherits(tryCatch(ars(dnorm, c(1, 1), n = 2), 
+        error = identity), "error")
+    report("INPUT_VALIDATION", bad_n && bad_domain)
+    bimodal <- function(x) 0.5 * dnorm(x, -2, 0.5) + 0.5 * dnorm(x, 
+        2, 0.5)
+    nonconcave <- inherits(tryCatch(ars(bimodal, c(-5, 5), n = 10), 
+        error = identity), "error")
+    report("NON_LOG_CONCAVE_CHECK", nonconcave)
+    invisible(all(normal_ok, exponential_ok, bad_n, bad_domain, 
+        nonconcave))
+})
+parse ok

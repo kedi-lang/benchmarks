@@ -1,0 +1,128 @@
+  if(Ray_Blob_Tests)
+    fprintf (stat_out,"  Blob         %10ld  %10ld  %10.2f\n", Ray_Blob_Tests, Ray_Blob_Tests_Succeeded, ( ((DBL)Ray_Blob_Tests_Succeeded/(DBL)Ray_Blob_Tests) *100.0 ));
+  if(Ray_Box_Tests)
+    fprintf (stat_out,"  Box          %10ld  %10ld  %10.2f\n", Ray_Box_Tests, Ray_Box_Tests_Succeeded, ( ((DBL)Ray_Box_Tests_Succeeded/(DBL)Ray_Box_Tests) *100.0 ));
+  if(Ray_Cone_Tests)
+    fprintf (stat_out,"  Cone         %10ld  %10ld  %10.2f\n", Ray_Cone_Tests, Ray_Cone_Tests_Succeeded, ( ((DBL)Ray_Cone_Tests_Succeeded/(DBL)Ray_Cone_Tests) *100.0 ) );
+  if(Ray_Disc_Tests)
+    fprintf (stat_out,"  Disc         %10ld  %10ld  %10.2f\n", Ray_Disc_Tests, Ray_Disc_Tests_Succeeded, ( ((DBL)Ray_Disc_Tests_Succeeded/(DBL)Ray_Disc_Tests) *100.0 ) );
+  if(Ray_Poly_Tests)
+    fprintf (stat_out,"  Quartic\\Poly %10ld  %10ld  %10.2f\n", Ray_Poly_Tests, Ray_Poly_Tests_Succeeded, ( ((DBL)Ray_Poly_Tests_Succeeded/(DBL)Ray_Poly_Tests) *100.0 ));
+  if(Ray_Bicubic_Tests)
+    fprintf (stat_out,"  Bezier Patch %10ld  %10ld  %10.2f\n", Ray_Bicubic_Tests, Ray_Bicubic_Tests_Succeeded, ( ((DBL)Ray_Bicubic_Tests_Succeeded/(DBL)Ray_Bicubic_Tests) *100.0 ));
+  if(Ray_Ht_Field_Tests)
+    fprintf (stat_out,"  Height Fld   %10ld  %10ld  %10.2f\n", Ray_Ht_Field_Tests, Ray_Ht_Field_Tests_Succeeded, ( ((DBL)Ray_Ht_Field_Tests_Succeeded/(DBL)Ray_Ht_Field_Tests) *100.0 ));
+  if(Ray_Ht_Field_Box_Tests)
+    fprintf (stat_out,"  Hght Fld Box %10ld  %10ld  %10.2f\n", Ray_Ht_Field_Box_Tests, Ray_HField_Box_Tests_Succeeded, ( ((DBL)Ray_HField_Box_Tests_Succeeded/(DBL)Ray_Ht_Field_Box_Tests) *100.0 ));
+  if(Bounding_Region_Tests)
+    fprintf (stat_out,"  Bounds       %10ld  %10ld  %10.2f\n", Bounding_Region_Tests, Bounding_Region_Tests_Succeeded, ( ((DBL)Bounding_Region_Tests_Succeeded/(DBL)Bounding_Region_Tests) *100.0 ));
+  if(Clipping_Region_Tests)
+    fprintf (stat_out,"  Clips        %10ld  %10ld  %10.2f\n", Clipping_Region_Tests, Clipping_Region_Tests_Succeeded, ( ((DBL)Clipping_Region_Tests_Succeeded/(DBL)Clipping_Region_Tests) *100.0 ));
+
+  if(Calls_To_Noise) 
+
+    fprintf (stat_out,"  Calls to Noise:   %10ld\n", Calls_To_Noise);
+  if(Calls_To_DNoise)
+    fprintf (stat_out,"  Calls to DNoise:  %10ld\n", Calls_To_DNoise);
+  if(Shadow_Ray_Tests)
+    fprintf (stat_out,"  Shadow Ray Tests: %10ld     Blocking Objects Found:  %10ld\n",
+      Shadow_Ray_Tests, Shadow_Rays_Succeeded);
+  if(Reflected_Rays_Traced)
+    fprintf (stat_out,"  Reflected Rays:   %10ld\n", Reflected_Rays_Traced);
+  if(Refracted_Rays_Traced)
+    fprintf (stat_out,"  Refracted Rays:   %10ld\n", Refracted_Rays_Traced);
+  if(Transmitted_Rays_Traced)
+    fprintf (stat_out,"  Transmitted Rays: %10ld\n", Transmitted_Rays_Traced);
+  if(Istack_overflows)
+    fprintf (stat_out,"  I-Stack overflows:%10ld\n", Istack_overflows);
+
+  if(tused==0) 
+    {
+    STOP_TIME                  /* Get trace done time. */
+    tused = TIME_ELAPSED       /* Calc. elapsed time. Define TIME_ELAPSED as */
+    /* 0 in your specific CONFIG.H if unsupported */
+    }
+  if (tused != 0)
+    {
+    /* Convert seconds to hours, min & sec. CdW */
+    hours = (long) tused/3600;
+    min = (long) (tused - hours*3600)/60;
+    sec = tused - (DBL) (hours*3600 + min*60);
+    fprintf (stat_out,"  Time For Trace:   %2ld hours %2ld minutes %4.2f seconds\n", hours,min,sec); 
+    }
+  if (Options & VERBOSE_FILE)
+    fclose(stat_out);
+
+  }
+
+/* Find a file in the search path. */
+
+FILE *Locate_File (filename, mode)
+char *filename, *mode;
+  {
+  FILE *f;
+  int i;
+  char pathname[FILE_NAME_LENGTH];
+
+  /* Check the current directory first. */
+  if ((f = fopen (filename, mode)) != NULL)
+    return (f);
+
+  for (i = 0 ; i < Library_Path_Index ; i++) 
+    {
+    strcpy (pathname, Library_Paths[i]);
+    if (FILENAME_SEPARATOR != NULL)
+      strcat (pathname, FILENAME_SEPARATOR);
+    strcat (pathname, filename);
+    if ((f = fopen (pathname, mode)) != NULL)
+      return (f);
+    }
+
+  return (NULL);
+  }
+void print_credits()
+  {
+  fprintf (stderr,"\n");
+  fprintf (stderr,"  Persistence of Vision Raytracer Ver %s%s\n",POV_RAY_VERSION,COMPILER_VER);
+  fprintf (stderr,"    %s\n",DISTRIBUTION_MESSAGE_1);
+  fprintf (stderr,"     %s\n",DISTRIBUTION_MESSAGE_2);
+  fprintf (stderr,"     %s\n",DISTRIBUTION_MESSAGE_3);
+  fprintf (stderr,"  Copyright 1993 POV-Team\n");
+  fprintf (stderr,"  ----------------------------------------------------------------------\n");
+  fprintf (stderr,"  POV-Ray is based on DKBTrace 2.12 by David K. Buck & Aaron A. Collins.\n");
+  fprintf (stderr,"    Contributing Authors: (Alphabetically)\n");
+  fprintf (stderr,"       Steve Anger        Steve A. Bennett   David K. Buck\n");
+  fprintf (stderr,"       Aaron A. Collins   Alexander Enzmann  Dan Farmer\n");
+  fprintf (stderr,"       Douglas Muir       Bill Pulver        Robert Skinner\n");
+  fprintf (stderr,"       Scott Taylor       Drew Wells         Chris Young\n");
+  fprintf (stderr,"    Other contributors listed in the documentation.\n");
+  fprintf (stderr,"  ----------------------------------------------------------------------\n");
+  }
+/app/povray-2.2/source/render.c:135:      exit(1);
+/app/povray-2.2/source/render.c:137:    return;
+/app/povray-2.2/source/render.c:291:  return;
+/app/povray-2.2/source/render.c:332:  return;
+/app/povray-2.2/source/render.c:370:  return;
+/app/povray-2.2/source/render.c:386:    return;
+/app/povray-2.2/source/render.c:417:/* exit with error if image not completed/user abort*/
+/app/povray-2.2/source/render.c:429:    exit(2);
+/app/povray-2.2/source/povray.c:170:        exit(1);
+/app/povray-2.2/source/povray.c:178:                      exit(1);
+/app/povray-2.2/source/povray.c:188:        exit(1);
+/app/povray-2.2/source/povray.c:197:        exit(1);
+/app/povray-2.2/source/povray.c:204:      exit(1);
+/app/povray-2.2/source/povray.c:257:        exit(1);
+/app/povray-2.2/source/povray.c:273:      exit(1);
+/app/povray-2.2/source/povray.c:338:  fprintf (stdout,"\n    P  = pause before exit");
+/app/povray-2.2/source/povray.c:339:  fprintf (stdout,"\n    X  = enable early exit by key hit");
+/app/povray-2.2/source/povray.c:359:  exit(1);
+/app/povray-2.2/source/povray.c:431:  return;
+/app/povray-2.2/source/povray.c:504:          exit (1);
+/app/povray-2.2/source/povray.c:656:      exit(1);
+/app/povray-2.2/source/povray.c:662:      exit(1);
+/app/povray-2.2/source/povray.c:892:    return;
+/app/povray-2.2/source/povray.c:899:    return;
+/app/povray-2.2/source/povray.c:907:    exit(1);
+/app/povray-2.2/source/povray.c:1023:    return (f);
+/app/povray-2.2/source/povray.c:1032:      return (f);
+/app/povray-2.2/source/povray.c:1035:  return (NULL);

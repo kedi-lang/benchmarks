@@ -1,0 +1,123 @@
+703:void R_InitData (void)
+    //  256 byte align tables.
+    lump = W_GetNumForName(DEH_String("COLORMAP"));
+    colormaps = W_CacheLumpNum(lump, PU_STATIC);
+}
+
+
+
+//
+// R_InitData
+// Locates all the lumps
+//  that will be used by all views
+// Must be called after W_Init.
+//
+void R_InitData (void)
+{
+    R_InitTextures ();
+    printf (".");
+    R_InitFlats ();
+    printf (".");
+    R_InitSpriteLumps ();
+    printf (".");
+    R_InitColormaps ();
+}
+
+
+
+//
+// R_FlatNumForName
+// Retrieval, get a flat number for a flat name.
+//
+int R_FlatNumForName (char* name)
+{
+    int		i;
+    char	namet[9];
+
+    i = W_CheckNumForName (name);
+
+    if (i == -1)
+    {
+	namet[8] = 0;
+	memcpy (namet, name,8);
+	I_Error ("R_FlatNumForName: %s not found",namet);
+    }
+    return i - firstflat;
+}
+
+
+
+
+//
+// R_CheckTextureNumForName
+// Check whether texture is available.
+// Filter out NoTexture indicator.
+//
+int	R_CheckTextureNumForName (char *name)
+{
+    texture_t *texture;
+    int key;
+
+    // "NoTexture" marker.
+    if (name[0] == '-')		
+	return 0;
+		
+    key = W_LumpNameHash(name) % numtextures;
+
+    texture=textures_hashtable[key]; 
+    
+    while (texture != NULL)
+    {
+	if (!strncasecmp (texture->name, name, 8) )
+	    return texture->index;
+359:void I_Error (char *error, ...)
+360-{
+361-    char msgbuf[512];
+362-    va_list argptr;
+363-    atexit_listentry_t *entry;
+364-    boolean exit_gui_popup;
+365-
+366-    if (already_quitting)
+367-    {
+368-        fprintf(stderr, "Warning: recursive call to I_Error detected.\n");
+369-#if ORIGCODE
+370-        exit(-1);
+371-#endif
+372-    }
+373-    else
+374-    {
+375-        already_quitting = true;
+376-    }
+377-
+378-    // Message first.
+379-    va_start(argptr, error);
+380-    //fprintf(stderr, "\nError: ");
+381-    vfprintf(stderr, error, argptr);
+382-    fprintf(stderr, "\n\n");
+383-    va_end(argptr);
+384-    fflush(stderr);
+385-
+386-    // Write a copy of the message into buffer.
+387-    va_start(argptr, error);
+388-    memset(msgbuf, 0, sizeof(msgbuf));
+389-    M_vsnprintf(msgbuf, sizeof(msgbuf), error, argptr);
+390-    va_end(argptr);
+391-
+392-    // Shutdown. Here might be other errors.
+393-
+394-    entry = exit_funcs;
+395-
+396-    while (entry != NULL)
+397-    {
+398-        if (entry->run_on_error)
+399-        {
+400-            entry->func();
+401-        }
+402-
+403-        entry = entry->next;
+404-    }
+405-
+406-    exit_gui_popup = !M_ParmExists("-nogui");
+407-
+408-    // Pop up a GUI dialog box to show the error message, if the
+409-    // game was not run from the console (and the user will

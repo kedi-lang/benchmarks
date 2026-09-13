@@ -1,0 +1,65 @@
+root        2554  0.0  0.0   2716  1612 ?        S    18:58   0:00 timeout 21630 env KEDI_HOME=/installed-agent/kedi-home KEDI_CODEX_AUTH_FILE=/installed-agent/kedi-codex-auth.json bash -c set -o pipefail; set -o pipefail; trap 'rm -f -- /installed-agent/kedi-codex-auth.json' EXIT; rm -f -- /installed-agent/kedi-runner.pid /logs/agent/runner-exit.json /logs/agent/.runner-exit.tmp; /installed-agent/kedi/bin/python -m kedi.integrations.harbor.runner --instruction-file /installed-agent/kedi-instruction.txt --model codex/gpt-5.6-luna --adapter pydantic --workspace . --result-file /logs/agent/kedi-result.json --trial-id b97240fc-8f7c-4364-afa8-e0ada519e8e3 --compaction-mode disabled --history-enabled --artifacts-enabled --no-codemode-enabled --no-batching-guidance-enabled --request-observation --artifact-threshold-bytes 16384 --artifact-quota-bytes 256000000 --command-timeout-seconds 600.0 --terminal-preview-bytes 32768 --terminal-output-limit-bytes 512000000 --retained-process-timeout-seconds 21600.0 --model-request-limit 512 --model-cumulative-input-tokens 50000000 --effort high --trial-timeout-seconds 21600.0 --trial-deadline-unix 1789261084.4514313 --manifest-digest 9d8b5edf17a9b91a65b78f026871333df856d064e41d273798f8e84bad88f15e > /logs/agent/kedi.txt 2>&1 & runner_pid="$!"; printf '%s\n' "$runner_pid" > /installed-agent/kedi-runner.pid; wait "$runner_pid"; runner_status="$?"; printf '{"schema_version":1,"exit_code":%s,"finished_at":"%s"}\n' "$runner_status" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /logs/agent/.runner-exit.tmp && mv -- /logs/agent/.runner-exit.tmp /logs/agent/runner-exit.json; rm -f -- /installed-agent/kedi-runner.pid; exit "$runner_status"
+root        2555  0.0  0.0   4336  3564 ?        S    18:58   0:00 bash -c set -o pipefail; set -o pipefail; trap 'rm -f -- /installed-agent/kedi-codex-auth.json' EXIT; rm -f -- /installed-agent/kedi-runner.pid /logs/agent/runner-exit.json /logs/agent/.runner-exit.tmp; /installed-agent/kedi/bin/python -m kedi.integrations.harbor.runner --instruction-file /installed-agent/kedi-instruction.txt --model codex/gpt-5.6-luna --adapter pydantic --workspace . --result-file /logs/agent/kedi-result.json --trial-id b97240fc-8f7c-4364-afa8-e0ada519e8e3 --compaction-mode disabled --history-enabled --artifacts-enabled --no-codemode-enabled --no-batching-guidance-enabled --request-observation --artifact-threshold-bytes 16384 --artifact-quota-bytes 256000000 --command-timeout-seconds 600.0 --terminal-preview-bytes 32768 --terminal-output-limit-bytes 512000000 --retained-process-timeout-seconds 21600.0 --model-request-limit 512 --model-cumulative-input-tokens 50000000 --effort high --trial-timeout-seconds 21600.0 --trial-deadline-unix 1789261084.4514313 --manifest-digest 9d8b5edf17a9b91a65b78f026871333df856d064e41d273798f8e84bad88f15e > /logs/agent/kedi.txt 2>&1 & runner_pid="$!"; printf '%s\n' "$runner_pid" > /installed-agent/kedi-runner.pid; wait "$runner_pid"; runner_status="$?"; printf '{"schema_version":1,"exit_code":%s,"finished_at":"%s"}\n' "$runner_status" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /logs/agent/.runner-exit.tmp && mv -- /logs/agent/.runner-exit.tmp /logs/agent/runner-exit.json; rm -f -- /installed-agent/kedi-runner.pid; exit "$runner_status"
+root        2557  0.0  0.0 1136372 153616 ?      Sl   18:58   0:02 /installed-agent/kedi/bin/python -m kedi.integrations.harbor.runner --instruction-file /installed-agent/kedi-instruction.txt --model codex/gpt-5.6-luna --adapter pydantic --workspace . --result-file /logs/agent/kedi-result.json --trial-id b97240fc-8f7c-4364-afa8-e0ada519e8e3 --compaction-mode disabled --history-enabled --artifacts-enabled --no-codemode-enabled --no-batching-guidance-enabled --request-observation --artifact-threshold-bytes 16384 --artifact-quota-bytes 256000000 --command-timeout-seconds 600.0 --terminal-preview-bytes 32768 --terminal-output-limit-bytes 512000000 --retained-process-timeout-seconds 21600.0 --model-request-limit 512 --model-cumulative-input-tokens 50000000 --effort high --trial-timeout-seconds 21600.0 --trial-deadline-unix 1789261084.4514313 --manifest-digest 9d8b5edf17a9b91a65b78f026871333df856d064e41d273798f8e84bad88f15e
+list        3060  0.0  0.0  82584 73416 ?        Ss   19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/master -C /etc/mailman3/mailman.cfg
+list        3077  0.0  0.0  81460 73396 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=archive:0:1
+list        3078  0.0  0.0  84348 75224 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=bounces:0:1
+list        3079  0.0  0.0  81460 73148 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=command:0:1
+list        3080  0.0  0.0  81456 73296 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=in:0:1
+list        3081  0.0  0.0 155204 73408 ?        Sl   19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=lmtp:0:1
+list        3082  0.0  0.0  81456 73384 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=nntp:0:1
+list        3083  0.0  0.0  81588 73224 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=out:0:1
+list        3084  0.0  0.0  81460 73308 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=pipeline:0:1
+list        3085  0.0  0.0  92708 83968 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=rest:0:1
+list        3086  0.0  0.0  81460 73204 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=retry:0:1
+list        3087  0.0  0.0  83180 74924 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=task:0:1
+list        3088  0.0  0.0  81460 73308 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=virgin:0:1
+list        3089  0.0  0.0  81460 73348 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=digest:0:1
+list        3169  0.0  0.0  92708 69948 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=rest:0:1
+list        3170  0.0  0.0  92708 69948 ?        S    19:00   0:00 /usr/bin/python3 /usr/lib/mailman3/bin/runner -C /etc/mailman3/mailman.cfg --runner=rest:0:1
+root        3178  0.0  0.0   4720  3656 ?        Ss   19:01   0:00 /bin/bash -c ps aux | grep -E '[m]ailman|[r]unner'; find /var/log/mailman3 -maxdepth 1 -type f -printf '%f %s bytes\n'; for f in /var/log/mailman3/*; do echo ---$f; tail -80 "$f"; done 2>/dev/null; cat /run/mailman3/master.pid 2>/dev/null || true; /usr/bin/mailman -C /etc/mailman3/mailman.cfg status 2>&1 || true
+mailman.log 1394 bytes
+bounce.log 0 bytes
+debug.log 0 bytes
+plugins.log 0 bytes
+smtp.log 425 bytes
+---/var/log/mailman3/bounce.log
+---/var/log/mailman3/debug.log
+---/var/log/mailman3/mailman.log
+Sep 12 19:00:48 2026 (3060) Master started
+Sep 12 19:00:53 2026 (3079) command runner started.
+Sep 12 19:00:53 2026 (3086) retry runner started.
+Sep 12 19:00:53 2026 (3080) in runner started.
+Sep 12 19:00:53 2026 (3084) pipeline runner started.
+Sep 12 19:00:53 2026 (3077) archive runner started.
+Sep 12 19:00:53 2026 (3089) digest runner started.
+Sep 12 19:00:54 2026 (3081) lmtp runner started.
+Sep 12 19:00:54 2026 (3085) rest runner started.
+[2026-09-12 19:00:54 +0000] [3085] [INFO] Starting gunicorn 20.1.0
+[2026-09-12 19:00:54 +0000] [3085] [INFO] Listening at: http://127.0.0.1:8001 (3085)
+[2026-09-12 19:00:54 +0000] [3085] [INFO] Using worker: sync
+[2026-09-12 19:00:54 +0000] [3169] [INFO] Booting worker with pid: 3169
+[2026-09-12 19:00:54 +0000] [3170] [INFO] Booting worker with pid: 3170
+Sep 12 19:00:54 2026 (3082) nntp runner started.
+Sep 12 19:00:54 2026 (3088) virgin runner started.
+Sep 12 19:00:55 2026 (3078) bounces runner started.
+Sep 12 19:00:55 2026 (3083) out runner started.
+Sep 12 19:00:55 2026 (3087) task runner started.
+Sep 12 19:00:55 2026 (3087) Task runner evicted 0 expired pendings
+Sep 12 19:00:55 2026 (3087) Task runner deleted 0 orphaned workflows
+Sep 12 19:00:55 2026 (3087) Task runner deleted 0 orphaned requests
+Sep 12 19:00:55 2026 (3087) Task runner deleted 0 orphaned messages
+Sep 12 19:00:55 2026 (3087) Task runner evicted expired cache entries
+---/var/log/mailman3/plugins.log
+---/var/log/mailman3/smtp.log
+Sep 12 19:00:54 2026 (3081) Available AUTH mechanisms: LOGIN(builtin) PLAIN(builtin)
+Sep 12 19:00:54 2026 (3081) Peer: ('127.0.0.1', 39558)
+Sep 12 19:00:54 2026 (3081) ('127.0.0.1', 39558) handling connection
+Sep 12 19:00:54 2026 (3081) ('127.0.0.1', 39558) EOF received
+Sep 12 19:00:54 2026 (3081) ('127.0.0.1', 39558) Connection lost during _handle_client()
+Sep 12 19:00:54 2026 (3081) ('127.0.0.1', 39558) connection lost
+3060
+Usage: mailman [OPTIONS] COMMAND [ARGS]...
+Try 'mailman -h' for help.
+
+Error: If you are sure you want to run as root, specify --run-as-root.

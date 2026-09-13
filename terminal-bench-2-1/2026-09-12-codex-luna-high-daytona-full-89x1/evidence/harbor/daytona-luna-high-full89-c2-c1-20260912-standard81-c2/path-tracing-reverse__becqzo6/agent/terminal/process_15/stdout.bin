@@ -1,0 +1,280 @@
+
+mystery:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000401bf0 <main+0x4b0>:
+  401bf0:	fc                   	cld
+  401bf1:	ff                   	(bad)
+  401bf2:	ff f3                	push   rbx
+  401bf4:	0f 10 15 15 e4 07 00 	movups xmm2,XMMWORD PTR [rip+0x7e415]        # 480010 <_IO_stdin_used+0x10>
+  401bfb:	0f 28 da             	movaps xmm3,xmm2
+  401bfe:	45 85 ed             	test   r13d,r13d
+  401c01:	0f 85 2c fd ff ff    	jne    401933 <main+0x1f3>
+  401c07:	f3 0f 10 44 24 04    	movss  xmm0,DWORD PTR [rsp+0x4]
+  401c0d:	f3 0f 10 25 ab 3e 08 	movss  xmm4,DWORD PTR [rip+0x83eab]        # 485ac0 <sigall_set+0x20>
+  401c14:	00 
+  401c15:	f3 0f 10 35 07 e4 07 	movss  xmm6,DWORD PTR [rip+0x7e407]        # 480024 <_IO_stdin_used+0x24>
+  401c1c:	00 
+  401c1d:	0f 28 d0             	movaps xmm2,xmm0
+  401c20:	0f 54 d4             	andps  xmm2,xmm4
+  401c23:	0f 2e f2             	ucomiss xmm6,xmm2
+  401c26:	76 2c                	jbe    401c54 <main+0x514>
+  401c28:	f3 0f 2c c0          	cvttss2si eax,xmm0
+  401c2c:	66 0f ef d2          	pxor   xmm2,xmm2
+  401c30:	f3 0f 10 35 a4 3e 08 	movss  xmm6,DWORD PTR [rip+0x83ea4]        # 485adc <sigall_set+0x3c>
+  401c37:	00 
+  401c38:	0f 55 e0             	andnps xmm4,xmm0
+  401c3b:	f3 0f 2a d0          	cvtsi2ss xmm2,eax
+  401c3f:	0f 28 ca             	movaps xmm1,xmm2
+  401c42:	f3 0f c2 c8 06       	cmpnless xmm1,xmm0
+  401c47:	0f 54 ce             	andps  xmm1,xmm6
+  401c4a:	f3 0f 5c d1          	subss  xmm2,xmm1
+  401c4e:	0f 56 d4             	orps   xmm2,xmm4
+  401c51:	0f 28 c2             	movaps xmm0,xmm2
+  401c54:	f3 0f 10 0c 24       	movss  xmm1,DWORD PTR [rsp]
+  401c59:	f3 0f 10 2d 5f 3e 08 	movss  xmm5,DWORD PTR [rip+0x83e5f]        # 485ac0 <sigall_set+0x20>
+  401c60:	00 
+  401c61:	f3 0f 10 35 bb e3 07 	movss  xmm6,DWORD PTR [rip+0x7e3bb]        # 480024 <_IO_stdin_used+0x24>
+  401c68:	00 
+  401c69:	0f 28 e1             	movaps xmm4,xmm1
+  401c6c:	0f 54 e5             	andps  xmm4,xmm5
+  401c6f:	0f 2e f4             	ucomiss xmm6,xmm4
+  401c72:	76 2c                	jbe    401ca0 <main+0x560>
+  401c74:	f3 0f 2c c1          	cvttss2si eax,xmm1
+  401c78:	66 0f ef e4          	pxor   xmm4,xmm4
+  401c7c:	f3 0f 10 35 58 3e 08 	movss  xmm6,DWORD PTR [rip+0x83e58]        # 485adc <sigall_set+0x3c>
+  401c83:	00 
+  401c84:	0f 55 e9             	andnps xmm5,xmm1
+  401c87:	f3 0f 2a e0          	cvtsi2ss xmm4,eax
+  401c8b:	0f 28 d4             	movaps xmm2,xmm4
+  401c8e:	f3 0f c2 d1 06       	cmpnless xmm2,xmm1
+  401c93:	0f 54 d6             	andps  xmm2,xmm6
+  401c96:	f3 0f 5c e2          	subss  xmm4,xmm2
+  401c9a:	0f 56 e5             	orps   xmm4,xmm5
+  401c9d:	0f 28 cc             	movaps xmm1,xmm4
+  401ca0:	f3 0f 5a c0          	cvtss2sd xmm0,xmm0
+  401ca4:	f3 0f 5a c9          	cvtss2sd xmm1,xmm1
+  401ca8:	f2 0f 58 c1          	addsd  xmm0,xmm1
+  401cac:	f3 0f 10 15 64 e3 07 	movss  xmm2,DWORD PTR [rip+0x7e364]        # 480018 <_IO_stdin_used+0x18>
+  401cb3:	00 
+  401cb4:	f2 0f 2c c0          	cvttsd2si eax,xmm0
+  401cb8:	a8 01                	test   al,0x1
+  401cba:	75 08                	jne    401cc4 <main+0x584>
+  401cbc:	f3 0f 10 15 50 e3 07 	movss  xmm2,DWORD PTR [rip+0x7e350]        # 480014 <_IO_stdin_used+0x14>
+  401cc3:	00 
+  401cc4:	f3 0f 59 d3          	mulss  xmm2,xmm3
+  401cc8:	0f 28 c2             	movaps xmm0,xmm2
+  401ccb:	0f c6 c0 e0          	shufps xmm0,xmm0,0xe0
+  401ccf:	e9 69 fc ff ff       	jmp    40193d <main+0x1fd>
+  401cd4:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  401cd8:	f3 0f 10 35 28 e3 07 	movss  xmm6,DWORD PTR [rip+0x7e328]        # 480008 <_IO_stdin_used+0x8>
+  401cdf:	00 
+  401ce0:	45 85 ed             	test   r13d,r13d
+  401ce3:	75 50                	jne    401d35 <main+0x5f5>
+  401ce5:	f3 0f 58 15 ef 3d 08 	addss  xmm2,DWORD PTR [rip+0x83def]        # 485adc <sigall_set+0x3c>
+  401cec:	00 
+  401ced:	f3 0f 59 15 6b 3d 08 	mulss  xmm2,DWORD PTR [rip+0x83d6b]        # 485a60 <__PRETTY_FUNCTION__.0+0x48>
+  401cf4:	00 
+  401cf5:	f3 0f 7e 25 63 3d 08 	movq   xmm4,QWORD PTR [rip+0x83d63]        # 485a60 <__PRETTY_FUNCTION__.0+0x48>
+  401cfc:	00 
+  401cfd:	f3 0f 10 0d d7 3d 08 	movss  xmm1,DWORD PTR [rip+0x83dd7]        # 485adc <sigall_set+0x3c>
+  401d04:	00 
+  401d05:	0f 28 c2             	movaps xmm0,xmm2
+  401d08:	f3 0f 5c ca          	subss  xmm1,xmm2
+  401d0c:	0f c6 c0 e0          	shufps xmm0,xmm0,0xe0
+  401d10:	0f 59 c4             	mulps  xmm0,xmm4
+  401d13:	0f 28 e1             	movaps xmm4,xmm1
+  401d16:	f3 0f 58 d1          	addss  xmm2,xmm1
+  401d1a:	0f c6 e4 e0          	shufps xmm4,xmm4,0xe0
+  401d1e:	0f 58 c4             	addps  xmm0,xmm4
+  401d21:	e9 17 fc ff ff       	jmp    40193d <main+0x1fd>
+  401d26:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  401d2d:	00 00 00 
+  401d30:	45 85 ed             	test   r13d,r13d
+  401d33:	74 b0                	je     401ce5 <main+0x5a5>
+  401d35:	f3 0f 10 8c 24 d0 00 	movss  xmm1,DWORD PTR [rsp+0xd0]
+  401d3c:	00 00 
+  401d3e:	f3 0f 10 64 24 14    	movss  xmm4,DWORD PTR [rsp+0x14]
+  401d44:	41 bd 01 00 00 00    	mov    r13d,0x1
+  401d4a:	f3 0f 10 84 24 d4 00 	movss  xmm0,DWORD PTR [rsp+0xd4]
+  401d51:	00 00 
+  401d53:	f3 0f 10 bc 24 d8 00 	movss  xmm7,DWORD PTR [rsp+0xd8]
+  401d5a:	00 00 
+  401d5c:	f3 0f 10 ac 24 c4 00 	movss  xmm5,DWORD PTR [rsp+0xc4]
+  401d63:	00 00 
+  401d65:	f3 0f 11 4c 24 08    	movss  DWORD PTR [rsp+0x8],xmm1
+  401d6b:	f3 0f 10 9c 24 cc 00 	movss  xmm3,DWORD PTR [rsp+0xcc]
+  401d72:	00 00 
+  401d74:	f3 0f 59 e0          	mulss  xmm4,xmm0
+  401d78:	f3 0f 11 7c 24 18    	movss  DWORD PTR [rsp+0x18],xmm7
+  401d7e:	f3 0f 10 94 24 c8 00 	movss  xmm2,DWORD PTR [rsp+0xc8]
+  401d85:	00 00 
+  401d87:	f3 0f 59 fe          	mulss  xmm7,xmm6
+  401d8b:	f3 0f 11 6c 24 04    	movss  DWORD PTR [rsp+0x4],xmm5
+  401d91:	f3 0f 59 c6          	mulss  xmm0,xmm6
+  401d95:	f3 0f 11 1c 24       	movss  DWORD PTR [rsp],xmm3
+  401d9a:	f3 0f 59 f1          	mulss  xmm6,xmm1
+  401d9e:	f3 0f 11 64 24 1c    	movss  DWORD PTR [rsp+0x1c],xmm4
+  401da4:	0f 28 e7             	movaps xmm4,xmm7
+  401da7:	f3 0f 58 e3          	addss  xmm4,xmm3
+  401dab:	f3 0f 58 f5          	addss  xmm6,xmm5
+  401daf:	0f 28 ce             	movaps xmm1,xmm6
+  401db2:	e9 70 fd ff ff       	jmp    401b27 <main+0x3e7>
+  401db7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  401dbe:	00 00 
+  401dc0:	0f 2f c1             	comiss xmm0,xmm1
+  401dc3:	0f 87 6c ff ff ff    	ja     401d35 <main+0x5f5>
+  401dc9:	f3 0f 10 7c 24 14    	movss  xmm7,DWORD PTR [rsp+0x14]
+  401dcf:	0f 28 cc             	movaps xmm1,xmm4
+  401dd2:	0f 28 c6             	movaps xmm0,xmm6
+  401dd5:	45 31 ed             	xor    r13d,r13d
+  401dd8:	c7 44 24 18 00 00 00 	mov    DWORD PTR [rsp+0x18],0x0
+  401ddf:	00 
+  401de0:	f3 0f 10 24 24       	movss  xmm4,DWORD PTR [rsp]
+  401de5:	c7 44 24 08 00 00 00 	mov    DWORD PTR [rsp+0x8],0x0
+  401dec:	00 
+  401ded:	f3 0f 11 7c 24 1c    	movss  DWORD PTR [rsp+0x1c],xmm7
+  401df3:	e9 2f fd ff ff       	jmp    401b27 <main+0x3e7>
+  401df8:	49 83 c7 01          	add    r15,0x1
+  401dfc:	f3 0f 10 5c 24 0c    	movss  xmm3,DWORD PTR [rsp+0xc]
+  401e02:	49 81 ff 58 02 00 00 	cmp    r15,0x258
+  401e09:	0f 85 41 fa ff ff    	jne    401850 <main+0x110>
+  401e0f:	4c 8b 6c 24 38       	mov    r13,QWORD PTR [rsp+0x38]
+  401e14:	ba 14 00 00 00       	mov    edx,0x14
+  401e19:	48 8b 0d a8 98 0a 00 	mov    rcx,QWORD PTR [rip+0xa98a8]        # 4ab6c8 <stderr>
+  401e20:	be 01 00 00 00       	mov    esi,0x1
+  401e25:	48 8d 3d 67 e2 07 00 	lea    rdi,[rip+0x7e267]        # 480093 <__rseq_flags+0x4b>
+  401e2c:	e8 4f 4a 00 00       	call   406880 <_IO_fwrite>
+  401e31:	b9 58 02 00 00       	mov    ecx,0x258
+  401e36:	4c 89 ee             	mov    rsi,r13
+  401e39:	ba 20 03 00 00       	mov    edx,0x320
+  401e3e:	48 8d 3d 63 e2 07 00 	lea    rdi,[rip+0x7e263]        # 4800a8 <__rseq_flags+0x60>
+  401e45:	e8 e6 0d 00 00       	call   402c30 <write_image>
+  401e4a:	be 58 02 00 00       	mov    esi,0x258
+  401e4f:	4c 89 ef             	mov    rdi,r13
+  401e52:	e8 f9 0f 00 00       	call   402e50 <free_image>
+  401e57:	ba 06 00 00 00       	mov    edx,0x6
+  401e5c:	48 8b 0d 65 98 0a 00 	mov    rcx,QWORD PTR [rip+0xa9865]        # 4ab6c8 <stderr>
+  401e63:	be 01 00 00 00       	mov    esi,0x1
+  401e68:	48 8d 3d 43 e2 07 00 	lea    rdi,[rip+0x7e243]        # 4800b2 <__rseq_flags+0x6a>
+  401e6f:	e8 0c 4a 00 00       	call   406880 <_IO_fwrite>
+  401e74:	48 8b 84 24 08 01 00 	mov    rax,QWORD PTR [rsp+0x108]
+  401e7b:	00 
+  401e7c:	64 48 2b 04 25 28 00 	sub    rax,QWORD PTR fs:0x28
+  401e83:	00 00 
+  401e85:	75 14                	jne    401e9b <main+0x75b>
+  401e87:	48 81 c4 18 01 00 00 	add    rsp,0x118
+  401e8e:	31 c0                	xor    eax,eax
+  401e90:	5b                   	pop    rbx
+  401e91:	5d                   	pop    rbp
+  401e92:	41 5c                	pop    r12
+  401e94:	41 5d                	pop    r13
+  401e96:	41 5e                	pop    r14
+  401e98:	41 5f                	pop    r15
+  401e9a:	c3                   	ret
+  401e9b:	e8 70 a2 01 00       	call   41c110 <__stack_chk_fail>
+
+0000000000401ea0 <_start>:
+  401ea0:	f3 0f 1e fa          	endbr64
+  401ea4:	31 ed                	xor    ebp,ebp
+  401ea6:	49 89 d1             	mov    r9,rdx
+  401ea9:	5e                   	pop    rsi
+  401eaa:	48 89 e2             	mov    rdx,rsp
+  401ead:	48 83 e4 f0          	and    rsp,0xfffffffffffffff0
+  401eb1:	50                   	push   rax
+  401eb2:	54                   	push   rsp
+  401eb3:	45 31 c0             	xor    r8d,r8d
+  401eb6:	31 c9                	xor    ecx,ecx
+  401eb8:	48 c7 c7 40 17 40 00 	mov    rdi,0x401740
+  401ebf:	67 e8 2b 35 00 00    	addr32 call 4053f0 <__libc_start_main>
+  401ec5:	f4                   	hlt
+  401ec6:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  401ecd:	00 00 00 
+
+0000000000401ed0 <_dl_relocate_static_pie>:
+  401ed0:	f3 0f 1e fa          	endbr64
+  401ed4:	c3                   	ret
+  401ed5:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  401edc:	00 00 00 
+  401edf:	90                   	nop
+
+0000000000401ee0 <deregister_tm_clones>:
+  401ee0:	b8 c0 ca 4a 00       	mov    eax,0x4acac0
+  401ee5:	48 3d c0 ca 4a 00    	cmp    rax,0x4acac0
+  401eeb:	74 13                	je     401f00 <deregister_tm_clones+0x20>
+  401eed:	b8 00 00 00 00       	mov    eax,0x0
+  401ef2:	48 85 c0             	test   rax,rax
+  401ef5:	74 09                	je     401f00 <deregister_tm_clones+0x20>
+  401ef7:	bf c0 ca 4a 00       	mov    edi,0x4acac0
+  401efc:	ff e0                	jmp    rax
+  401efe:	66 90                	xchg   ax,ax
+  401f00:	c3                   	ret
+  401f01:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  401f08:	00 00 00 00 
+  401f0c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+
+0000000000401f10 <register_tm_clones>:
+  401f10:	be c0 ca 4a 00       	mov    esi,0x4acac0
+  401f15:	48 81 ee c0 ca 4a 00 	sub    rsi,0x4acac0
+  401f1c:	48 89 f0             	mov    rax,rsi
+  401f1f:	48 c1 ee 3f          	shr    rsi,0x3f
+  401f23:	48 c1 f8 03          	sar    rax,0x3
+  401f27:	48 01 c6             	add    rsi,rax
+  401f2a:	48 d1 fe             	sar    rsi,1
+  401f2d:	74 11                	je     401f40 <register_tm_clones+0x30>
+  401f2f:	b8 00 00 00 00       	mov    eax,0x0
+  401f34:	48 85 c0             	test   rax,rax
+  401f37:	74 07                	je     401f40 <register_tm_clones+0x30>
+  401f39:	bf c0 ca 4a 00       	mov    edi,0x4acac0
+  401f3e:	ff e0                	jmp    rax
+  401f40:	c3                   	ret
+  401f41:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  401f48:	00 00 00 00 
+  401f4c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+
+0000000000401f50 <__do_global_dtors_aux>:
+  401f50:	f3 0f 1e fa          	endbr64
+  401f54:	80 3d 65 ab 0a 00 00 	cmp    BYTE PTR [rip+0xaab65],0x0        # 4acac0 <__TMC_END__>
+  401f5b:	75 2b                	jne    401f88 <__do_global_dtors_aux+0x38>
+  401f5d:	55                   	push   rbp
+  401f5e:	48 89 e5             	mov    rbp,rsp
+  401f61:	e8 7a ff ff ff       	call   401ee0 <deregister_tm_clones>
+  401f66:	b8 c0 eb 47 00       	mov    eax,0x47ebc0
+  401f6b:	48 85 c0             	test   rax,rax
+  401f6e:	74 0a                	je     401f7a <__do_global_dtors_aux+0x2a>
+  401f70:	bf c0 c3 49 00       	mov    edi,0x49c3c0
+  401f75:	e8 46 cc 07 00       	call   47ebc0 <__deregister_frame_info>
+  401f7a:	c6 05 3f ab 0a 00 01 	mov    BYTE PTR [rip+0xaab3f],0x1        # 4acac0 <__TMC_END__>
+  401f81:	5d                   	pop    rbp
+  401f82:	c3                   	ret
+  401f83:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  401f88:	c3                   	ret
+  401f89:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+
+0000000000401f90 <frame_dummy>:
+  401f90:	f3 0f 1e fa          	endbr64
+  401f94:	b8 10 e9 47 00       	mov    eax,0x47e910
+  401f99:	48 85 c0             	test   rax,rax
+  401f9c:	74 22                	je     401fc0 <frame_dummy+0x30>
+  401f9e:	55                   	push   rbp
+  401f9f:	be e0 ca 4a 00       	mov    esi,0x4acae0
+  401fa4:	bf c0 c3 49 00       	mov    edi,0x49c3c0
+  401fa9:	48 89 e5             	mov    rbp,rsp
+  401fac:	e8 5f c9 07 00       	call   47e910 <__register_frame_info>
+  401fb1:	5d                   	pop    rbp
+  401fb2:	e9 59 ff ff ff       	jmp    401f10 <register_tm_clones>
+  401fb7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  401fbe:	00 00 
+  401fc0:	e9 4b ff ff ff       	jmp    401f10 <register_tm_clones>
+  401fc5:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+  401fcc:	00 00 00 
+  401fcf:	90                   	nop
+
+0000000000401fd0 <vector_create>:
+  401fd0:	f3 0f 1e fa          	endbr64
+  401fd4:	0f 14 c1             	unpcklps xmm0,xmm1
+  401fd7:	0f 28 ca             	movaps xmm1,xmm2
+  401fda:	c3                   	ret
+  401fdb:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]

@@ -1,0 +1,16 @@
+			 "for %s frame %c", spritename, frame+'A');
+		break;
+		
+	      case 0:
+		// only the first rotation is needed
+		break;
+			
+	      case 1:
+		// must have all 8 frames
+		for (rotation=0 ; rotation<8 ; rotation++)
+		    if (sprtemp[frame].lump[rotation] == -1)
+			I_Error ("R_InitSprites: Sprite %s frame %c "
+				 "is missing rotations",
+				 spritename, frame+'A');
+		break;
+	    }

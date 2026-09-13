@@ -1,0 +1,26 @@
+    const pc=this.pc;
+    // The image's tiny printf has intentionally minimal libc formatting, but
+    // its error path is recursive for a few Doom format strings.  Implementing
+    // these ABI entry points here is still execution (not a Doom shortcut) and
+    // keeps diagnostics from preventing the game from reaching its renderer.
+    if(pc===0x439938 || pc===0x43d180) {
+      const off=pc===0x439938 ? 4 : 5, fmt=this.m.cstr(this.get(off));
+      const args=[this.get(off+1),this.get(off+2),this.get(off+3)];
+      const text=this.guestPrintf(fmt,args); this.put(2,text.length); this.pc=this.get(31); this.steps++; return;
+    }
+    if(pc===0x43d1f8) { // vfprintf(FILE *, format, va_list)
+      const fmt=this.m.cstr(this.get(5)), va=this.get(6);
+      const args=[this.m.w(va),this.m.w(va+4),this.m.w(va+8)];
+      const text=this.guestPrintf(fmt,args); this.put(2,text.length); this.pc=this.get(31); this.steps++; return;
+    }
+    if(pc===0x43d224) { // vsnprintf(char *, size, format, va_list)
+      const dst=this.get(4), size=this.get(5), fmt=this.m.cstr(this.get(6)), va=this.get(7);
+      const text=this.guestPrintf(fmt,[this.m.w(va),this.m.w(va+4),this.m.w(va+8)],false);
+      if(size) { const q=Buffer.from(text.slice(0,size-1)+'\\0'); this.m.load(dst,q); }
+      this.put(2,text.length); this.pc=this.get(31); this.steps++; return;
+    }
+    if(pc===0x43d8a0) {
+      const s=this.m.cstr(this.get(4)); process.stdout.write(s+'\\n'); this.put(2,s.length+1); this.pc=this.get(31); this.steps++; return;
+    }
+    if(process.env.VM_TRACE_LOOP && pc===0x43ad60 && this.steps<100) process.stderr.write(`loop fp=${this.get(30)} fmt=0x${this.get(20).toString(16)} char=${this.m.b(this.get(20)+this.get(30))}\\n`);
+    const t=this.exec(pc,false); this.r[0]=0;

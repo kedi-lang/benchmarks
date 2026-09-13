@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "23f78843f95075ba43418f9282bd7fefc135fcd6ba3b3344b19565c1eebdf29f",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 30000,
+    "created_at": "2026-09-12T19:07:11.807298Z",
+    "expires_at": "2026-09-12T20:07:11.807298Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": "ATH_LENGTH];\n            \n            split_path(pathname, dir_path, filename);\n            \n            if (strlen(filename) == 0) {\n                return -EINVAL; // Invalid filename\n            }\n            \n            if (parent_dir == NULL) {\n                parent_dir = find_node(dir_path, NULL);\n                if (parent_dir == NULL) {\n                    return -ENOENT; // Parent directory not found\n                }\n            }\n            \n            if (parent_dir->type != FILE_TYPE_DIRECTORY) {\n                return -ENOTDIR;\n            }\n            \n            node = create_node(filename, FILE_TYPE_REGULAR, parent_dir);\n            int result = add_to_directory(parent_dir, filename, node);\n            if (result < 0) {\n                free(node);\n                return result;\n            }\n        } else {\n            return -ENOENT; // File not found and we're not creating it\n        }\n    } else if (flags & O_CREAT && flags & O_EXCL) {\n        return -EEXIST; // File exists but O_CREAT|O_EXCL was specified\n    }\n    \n    if (node->type == FILE_TYPE_DIRECTORY && (flags & O_WRONLY || flags & O_RDWR)) {\n        return -EISDIR; // Cannot open directory for w…",
+    "ref_id": "tool_call_result_11",
+    "sensitive": false,
+    "size_bytes": 30000,
+    "summary": "str value with 30000 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_ba3510bf-291e-4ca2-bb56-6f39a0aec868",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

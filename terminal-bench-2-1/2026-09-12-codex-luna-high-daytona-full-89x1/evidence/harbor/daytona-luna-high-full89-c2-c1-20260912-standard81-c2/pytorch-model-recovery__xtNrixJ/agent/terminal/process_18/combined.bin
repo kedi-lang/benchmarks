@@ -1,0 +1,7 @@
+/usr/local/lib/python3.13/site-packages/torch/_subclasses/functional_tensor.py:276: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:81.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+Traceback (most recent call last):
+  File "<string>", line 16, in <module>
+    h=m.transformer_decoder(m.pos_encoder(m.embedding(t)),m.transformer_encoder(m.pos_encoder(m.embedding(src))));x=torch.cat([h.reshape(-1,128),torch.ones(800,1)],1);z=torch.linalg.lstsq(x.double(),t.reshape(-1,64).double()).solution.float();p=x@z;print(n,((m(src,t)-t)**2).mean().item(),((p-t.reshape(-1,64))**2).mean().item())
+                                                                                                                    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Sizes of tensors must match except in dimension 1. Expected size 400 but got size 800 for tensor number 1 in the list.

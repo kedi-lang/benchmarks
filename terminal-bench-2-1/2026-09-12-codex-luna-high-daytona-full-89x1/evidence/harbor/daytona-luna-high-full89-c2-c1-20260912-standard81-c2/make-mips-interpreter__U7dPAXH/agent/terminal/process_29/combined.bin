@@ -1,0 +1,264 @@
+
+doomgeneric_mips:	file format elf32-mips
+
+Disassembly of section .text:
+
+00439970 <malloc>:
+  439970: e8 ff bd 27  	addiu	$sp, $sp, -24 <_end+0xffffffffbfb4e858>
+  439974: 14 00 bf af  	sw	$ra, 20($sp)
+  439978: 48 00 80 10  	beqz	$4, 292 <malloc+0x12c>
+  43997c: 00 00 00 00  	nop <z_zone.c>
+  439980: 81 00 81 2c  	sltiu	$1, $4, 129 <z_zone.c+0x81>
+  439984: 41 00 20 10  	beqz	$1, 264 <malloc+0x11c>
+  439988: 00 00 00 00  	nop <z_zone.c>
+  43998c: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  439990: 8c 17 21 90  	lbu	$1, 6028($1)
+  439994: 2c 00 20 14  	bnez	$1, 180 <malloc+0xd8>
+  439998: 00 00 00 00  	nop <z_zone.c>
+  43999c: 4b 00 01 3c  	lui	$1, 75 <z_zone.c+0x4b>
+  4399a0: 4b 40 07 3c  	lui	$7, 16459 <z_zone.c+0x404b>
+  4399a4: 00 00 03 24  	addiu	$3, $zero, 0 <z_zone.c>
+  4399a8: f8 ff 06 24  	addiu	$6, $zero, -8 <_end+0xffffffffbfb4e868>
+  4399ac: 04 00 0a 24  	addiu	$10, $zero, 4 <z_zone.c+0x4>
+  4399b0: 14 0b 22 8c  	lw	$2, 2836($1)
+  4399b4: 45 00 01 3c  	lui	$1, 69 <z_zone.c+0x45>
+  4399b8: 4c 17 e8 24  	addiu	$8, $7, 5964 <z_zone.c+0x174c>
+  4399bc: 04 65 25 24  	addiu	$5, $1, 25860 <z_zone.c+0x6504>
+  4399c0: 4b 00 01 3c  	lui	$1, 75 <z_zone.c+0x4b>
+  4399c4: 40 0b 29 24  	addiu	$9, $1, 2880 <z_zone.c+0xb40>
+  4399c8: 80 08 03 00  	sll	$1, $3, 2 <z_zone.c+0x2>
+  4399cc: 00 61 03 00  	sll	$12, $3, 4 <z_zone.c+0x4>
+  4399d0: 21 68 22 01  	addu	$13, $9, $2
+  4399d4: 00 04 0e 24  	addiu	$14, $zero, 1024 <z_zone.c+0x400>
+  4399d8: 00 00 0f 24  	addiu	$15, $zero, 0 <z_zone.c>
+  4399dc: 21 08 a1 00  	addu	$1, $5, $1
+  4399e0: 00 00 21 8c  	lw	$1, 0($1)
+  4399e4: 07 00 21 24  	addiu	$1, $1, 7 <z_zone.c+0x7>
+  4399e8: 24 58 26 00  	and	$11, $1, $6
+  4399ec: 21 08 0c 01  	addu	$1, $8, $12
+  4399f0: 04 00 2d ac  	sw	$13, 4($1)
+  4399f4: 08 00 2b ac  	sw	$11, 8($1)
+  4399f8: 0c 00 20 ac  	sw	$zero, 12($1)
+  4399fc: 21 c0 ab 01  	addu	$24, $13, $11
+
+doomgeneric_mips:	file format elf32-mips
+
+Disassembly of section .text:
+
+0043d974 <syscall6>:
+  43da00: 00 00 00 00  	nop <z_zone.c>
+  43da04: 23 08 03 00  	negu	$1, $3
+  43da08: 4b 00 02 3c  	lui	$2, 75 <z_zone.c+0x4b>
+  43da0c: ff ff 03 24  	addiu	$3, $zero, -1 <_end+0xffffffffbfb4e86f>
+  43da10: 80 0a 41 ac  	sw	$1, 2688($2)
+  43da14: 08 00 e0 03  	jr	$ra
+  43da18: 25 10 60 00  	move	$2, $3
+
+0043da1c <mkdir>:
+  43da1c: 25 18 a0 00  	move	$3, $5
+  43da20: 25 50 80 00  	move	$10, $4
+  43da24: 53 00 0b 24  	addiu	$11, $zero, 83 <z_zone.c+0x53>
+  43da28: 00 00 0c 24  	addiu	$12, $zero, 0 <z_zone.c>
+  43da2c: 25 10 60 01  	move	$2, $11
+  43da30: 25 20 40 01  	move	$4, $10
+  43da34: 25 28 60 00  	move	$5, $3
+  43da38: 25 30 80 01  	move	$6, $12
+  43da3c: 25 38 80 01  	move	$7, $12
+  43da40: 25 40 80 01  	move	$8, $12
+  43da44: 25 48 80 01  	move	$9, $12
+  43da48: 0c 00 00 00  	syscall <z_zone.c>
+  43da4c: 25 18 40 00  	move	$3, $2
+  43da50: 05 00 61 04  	bgez	$3, 24 <mkdir+0x4c>
+  43da54: 00 00 00 00  	nop <z_zone.c>
+  43da58: 23 08 03 00  	negu	$1, $3
+  43da5c: 4b 00 02 3c  	lui	$2, 75 <z_zone.c+0x4b>
+  43da60: ff ff 03 24  	addiu	$3, $zero, -1 <_end+0xffffffffbfb4e86f>
+  43da64: 80 0a 41 ac  	sw	$1, 2688($2)
+  43da68: 08 00 e0 03  	jr	$ra
+  43da6c: c3 17 03 00  	sra	$2, $3, 31 <z_zone.c+0x1f>
+
+0043da70 <exit>:
+  43da70: 25 18 80 00  	move	$3, $4
+  43da74: 3c 00 0a 24  	addiu	$10, $zero, 60 <z_zone.c+0x3c>
+  43da78: 00 00 0b 24  	addiu	$11, $zero, 0 <z_zone.c>
+  43da7c: 25 10 40 01  	move	$2, $10
+  43da80: 25 20 60 00  	move	$4, $3
+  43da84: 25 28 60 01  	move	$5, $11
+  43da88: 25 30 60 01  	move	$6, $11
+  43da8c: 25 38 60 01  	move	$7, $11
+  43da90: 25 40 60 01  	move	$8, $11
+  43da94: 25 48 60 01  	move	$9, $11
+  43da98: 0c 00 00 00  	syscall <z_zone.c>
+  43da9c: 25 18 40 00  	move	$3, $2
+  43daa0: 04 00 61 04  	bgez	$3, 20 <exit+0x44>
+  43daa4: 00 00 00 00  	nop <z_zone.c>
+  43daa8: 23 08 03 00  	negu	$1, $3
+  43daac: 4b 00 02 3c  	lui	$2, 75 <z_zone.c+0x4b>
+  43dab0: 80 0a 41 ac  	sw	$1, 2688($2)
+  43dab4: ad f6 10 08  	j	4446900 <exit+0x44>
+  43dab8: 00 00 00 00  	nop <z_zone.c>
+
+0043dabc <system>:
+  43dabc: 08 00 e0 03  	jr	$ra
+  43dac0: ff ff 02 24  	addiu	$2, $zero, -1 <_end+0xffffffffbfb4e86f>
+
+0043dac4 <__errno_location>:
+  43dac4: 4b 00 01 3c  	lui	$1, 75 <z_zone.c+0x4b>
+  43dac8: 08 00 e0 03  	jr	$ra
+  43dacc: 80 0a 22 24  	addiu	$2, $1, 2688 <z_zone.c+0xa80>
+
+0043dad0 <__ctype_toupper_loc>:
+  43dad0: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43dad4: 44 11 21 90  	lbu	$1, 4420($1)
+  43dad8: 15 00 20 14  	bnez	$1, 88 <__ctype_toupper_loc+0x60>
+  43dadc: 00 00 00 00  	nop <z_zone.c>
+  43dae0: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43dae4: 00 00 03 24  	addiu	$3, $zero, 0 <z_zone.c>
+  43dae8: 80 01 04 24  	addiu	$4, $zero, 384 <z_zone.c+0x180>
+  43daec: 44 0b 22 24  	addiu	$2, $1, 2884 <z_zone.c+0xb44>
+  43daf0: 00 00 43 ac  	sw	$3, 0($2)
+  43daf4: 01 00 63 24  	addiu	$3, $3, 1 <z_zone.c+0x1>
+  43daf8: fd ff 64 14  	bne	$3, $4, -8 <__ctype_toupper_loc+0x20>
+  43dafc: 04 00 42 24  	addiu	$2, $2, 4 <z_zone.c+0x4>
+  43db00: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43db04: 41 00 03 24  	addiu	$3, $zero, 65 <z_zone.c+0x41>
+  43db08: 5b 00 04 24  	addiu	$4, $zero, 91 <z_zone.c+0x5b>
+  43db0c: 44 0b 21 24  	addiu	$1, $1, 2884 <z_zone.c+0xb44>
+  43db10: 84 01 22 24  	addiu	$2, $1, 388 <z_zone.c+0x184>
+  43db14: 00 00 43 ac  	sw	$3, 0($2)
+  43db18: 01 00 63 24  	addiu	$3, $3, 1 <z_zone.c+0x1>
+  43db1c: fd ff 64 14  	bne	$3, $4, -8 <__ctype_toupper_loc+0x44>
+  43db20: 04 00 42 24  	addiu	$2, $2, 4 <z_zone.c+0x4>
+  43db24: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43db28: 01 00 02 24  	addiu	$2, $zero, 1 <z_zone.c+0x1>
+  43db2c: 44 11 22 a0  	sb	$2, 4420($1)
+  43db30: 47 00 01 3c  	lui	$1, 71 <z_zone.c+0x47>
+  43db34: 08 00 e0 03  	jr	$ra
+  43db38: 8c 50 22 24  	addiu	$2, $1, 20620 <z_zone.c+0x508c>
+
+0043db3c <__ctype_tolower_loc>:
+  43db3c: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43db40: 48 17 21 90  	lbu	$1, 5960($1)
+  43db44: 15 00 20 14  	bnez	$1, 88 <__ctype_tolower_loc+0x60>
+  43db48: 00 00 00 00  	nop <z_zone.c>
+  43db4c: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43db50: 00 00 03 24  	addiu	$3, $zero, 0 <z_zone.c>
+  43db54: 80 01 04 24  	addiu	$4, $zero, 384 <z_zone.c+0x180>
+  43db58: 48 11 22 24  	addiu	$2, $1, 4424 <z_zone.c+0x1148>
+  43db5c: 00 00 43 ac  	sw	$3, 0($2)
+  43db60: 01 00 63 24  	addiu	$3, $3, 1 <z_zone.c+0x1>
+  43db64: fd ff 64 14  	bne	$3, $4, -8 <__ctype_tolower_loc+0x20>
+  43db68: 04 00 42 24  	addiu	$2, $2, 4 <z_zone.c+0x4>
+  43db6c: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43db70: 61 00 03 24  	addiu	$3, $zero, 97 <z_zone.c+0x61>
+  43db74: 7b 00 04 24  	addiu	$4, $zero, 123 <z_zone.c+0x7b>
+  43db78: 48 11 21 24  	addiu	$1, $1, 4424 <z_zone.c+0x1148>
+  43db7c: 04 01 22 24  	addiu	$2, $1, 260 <z_zone.c+0x104>
+  43db80: 00 00 43 ac  	sw	$3, 0($2)
+  43db84: 01 00 63 24  	addiu	$3, $3, 1 <z_zone.c+0x1>
+  43db88: fd ff 64 14  	bne	$3, $4, -8 <__ctype_tolower_loc+0x44>
+  43db8c: 04 00 42 24  	addiu	$2, $2, 4 <z_zone.c+0x4>
+  43db90: 4b 40 01 3c  	lui	$1, 16459 <z_zone.c+0x404b>
+  43db94: 01 00 02 24  	addiu	$2, $zero, 1 <z_zone.c+0x1>
+  43db98: 48 17 22 a0  	sb	$2, 5960($1)
+  43db9c: 47 00 01 3c  	lui	$1, 71 <z_zone.c+0x47>
+  43dba0: 08 00 e0 03  	jr	$ra
+  43dba4: 90 50 22 24  	addiu	$2, $1, 20624 <z_zone.c+0x5090>
+
+0043dba8 <fabs>:
+  43dba8: 00 10 80 44  	mtc1	$zero, $f2
+  43dbac: 06 60 20 46  	mov.d	$f0, $f12
+  43dbb0: 07 61 20 46  	neg.d	$f4, $f12
+  43dbb4: 00 10 e0 44  	mthc1	$zero, $f2
+  43dbb8: 34 60 22 46  	c.olt.d	$f12, $f2
+  43dbbc: 08 00 e0 03  	jr	$ra
+  43dbc0: 11 20 21 46  	movt.d	$f0, $f4, $fcc0
+
+0043dbc4 <fabsf>:
+  43dbc4: 00 20 80 44  	mtc1	$zero, $f4
+  43dbc8: 06 60 00 46  	mov.s	$f0, $f12
+  43dbcc: 87 60 00 46  	neg.s	$f2, $f12
+  43dbd0: 34 60 04 46  	c.olt.s	$f12, $f4
+  43dbd4: 08 00 e0 03  	jr	$ra
+  43dbd8: 11 10 01 46  	movt.s	$f0, $f2, $fcc0
+
+0043dbdc <abs>:
+  43dbdc: c3 0f 04 00  	sra	$1, $4, 31 <z_zone.c+0x1f>
+  43dbe0: 21 10 81 00  	addu	$2, $4, $1
+  43dbe4: 08 00 e0 03  	jr	$ra
+  43dbe8: 26 10 41 00  	xor	$2, $2, $1
+
+0043dbec <stat>:
+  43dbec: 07 00 a0 10  	beqz	$5, 32 <stat+0x20>
+  43dbf0: 00 00 00 00  	nop <z_zone.c>
+  43dbf4: 00 00 02 24  	addiu	$2, $zero, 0 <z_zone.c>
+  43dbf8: 34 00 03 24  	addiu	$3, $zero, 52 <z_zone.c+0x34>
+  43dbfc: 21 08 a2 00  	addu	$1, $5, $2
+  43dc00: 01 00 42 24  	addiu	$2, $2, 1 <z_zone.c+0x1>
+  43dc04: fd ff 43 14  	bne	$2, $3, -8 <stat+0x10>
+  43dc08: 00 00 20 a0  	sb	$zero, 0($1)
+  43dc0c: 08 00 e0 03  	jr	$ra
+  43dc10: ff ff 02 24  	addiu	$2, $zero, -1 <_end+0xffffffffbfb4e86f>
+
+0043dc14 <fstat>:
+  43dc14: 07 00 a0 10  	beqz	$5, 32 <fstat+0x20>
+  43dc18: 00 00 00 00  	nop <z_zone.c>
+  43dc1c: 00 00 02 24  	addiu	$2, $zero, 0 <z_zone.c>
+  43dc20: 34 00 03 24  	addiu	$3, $zero, 52 <z_zone.c+0x34>
+  43dc24: 21 08 a2 00  	addu	$1, $5, $2
+  43dc28: 01 00 42 24  	addiu	$2, $2, 1 <z_zone.c+0x1>
+  43dc2c: fd ff 43 14  	bne	$2, $3, -8 <fstat+0x10>
+  43dc30: 00 00 20 a0  	sb	$zero, 0($1)
+  43dc34: 08 00 e0 03  	jr	$ra
+  43dc38: ff ff 02 24  	addiu	$2, $zero, -1 <_end+0xffffffffbfb4e86f>
+
+0043dc3c <lstat>:
+  43dc3c: 07 00 a0 10  	beqz	$5, 32 <lstat+0x20>
+  43dc40: 00 00 00 00  	nop <z_zone.c>
+  43dc44: 00 00 02 24  	addiu	$2, $zero, 0 <z_zone.c>
+  43dc48: 34 00 03 24  	addiu	$3, $zero, 52 <z_zone.c+0x34>
+  43dc4c: 21 08 a2 00  	addu	$1, $5, $2
+  43dc50: 01 00 42 24  	addiu	$2, $2, 1 <z_zone.c+0x1>
+  43dc54: fd ff 43 14  	bne	$2, $3, -8 <lstat+0x10>
+  43dc58: 00 00 20 a0  	sb	$zero, 0($1)
+  43dc5c: 08 00 e0 03  	jr	$ra
+  43dc60: ff ff 02 24  	addiu	$2, $zero, -1 <_end+0xffffffffbfb4e86f>
+
+0043dc64 <gettimeofday>:
+  43dc64: 08 00 e0 03  	jr	$ra
+  43dc68: 00 00 02 24  	addiu	$2, $zero, 0 <z_zone.c>
+
+0043dc6c <time>:
+  43dc6c: 25 18 80 00  	move	$3, $4
+  43dc70: c9 00 0a 24  	addiu	$10, $zero, 201 <z_zone.c+0xc9>
+  43dc74: 00 00 0b 24  	addiu	$11, $zero, 0 <z_zone.c>
+  43dc78: 25 10 40 01  	move	$2, $10
+  43dc7c: 25 20 60 00  	move	$4, $3
+  43dc80: 25 28 60 01  	move	$5, $11
+  43dc84: 25 30 60 01  	move	$6, $11
+  43dc88: 25 38 60 01  	move	$7, $11
+  43dc8c: 25 40 60 01  	move	$8, $11
+  43dc90: 25 48 60 01  	move	$9, $11
+  43dc94: 0c 00 00 00  	syscall <z_zone.c>
+  43dc98: 25 18 40 00  	move	$3, $2
+  43dc9c: 05 00 61 04  	bgez	$3, 24 <time+0x48>
+  43dca0: 00 00 00 00  	nop <z_zone.c>
+  43dca4: 23 08 03 00  	negu	$1, $3
+  43dca8: 4b 00 02 3c  	lui	$2, 75 <z_zone.c+0x4b>
+  43dcac: ff ff 03 24  	addiu	$3, $zero, -1 <_end+0xffffffffbfb4e86f>
+  43dcb0: 80 0a 41 ac  	sw	$1, 2688($2)
+  43dcb4: 08 00 e0 03  	jr	$ra
+  43dcb8: 25 10 60 00  	move	$2, $3
+
+0043dcbc <isatty>:
+  43dcbc: 08 00 e0 03  	jr	$ra
+  43dcc0: 03 00 82 2c  	sltiu	$2, $4, 3 <z_zone.c+0x3>
+
+0043dcc4 <sleep>:
+  43dcc4: 08 00 e0 03  	jr	$ra
+  43dcc8: 00 00 02 24  	addiu	$2, $zero, 0 <z_zone.c>
+
+0043dccc <usleep>:
+  43dccc: 08 00 e0 03  	jr	$ra
+  43dcd0: 00 00 02 24  	addiu	$2, $zero, 0 <z_zone.c>
+		...

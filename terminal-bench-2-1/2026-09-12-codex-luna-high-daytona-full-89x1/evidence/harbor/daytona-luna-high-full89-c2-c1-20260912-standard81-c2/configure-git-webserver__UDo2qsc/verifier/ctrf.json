@@ -1,0 +1,32 @@
+{
+  "results": {
+    "summary": {
+      "failed": 1,
+      "other": 0,
+      "passed": 0,
+      "pending": 0,
+      "skipped": 0,
+      "start": 1789229927.0667517,
+      "stop": 1789229930.9665673,
+      "tests": 1
+    },
+    "tests": [
+      {
+        "duration": 3.8575651217252016,
+        "file_path": "test_outputs.py",
+        "message": "The test failed in the call phase due to an assertion error",
+        "name": "test_outputs.py::test_hello_html_exists",
+        "raw_status": "call_failed",
+        "retries": 0,
+        "start": 1789229927.1028972,
+        "status": "failed",
+        "stop": 1789229930.9664001,
+        "trace": "def test_hello_html_exists():\n        \"\"\"Test that the hello.html file exists and contains the correct content.\"\"\"\n        result = subprocess.run([\"bash\", \"/tests/verify.sh\"], capture_output=True, text=True)\n    \n>       assert \"TEST PASSED\" in result.stdout, \"Did not pass test\"\nE       AssertionError: Did not pass test\nE       assert 'TEST PASSED' in 'Testing web server...\\nUsing curl to test web server...\\n❌ TEST FAILED: Web server returned HTTP 000\\nTest completed\\n'\nE        +  where 'Testing web server...\\nUsing curl to test web server...\\n❌ TEST FAILED: Web server returned HTTP 000\\nTest completed\\n' = CompletedProcess(args=['bash', '/tests/verify.sh'], returncode=0, stdout='Testing web server...\\nUsing curl to test we...tory (or any of the parent directories): .git\\nfatal: not a git repository (or any of the parent directories): .git\\n\").stdout\n\n/tests/test_outputs.py:13: AssertionError"
+      }
+    ],
+    "tool": {
+      "name": "pytest",
+      "version": "8.4.1"
+    }
+  }
+}

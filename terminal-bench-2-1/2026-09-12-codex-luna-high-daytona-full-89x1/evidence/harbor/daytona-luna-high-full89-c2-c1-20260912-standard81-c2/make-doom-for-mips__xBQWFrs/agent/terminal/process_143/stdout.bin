@@ -1,0 +1,53 @@
+ doomgeneric/m_fixed.c  | 10 +++++++++-
+ doomgeneric/r_things.c |  6 ++++--
+ 2 files changed, 13 insertions(+), 3 deletions(-)
+diff --git a/doomgeneric/m_fixed.c b/doomgeneric/m_fixed.c
+index 23f6ff3..4637057 100644
+--- a/doomgeneric/m_fixed.c
++++ b/doomgeneric/m_fixed.c
+@@ -35,7 +35,15 @@ FixedMul
+ ( fixed_t	a,
+   fixed_t	b )
+ {
+-    return ((int64_t) a * (int64_t) b) >> FRACBITS;
++    int lo, hi;
++
++    /* Keep this as the two basic MIPS multiply instructions.  vm.js
++     * implements MULT/MFHI/MFLO, but not the optional MADD instruction
++     * GCC otherwise uses for this expression. */
++    __asm__ volatile ("mult %2,%3\n\tmflo %0\n\tmfhi %1"
++                      : "=r" (lo), "=r" (hi) : "r" (a), "r" (b)
++                      : "hi", "lo");
++    return (lo >> 16) | (hi << 16);
+ }
+ 
+ 
+diff --git a/doomgeneric/r_things.c b/doomgeneric/r_things.c
+index 74e7369..d3fa00a 100644
+--- a/doomgeneric/r_things.c
++++ b/doomgeneric/r_things.c
+@@ -141,7 +141,9 @@ R_InstallSpriteLump
+ 
+     // make 0 based
+     rotation--;		
+-    if (sprtemp[frame].lump[rotation] != -1)
++    /* vm.js keeps sign-extended loads signed but materializes -1 as
++     * unsigned; compare the halfword in its zero-extended form. */
++    if (*(volatile unsigned short *) &sprtemp[frame].lump[rotation] != 0xffffU)
+ 	I_Error ("R_InitSprites: Sprite %s : %c : %c "
+ 		 "has two lumps mapped to it",
+ 		 spritename, 'A'+frame, '1'+rotation);
+@@ -255,7 +257,7 @@ void R_InitSpriteDefs (char** namelist)
+ 	      case 1:
+ 		// must have all 8 frames
+ 		for (rotation=0 ; rotation<8 ; rotation++)
+-		    if (sprtemp[frame].lump[rotation] == -1)
++		    if (*(volatile unsigned short *) &sprtemp[frame].lump[rotation] == 0xffffU)
+ 			I_Error ("R_InitSprites: Sprite %s frame %c "
+ 				 "is missing rotations",
+ 				 spritename, frame+'A');
+-rwxr-xr-x 1 root root 1.7M Sep 12 17:10 doomgeneric_mips
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Machine:                           MIPS R3000
+  Entry point address:               0x405ef8

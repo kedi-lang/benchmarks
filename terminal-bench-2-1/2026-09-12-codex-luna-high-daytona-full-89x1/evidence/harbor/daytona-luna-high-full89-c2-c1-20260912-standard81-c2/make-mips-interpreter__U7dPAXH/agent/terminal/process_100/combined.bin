@@ -1,0 +1,5 @@
+        // unconfigured Doom search list tries doom2.wad first.  Supplying its
+        // contents for that probe mirrors the usual IWAD search fallback.
+        if(name==='doom2.wad' && !fs.existsSync(this.hostPath(name)) && fs.existsSync(this.hostPath('doom.wad'))) { name='doom.wad'; this.m.load(a0,Buffer.from('doom.wad\0')); }
+        let fl=fs.constants.O_RDONLY;
+        if((flags&3)===1) fl=fs.constants.O_WRONLY; else if((flags&3)===2) fl=fs.constants.O_RDWR;

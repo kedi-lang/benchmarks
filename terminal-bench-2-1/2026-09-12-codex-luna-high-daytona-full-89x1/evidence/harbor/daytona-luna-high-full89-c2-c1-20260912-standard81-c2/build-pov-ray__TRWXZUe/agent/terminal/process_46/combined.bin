@@ -1,0 +1,193 @@
+
+  Initialize_Noise();
+
+  START_TIME  /* Store start time for trace. Timer macro in CONFIG.H */
+
+
+  /* Ok, go for it - trace the picture */
+  if ((Options & VERBOSE) && (VerboseFormat !='1'))
+    printf ("Rendering...\n");
+  else if ((Options & VERBOSE) && (VerboseFormat=='1'))
+    fprintf (stderr,"POV-Ray rendering %s to %s :\n",Input_File_Name,Output_File_Name);
+  if (Options & VERBOSE_FILE)
+    {
+    stat_file = fopen(Stat_File_Name,"w+t");
+    fprintf (stat_file,"Parsed ok. Now rendering %s to %s :\n",Input_File_Name,Output_File_Name);
+    fclose(stat_file);
+    }
+  CONFIG_MATH               /* Macro for setting up any special FP options */
+  Start_Tracing ();
+
+  if (Options & VERBOSE && VerboseFormat=='1')
+    fprintf (stderr,"\n");
+
+  /* Record the time so well spent... */
+  STOP_TIME                  /* Get trace done time. */
+  tused = TIME_ELAPSED       /* Calc. elapsed time. Define TIME_ELAPSED as */
+  /* 0 in your specific CONFIG.H if unsupported */
+
+  /* Clean up and leave */
+  display_finished();
+
+  close_all ();
+
+  PRINT_STATS
+
+  if (Options & VERBOSE_FILE)
+    {
+    stat_file = fopen(Stat_File_Name,"a+t");
+    fprintf (stat_file,"Done Tracing\n");
+    fclose(stat_file);
+    }
+
+  FINISH_POVRAY
+  }
+
+/* Print out usage error message */
+
+void usage ()
+  {
+  fprintf (stdout,"\nUsage: POVRAY  [+/-] Option1 [+/-] Option2 ...");
+  fprintf (stdout,"\n  Example: +L\\povray\\include +Iscene.pov +Oscene.tga +W320 +H200");
+  fprintf (stdout,"\n  Example: +Iscene.pov +Oscene.tga +W160 +H200 +V -D +X ");
+  fprintf (stdout,"\n");
+  fprintf (stdout,"\n[ Paused for keypress... ]\n");
+  WAIT_FOR_KEYPRESS;
+  fprintf (stdout,"\n\n\n\n\n Options:");
+  fprintf (stdout,"\n    Dxy = display in format x, using palette option y");
+  fprintf (stdout,"\n    V   = verbose messages on");
+  fprintf (stdout,"\n    P  = pause before exit");
+  fprintf (stdout,"\n    X  = enable early exit by key hit");
+  fprintf (stdout,"\n    Fx = write output file in format x");
+  fprintf (stdout,"\n         FT - Uncompressed Targa-24  |  FD - DKB/QRT Dump  | FR - RGB Raw Files");
+  fprintf (stdout,"\n    C  = continue aborted trace");
+  fprintf (stdout,"\n    Qx = image quality 0=rough, 9=full");
+  fprintf (stdout,"\n    A0.x = perform antialiasing");
+  fprintf (stdout,"\n    Bxxx = Use xxx KB for output file buffer");
+  fprintf (stdout,"\n    Jx.x = set aa-jitter amount");
+  fprintf (stdout,"\n    Kx.x = set frame clocK to x.x");
+  fprintf (stdout,"\n    MBxxx = use slabs if more than xxx objects");
+  fprintf (stdout,"\n    MSxxx = set max symbol table size to xxx");
+  fprintf (stdout,"\n    MVx.x = set compability to version x.x");
+  fprintf (stdout,"\n    Rn   = set aa-depth (use n X n rays/pixel)");
+  fprintf (stdout,"\n    SRxx = start at row xxx         |  SR0.xx start row at x%% of screen");
+  fprintf (stdout,"\n    ERxx = end   at row xxx         |  ER0.xx end   row at x%% of screen");
+  fprintf (stdout,"\n    SCxx = start at col xxx         |  SC0.xx start col at x%% of screen");
+  fprintf (stdout,"\n    ECxx = end   at col xxx         |  EC0.xx end   col at x%% of screen");
+  fprintf (stdout,"\n    I<filename> = input file name   |  O<filename> = output file name");
+  fprintf (stdout,"\n    L<pathname> = library path prefix");
+  fprintf (stdout,"\n");
+  exit(1);
+  }
+void init_vars()
+  {
+  Output_File_Handle = NULL;
+  File_Buffer_Size = 0;
+  Options = JITTER;
+  Quality_Flags = QUALITY_9;
+  Quality = 9;
+  Use_Slabs=TRUE;
+  Number_Of_Files = 0;
+  Frame.Screen_Height = 100;
+  Frame.Screen_Width = 100;
+  First_Line = 0;
+  Last_Line = -1;
+  First_Column = 0;
+  Last_Column = -1;
+
+  First_Line_Temp = (DBL) First_Line+1;
+  Last_Line_Temp = (DBL) Last_Line;
+  First_Column_Temp = (DBL) First_Column+1;
+  Last_Column_Temp = (DBL) Last_Column;
+
+  Color_Bits = 8;
+
+  Number_Of_Pixels = 0L;
+  Number_Of_Rays = 0L;
+  Number_Of_Pixels_Supersampled = 0L;
+  Ray_Ht_Field_Tests = 0L;
+  Ray_Ht_Field_Tests_Succeeded = 0L;
+  Ray_Ht_Field_Box_Tests = 0L;
+  Ray_HField_Box_Tests_Succeeded = 0L;
+  Ray_Bicubic_Tests = 0L;
+  Ray_Bicubic_Tests_Succeeded = 0L;
+  Ray_Blob_Tests = 0L;
+  Ray_Blob_Tests_Succeeded = 0L;
+  Ray_Box_Tests = 0L;
+  Ray_Box_Tests_Succeeded = 0L;
+  Ray_Disc_Tests = 0L;
+  Ray_Disc_Tests_Succeeded = 0L;
+  Ray_Cone_Tests = 0L;
+  Ray_Cone_Tests_Succeeded = 0L;
+  Ray_Sphere_Tests = 0L;
+  Ray_Sphere_Tests_Succeeded = 0L;
+  Ray_Plane_Tests = 0L;
+  Ray_Plane_Tests_Succeeded = 0L;
+  Ray_Triangle_Tests = 0L;
+  Ray_Triangle_Tests_Succeeded = 0L;
+  Ray_Quadric_Tests = 0L;
+  Ray_Quadric_Tests_Succeeded = 0L;
+  Ray_Poly_Tests = 0L;
+  Ray_Poly_Tests_Succeeded = 0L;
+  Bounding_Region_Tests = 0L;
+  Bounding_Region_Tests_Succeeded = 0L;
+  Clipping_Region_Tests = 0L;
+  Clipping_Region_Tests_Succeeded = 0L;
+  Calls_To_Noise = 0L;
+  Calls_To_DNoise = 0L;
+  Shadow_Ray_Tests = 0L;
+  /* SJA */
+  Shadow_Cache_Hits = 0L;
+  /* SJA */
+  Shadow_Rays_Succeeded = 0L;
+  Reflected_Rays_Traced = 0L;
+  Refracted_Rays_Traced = 0L;
+  Transmitted_Rays_Traced = 0L;
+  Istack_overflows = 0L;
+  Number_of_istacks = 0;
+  free_istack = NULL;
+  Max_Intersections = 64; /*128*/
+  Antialias_Threshold = 0.3;
+  strcpy (Input_File_Name, "object.pov");
+  return;
+  }
+
+/* Close all the stuff that has been opened. */
+void close_all ()
+  {
+  if ((Options & DISPLAY) && Display_Started)
+    display_close();
+
+  if (Output_File_Handle)
+    Close_File (Output_File_Handle);
+  }
+
+/* Read the default parameters from povray.def */
+void get_defaults()
+  {
+  FILE *defaults_file;
+  char Option_String[256], *Option_String_Ptr;
+  /* READ_ENV_VAR_? should be defined in config.h */
+  /* Only one READ_ENV_VAR_? should ever be defined. */
+  /* This allows some machines to read environment variable before */
+  /* reading povray.def and others to do it after depending on the */
+  /* operating system. IBM-PC is before. Default is after if not */
+  /* defined in config.h. CDW 2/92 */
+  /* Set Diskwrite as default */
+  Options |= DISKWRITE;
+  OutputFormat = DEFAULT_OUTPUT_FORMAT;
+
+  READ_ENV_VAR_BEFORE
+  if ((defaults_file = Locate_File("povray.def", "r")) != NULL) 
+    {
+    while (fgets(Option_String, 256, defaults_file) != NULL)
+      read_options(Option_String);
+    fclose (defaults_file);
+    }
+  READ_ENV_VAR_AFTER
+  }
+
+void read_options (Option_Line)
+char *Option_Line;
+245:#ifndef MAIN_RETURN_TYPE
+246:#define MAIN_RETURN_TYPE void

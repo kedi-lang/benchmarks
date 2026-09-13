@@ -1,0 +1,108 @@
+ pyknotid/invariants.py                     |  6 +++---
+ pyknotid/make/periodic_knot.py             |  4 ++--
+ pyknotid/make/torus.py                     |  2 +-
+ pyknotid/representations/dtnotation.py     |  4 ++--
+ pyknotid/representations/gausscode.py      |  2 +-
+ pyknotid/representations/representation.py |  4 ++--
+ pyknotid/simplify/octree.py                |  2 +-
+ pyknotid/spacecurves/ccomplexity.pyx       |  6 +++---
+ pyknotid/spacecurves/knot.py               |  2 +-
+ pyknotid/spacecurves/openknot.py           | 18 +++++++++---------
+ pyknotid/spacecurves/periodiccell.py       |  6 +++---
+ pyknotid/spacecurves/spacecurve.py         |  8 ++++----
+ 12 files changed, 32 insertions(+), 32 deletions(-)
+diff --git a/pyknotid/invariants.py b/pyknotid/invariants.py
+index c4ab998..6c7f32d 100644
+--- a/pyknotid/invariants.py
++++ b/pyknotid/invariants.py
+@@ -134,7 +134,7 @@ def _alexander_numpy(crossings, variable=-1.0, quadrant='lr'):
+     '''
+     import numpy as n
+     num_crossings = int(len(crossings)/2)
+-    dtype = n.complex if isinstance(variable, n.complex) else n.float
++    dtype = complex if isinstance(variable, complex) else n.float64
+     matrix = n.zeros((num_crossings, num_crossings), dtype=dtype)
+     line_num = 0
+     crossing_num_counter = 0
+@@ -174,7 +174,7 @@ def _alexander_numpy(crossings, variable=-1.0, quadrant='lr'):
+         poly_val = n.linalg.det(matrix[:-1:, :-1])
+     elif quadrant == 'll':
+         poly_val = n.linalg.det(matrix[1:, :-1])
+-    if not isinstance(poly_val, n.complex):
++    if not isinstance(poly_val, complex):
+         poly_val = n.abs(poly_val)
+     return poly_val
+ 
+@@ -975,7 +975,7 @@ def _crossing_arrows_and_signs_numpy(gc, crossing_numbers):
+             under_crossing_indices[row[0]] = i
+         signs[row[0]] = row[2]
+ 
+-    arrows = n.zeros((len(crossing_numbers), 3), dtype=n.long)
++    arrows = n.zeros((len(crossing_numbers), 3), dtype=n.int64)
+ 
+     for index, number in enumerate(crossing_numbers):
+         row = arrows[index]
+diff --git a/pyknotid/make/torus.py b/pyknotid/make/torus.py
+index 0780cd9..a8f6b7b 100644
+--- a/pyknotid/make/torus.py
++++ b/pyknotid/make/torus.py
+@@ -11,7 +11,7 @@ API documentation
+ from __future__ import division
+ 
+ import numpy as np
+-from fractions import gcd
++from math import gcd
+ 
+ from pyknotid.spacecurves.knot import Knot
+ from pyknotid.spacecurves.link import Link
+diff --git a/pyknotid/spacecurves/spacecurve.py b/pyknotid/spacecurves/spacecurve.py
+index 449ce04..1318559 100644
+--- a/pyknotid/spacecurves/spacecurve.py
++++ b/pyknotid/spacecurves/spacecurve.py
+@@ -80,7 +80,7 @@ class SpaceCurve(object):
+         self._points = n.zeros((0, 3))
+         self._crossings = None  # Will store a list of crossings if
+                                 # self.crossings() has been called
+-        self.points = n.array(points).astype(n.float)
++        self.points = n.array(points).astype(n.float64)
+         self.verbose = verbose
+ 
+         self._cached_writhe_and_crossing_numbers = None
+@@ -635,7 +635,7 @@ class SpaceCurve(object):
+ 
+     def second_order_twist(self, z):
+         from pyknotid.spacecurves import complexity as com
+-        z = np.array(z).astype(np.float)
++        z = np.array(z).astype(np.float64)
+         assert len(z) == 3
+         return com.second_order_twist(self.points, z)
+ 
+@@ -987,7 +987,7 @@ class SpaceCurve(object):
+                              n.hstack((self.points[:, 2],
+                                       self.points[:, 2][:1])))
+ 
+-        new_points = n.zeros((len(indices), 3), dtype=n.float)
++        new_points = n.zeros((len(indices), 3), dtype=n.float64)
+         new_points[:, 0] = interp_xs(indices)
+         new_points[:, 1] = interp_ys(indices)
+         new_points[:, 2] = interp_zs(indices)
+@@ -1080,7 +1080,7 @@ class SpaceCurve(object):
+         points = self.points
+         ts = np.roll(points, -1, axis=0) - points
+ 
+-        keep_points = np.ones(len(points), dtype=np.bool)
++        keep_points = np.ones(len(points), dtype=np.bool_)
+ 
+         ts_range = ts[:-2] if not closed else ts
+ 
+Processing /app/pyknotid
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Building wheels for collected packages: pyknotid
+  Building wheel for pyknotid (setup.py): started
+  Building wheel for pyknotid (setup.py): finished with status 'done'
+  Created wheel for pyknotid: filename=pyknotid-0.5.3-cp313-cp313-linux_x86_64.whl size=2379106 sha256=1ba3c490afa08737dd373fbdd0c0d754766065e78cc86be34e63232d84e9c065
+  Stored in directory: /tmp/pip-ephem-wheel-cache-tns3grxh/wheels/5e/f2/cb/b3080784954f43467934ff337ba823c57a3e1db3303f8227db
+Successfully built pyknotid
+Installing collected packages: pyknotid
+Successfully installed pyknotid-0.5.3

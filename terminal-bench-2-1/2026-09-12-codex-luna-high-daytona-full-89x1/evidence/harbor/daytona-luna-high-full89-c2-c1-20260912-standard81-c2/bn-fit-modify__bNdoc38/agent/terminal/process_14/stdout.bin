@@ -1,0 +1,20 @@
+> d<-read.csv('/app/bn_sample_10k.csv'); print(round(cor(d),3));
+      U     Y     R     D     M
+U 1.000 0.603 0.704 0.537 0.662
+Y 0.603 1.000 0.431 0.539 0.385
+R 0.704 0.431 1.000 0.382 0.599
+D 0.537 0.539 0.382 1.000 0.348
+M 0.662 0.385 0.599 0.348 1.000
+> # partial corr for each pair controlling every subset other variables
+> pc<-function(a,b,z){ if(!length(z)) return(cor(d[[a]],d[[b]])); e1=resid(lm(d[[a]]~as.matrix(d[,z,drop=F])));e2=resid(lm(d[[b]]~as.matrix(d[,z,drop=F])));cor(e1,e2)}
+> for(i in 1:5)for(j in (i+1):5){ oth=setdiff(1:5,c(i,j)); vals<-sapply(0:(2^length(oth)-1),function(m){z<-oth[as.logical(intToBits(m)[1:length(oth)])];pc(i,j,z)}); cat(names(d)[i],names(d)[j], 'min',round(min(abs(vals)),4),'at',paste(names(d)[oth][which.min(abs(vals))],collapse=','),'vals',paste(round(vals,3),collapse=' '),'\n')}
+U Y min 0.3307 at NA vals 0.603 0.468 0.441 0.348 0.503 0.441 0.376 0.331 
+U R min 0.4397 at NA vals 0.704 0.618 0.641 0.597 0.513 0.453 0.471 0.44 
+U D min 0.2349 at NA vals 0.537 0.316 0.409 0.252 0.437 0.263 0.381 0.235 
+U M min 0.3817 at NA vals 0.662 0.584 0.423 0.391 0.601 0.565 0.396 0.382 
+Y R min 0.0092 at NA vals 0.431 0.01 0.289 0.009 0.271 0.017 0.189 0.015 
+Y D min 0.3202 at NA vals 0.539 0.32 0.45 0.32 0.469 0.32 0.434 0.32 
+Y M min 0.021 at NA vals 0.385 -0.024 0.176 -0.027 0.25 -0.021 0.117 -0.024 
+R D min 0.0021 at NA vals 0.382 0.005 0.197 0.002 0.231 0.009 0.122 0.003 
+R M min 0.2487 at Y vals 0.599 0.249 0.52 0.249 0.538 0.249 0.502 0.249 
+D M min 0.0049 at NA vals 0.348 -0.012 0.181 -0.005 0.161 -0.014 0.094 -0.006 

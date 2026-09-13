@@ -1,0 +1,6 @@
+/app/polyglot/main.rs:33:138: error: too many decimal points in number
+   33 | fn main(){let n:usize=std::env::args().nth(1).unwrap().parse().unwrap();let mut a=String::from("1");let mut b=String::from("1");for _ in 0..n{let mut c=String::new();let(mut i,mut j,mut carry)=(a.len() as i32-1,b.len() as i32-1,0u8);while i>=0||j>=0||carry>0{let x=if i>=0{a.as_bytes()[i as usize]-b'0'}else{0};let y=if j>=0{b.as_bytes()[j as usize]-b'0'}else{0};let s=x+y+carry;c.push((b'0'+s%10)as char);carry=s/10;i-=1;j-=1;}let r:String=c.chars().rev().collect();a=b;b=r;}println!("{}",a);}
+      |                                                                                                                                          ^~~~
+/app/polyglot/main.rs:33:1: error: ‘fn’ does not name a type
+   33 | fn main(){let n:usize=std::env::args().nth(1).unwrap().parse().unwrap();let mut a=String::from("1");let mut b=String::from("1");for _ in 0..n{let mut c=String::new();let(mut i,mut j,mut carry)=(a.len() as i32-1,b.len() as i32-1,0u8);while i>=0||j>=0||carry>0{let x=if i>=0{a.as_bytes()[i as usize]-b'0'}else{0};let y=if j>=0{b.as_bytes()[j as usize]-b'0'}else{0};let s=x+y+carry;c.push((b'0'+s%10)as char);carry=s/10;i-=1;j-=1;}let r:String=c.chars().rev().collect();a=b;b=r;}println!("{}",a);}
+      | ^~

@@ -1,0 +1,41 @@
+{
+  "results": {
+    "summary": {
+      "failed": 1,
+      "other": 0,
+      "passed": 1,
+      "pending": 0,
+      "skipped": 0,
+      "start": 1789241640.9627955,
+      "stop": 1789241641.0163653,
+      "tests": 2
+    },
+    "tests": [
+      {
+        "duration": 0.0003337133675813675,
+        "file_path": "test_outputs.py",
+        "name": "test_outputs.py::test_result_exists",
+        "retries": 0,
+        "start": 1789241641.000245,
+        "status": "passed",
+        "stop": 1789241641.0007322
+      },
+      {
+        "duration": 0.0007902467623353004,
+        "file_path": "test_outputs.py",
+        "message": "The test failed in the call phase due to an assertion error",
+        "name": "test_outputs.py::test_data_matches",
+        "raw_status": "call_failed",
+        "retries": 0,
+        "start": 1789241641.0008478,
+        "status": "failed",
+        "stop": 1789241641.016238,
+        "trace": "def test_data_matches():\n        expected = \"MTEB: Massive Text Embedding Benchmark\"\n        with open(\"/app/result.txt\", \"r\") as f:\n            lines = f.readlines()\n            assert len(lines) == 1, \"result.txt should contain exactly one line\"\n>           assert lines[0].strip() == expected, \"result.txt contains unexpected value\"\nE           AssertionError: result.txt contains unexpected value\nE           assert 'HumanEval: B...onal examples' == 'MTEB: Massiv...ing Benchmark'\nE             \nE             - MTEB: Massive Text Embedding Benchmark\nE             + HumanEval: Benchmarking Python code generation via functional examples\n\n/tests/test_outputs.py:15: AssertionError"
+      }
+    ],
+    "tool": {
+      "name": "pytest",
+      "version": "8.4.1"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+install -d /tmp/CompCert/.install-bin
+install -m 0755 ./ccomp /tmp/CompCert/.install-bin
+install -d /tmp/CompCert/.install-share
+install -m 0644 ./compcert.ini /tmp/CompCert/.install-share
+install -d /tmp/CompCert/share/man/man1
+install -m 0644 ./doc/ccomp.1 /tmp/CompCert/share/man/man1
+make -C runtime install
+make[1]: Entering directory '/tmp/CompCert/runtime'
+install -d /tmp/CompCert/lib/compcert
+install -m 0644 libcompcert.a /tmp/CompCert/lib/compcert
+install -d /tmp/CompCert/lib/compcert/include
+install -m 0644 include/float.h include/stdarg.h include/stdbool.h include/stddef.h include/varargs.h include/stdalign.h include/stdnoreturn.h /tmp/CompCert/lib/compcert/include
+make[1]: Leaving directory '/tmp/CompCert/runtime'
+The CompCert C verified compiler, version 3.13
+/usr/bin/ld: warning: /tmp/compcerta7dc82.o: missing .note.GNU-stack section implies executable stack
+/usr/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+/tmp/hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=ef505bf8a219400b90f5040e9de1dbda116c855c, for GNU/Linux 3.2.0, not stripped
+run_exit=0
+-rw-r--r-- 1 root root 3874 Sep 12 20:06 lib/compcert/include/stddef.h
+-rw-r--r-- 1 root root 3618 Sep 12 20:06 lib/compcert/libcompcert.a

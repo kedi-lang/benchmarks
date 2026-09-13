@@ -1,0 +1,285 @@
+"""A small AFAB pipeline-parallel training step for LLaMA models.
+
+The model is assumed to be replicated when this function is entered (as is
+usual for a torch.distributed program).  Only the decoder layers belonging to
+the current rank are executed.  The tensors crossing a stage boundary are
+intentionally detached; their gradients are sent back explicitly during the
+backward half of the schedule.
+"""
+
+import inspect
+from typing import Any, List, Optional, Tuple
+
+import torch
+import torch.distributed as dist
+import torch.nn.functional as F
+
+
+def _partition(num_layers: int, rank: int, world_size: int) -> Tuple[int, int]:
+    """Return the (inclusive, exclusive) layer range for ``rank``.
+
+    Giving the first ``num_layers % world_size`` ranks one extra layer keeps
+    the ranges contiguous and makes their sizes differ by at most one.
+    """
+    quotient, remainder = divmod(num_layers, world_size)
+    start = rank * quotient + min(rank, remainder)
+    end = start + quotient + (1 if rank < remainder else 0)
+    return start, end
+
+
+def _causal_mask(
+    llama: torch.nn.Module,
+    hidden_states: torch.Tensor,
+    position_ids: torch.Tensor,
+    cache_position: torch.Tensor,
+) -> Optional[torch.Tensor]:
+    """Make the same mask used by the common versions of transformers.
+
+    LLaMA's internal API changed when ``Cache`` and ``cache_position`` were
+    introduced.  Prefer the model's own helper, and retain the older helper
+    and a simple no-padding fallback for older/custom LLaMA implementations.
+    """
+    update = getattr(llama, "_update_causal_mask", None)
+    if update is not None:
+        # This is the signature used by recent transformers releases.  Using
+        # names where possible also handles small signature additions.
+        try:
+            parameters = inspect.signature(update).parameters
+            values = {}
+            for name, parameter in parameters.items():
+                if name == "self":
+                    continue
+                if name == "attention_mask":
+                    values[name] = None
+                elif name in ("input_tensor", "inputs_embeds", "hidden_states"):
+                    values[name] = hidden_states
+                elif name == "cache_position":
+                    values[name] = cache_position
+                elif name in ("past_key_values", "past_key_value"):
+                    values[name] = None
+                elif name == "output_attentions":
+                    values[name] = False
+                elif parameter.default is inspect.Parameter.empty:
+                    # Let the fallback below deal with an unknown required
+                    # argument rather than silently supplying a bad value.
+                    raise TypeError("unknown required causal-mask argument")
+            return update(**values)
+        except (TypeError, ValueError):
+            # A few older releases have a positional-only implementation.
+            try:
+                return update(None, hidden_states, cache_position, None, False)
+            except (TypeError, ValueError):
+                pass
+
+    prepare = getattr(llama, "_prepare_decoder_attention_mask", None)
+    if prepare is not None:
+        batch, sequence_length = hidden_states.shape[:2]
+        try:
+            return prepare(
+                None,
+                (batch, sequence_length),
+                hidden_states,
+                0,
+            )
+        except (TypeError, ValueError):
+            pass
+
+    # This is an additive mask, which is accepted by the eager LLaMA
+    # attention implementation.  There is no padding in the input contract.
+    sequence_length = hidden_states.shape[1]
+    mask_value = torch.finfo(hidden_states.dtype).min
+    mask = torch.full(
+        (sequence_length, sequence_length),
+        mask_value,
+        dtype=hidden_states.dtype,
+        device=hidden_states.device,
+    )
+    mask = torch.triu(mask, diagonal=1)
+    return mask.unsqueeze(0).unsqueeze(0)
+
+
+def _layer_forward(
+    layer: torch.nn.Module,
+    hidden_states: torch.Tensor,
+    attention_mask: Optional[torch.Tensor],
+    position_ids: torch.Tensor,
+    position_embeddings: Any,
+    cache_position: torch.Tensor,
+) -> torch.Tensor:
+    """Call a decoder layer across the old and new HF LLaMA APIs."""
+    try:
+        parameters = inspect.signature(layer.forward).parameters
+    except (TypeError, ValueError):
+        parameters = {}
+
+    has_var_kwargs = any(
+        parameter.kind == inspect.Parameter.VAR_KEYWORD
+        for parameter in parameters.values()
+    )
+
+    possible = {
+        "attention_mask": attention_mask,
+        "position_ids": position_ids,
+        "position_embeddings": position_embeddings,
+        "cache_position": cache_position,
+        "past_key_value": None,
+        "past_key_values": None,
+        "output_attentions": False,
+        "use_cache": False,
+    }
+    if has_var_kwargs:
+        kwargs = possible
+    else:
+        kwargs = {key: value for key, value in possible.items() if key in parameters}
+
+    outputs = layer(hidden_states, **kwargs)
+    # LlamaDecoderLayer returns (hidden_states, ...).  Supporting a layer
+    # returning the tensor directly costs nothing and is useful for small
+    # test doubles.
+    return outputs[0] if isinstance(outputs, (tuple, list)) else outputs
+
+
+def _position_embeddings(
+    llama: torch.nn.Module,
+    hidden_states: torch.Tensor,
+    position_ids: torch.Tensor,
+) -> Any:
+    rotary_emb = getattr(llama, "rotary_emb", None)
+    if rotary_emb is None:
+        return None
+    try:
+        return rotary_emb(hidden_states, position_ids)
+    except TypeError:
+        # Some intermediate releases expose position_ids as a keyword-only
+        # argument.
+        return rotary_emb(hidden_states, position_ids=position_ids)
+
+
+def train_step_pipeline_afab(model, inputs, targets, device, dtype):
+    """Run one all-forward-all-backward pipeline training step.
+
+    ``inputs`` and ``targets`` are lists of microbatches.  Forward passes are
+    issued in microbatch order, followed by backward passes in reverse order.
+    The latter ordering is the usual AFAB 1F1B-compatible drain ordering and
+    also makes the point-to-point communication between adjacent stages
+    deterministic.
+    """
+    if not inputs:
+        raise ValueError("at least one microbatch is required")
+    if len(inputs) != len(targets):
+        raise ValueError("inputs and targets must have the same number of microbatches")
+
+    # The test/program initializes the process group before entering here.
+    rank = dist.get_rank()
+    world_size = dist.get_world_size()
+    num_microbatches = len(inputs)
+
+    # Keeping the complete module object on every rank is intentional: it
+    # avoids rebuilding a LLaMA config and preserves tied embedding weights.
+    # Only the selected modules below participate in this step.
+    model.to(device=device, dtype=dtype)
+    llama = model.model
+    layers = llama.layers
+    first_layer, last_layer = _partition(len(layers), rank, world_size)
+
+    embed_tokens = llama.embed_tokens if rank == 0 else None
+    norm = llama.norm if rank == world_size - 1 else None
+    lm_head = model.lm_head if rank == world_size - 1 else None
+    hidden_size = getattr(model.config, "hidden_size", None)
+    if hidden_size is None:
+        hidden_size = embed_tokens.embedding_dim if embed_tokens is not None else layers[0].input_layernorm.normalized_shape[0]
+
+    # Keep the graph for every microbatch until the backward phase.  The
+    # input is a leaf only on non-first stages, which is exactly where its
+    # gradient needs to be sent to the preceding stage.
+    stage_inputs: List[torch.Tensor] = []
+    stage_outputs: List[torch.Tensor] = []
+    losses: List[torch.Tensor] = []
+
+    for microbatch, input_ids in enumerate(inputs):
+        input_ids = input_ids.to(device=device)
+        if input_ids.dim() != 2:
+            raise ValueError("each input microbatch must have shape [batch, seq_len]")
+        batch_size, sequence_length = input_ids.shape
+
+        if rank == 0:
+            hidden_states = embed_tokens(input_ids)
+            hidden_states = hidden_states.to(device=device, dtype=dtype)
+        else:
+            hidden_states = torch.empty(
+                (batch_size, sequence_length, hidden_size),
+                device=device,
+                dtype=dtype,
+            )
+            dist.recv(hidden_states, src=rank - 1)
+            # Make the received activation a differentiable leaf.  A
+            # distributed recv itself is not an autograd operation.
+            hidden_states = hidden_states.detach().requires_grad_(True)
+
+        stage_inputs.append(hidden_states)
+
+        position_ids = torch.arange(
+            sequence_length, device=device, dtype=torch.long
+        ).unsqueeze(0)
+        cache_position = torch.arange(sequence_length, device=device, dtype=torch.long)
+        attention_mask = _causal_mask(
+            llama, hidden_states, position_ids, cache_position
+        )
+        position_embeddings = _position_embeddings(llama, hidden_states, position_ids)
+
+        for layer in layers[first_layer:last_layer]:
+            hidden_states = _layer_forward(
+                layer,
+                hidden_states,
+                attention_mask,
+                position_ids,
+                position_embeddings,
+                cache_position,
+            )
+            hidden_states = hidden_states.to(device=device, dtype=dtype)
+
+        stage_outputs.append(hidden_states)
+
+        if rank != world_size - 1:
+            # Do not connect the receiver's graph to this graph through the
+            # communication primitive; the matching gradient is sent below.
+            dist.send(hidden_states.detach().contiguous(), dst=rank + 1)
+        else:
+            hidden_for_head = norm(hidden_states)
+            logits = lm_head(hidden_for_head)
+            target = targets[microbatch].to(device=device, dtype=torch.long)
+            if target.shape != (batch_size, sequence_length):
+                raise ValueError("target microbatch shape must match its input microbatch")
+            loss = F.cross_entropy(
+                logits.reshape(-1, logits.shape[-1]), target.reshape(-1)
+            ) / num_microbatches
+            losses.append(loss)
+
+    # AFAB: no backward communication is started until every forward has
+    # completed.  Reverse order avoids a stage having to buffer gradients in
+    # an ambiguous order.
+    for microbatch in range(num_microbatches - 1, -1, -1):
+        if rank == world_size - 1:
+            torch.autograd.backward(losses[microbatch])
+        else:
+            grad = torch.empty_like(
+                stage_outputs[microbatch], device=device, dtype=dtype
+            )
+            dist.recv(grad, src=rank + 1)
+            grad = grad.to(device=device, dtype=dtype)
+            torch.autograd.backward(stage_outputs[microbatch], grad)
+
+        if rank != 0:
+            incoming_grad = stage_inputs[microbatch].grad
+            if incoming_grad is None:
+                incoming_grad = torch.zeros_like(
+                    stage_inputs[microbatch], device=device, dtype=dtype
+                )
+            incoming_grad = incoming_grad.to(device=device, dtype=dtype)
+            dist.send(incoming_grad.detach().contiguous(), dst=rank - 1)
+
+    if losses:
+        # Return a detached value for the caller on the last stage.  The
+        # function's useful side effect is the parameter gradients.
+        return torch.stack([loss.detach() for loss in losses]).sum()
+    return None

@@ -1,0 +1,139 @@
+131:// W_AddFile
+132-// All files are optional, but at least one file must be
+133-//  found (PWAD, if all required lumps are present).
+134-// Files with a .wad extension are wadlink files
+135-//  with multiple lumps.
+136-// Other files are single lumps with the base filename
+137-//  for the lump name.
+138-
+139:wad_file_t *W_AddFile (char *filename)
+140-{
+141-    wadinfo_t header;
+142-    lumpinfo_t *lump_p;
+143-    unsigned int i;
+144-    wad_file_t *wad_file;
+145-    int length;
+146-    int startlump;
+147-    filelump_t *fileinfo;
+148-    filelump_t *filerover;
+149-    int newnumlumps;
+150-
+151-    // open the file and add to directory
+152-
+153-    wad_file = W_OpenFile(filename);
+154-
+155-    if (wad_file == NULL)
+156-    {
+157-		printf (" couldn't open %s\n", filename);
+158-		return NULL;
+159-    }
+160-
+161-    newnumlumps = numlumps;
+162-
+163-    if (strcasecmp(filename+strlen(filename)-3 , "wad" ) )
+164-    {
+165-    	// single lump file
+166-
+167-        // fraggle: Swap the filepos and size here.  The WAD directory
+168-        // parsing code expects a little-endian directory, so will swap
+169-        // them back.  Effectively we're constructing a "fake WAD directory"
+170-        // here, as it would appear on disk.
+171-
+172-		fileinfo = Z_Malloc(sizeof(filelump_t), PU_STATIC, 0);
+173-		fileinfo->filepos = LONG(0);
+174-		fileinfo->size = LONG(wad_file->length);
+175-
+176-        // Name the lump after the base of the filename (without the
+177-        // extension).
+178-
+179-		M_ExtractFileBase (filename, fileinfo->name);
+180-		newnumlumps++;
+181-    }
+182-    else 
+183-    {
+184-    	// WAD file
+185-        W_Read(wad_file, 0, &header, sizeof(header));
+186-
+187-		if (strncmp(header.identification,"IWAD",4))
+188-		{
+189-			// Homebrew levels?
+190-			if (strncmp(header.identification,"PWAD",4))
+191-			{
+192-			I_Error ("Wad file %s doesn't have IWAD "
+193-				 "or PWAD id\n", filename);
+194-			}
+195-
+196-			// ???modifiedgame = true;
+197-		}
+198-
+199-		header.numlumps = LONG(header.numlumps);
+200-		header.infotableofs = LONG(header.infotableofs);
+201-		length = header.numlumps*sizeof(filelump_t);
+202-		fileinfo = Z_Malloc(length, PU_STATIC, 0);
+203-
+204-        W_Read(wad_file, header.infotableofs, fileinfo, length);
+205-        newnumlumps += header.numlumps;
+206-    }
+207-
+208-    // Increase size of numlumps array to accomodate the new file.
+209-    startlump = numlumps;
+210-    ExtendLumpInfo(newnumlumps);
+211-
+212-    lump_p = &lumpinfo[startlump];
+213-
+214-    filerover = fileinfo;
+215-
+216-    for (i=startlump; i<numlumps; ++i)
+217-    {
+218-		lump_p->wad_file = wad_file;
+219-		lump_p->position = LONG(filerover->filepos);
+220-		lump_p->size = LONG(filerover->size);
+221-			lump_p->cache = NULL;
+222-		strncpy(lump_p->name, filerover->name, 8);
+223-
+224-			++lump_p;
+225-			++filerover;
+226-    }
+227-
+228-    Z_Free(fileinfo);
+229-
+230-    if (lumphash != NULL)
+231-    {
+232-        Z_Free(lumphash);
+233-        lumphash = NULL;
+234-    }
+235-
+236-    return wad_file;
+237-}
+238-
+239-
+240-
+241-//
+242-// W_NumLumps
+243-//
+244-int W_NumLumps (void)
+245-{
+246-    return numlumps;
+247-}
+248-
+249-
+250-
+251-//
+252-// W_CheckNumForName
+253-// Returns -1 if name not found.
+254-//
+255-
+256-int W_CheckNumForName (char* name)
+257-{
+258-    lumpinfo_t *lump_p;
+259-    int i;
+260-
+261-    // Do we have a hash table yet?
+262-
+263-    if (lumphash != NULL)
+264-    {
+265-        int hash;
+266-        
+267-        // We do! Excellent.
+268-
+269-        hash = W_LumpNameHash(name) % numlumps;

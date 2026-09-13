@@ -1,0 +1,218 @@
+total 272
+drwxr-xr-x 25 root root  4096 Sep 12 19:55 .
+drwxrwxrwt  1 root root    94 Sep 12 19:55 ..
+drwxr-xr-x  8 root root  4096 Sep 12 19:55 .git
+-rw-r--r--  1 root root   108 Sep 12 19:55 .gitattributes
+-rw-r--r--  1 root root  1367 Sep 12 19:55 .gitignore
+-rw-r--r--  1 root root 78399 Sep 12 19:55 Changelog.md
+-rw-r--r--  1 root root 43807 Sep 12 19:55 LICENSE
+-rw-r--r--  1 root root 11679 Sep 12 19:55 Makefile
+-rw-r--r--  1 root root  4663 Sep 12 19:55 Makefile.extr
+-rw-r--r--  1 root root  1903 Sep 12 19:55 Makefile.menhir
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 MenhirLib
+-rw-r--r--  1 root root  1464 Sep 12 19:55 README.md
+-rw-r--r--  1 root root    35 Sep 12 19:55 VERSION
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 aarch64
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 arm
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 backend
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 cfrontend
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 common
+-rwxr-xr-x  1 root root 25006 Sep 12 19:55 configure
+-rwxr-xr-x  1 root root   329 Sep 12 19:55 coq
+drwxr-xr-x  3 root root  4096 Sep 12 19:55 cparser
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 debug
+drwxr-xr-x  2 root root    72 Sep 12 19:55 doc
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 driver
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 export
+drwxr-xr-x  2 root root    56 Sep 12 19:55 extraction
+drwxr-xr-x  6 root root    98 Sep 12 19:55 flocq
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 lib
+-rwxr-xr-x  1 root root   383 Sep 12 19:55 pg
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 powerpc
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 riscV
+drwxr-xr-x 12 root root  4096 Sep 12 19:55 runtime
+drwxr-xr-x  9 root root  4096 Sep 12 19:55 test
+drwxr-xr-x  2 root root    73 Sep 12 19:55 tools
+drwxr-xr-x  2 root root  4096 Sep 12 19:55 x86
+drwxr-xr-x  2 root root    29 Sep 12 19:55 x86_32
+drwxr-xr-x  2 root root    29 Sep 12 19:55 x86_64
+#!/bin/sh
+
+#######################################################################
+#                                                                     #
+#              The Compcert verified compiler                         #
+#                                                                     #
+#          Xavier Leroy, INRIA Paris-Rocquencourt                     #
+#                                                                     #
+#  Copyright Institut National de Recherche en Informatique et en     #
+#  Automatique.  All rights reserved.  This file is distributed       #
+#  under the terms of the GNU Lesser General Public License as        #
+#  published by the Free Software Foundation, either version 2.1 of   #
+#  the License, or (at your option) any later version.                #
+#  This file is also distributed under the terms of the               #
+#  INRIA Non-Commercial License Agreement.                            #
+#                                                                     #
+#######################################################################
+
+prefix='/usr/local'
+bindir='$(PREFIX)/bin'
+libdir='$(PREFIX)/lib/compcert'
+mandir='$(PREFIX)/share/man'
+sharedir=''  # determined later based on $bindir and -sharedir option
+coqdevdir='$(PREFIX)/lib/compcert/coq'
+toolprefix=''
+target=''
+has_runtime_lib=true
+has_standard_headers=true
+clightgen=false
+install_coqdev=false
+ignore_coq_version=false
+ignore_ocaml_version=false
+library_Flocq=local
+library_MenhirLib=local
+
+usage='Usage: ./configure [options] target
+For help on options and targets, do: ./configure -help
+'
+
+help='Usage: ./configure [options] target
+
+Supported targets:
+  ppc-eabi             (PowerPC, EABI with GNU/Unix tools)
+  ppc-eabi-diab        (PowerPC, EABI with Diab tools)
+  ppc-linux            (PowerPC, Linux)
+  arm-eabi             (ARM, EABI, little endian)
+  arm-linux            (ARM, EABI, little endian)
+  arm-eabihf           (ARM, EABI using hardware FP registers, little endian)
+  arm-hardfloat        (ARM, EABI using hardware FP registers, little endian)
+  armeb-eabi           (ARM, EABI, big endian)
+  armeb-linux          (ARM, EABI, big endian)
+  armeb-eabihf         (ARM, EABI using hardware FP registers, big endian)
+  armeb-hardfloat      (ARM, EABI using hardware FP registers, big endian)
+  x86_32-linux         (x86 32 bits, Linux)
+  x86_32-bsd           (x86 32 bits, BSD)
+  x86_64-linux         (x86 64 bits, Linux)
+  x86_64-bsd           (x86 64 bits, BSD)
+  x86_64-macos         (x86 64 bits, MacOS X)
+  x86_64-cygwin        (x86 64 bits, Cygwin environment under Windows)
+  rv32-linux           (RISC-V 32 bits, Linux)
+  rv64-linux           (RISC-V 64 bits, Linux)
+  aarch64-linux        (AArch64, i.e. ARMv8 in 64-bit mode, Linux)
+  aarch64-macos        (AArch64, i.e. Apple silicon, MacOS)
+  manual               (edit configuration file by hand)
+
+For x86 targets, the "x86_32-" prefix can also be written "ia32-" or "i386-".
+For x86 targets, the "x86_64-" prefix can also be written "amd64-".
+For AArch64 targets, the "aarch64-" prefix can also be written "arm64-".
+For RISC-V targets, the "rv32-" or "rv64-" prefix can also be written "riscv32-" or "riscv64-".
+
+For PowerPC targets, the "ppc-" prefix can be refined into:
+  ppc64-               PowerPC 64 bits
+  e5500-               Freescale e5500 core (PowerPC 64 bit, EREF extensions)
+
+For ARM targets, the "arm-" or "armeb-" prefix can be refined into:
+  armv6-               ARMv6   + VFPv2       (Thumb mode not supported)
+  armv6t2-             ARMv6T2 + VFPv2
+  armv7a-              ARMv7-A + VFPv3-d16   (default for arm-)
+  armv7r-              ARMv7-R + VFPv3-d16
+  armv7m-              ARMv7-M + VFPv3-d16
+
+  armebv6-             ARMv6   + VFPv2       (Thumb mode not supported)
+  armebv6t2-           ARMv6T2 + VFPv2
+  armebv7a-            ARMv7-A + VFPv3-d16   (default for armeb-)
+  armebv7r-            ARMv7-R + VFPv3-d16
+  armebv7m-            ARMv7-M + VFPv3-d16
+
+Options:
+  -prefix <dir>        Install in <dir>/bin and <dir>/lib/compcert
+  -bindir <dir>        Install binaries in <dir>
+  -libdir <dir>        Install libraries in <dir>
+  -sharedir <dir>      Install configuration file in <dir>
+  -mandir <dir>        Install man pages in <dir>
+  -coqdevdir <dir>     Install Coq development (.vo files) in <dir>
+  -toolprefix <pref>   Prefix names of tools ("gcc", etc) with <pref>
+  -use-external-Flocq  Use an already-installed Flocq library
+  -use-external-MenhirLib  Use an already-installed MenhirLib library
+  -no-runtime-lib      Do not compile nor install the runtime support library
+  -no-standard-headers Do not install nor use the standard .h headers
+  -clightgen           Also compile and install the clightgen tool
+  -install-coqdev      Also install the Coq development (implied by -clightgen)
+  -ignore-coq-version  Accept to use experimental or unsupported versions of Coq
+  -ignore-ocaml-version Accept to use experimental or unsupported versions of OCaml
+'
+
+#
+# Remove Leftover Makefile.config (if any)  (GPR#244)
+#
+rm -f Makefile.config
+
+#
+# Parse Command-Line Arguments
+#
+while : ; do
+  case "$1" in
+    "")
+        break;;
+    -prefix|--prefix)
+        prefix="$2"; shift;;
+    -bindir|--bindir)
+        bindir="$2"; shift;;
+    -libdir|--libdir)
+        libdir="$2"; shift;;
+    -mandir|--mandir)
+        mandir="$2"; shift;;
+    -sharedir|--sharedir)
+        sharedir="$2"; shift;;
+    -coqdevdir|--coqdevdir)
+        coqdevdir="$2"; install_coqdev=true; shift;;
+    -toolprefix|--toolprefix)
+        toolprefix="$2"; shift;;
+    -no-runtime-lib)
+        has_runtime_lib=false;;
+    -no-standard-headers)
+        has_standard_headers=false;;
+    -clightgen)
+        clightgen=true
+        install_coqdev=true;;
+    -ignore-coq-version|--ignore-coq-version)
+        ignore_coq_version=true;;
+    -ignore-ocaml-version|--ignore-ocaml-version)
+        ignore_ocaml_version=true;;
+    -install-coqdev|--install-coqdev|-install-coq-dev|--install-coq-dev)
+        install_coqdev=true;;
+    -use-external-Flocq|--use-external-Flocq)
+        library_Flocq=external;;
+    -use-external-MenhirLib|--use-external-MenhirLib)
+        library_MenhirLib=external;;
+    -help|--help)
+        echo "$help"; exit 0;;
+    -*)
+        echo "Error: unknown option '$1'." 1>&2
+        echo "$usage" 1>&2
+        exit 2;;
+    *)
+        if test -n "$target"; then echo "$usage" 1>&2; exit 2; fi
+        target="$1";;
+  esac
+  shift
+done
+
+
+#
+# Extract Architecture, Model and Default Endianness
+#
+case "$target" in
+  arm-*|armv7a-*)
+      arch="arm"; model="armv7a"; endianness="little"; bitsize=32;;
+  armv6-*)
+      arch="arm"; model="armv6"; endianness="little"; bitsize=32;;
+  armv6t2-*)
+      arch="arm"; model="armv6t2"; endianness="little"; bitsize=32;;
+  armv7r-*)
+      arch="arm"; model="armv7r"; endianness="little"; bitsize=32;;
+  armv7m-*)
+      arch="arm"; model="armv7m"; endianness="little"; bitsize=32;;
+  armeb-*|armebv7a-*)
+      arch="arm"; model="armv7a"; endianness="big"; bitsize=32;;
+  armebv6-*)
+      arch="arm"; model="armv6"; endianness="big"; bitsize=32;;

@@ -1,0 +1,121 @@
+{
+  static constexpr std::size_t
+  buffer_size_in_bytes(std::size_t obj_count, std::size_t obj_size) noexcept
+  {
+    // N * (S * P + R + D)
+    constexpr std::size_t P = sizeof(void*);
+    constexpr std::size_t R = sizeof(__cxa_refcounted_exception);
+    constexpr std::size_t D = sizeof(__cxa_dependent_exception);
+    return obj_count * (obj_size * P + R + D);
+  }
+
+  // A fixed-size heap, variable size object allocator
+  class pool
+    {
+    public:
+      pool() noexcept;
+
+      _GLIBCXX_NODISCARD void *allocate (std::size_t) noexcept;
+      void free (void *) noexcept;
+
+      bool in_pool (void *) const noexcept;
+
+    private:
+      struct free_entry {
+	std::size_t size;
+	free_entry *next;
+      };
+      struct allocated_entry {
+	std::size_t size;
+	char data[] __attribute__((aligned));
+      };
+
+#if _GLIBCXX_HOSTED
+      // A single mutex controlling emergency allocations.
+      __gnu_cxx::__mutex emergency_mutex;
+      using __scoped_lock = __gnu_cxx::__scoped_lock;
+#else
+      int emergency_mutex = 0;
+      struct __scoped_lock { explicit __scoped_lock(int) { } };
+#endif
+
+      // The free-list
+      free_entry *first_free_entry = nullptr;
+      // The arena itself - we need to keep track of these only
+      // to implement in_pool.
+#ifdef _GLIBCXX_EH_POOL_STATIC
+      static constexpr std::size_t arena_size
+	= buffer_size_in_bytes(EMERGENCY_OBJ_COUNT, EMERGENCY_OBJ_SIZE);
+      alignas(void*) char arena[arena_size];
+#else
+      char *arena = nullptr;
+      std::size_t arena_size = 0;
+#endif
+
+      friend void __gnu_cxx::__freeres() noexcept;
+    };
+
+  pool::pool() noexcept
+    {
+#ifndef _GLIBCXX_EH_POOL_STATIC
+      int obj_size = EMERGENCY_OBJ_SIZE;
+      int obj_count = EMERGENCY_OBJ_COUNT;
+
+#if _GLIBCXX_HOSTED
+#if _GLIBCXX_HAVE_SECURE_GETENV
+      const char* str = ::secure_getenv("GLIBCXX_TUNABLES");
+#else
+      const char* str = std::getenv("GLIBCXX_TUNABLES");
+#endif
+      const std::string_view ns_name = "glibcxx.eh_pool";
+      std::pair<std::string_view, int> tunables[]{
+	{"obj_size", 0}, {"obj_count", obj_count}
+      };
+      while (str)
+	{
+	  if (*str == ':')
+	    ++str;
+
+	  if (!ns_name.compare(0, ns_name.size(), str, ns_name.size())
+		&& str[ns_name.size()] == '.')
+	  {
+	    str += ns_name.size() + 1;
+	    for (auto& t : tunables)
+	      if (!t.first.compare(0, t.first.size(), str, t.first.size())
+		  && str[t.first.size()] == '=')
+	      {
+		str += t.first.size() + 1;
+		char* end;
+		unsigned long val = strtoul(str, &end, 0);
+		if ((*end == ':' || *end == '\0') && val <= INT_MAX)
+		  t.second = val;
+		str = end;
+		break;
+	      }
+	  }
+	  str = strchr(str, ':');
+	}
+      obj_count = std::min(tunables[1].second, MAX_OBJ_COUNT); // Can be zero.
+      if (tunables[0].second != 0)
+	obj_size = tunables[0].second;
+#endif // HOSTED
+
+      arena_size = buffer_size_in_bytes(obj_count, obj_size);
+      if (arena_size == 0)
+	return;
+      arena = (char *)malloc (arena_size);
+      if (!arena)
+	{
+	  // If the allocation failed go without an emergency pool.
+	  arena_size = 0;
+	  return;
+	}
+#endif // STATIC
+
+      // Populate the free-list with a single entry covering the whole arena
+      first_free_entry = reinterpret_cast <free_entry *> (arena);
+      new (first_free_entry) free_entry;
+      first_free_entry->size = arena_size;
+      first_free_entry->next = NULL;
+    }
+

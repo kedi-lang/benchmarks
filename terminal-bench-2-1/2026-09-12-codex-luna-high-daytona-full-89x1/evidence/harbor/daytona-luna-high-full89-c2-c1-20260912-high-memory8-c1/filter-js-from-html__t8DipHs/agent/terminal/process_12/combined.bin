@@ -1,0 +1,31 @@
+        super().__init__(convert_charrefs=False)
+        self.output: list[str] = []
+        self.drop_element: str | None = None
+        self.style_buffer: list[str] | None = None
+        self.source = ""
+        self._line_starts: list[int] = [0]
+
+    def _raw_endtag(self, tag: str) -> str:
+        """Recover an end tag verbatim (HTMLParser only exposes its name)."""
+        if self.source:
+            line, column = self.getpos()
+            if 1 <= line <= len(self._line_starts):
+                start = self._line_starts[line - 1] + column
+                if self.source.startswith("</", start):
+                    end = self.source.find(">", start + 2)
+                    if end >= 0:
+                        candidate = self.source[start : end + 1]
+                        if re.match(r"</\\s*" + re.escape(tag) + r"(?:\\s*>)", candidate, re.I):
+                            return candidate
+        return "</" + tag + ">"
+
+    def _put(self, text: str) -> None:
+        if self.drop_element is not None:
+            return
+        if self.style_buffer is not None:
+            self.style_buffer.append(text)
+        else:
+            self.output.append(text)
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        raw = self.get_starttag_text() or ("<" + tag + ">")

@@ -1,0 +1,40 @@
+165:my $LZMA2_MIN_COMPRESSED_LEN = 16; # the raw data (decrypted) needs to be at least: 3 + 1 + 1, header (start + size) + at least one byte of data + end
+209:my $SEVEN_ZIP_LZMA1             = "\x03\x01\x01";
+210:my $SEVEN_ZIP_LZMA2             = "\x21";
+232:my $SEVEN_ZIP_LZMA1_COMPRESSED   =   1;
+233:my $SEVEN_ZIP_LZMA2_COMPRESSED   =   2;
+250:my %SEVEN_ZIP_COMPRESSOR_NAMES   = (1 => "LZMA1", 2 => "LZMA2", 3 => "PPMD", 6 => "BZIP2", 7 => "DEFLATE",
+859:  if ($dict_size < LZMA_DICT_SIZE_MIN)
+861:    $dict_size = LZMA_DICT_SIZE_MIN;
+917:  if ($codec_id eq $SEVEN_ZIP_LZMA1)
+919:    $type = $SEVEN_ZIP_LZMA1_COMPRESSED;
+921:  elsif ($codec_id eq $SEVEN_ZIP_LZMA2)
+923:    $type = $SEVEN_ZIP_LZMA2_COMPRESSED;
+1092:      $steps_involved .= "decompressed using " . $SEVEN_ZIP_COMPRESSOR_NAMES{$cur_type};
+1146:  # show a warning if the decompression algorithm is currently not supported by the cracker
+1160:    print STDERR "$PASSWORD_RECOVERY_TOOL_NAME currently does not support this particular decompression algorithm(s) or preprocessing filter(s).\n";
+1177:    elsif ($type_of_compression == $SEVEN_ZIP_LZMA2_COMPRESSED) # this special case should only work for LZMA2
+1179:      if ($data_len <= $LZMA2_MIN_COMPRESSED_LEN)
+1182:        print STDERR "to be very short and therefore it might use the LZMA2 uncompressed chunk feature\n";
+1197:        print STDERR "WARNING: $PASSWORD_RECOVERY_TOOL_NAME does not currently support combining/cascading multiple decompression algorithms\n";
+1329:  # if it is lzma compressed, we need to decompress it first
+1331:  if ($codec_id eq $SEVEN_ZIP_LZMA1)
+1358:    my $decompressed_header = "";
+1365:      my $lz = new Compress::Raw::Lzma::AloneDecoder (AppendOutput => 1);
+1384:      my $status = $lz->code ($lzma_header, $decompressed_header);
+1390:          if ($status != LZMA_STREAM_END)
+1392:            print STDERR "WARNING: the LZMA header decompression for the file '" . $file_path . "' failed with status: '" . $status . "'\n";
+1397:              print STDERR "INFO: for some reasons, for large LZMA buffers, we sometimes get a 'Data is corrupt' error.\n";
+1402:              print STDERR "      'The reference LZMA Decoder ignores the value of the \"Corrupted\" variable.\n";
+1405:              print STDERR "       reference LZMA Decoder, another LZMA Decoder implementation must also\n";
+1409:              print STDERR "       https://github.com/jljusten/LZMA-SDK/blob/master/DOC/lzma-specification.txt#L343-L347)\n";
+1417:      last if (length ($decompressed_header) > 0); # if we got some output it seems that it worked just fine
+1420:    return undef unless (length ($decompressed_header) > 0);
+1423:    # return undef unless (length ($decompressed_header) == $unpack_size);
+1425:    # check the decompressed 7zip header
+1427:    $memory_buffer_read_offset = 0; # decompressed_header is a new memory buffer (which uses a offset to speed things up)
+1429:    my $id = read_id (\$decompressed_header);
+1433:    my $header = read_seven_zip_header (\$decompressed_header);
+1529:  elsif ($codec_id eq $SEVEN_ZIP_LZMA2)
+2120:    # codec_id: 030101   -> lzma  (we need to decompress - k_LZMA)
+2121:    # codec_id: 21       -> lzma2 (we need to decompress - k_LZMA2)

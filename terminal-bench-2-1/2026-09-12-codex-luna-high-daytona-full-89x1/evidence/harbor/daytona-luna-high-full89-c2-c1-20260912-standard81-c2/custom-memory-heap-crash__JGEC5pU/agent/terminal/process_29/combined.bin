@@ -1,0 +1,53 @@
+4:	.globl	_Z9user_initv
+5:	.type	_Z9user_initv, @function
+6:_Z9user_initv:
+7-.LFB2088:
+8-	.cfi_startproc
+9-	endbr64
+10-	pushq	%rbx
+11-	.cfi_def_cfa_offset 16
+12-	.cfi_offset 3, -16
+13-	call	_ZNSt6locale7classicEv@PLT
+14-	leaq	_ZNSt5ctypeIcE2idE(%rip), %rdi
+15-	movq	%rax, %rbx
+16-	call	_ZNKSt6locale2id5_M_idEv@PLT
+17-	movq	%rax, %rdx
+18-	movq	(%rbx), %rax
+19-	movq	8(%rax), %rax
+20-	cmpq	$0, (%rax,%rdx,8)
+21-	je	.L5
+22-	popq	%rbx
+23-	.cfi_remember_state
+24-	.cfi_def_cfa_offset 8
+25-	ret
+26-.L5:
+27-	.cfi_restore_state
+28-	call	_ZSt16__throw_bad_castv@PLT
+29-	.cfi_endproc
+30-.LFE2088:
+31:	.size	_Z9user_initv, .-_Z9user_initv
+32-	.p2align 4
+33-	.globl	_Z12user_cleanupv
+34-	.type	_Z12user_cleanupv, @function
+35-_Z12user_cleanupv:
+36-.LFB2089:
+37-	.cfi_startproc
+38-	endbr64
+39-	ret
+40-	.cfi_endproc
+41-.LFE2089:
+42-	.size	_Z12user_cleanupv, .-_Z12user_cleanupv
+43-	.p2align 4
+44-	.globl	_Z9user_mainv
+45-	.type	_Z9user_mainv, @function
+46-_Z9user_mainv:
+47-.LFB2611:
+48-	.cfi_startproc
+49-	endbr64
+50-	ret
+51-	.cfi_endproc
+52-.LFE2611:
+53-	.size	_Z9user_mainv, .-_Z9user_mainv
+54-	.ident	"GCC: (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0"
+55-	.section	.note.GNU-stack,"",@progbits
+56-	.section	.note.gnu.property,"a"

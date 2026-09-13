@@ -1,0 +1,76 @@
+#endif
+    case QUI_H:
+    case QU_H:
+    case Q_H:
+      if (logfile) {
+        fclose(logfile);
+        logfile = NULL;
+      }
+#if defined(DOSALLGRAPHX)
+      if (displayMode != TEXT)
+        bgi_display_close(NOWAIT);
+      else {
+        show_cursor();
+        switch_page(DEF_PAGE);
+      }
+#else
+#if defined(DOSGRXGRAPHX)
+      bgi_display_close(NOWAIT);
+#else
+#if defined(DOSTXTGRAPHX)
+      switch_page(DEF_PAGE);
+      show_cursor();
+#else
+#if defined(MACGRAPHX)
+      mac_display_close();
+#else
+#if defined(LINUXGRAPHX)
+      svga_display_close(NOWAIT);
+#else
+#if defined(XWINGRAPHX)
+      xWin_display_close(NOWAIT);
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+#if defined(__MAC__) || defined(__AMIGA__)
+      /* DOS taskQueue may not be free'd because of segment wrap-around */
+      if (alloc_p) {
+        free(memory);
+        free(taskQueue);
+        alloc_p = 0;
+      }
+#endif
+
+      Exit(USERABORT);
+
+    case REM_H:                /* macro comment */
+      break;
+    case REG_H:
+    case RE_H:
+    case R_H:
+      print_registers();
+      break;
+    case RES_H:                /* reset command chain/macro execution */
+      cmdMod = RESET;
+      break;
+    case SEA_H:                /* wildcard search for pattern in disassembly */
+    case SE_H:
+      for (i = 0; argStr[i]; ++i)
+        argStr[i] = toupper_(argStr[i]);
+      for (i = curAddr + 1; !cmdMod && i != curAddr; ++i) {
+        if (i == targetSize)
+          i = 0;
+        if (!wildsearch(argStr, (*targetview) (i, outs))) {
+          curAddr = i;
+          break;
+        }
+      }
+      cdb_fputs((*targetview) (curAddr, outs), COND);
+      break;
+#if !defined(__MAC__) && !defined(XWINGRAPHX)
+    case SHE_H:                /* execute shell (command) */
+    case SH_H:
+#if defined(DOSALLGRAPHX)

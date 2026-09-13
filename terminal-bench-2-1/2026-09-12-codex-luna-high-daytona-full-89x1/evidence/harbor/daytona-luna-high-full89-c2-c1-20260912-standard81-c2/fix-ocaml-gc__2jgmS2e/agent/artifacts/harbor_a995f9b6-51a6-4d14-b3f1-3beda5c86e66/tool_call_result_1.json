@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "ea480b8419f2ae8c8476598994654d78c6bd10bdd86e4ff915c2586ec4750312",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 20000,
+    "created_at": "2026-09-12T20:17:27.057319Z",
+    "expires_at": "2026-09-12T21:17:27.057319Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": "= Hacking the compiler :camel:\n\nThis document is a work-in-progress attempt to provide useful\ninformation for people willing to inspect or modify the compiler\ndistribution's codebase. Feel free to improve it by sending change\nproposals for it.\n\nIf you already have a patch that you would like to contribute to the\nofficial distribution, please see link:CONTRIBUTING.md[].\n\n=== Your first compiler modification\n\n1. Create a new git branch to store your changes.\n+\n----\ngit checkout -b my-modification\n----\nUsually, this branch wants to be based on `trunk`. If your changes must be on a\nspecific release, use its release branch (*not* the release tag) instead. For\nexample, to make a fix for 4.11.1, base your branch on *4.11* (not on *4.11.1*).\nThe `configure` step for the compiler recognises a development build from the\n`+dev` in the version number (see file `VERSION`), and release tarballs and the tagged Git commits do\nnot have this which causes some important development things to be disabled\n(ocamltest and converting C compiler warnings to errors).\n\n2. Consult link:INSTALL.adoc[] for build instructions. Here is the gist of it:\n+\n----\n./configure\nmake -j 4\n----\nIf you are on a release bui…",
+    "ref_id": "tool_call_result_1",
+    "sensitive": false,
+    "size_bytes": 20004,
+    "summary": "str value with 20000 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_a995f9b6-51a6-4d14-b3f1-3beda5c86e66",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

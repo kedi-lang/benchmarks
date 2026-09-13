@@ -1,0 +1,14 @@
+/usr/bin/install -m 0644 sqlite3.pc "/app/sqlite/lib/pkgconfig"
+if [ x != "x" ] && [ -f "" ]; then \
+	/usr/bin/install  "/app/sqlite/lib"; \
+fi
+/usr/bin/install libsqlite3.so "/app/sqlite/lib"
+Setting up libsqlite3.so version symlinks...
+lrwxrwxrwx 1 root root      20 Sep 12 17:49 libsqlite3.so -> libsqlite3.so.3.50.4
+lrwxrwxrwx 1 root root      20 Sep 12 17:49 libsqlite3.so.0 -> libsqlite3.so.3.50.4
+-rwxr-xr-x 1 root root 5257000 Sep 12 17:49 libsqlite3.so.3.50.4
+/usr/bin/install -m 0644 libsqlite3.a "/app/sqlite/lib"
+/usr/bin/install -m 0644 sqlite3.h "/app/sqlite/src/sqlite3ext.h" "/app/sqlite/include"
+TCL support disabled, so not installing libtclsqlite3.so
+/usr/bin/install sqlite3 "/app/sqlite/bin"
+/usr/bin/install -m 0644 "/app/sqlite/sqlite3.1" "/app/sqlite/share/man/man1"

@@ -1,0 +1,21 @@
+
+# Castling-right bookkeeping.  A king leaving e1 loses both white rights;
+# a rook leaving (or being captured on) its home square loses its one right.
+add(r'(?m)^([CUT]\|.{60}[^K].{3})\|([^|\n]*)K([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+add(r'(?m)^([CUT]\|.{60}[^K].{3})\|([^|\n]*)Q([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+add(r'(?m)^([CUT]\|.{63}[^R])\|([^|\n]*)K([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+add(r'(?m)^([CUT]\|.{7}[^r].{56})\|([^|\n]*)k([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+add(r'(?m)^([CUT]\|[^r].{7}.{56})\|([^|\n]*)q([^|\n]*)\|([^\n]*)$', r'\g<1>|\g<2>\g<3>|\g<4>')
+add(r'(?m)^([CUT]\|[^|\n]+)\|\|([^|\n]*)$', r'\g<1>|-|\g<2>')
+
+# Attack detector.  For each possible white-king square, delete a candidate
+# if a black pawn/knight/king or an unobstructed rook/bishop/queen ray attacks
+# it.  The blocker assertions deliberately allow only white pieces and empty
+# squares.
+def attack_condition(target, attacker, kinds, slider=False):
+    if not slider:
+        return rf'(?=.{{{attacker}}}[{kinds}])'
+    mid = slider_between(target, attacker)
+    a = rf'(?=.{{{attacker}}}[{kinds}])'
+    b = ''.join(rf'(?=.{{{i}}}[.])' for i in mid)
+    return a+b

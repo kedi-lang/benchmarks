@@ -1,0 +1,16 @@
+> d <- read.csv('/app/bn_sample_10k.csv')
+> vars <- names(d); n <- nrow(d); p <- length(vars)
+> # directed edges from -> to, exclude into U
+> edges <- do.call(rbind,lapply(1:p,function(i) do.call(rbind,lapply(1:p,function(j) if(i!=j && j!=1) c(i,j) else NULL))))
+> # matrices edge rows from,to
+> # local fit residual and BIC (constant included, parent coefficients)
+> localscore <- function(child, pars) {
++  y <- d[[child]]
++  if(length(pars)==0) rss <- sum((y-mean(y))^2) else rss <- sum(resid(lm(y ~ ., data=d[,c(child,vars[pars]),drop=FALSE])))^2 # likely formula issue child included
++  # safer
++  if(length(pars)>0) rss <- sum(residuals(lm(y ~ as.matrix(d[,vars[pars],drop=FALSE])) )^2)
++  n*log(rss/n) + (length(pars)+2)*log(n)
++ }
+> # precompute local by child mask
+> ls <- vector('list',p)
+> for (ch in 1:p) { ls[[ch]] <- numeric(2^p); for(m in 0:(2^p-1)) {pa<-which(as.logical(intToBits(m)[1:p])); pa<-setdiff(pa,ch); ls[[ch]][m+1]<-localscore(ch,pa)}}

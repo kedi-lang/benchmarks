@@ -1,0 +1,201 @@
+        """
+        assert not many and not partial, "Use of `many` and `partial` with schema unsupported."
+
+        def is_nested_list_of_numbers(value: typing.Any) -> bool:
+            if not isinstance(value, list):
+                return False
+            return all(isinstance(val, numbers.Number) or is_nested_list_of_numbers(val) for val in value)
+
+        for key, value in data.items():
+            if isinstance(value, numbers.Number):
+                continue  # scalar value
+            elif not is_nested_list_of_numbers(value):
+                raise marshmallow.ValidationError(
+                    f"Values associated with `{key}` must be (nested) sequences of numbers."
+                )
+
+
+class CreateFitRequest(marshmallow.Schema):
+    """Schema for request to start sampling.
+
+    Only two algorithms are supported: ``hmc_nuts_diag_e_adapt`` and ``fixed_param``.
+
+    Sampler parameters can be found in ``httpstan/stan_services.cpp``.
+
+    """
+
+    function = fields.String(
+        required=True,
+        validate=validate.OneOf(
+            ["stan::services::sample::hmc_nuts_diag_e_adapt", "stan::services::sample::fixed_param"]
+        ),
+    )
+    data = fields.Nested(Data(), missing={})
+    init = fields.Nested(Data(), missing={})
+    random_seed = fields.Integer(validate=validate.Range(min=0))
+    chain = fields.Integer(validate=validate.Range(min=0))
+    init_radius = fields.Number()
+    num_warmup = fields.Integer(validate=validate.Range(min=0))
+    num_samples = fields.Integer(validate=validate.Range(min=0))
+    num_thin = fields.Integer(validate=validate.Range(min=0))
+    save_warmup = fields.Boolean()
+    refresh = fields.Integer(validate=validate.Range(min=0))
+    stepsize = fields.Number()
+    stepsize_jitter = fields.Number()
+    max_depth = fields.Integer(validate=validate.Range(min=0))
+    delta = fields.Number()
+    gamma = fields.Number()
+    kappa = fields.Number()
+    t0 = fields.Number()
+    init_buffer = fields.Integer(validate=validate.Range(min=0))
+    term_buffer = fields.Integer(validate=validate.Range(min=0))
+    window = fields.Integer(validate=validate.Range(min=0))
+
+
+class Fit(marshmallow.Schema):
+    # e.g., models/15d69926a05591e1/fits/66ff16fc9d25cd29
+    name = fields.String(required=True)
+
+
+class ShowParamsRequest(marshmallow.Schema):
+    data = fields.Nested(Data(), missing={})
+
+
+class Parameter(marshmallow.Schema):  # noqa
+    """Schema for single parameter."""
+
+    name = fields.String(required=True)
+    dims = fields.List(fields.Integer(), required=True)
+    constrained_names = fields.List(fields.String(), required=True)
+
+
+#include <exception>
+#include <ostream>
+#include <string>
+
+#include <stan/callbacks/interrupt.hpp>
+#include <stan/callbacks/stream_logger.hpp>
+#include <stan/callbacks/writer.hpp>
+#include <stan/io/array_var_context.hpp>
+#include <stan/io/var_context.hpp>
+#include <stan/model/model_base.hpp>
+#include <stan/services/sample/fixed_param.hpp>
+#include <stan/services/sample/hmc_nuts_diag_e_adapt.hpp>
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+#include "socket_logger.hpp"
+#include "socket_writer.hpp"
+
+namespace py = pybind11;
+
+using rng_t = boost::random::mixmax;
+
+// forward declaration for function defined in another translation unit
+stan::model::model_base &new_model(stan::io::var_context &data_context, unsigned int seed, std::ostream *msg_stream);
+
+// Returns a reference variable to a new array_var_context
+//
+// See the C++ documentation for ``array_var_context`` for details about the
+// C++ class.
+// Caller takes responsibility for deleting.
+stan::io::array_var_context &new_array_var_context(py::dict data) {
+  py::module utils = py::module::import("httpstan.utils");
+  py::tuple split_results = utils.attr("_split_data")(data);
+
+  std::vector<std::string> names_r;
+  for (auto item : split_results[0])
+    names_r.push_back(item.cast<std::string>());
+
+  std::vector<double> values_r;
+  for (auto item : split_results[1])
+    values_r.push_back(item.cast<double>());
+
+  std::vector<std::vector<size_t>> dim_r;
+  for (auto lst : split_results[2]) {
+    std::vector<size_t> dim;
+    for (auto item : lst)
+      dim.push_back(item.cast<size_t>());
+    dim_r.push_back(dim);
+  }
+
+  std::vector<std::string> names_i;
+  for (auto item : split_results[3])
+    names_i.push_back(item.cast<std::string>());
+
+  std::vector<int> values_i;
+  for (auto item : split_results[4])
+    values_i.push_back(item.cast<int>());
+
+  std::vector<std::vector<size_t>> dim_i;
+  for (auto lst : split_results[5]) {
+    std::vector<size_t> dim;
+    for (auto item : lst)
+      dim.push_back(item.cast<size_t>());
+    dim_i.push_back(dim);
+  }
+
+  stan::io::array_var_context *var_context_ptr =
+      new stan::io::array_var_context(names_r, values_r, dim_r, names_i, values_i, dim_i);
+  return *var_context_ptr;
+}
+
+// See exported docstring
+std::string model_name() {
+  stan::io::array_var_context &var_context = new_array_var_context(py::dict()); // empty var_context
+  // random_seed, the second argument, is unused but the function requires it.
+  stan::model::model_base &model = new_model(var_context, (unsigned int)1, &std::cout);
+  std::string name = model.model_name();
+
+  delete &model;
+  delete &var_context;
+
+  return name;
+}
+
+// See exported docstring
+std::vector<std::string> get_param_names(py::dict data) {
+  std::vector<std::string> names;
+  stan::io::array_var_context &var_context = new_array_var_context(data);
+  // random_seed, the second argument, is unused but the function requires it.
+  stan::model::model_base &model = new_model(var_context, (unsigned int)1, &std::cout);
+  model.get_param_names(names);
+
+  delete &model;
+  delete &var_context;
+
+  return names;
+}
+
+// See exported docstring
+std::vector<std::string> constrained_param_names(py::dict data) {
+  stan::io::array_var_context &var_context = new_array_var_context(data);
+  std::vector<std::string> names;
+  // random_seed, the second argument, is unused but the function requires it.
+  stan::model::model_base &model = new_model(var_context, (unsigned int)1, &std::cout);
+  model.constrained_param_names(names);
+
+  delete &model;
+  delete &var_context;
+
+  return names;
+}
+
+// See exported docstring
+std::vector<std::vector<size_t>> get_dims(py::dict data) {
+  stan::io::array_var_context &var_context = new_array_var_context(data);
+  std::vector<std::vector<size_t>> dims_;
+  // random_seed, the second argument, is unused but the function requires it.
+  stan::model::model_base &model = new_model(var_context, (unsigned int)1, &std::cout);
+  model.get_dims(dims_);
+
+  delete &model;
+  delete &var_context;
+
+  return dims_;
+}
+
+// See exported docstring
+double log_prob(py::dict data, const std::vector<double> &unconstrained_parameters, bool adjust_transform) {
+  double lp;

@@ -1,0 +1,33 @@
+    carry=n.OR(n.AND(count[bit],addbit),n.AND(carry,n.XOR(count[bit],addbit)))
+
+# Fill DFF placeholders. Logical output is qbar of slave latch.
+def dff(D):
+    # A cross-coupled NOR latch.  The logical stored value is qbar;
+    # initially qbar=0, which is useful for all state except complemented B.
+    # master is transparent while clock is low, slave while it is high.
+    ms=n.AND(n.NOT(D),nclock); mr=n.AND(D,nclock)
+    # NOR = ~(a | b).  Put q before qbar so the feedback settles in order.
+    mor=len(n.lines); n.lines.append(f'out{mor} = out{mr} | out{len(n.lines)+3}')
+    mq= len(n.lines); n.lines.append(f'out{mq} = ~out{mor}')
+    mor2=len(n.lines); n.lines.append(f'out{mor2} = out{ms} | out{mq}')
+    mqb=len(n.lines); n.lines.append(f'out{mqb} = ~out{mor2}')
+    md=mqb
+    ss=n.AND(n.NOT(md),clock); sr=n.AND(md,clock)
+    sor=len(n.lines); n.lines.append(f'out{sor} = out{sr} | out{len(n.lines)+3}')
+    sq=len(n.lines); n.lines.append(f'out{sq} = ~out{sor}')
+    sor2=len(n.lines); n.lines.append(f'out{sor2} = out{ss} | out{sq}')
+    sqb=len(n.lines); n.lines.append(f'out{sqb} = ~out{sor2}')
+    return sqb
+# The above placeholders need be DFF output locations, but allocation order and lines can be arbitrary.
+# Use actual generated outputs; replace reserved placeholders with direct copies of dff outputs.
+actual=[]
+for D in D_a + D_bbar + D_count:
+    actual.append(dff(D))
+print('META actual',actual[:4],actual[32:36],actual[64:68])
+for p,a in zip(reg_outputs,actual): n.lines[p]=f'out{p} = out{a}'
+# Final outputs are the state A bits (F(root)), most significant convention doesn't matter since output bits use index order.
+for bit in range(32):
+    i=len(n.lines); n.lines.append(f'out{i} = out{state_a[bit]}')
+assert len(n.lines)<32000, len(n.lines)
+open('/app/gates.txt','w').write('\n'.join(n.lines)+'\n')
+print('lines',len(n.lines),'root logic end',len(n.lines))

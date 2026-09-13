@@ -1,0 +1,68 @@
+
+mystery:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000402de0 <allocate_image>:
+  402de0:	f3 0f 1e fa          	endbr64
+  402de4:	41 55                	push   r13
+  402de6:	41 54                	push   r12
+  402de8:	41 89 fc             	mov    r12d,edi
+  402deb:	55                   	push   rbp
+  402dec:	48 63 ee             	movsxd rbp,esi
+  402def:	53                   	push   rbx
+  402df0:	48 89 eb             	mov    rbx,rbp
+  402df3:	48 c1 e5 03          	shl    rbp,0x3
+  402df7:	48 89 ef             	mov    rdi,rbp
+  402dfa:	48 83 ec 08          	sub    rsp,0x8
+  402dfe:	e8 dd ec 00 00       	call   411ae0 <__libc_malloc>
+  402e03:	49 89 c5             	mov    r13,rax
+  402e06:	85 db                	test   ebx,ebx
+  402e08:	7e 2b                	jle    402e35 <allocate_image+0x55>
+  402e0a:	49 63 c4             	movsxd rax,r12d
+  402e0d:	4c 89 eb             	mov    rbx,r13
+  402e10:	4c 01 ed             	add    rbp,r13
+  402e13:	4c 8d 24 40          	lea    r12,[rax+rax*2]
+  402e17:	49 c1 e4 02          	shl    r12,0x2
+  402e1b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  402e20:	4c 89 e7             	mov    rdi,r12
+  402e23:	48 83 c3 08          	add    rbx,0x8
+  402e27:	e8 b4 ec 00 00       	call   411ae0 <__libc_malloc>
+  402e2c:	48 89 43 f8          	mov    QWORD PTR [rbx-0x8],rax
+  402e30:	48 39 eb             	cmp    rbx,rbp
+  402e33:	75 eb                	jne    402e20 <allocate_image+0x40>
+  402e35:	48 83 c4 08          	add    rsp,0x8
+  402e39:	4c 89 e8             	mov    rax,r13
+  402e3c:	5b                   	pop    rbx
+  402e3d:	5d                   	pop    rbp
+  402e3e:	41 5c                	pop    r12
+  402e40:	41 5d                	pop    r13
+  402e42:	c3                   	ret
+  402e43:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  402e4a:	00 00 00 00 
+  402e4e:	66 90                	xchg   ax,ax
+
+0000000000402e50 <free_image>:
+  402e50:	f3 0f 1e fa          	endbr64
+  402e54:	41 54                	push   r12
+  402e56:	49 89 fc             	mov    r12,rdi
+  402e59:	55                   	push   rbp
+  402e5a:	53                   	push   rbx
+  402e5b:	85 f6                	test   esi,esi
+  402e5d:	7e 22                	jle    402e81 <free_image+0x31>
+  402e5f:	48 63 f6             	movsxd rsi,esi
+  402e62:	48 89 fb             	mov    rbx,rdi
+  402e65:	48 8d 2c f7          	lea    rbp,[rdi+rsi*8]
+  402e69:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  402e70:	48 8b 3b             	mov    rdi,QWORD PTR [rbx]
+  402e73:	48 83 c3 08          	add    rbx,0x8
+  402e77:	e8 34 f3 00 00       	call   4121b0 <__free>
+  402e7c:	48 39 eb             	cmp    rbx,rbp
+  402e7f:	75 ef                	jne    402e70 <free_image+0x20>
+  402e81:	5b                   	pop    rbx
+  402e82:	4c 89 e7             	mov    rdi,r12
+  402e85:	5d                   	pop    rbp
+  402e86:	41 5c                	pop    r12
+  402e88:	e9 23 f3 00 00       	jmp    4121b0 <__free>
+  402e8d:	0f 1f 00             	nop    DWORD PTR [rax]

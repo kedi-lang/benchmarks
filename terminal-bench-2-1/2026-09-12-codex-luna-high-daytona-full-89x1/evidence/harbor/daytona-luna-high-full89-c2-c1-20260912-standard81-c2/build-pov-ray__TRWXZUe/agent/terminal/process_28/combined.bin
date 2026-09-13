@@ -1,0 +1,26 @@
+gcc -c -O2 -std=gnu89 -fcommon unix.c
+unix.c: In function ‘matherr’:
+unix.c:35:12: error: invalid use of undefined type ‘struct libm_exception’
+   35 |    switch(x->type)
+      |            ^~
+unix.c:37:11: error: ‘DOMAIN’ undeclared (first use in this function)
+   37 |      case DOMAIN:
+      |           ^~~~~~
+unix.c:37:11: note: each undeclared identifier is reported only once for each function it appears in
+unix.c:38:11: error: ‘OVERFLOW’ undeclared (first use in this function)
+   38 |      case OVERFLOW:
+      |           ^~~~~~~~
+unix.c:39:10: error: invalid use of undefined type ‘struct libm_exception’
+   39 |         x->retval = 1.0e17;
+      |          ^~
+unix.c:42:11: error: ‘SING’ undeclared (first use in this function); did you mean ‘SIN’?
+   42 |      case SING:
+      |           ^~~~
+      |           SIN
+unix.c:43:11: error: ‘UNDERFLOW’ undeclared (first use in this function)
+   43 |      case UNDERFLOW:
+      |           ^~~~~~~~~
+unix.c:44:10: error: invalid use of undefined type ‘struct libm_exception’
+   44 |         x->retval = 0.0;
+      |          ^~
+make: *** [unix.mak:28: unix.o] Error 1

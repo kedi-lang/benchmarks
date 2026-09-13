@@ -1,0 +1,59 @@
+Usage: mailman shell [OPTIONS] [RUN_ARGS]...
+
+  Operate on a mailing list.
+
+  For detailed help, see --details
+
+Options:
+  -i, --interactive    Leaves you at an interactive prompt after all other
+                       processing is complete. This is the default unless the
+                       --run option is given.
+  -r, --run TEXT       Run a script.  The argument is the module path to a
+                       callable.  This callable will be imported and then, if
+                       --listspec/-l is also given, is called with the mailing
+                       list as the first argument.  If additional arguments
+                       are given at the end of the command line, they are
+                       passed as subsequent positional arguments to the
+                       callable.  For additional help, see --details.  If no
+                       --listspec/-l argument is given, the script function
+                       being called is called with no arguments.
+  --details            Print detailed instructions and exit.
+  -l, --listspec TEXT  A specification of the mailing list to operate on.
+                       This may be the posting address of the list, or its
+                       List-ID.  The argument can also be a Python regular
+                       expression, in which case it is matched against both
+                       the posting address and List-ID of all mailing lists.
+                       To use a regular expression, LISTSPEC must start with a
+                       ^ (and the matching is done with re.match(). LISTSPEC
+                       cannot be a regular expression unless --run is given.
+  -h, --help           Show this message and exit.
+Usage: mailman withlist [OPTIONS] [RUN_ARGS]...
+
+  Operate on a mailing list.
+
+  For detailed help, see --details
+
+Options:
+  -i, --interactive    Leaves you at an interactive prompt after all other
+                       processing is complete. This is the default unless the
+                       --run option is given.
+  -r, --run TEXT       Run a script.  The argument is the module path to a
+                       callable.  This callable will be imported and then, if
+                       --listspec/-l is also given, is called with the mailing
+                       list as the first argument.  If additional arguments
+                       are given at the end of the command line, they are
+                       passed as subsequent positional arguments to the
+                       callable.  For additional help, see --details.  If no
+                       --listspec/-l argument is given, the script function
+                       being called is called with no arguments.
+  --details            Print detailed instructions and exit.
+  -l, --listspec TEXT  A specification of the mailing list to operate on.
+                       This may be the posting address of the list, or its
+                       List-ID.  The argument can also be a Python regular
+                       expression, in which case it is matched against both
+                       the posting address and List-ID of all mailing lists.
+                       To use a regular expression, LISTSPEC must start with a
+                       ^ (and the matching is done with re.match(). LISTSPEC
+                       cannot be a regular expression unless --run is given.
+  -h, --help           Show this message and exit.
+/usr/lib/python3/dist-packages/mailman/interfaces/action.py:25:class Action(Enum):

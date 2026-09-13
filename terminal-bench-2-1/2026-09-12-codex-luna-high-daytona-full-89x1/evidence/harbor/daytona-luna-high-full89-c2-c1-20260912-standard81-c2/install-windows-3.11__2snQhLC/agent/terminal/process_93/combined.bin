@@ -1,0 +1,61 @@
+[DDEShares]
+CHAT$=winchat,chat,,31,,0,,0,0,0
+SCHAT$=winchat,chat,,31,,0,,0,0,0
+CLPBK$=clipsrv,system,,31,,0,,0,0,0
+HEARTS$=mshearts,hearts,,15,,0,,0,0,0
+
+[Network]
+winnet=wfwnet/00025100
+multinet=nonet
+FileSharing=Yes
+PrintSharing=Yes
+LogonDisconnected=yes
+EnableSharing=Yes
+UserName=JJ
+Workgroup=WORKGROUP
+ComputerName=QEMU
+Comment=Jaap & Jol
+logonvalidated=no
+
+
+
+[network drivers]
+netcard=PCIND.DOS
+transport=ndishlp.sys
+devdir=C:\WINDOWS
+LoadRMDrivers=No
+
+[Password Lists]
+*Shares=C:\WINDOWS\Share000.PWL
+JJ=C:\WINDOWS\JJ.PWL
+
+[MSTCP]
+EnableRouting=0
+Interfaces=RTL80290
+deadgwdetect=1
+pmtudiscovery=1
+
+[DNS]
+DNSServers=192.168.178.1
+HostName=qemu
+DomainName=lan
+ Volume in drive : has no label
+ Volume Serial Number is 3D9C-9DD2
+Directory for ::/WINDOWS
+
+PROTMAN  DOS     21940 1993-11-01   1:11 
+PCIND    DOS     16507 2010-12-28  19:36 
+        2 files              38 447 bytes
+                         11 939 840 bytes free
+
+@PATH C:\MSBOB;%PATH%
+@ECHO OFF
+C:\DOSIDLE.EXE
+C:\WINDOWS\SMARTDRV.EXE 2048 128 
+C:\WINDOWS\net start
+PROMPT $p$g
+PATH C:\MSBOB;C:\IE5;C:\WINDOWS;C:\DOS
+SET TEMP=C:\TEMP
+
+win
+fdapm poweroff

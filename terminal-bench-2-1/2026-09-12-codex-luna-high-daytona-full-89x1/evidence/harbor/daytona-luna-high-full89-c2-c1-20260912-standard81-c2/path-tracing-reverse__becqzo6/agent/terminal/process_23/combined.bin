@@ -1,0 +1,116 @@
+
+mystery:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000402570 <plane_intersect>:
+  402570:	endbr64
+  402574:	movss  xmm1,DWORD PTR [rsp+0x18]
+  40257a:	movss  xmm3,DWORD PTR [rip+0x7da8a]        # 48000c <_IO_stdin_used+0xc>
+  402582:	mov    rax,rdi
+  402585:	movaps xmm2,xmm1
+  402588:	andps  xmm2,XMMWORD PTR [rip+0x83531]        # 485ac0 <sigall_set+0x20>
+  40258f:	comiss xmm3,xmm2
+  402592:	ja     4025f0 <plane_intersect+0x80>
+  402594:	movss  xmm2,DWORD PTR [rsp+0xc]
+  40259a:	movss  xmm3,DWORD PTR [rip+0x7da66]        # 480008 <_IO_stdin_used+0x8>
+  4025a2:	subss  xmm0,xmm2
+  4025a6:	divss  xmm0,xmm1
+  4025aa:	comiss xmm3,xmm0
+  4025ad:	ja     4025f0 <plane_intersect+0x80>
+  4025af:	mulss  xmm1,xmm0
+  4025b3:	movss  xmm3,DWORD PTR [rsp+0x14]
+  4025b9:	mov    edx,0x1
+  4025be:	mulss  xmm3,xmm0
+  4025c2:	addss  xmm3,DWORD PTR [rsp+0x8]
+  4025c8:	addss  xmm1,xmm2
+  4025cc:	movss  xmm2,DWORD PTR [rsp+0x1c]
+  4025d2:	mulss  xmm2,xmm0
+  4025d6:	unpcklps xmm0,xmm3
+  4025d9:	addss  xmm2,DWORD PTR [rsp+0x10]
+  4025df:	unpcklps xmm1,xmm2
+  4025e2:	movlhps xmm0,xmm1
+  4025e5:	movss  xmm1,DWORD PTR [rip+0x834ef]        # 485adc <sigall_set+0x3c>
+  4025ed:	jmp    4025fa <plane_intersect+0x8a>
+  4025ef:	nop
+  4025f0:	pxor   xmm0,xmm0
+  4025f4:	pxor   xmm1,xmm1
+  4025f8:	xor    edx,edx
+  4025fa:	mov    DWORD PTR [rax+0x10],0x0
+  402601:	mov    DWORD PTR [rax+0x18],0x0
+  402608:	mov    DWORD PTR [rax+0x1c],edx
+  40260b:	movups XMMWORD PTR [rax],xmm0
+  40260e:	movss  DWORD PTR [rax+0x14],xmm1
+  402613:	ret
+  402614:	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  40261f:	nop
+
+0000000000402620 <sky_color>:
+  402620:	endbr64
+  402624:	movss  xmm1,DWORD PTR [rip+0x834b0]        # 485adc <sigall_set+0x3c>
+  40262c:	movss  xmm2,DWORD PTR [rsp+0x18]
+  402632:	movq   xmm3,QWORD PTR [rip+0x83426]        # 485a60 <__PRETTY_FUNCTION__.0+0x48>
+  40263a:	addss  xmm2,xmm1
+  40263e:	mulss  xmm2,DWORD PTR [rip+0x8341a]        # 485a60 <__PRETTY_FUNCTION__.0+0x48>
+  402646:	movaps xmm0,xmm2
+  402649:	subss  xmm1,xmm2
+  40264d:	shufps xmm0,xmm0,0xe0
+  402651:	mulps  xmm0,xmm3
+  402654:	movaps xmm3,xmm1
+  402657:	addss  xmm1,xmm2
+  40265b:	shufps xmm3,xmm3,0xe0
+  40265f:	addps  xmm0,xmm3
+  402662:	ret
+  402663:	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  40266e:	xchg   ax,ax
+
+0000000000402670 <is_in_shadow>:
+  402670:	endbr64
+  402674:	sub    rsp,0x88
+  40267b:	movq   QWORD PTR [rsp+0x10],xmm2
+  402681:	lea    rdi,[rsp+0x50]
+  402686:	sub    rsp,0x20
+  40268a:	movss  DWORD PTR [rsp+0x38],xmm3
+  402690:	movq   xmm2,QWORD PTR [rsp+0x34]
+  402696:	movss  xmm3,DWORD PTR [rsp+0x30]
+  40269c:	movq   QWORD PTR [rsp+0x40],xmm0
+  4026a2:	mov    rax,QWORD PTR fs:0x28
+  4026ab:	mov    QWORD PTR [rsp+0x98],rax
+  4026b3:	xor    eax,eax
+  4026b5:	movaps xmm7,xmm2
+  4026b8:	movaps xmm0,xmm3
+  4026bb:	shufps xmm7,xmm7,0xe5
+  4026bf:	mulss  xmm0,xmm3
+  4026c3:	movaps xmm6,xmm7
+  4026c6:	movaps xmm7,xmm2
+  4026c9:	mulss  xmm7,xmm2
+  4026cd:	mulss  xmm6,xmm6
+  4026d1:	addss  xmm0,xmm7
+  4026d5:	addss  xmm0,xmm6
+  4026d9:	movss  xmm6,DWORD PTR [rsp+0x44]
+  4026df:	sqrtss xmm0,xmm0
+  4026e3:	divss  xmm3,xmm0
+  4026e7:	shufps xmm0,xmm0,0xe0
+  4026eb:	movhps xmm0,QWORD PTR [rip+0x83366]        # 485a58 <__PRETTY_FUNCTION__.0+0x40>
+  4026f2:	divps  xmm2,xmm0
+  4026f5:	movdqa xmm0,xmm4
+  4026f9:	unpcklps xmm1,xmm3
+  4026fc:	movss  xmm3,DWORD PTR [rsp+0x40]
+  402702:	unpcklps xmm3,xmm6
+  402705:	movlhps xmm3,xmm1
+  402708:	movdqa xmm1,xmm5
+  40270c:	movlps QWORD PTR [rsp+0x60],xmm2
+  402711:	mov    rax,QWORD PTR [rsp+0x60]
+  402716:	movups XMMWORD PTR [rsp],xmm3
+  40271a:	mov    QWORD PTR [rsp+0x10],rax
+  40271f:	call   4021a0 <sphere_intersect>
+  402724:	mov    eax,DWORD PTR [rsp+0x8c]
+  40272b:	add    rsp,0x20
+  40272f:	mov    rdx,QWORD PTR [rsp+0x78]
+  402734:	sub    rdx,QWORD PTR fs:0x28
+  40273d:	jne    402747 <is_in_shadow+0xd7>
+  40273f:	add    rsp,0x88
+  402746:	ret
+  402747:	call   41c110 <__stack_chk_fail>
+  40274c:	nop    DWORD PTR [rax+0x0]

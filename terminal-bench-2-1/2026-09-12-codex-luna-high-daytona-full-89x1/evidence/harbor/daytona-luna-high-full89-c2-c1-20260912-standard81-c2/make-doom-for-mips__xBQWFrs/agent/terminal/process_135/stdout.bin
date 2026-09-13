@@ -1,0 +1,31 @@
+0040ea80 <FixedMul>:
+  40ea80:	000417c3 	sra	v0,a0,0x1f
+  40ea84:	00051fc3 	sra	v1,a1,0x1f
+  40ea88:	00640018 	mult	v1,a0
+  40ea8c:	70450000 	madd	v0,a1
+  40ea90:	00001012 	mflo	v0
+  40ea94:	00850019 	multu	a0,a1
+  40ea98:	00002012 	mflo	a0
+  40ea9c:	00002810 	mfhi	a1
+  40eaa0:	00452821 	addu	a1,v0,a1
+  40eaa4:	00051400 	sll	v0,a1,0x10
+  40eaa8:	00042402 	srl	a0,a0,0x10
+  40eaac:	03e00008 	jr	ra
+  40eab0:	00441025 	or	v0,v0,a0
+
+0040eab4 <FixedDiv>:
+  40eab4:	27bdffe0 	addiu	sp,sp,-32
+  40eab8:	afbf001c 	sw	ra,28(sp)
+  40eabc:	afb20018 	sw	s2,24(sp)
+  40eac0:	afb10014 	sw	s1,20(sp)
+  40eac4:	afb00010 	sw	s0,16(sp)
+  40eac8:	00809025 	move	s2,a0
+  40eacc:	0c1051f3 	jal	4147cc <abs>
+  40ead0:	00a08825 	move	s1,a1
+  40ead4:	00408025 	move	s0,v0
+  40ead8:	0c1051f3 	jal	4147cc <abs>
+  40eadc:	02202025 	move	a0,s1
+  40eae0:	00108383 	sra	s0,s0,0xe
+  40eae4:	0202802a 	slt	s0,s0,v0
+  40eae8:	16000009 	bnez	s0,40eb10 <FixedDiv+0x5c>
+  40eaec:	00122c02 	srl	a1,s2,0x10

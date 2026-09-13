@@ -1,0 +1,42 @@
+39:typedef struct lumpinfo_s lumpinfo_t;
+40-
+41-struct lumpinfo_s
+42-{
+43-    char	name[8];
+44-    wad_file_t *wad_file;
+45-    int		position;
+46-    int		size;
+47-    void       *cache;
+48-
+49-    // Used for hash table lookups
+50-
+51:    lumpinfo_t *next;
+52-};
+53-
+54-
+55:extern lumpinfo_t *lumpinfo;
+56-extern unsigned int numlumps;
+57-
+58-wad_file_t *W_AddFile (char *filename);
+59-
+60-int	W_CheckNumForName (char* name);
+61-int	W_GetNumForName (char* name);
+62-
+63-int	W_LumpLength (unsigned int lump);
+64-void    W_ReadLump (unsigned int lump, void *dest);
+65-
+66-void*	W_CacheLumpNum (int lump, int tag);
+67-void*	W_CacheLumpName (char* name, int tag);
+68-
+69-void    W_GenerateHashTable(void);
+70-
+71-extern unsigned int W_LumpNameHash(const char *s);
+72-
+73-void    W_ReleaseLumpNum(int lump);
+74-void    W_ReleaseLumpName(char *name);
+75-
+76-void W_CheckCorrectIWAD(GameMission_t mission);
+77-
+78-#endif
+1404a254 B lumpinfo
+1404a3e0 B mainzone

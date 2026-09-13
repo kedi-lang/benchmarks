@@ -1,0 +1,23 @@
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if self.drop_element is not None:
+            return
+        raw = self.get_starttag_text() or ("<" + tag + "/>" )
+        if tag.casefold() in _DROP_ELEMENTS:
+            # HTMLParser treats `<script/>` as self-closing, while HTML
+            # browsers historically treat script as a raw-text element.  Keep
+            # dropping until an explicit end tag so the latter interpretation
+            # cannot leak executable text.
+            self.drop_element = tag.casefold()
+            return
+        self._put(_filtered_start_tag(raw, tag, attrs))
+
+    def handle_endtag(self, tag: str) -> None:
+        tag_lower = tag.casefold()
+        if self.drop_element is not None:
+            if tag_lower == self.drop_element:
+                self.drop_element = None
+            return
+        if tag_lower == "style" and self.style_buffer is not None:
+            content = "".join(self.style_buffer)
+            self.style_buffer = None
+            if not _bad_css(content):

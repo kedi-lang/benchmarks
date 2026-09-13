@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "ea8238f11af2368b108fbb392a57ee04fb7efc40c44222aa0d8bfe1175bcc747",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 64346,
+    "created_at": "2026-09-12T16:44:40.053559Z",
+    "expires_at": "2026-09-12T17:44:40.053559Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": "/**\n * MIPS Virtual Machine in JavaScript\n * \n * This VM implements the core MIPS instruction set for use in a MIPS-to-JavaScript compiler.\n * It handles register operations, memory access, and program flow control.\n */\n\nconst fs = require('fs');\n\n\nclass MIPSVM {\n  constructor() {\n    // Initialize 32 general-purpose registers (R0-R31)\n    // R0 is always 0 in MIPS\n    this.registers = new Array(32).fill(0);\n      this.registers[29] = 0x7FFFFFFC\n    \n    // Register names for debugging\n    this.regNames = [\n      \"zero\", \"at\", \"v0\", \"v1\", \"a0\", \"a1\", \"a2\", \"a3\",\n      \"t0\", \"t1\", \"t2\", \"t3\", \"t4\", \"t5\", \"t6\", \"t7\",\n      \"s0\", \"s1\", \"s2\", \"s3\", \"s4\", \"s5\", \"s6\", \"s7\",\n      \"t8\", \"t9\", \"k0\", \"k1\", \"gp\", \"sp\", \"fp\", \"ra\"\n    ];\n    \n    // Special registers\n    this.hi = 0;  // High result register\n    this.lo = 0;  // Low result register\n    \n    // Program counter\n    this.pc = 0;\n    \n    // Memory (simplified as an object mapping addresses to values)\n    this.memory = {};\n    \n    // Exception program counter\n    this.epc = 0;\n    \n    // File descriptors for syscalls\n    this.fileDescriptors = {\n      0: process.stdin.fd,   // Standard input\n      1: process.stdout.fd,  // Sta…",
+    "ref_id": "tool_call_result_1",
+    "sensitive": false,
+    "size_bytes": 64346,
+    "summary": "str value with 64346 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_a845ed5f-0854-4cbd-8072-97f008a46337",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

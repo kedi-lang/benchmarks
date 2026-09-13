@@ -1,0 +1,23 @@
+install -d /tmp/CompCert/.install-bin
+install -m 0755 ./ccomp /tmp/CompCert/.install-bin
+install -d /tmp/CompCert/.install-share
+install -m 0644 ./compcert.ini /tmp/CompCert/.install-share
+install -d /tmp/CompCert/share/man/man1
+install -m 0644 ./doc/ccomp.1 /tmp/CompCert/share/man/man1
+make -C runtime install
+make[1]: Entering directory '/tmp/CompCert/runtime'
+install -d /tmp/CompCert/lib/compcert
+install -m 0644 libcompcert.a /tmp/CompCert/lib/compcert
+install -d /tmp/CompCert/lib/compcert/include
+install -m 0644 include/float.h include/stdarg.h include/stdbool.h include/stddef.h include/varargs.h include/stdalign.h include/stdnoreturn.h /tmp/CompCert/lib/compcert/include
+make[1]: Leaving directory '/tmp/CompCert/runtime'
+install -d /tmp/CompCert/lib/compcert/coq
+for d in lib common x86_64 x86 backend cfrontend driver export cparser flocq/Core flocq/Prop flocq/Calc flocq/IEEE754 MenhirLib; do \
+          set -e; \
+          install -d /tmp/CompCert/lib/compcert/coq/$d; \
+          install -m 0644 $d/*.vo /tmp/CompCert/lib/compcert/coq/$d/; \
+          if test -d $d/.coq-native; then \
+            install -d /tmp/CompCert/lib/compcert/coq/$d/.coq-native; \
+            install -m 0644 $d/.coq-native/* /tmp/CompCert/lib/compcert/coq/$d/.coq-native/; \
+          fi \
+done

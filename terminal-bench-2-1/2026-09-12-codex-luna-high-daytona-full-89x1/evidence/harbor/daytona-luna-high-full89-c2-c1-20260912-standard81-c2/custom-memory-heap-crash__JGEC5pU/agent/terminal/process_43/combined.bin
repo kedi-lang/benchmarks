@@ -1,0 +1,41 @@
+	      f->size = sz;
+	      f->next = (*fe)->next;
+	      (*fe)->next = f;
+	    }
+	}
+    }
+
+  inline bool pool::in_pool (void *ptr) const noexcept
+    {
+      std::less<const void*> less;
+      return less(ptr, arena + arena_size) && less(arena, ptr);
+    }
+
+  pool emergency_pool;
+}
+
+namespace __gnu_cxx
+{
+  __attribute__((cold))
+  void
+  __freeres() noexcept
+  {
+#ifndef _GLIBCXX_EH_POOL_STATIC
+    if (emergency_pool.arena)
+      {
+	::free(emergency_pool.arena);
+	emergency_pool.arena = 0;
+      }
+#endif
+  }
+}
+#endif // USE_POOL
+
+extern "C" void *
+__cxxabiv1::__cxa_allocate_exception(std::size_t thrown_size) noexcept
+{
+  thrown_size += sizeof (__cxa_refcounted_exception);
+
+  void *ret = malloc (thrown_size);
+
+#if USE_POOL

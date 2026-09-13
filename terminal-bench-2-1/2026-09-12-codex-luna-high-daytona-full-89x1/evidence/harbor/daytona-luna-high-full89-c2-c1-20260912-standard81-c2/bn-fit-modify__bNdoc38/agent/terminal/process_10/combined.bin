@@ -1,0 +1,33 @@
+Error in if (r$score < best + 1e-05) { : 
+  missing value where TRUE/FALSE needed
+Execution halted
+250915.586 U -> D, U -> M, Y -> M, R -> Y, D -> Y, D -> R 
+250965.612 U -> D, Y -> M, R -> Y, R -> M, D -> Y, D -> R 
+251102.284 U -> Y, U -> R, U -> D, Y -> M, R -> Y, D -> R 
+251102.284 U -> R, U -> D, Y -> M, R -> Y, D -> R, D -> M 
+251220.016 U -> Y, U -> D, Y -> M, R -> Y, D -> Y, D -> R 
+251220.016 U -> D, Y -> M, R -> Y, D -> Y, D -> R, D -> M 
+251471.333 U -> D, U -> M, Y -> M, R -> Y, R -> M, D -> R 
+251550.064 U -> Y, U -> D, U -> M, Y -> M, R -> Y, D -> R 
+251550.064 U -> D, U -> M, Y -> M, R -> Y, D -> R, D -> M 
+251600.089 U -> Y, U -> D, Y -> M, R -> Y, R -> M, D -> R 
+251600.089 U -> D, Y -> M, R -> Y, R -> M, D -> R, D -> M 
+251854.493 U -> Y, U -> D, Y -> M, R -> Y, D -> R, D -> M 
+252635.126 U -> R, U -> D, U -> M, Y -> M, D -> Y, D -> R 
+252685.151 U -> R, U -> D, Y -> M, R -> M, D -> Y, D -> R 
+252939.556 U -> Y, U -> R, U -> D, Y -> M, D -> Y, D -> R 
+252939.556 U -> R, U -> D, Y -> R, Y -> M, D -> Y, D -> R 
+252939.556 U -> R, U -> D, Y -> M, D -> Y, D -> R, D -> M 
+253302.863 U -> R, U -> D, U -> M, Y -> M, R -> Y, D -> Y 
+253302.863 U -> R, U -> D, U -> M, R -> Y, D -> Y, D -> R 
+253308.605 U -> D, U -> M, Y -> M, R -> M, D -> Y, D -> R 
+253352.888 U -> R, U -> D, Y -> M, R -> Y, R -> M, D -> Y 
+253387.336 U -> Y, U -> D, U -> M, Y -> M, D -> Y, D -> R 
+253387.336 U -> D, U -> M, Y -> R, Y -> M, D -> Y, D -> R 
+253387.336 U -> D, U -> M, Y -> M, D -> Y, D -> R, D -> M 
+253437.361 U -> Y, U -> D, Y -> M, R -> M, D -> Y, D -> R 
+253437.361 U -> D, Y -> R, Y -> M, R -> M, D -> Y, D -> R 
+253437.361 U -> D, Y -> M, R -> M, D -> Y, D -> R, D -> M 
+> best<-min(sapply(res,`[[`,'score')); cat('best exact variants\n')
+best exact variants
+> for(ii in ord) {r<-res[[ii]]; if(r$score < best+1e-5) {cat(sprintf('%.6f ',r$score)); cat(paste(vars[r$es[,1]],'->',vars[r$es[,2]],collapse=', '), '\n')}}

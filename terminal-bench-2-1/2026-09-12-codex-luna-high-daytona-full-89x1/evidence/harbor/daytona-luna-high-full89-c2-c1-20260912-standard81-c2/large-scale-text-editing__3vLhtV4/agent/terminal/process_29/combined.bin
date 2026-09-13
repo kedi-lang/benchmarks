@@ -1,0 +1,7 @@
+call setreg('a', ":s/^\\s*\\([A-Za-z0-9]*\\)\\s*,\\s*\\([A-Za-z0-9]*\\)\\s*,\\s*\\([A-Za-z0-9]*\\)\\s*$/\\U\\3;\\2;\\1\\E;OK/\r")
+call setreg('b', "l")
+call setreg('c', "h")
+:%normal! @a
+:%normal! @b
+:%normal! @c
+:x

@@ -1,0 +1,22 @@
+def map(g):
+    num_rows = len(g)
+    num_cols = len(g[0])
+
+    d = {}
+
+    for i in range(num_rows):
+        for j in range(num_cols):
+            c = g[i][j]
+            key = (i + j) % 4
+            if key not in d:
+                d[key] = c
+
+    result = []
+    for i in range(num_rows):
+        row = []
+        for j in range(num_cols):
+            value = d.get((i + j) % 4, 0)
+            row.append(value)
+        result.append(row)
+
+    return result

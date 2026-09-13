@@ -1,0 +1,114 @@
+    // Drone players don't need mouse focus
+
+    if (drone)
+        return false;
+
+    // when menu is active or game is paused, release the mouse 
+ 
+    if (menuactive || paused)
+        return false;
+
+    // only grab mouse when playing levels (but not demos)
+
+    return (gamestate == GS_LEVEL) && !demoplayback && !advancedemo;
+}
+
+void doomgeneric_Tick()
+{
+    // frame syncronous IO operations
+    I_StartFrame ();
+
+    TryRunTics (); // will run at least one tic
+
+    S_UpdateSounds (players[consoleplayer].mo);// move positional sounds
+
+    // Update display, next frame, with current state.
+    if (screenvisible)
+    {
+        D_Display ();
+    }
+}
+
+//
+//  D_DoomLoop
+//
+void D_DoomLoop (void)
+{
+    if (bfgedition &&
+        (demorecording || (gameaction == ga_playdemo) || netgame))
+    {
+        printf(" WARNING: You are playing using one of the Doom Classic\n"
+               " IWAD files shipped with the Doom 3: BFG Edition. These are\n"
+               " known to be incompatible with the regular IWAD files and\n"
+               " may cause demos and network games to get out of sync.\n");
+    }
+
+    if (demorecording)
+    	G_BeginRecording ();
+
+    main_loop_started = true;
+
+    TryRunTics();
+
+    I_SetWindowTitle(gamedescription);
+    I_GraphicsCheckCommandLine();
+    I_SetGrabMouseCallback(D_GrabMouseCallback);
+    I_InitGraphics();
+    I_EnableLoadingDisk();
+
+    V_RestoreBuffer();
+    R_ExecuteSetViewSize();
+
+    D_StartGameLoop();
+
+    if (testcontrols)
+    {
+        wipegamestate = gamestate;
+    }
+
+    doomgeneric_Tick();
+}
+
+
+
+//
+//  DEMO LOOP
+//
+int             demosequence;
+int             pagetic;
+char                    *pagename;
+
+
+*/
+
+//
+// I_Quit
+//
+
+void I_Quit (void)
+{
+    atexit_listentry_t *entry;
+
+    // Run through all exit functions
+ 
+    entry = exit_funcs; 
+
+    while (entry != NULL)
+    {
+        entry->func();
+        entry = entry->next;
+    }
+
+#if ORIGCODE
+    SDL_Quit();
+
+    exit(0);
+#endif
+}
+145:        return;
+186:    	return;                    // for comparative timing / profiling
+305:	return;
+704:            return;
+1078:        return;
+1818:        return;
+1826:        return;

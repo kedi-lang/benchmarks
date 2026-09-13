@@ -1,0 +1,50 @@
+    def sample(self, *, num_chains=4, **kwargs) -> stan.fit.Fit:
+        """Draw samples from the model.
+
+        Parameters in ``kwargs`` will be passed to the default sample function.
+        The default sample function is currently
+        ``stan::services::sample::hmc_nuts_diag_e_adapt``.  Parameter names are
+        identical to those used in CmdStan.  See the CmdStan documentation for
+        parameter descriptions and default values.
+
+        There is one exception:  `num_chains`. `num_chains` is a
+        PyStan-specific keyword argument. It indicates the number of
+        independent processes to use when drawing samples.
+
+
+        Returns:
+            Fit: instance of Fit allowing access to draws.
+
+        Examples:
+            User-defined initial values for parameters must be provided
+            for each chain. Typically they will be the same for each chain.
+            The following example shows how user-defined initial parameters
+            are provided:
+
+            >>> program_code = "parameters {real y;} model {y ~ normal(0,1);}"
+            >>> posterior = stan.build(program_code)
+            >>> fit = posterior.sample(num_chains=2, init=[{"y": 3}, {"y": 3}])
+
+        """
+        return self.hmc_nuts_diag_e_adapt(num_chains=num_chains, **kwargs)
+
+(self)
+    def to_frame(self):
+        """Return view of draws as a pandas DataFrame.
+
+        If pandas is not installed, a `RuntimeError` will be raised.
+
+        Returns:
+            pandas.DataFrame: DataFrame with `num_draws` rows and
+                `num_flat_params` columns.
+        """
+        try:
+            import pandas as pd
+        except ImportError:
+            raise RuntimeError("The `to_frame` method requires the Python package `pandas`.")
+        columns = self.sample_and_sampler_param_names + self.constrained_param_names
+        assert len(self._draws) == len(columns)
+        df = pd.DataFrame(self._draws.reshape(len(columns), -1).T, columns=columns)
+        df.index.name, df.columns.name = "draws", "parameters"
+        return df
+

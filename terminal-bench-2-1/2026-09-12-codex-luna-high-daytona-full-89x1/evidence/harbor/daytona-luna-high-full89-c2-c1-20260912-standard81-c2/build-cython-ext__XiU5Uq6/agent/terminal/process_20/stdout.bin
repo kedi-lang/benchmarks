@@ -1,0 +1,59 @@
+...........F......                                                       [100%]
+=================================== FAILURES ===================================
+________________________ test_reconstructed_space_curve ________________________
+
+    def new_func():
+>       return func(sp.SpaceCurve(mk.trefoil()))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_spacecurve.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_spacecurve.py:73: in test_reconstructed_space_curve
+    k2 = k.reconstructed_space_curve()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pyknotid/spacecurves/spacecurve.py:756: in reconstructed_space_curve
+    return SpaceCurve(r.space_curve())
+                      ^^^^^^^^^^^^^^^
+pyknotid/representations/representation.py:495: in space_curve
+    g, lines, node_labels, nodes_by_height, xlims, first_edge, heights, extra_x_shifts = self._construct_planar_graph()
+                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 1+a,2-a,3+a,1-a,2+a,3-a
+
+    def _construct_planar_graph(self):
+        pd = self.planar_diagram()
+        g, duplicates, heights, first_edge = pd.as_networkx_extended()
+    
+        import planarity
+    
+        pg = planarity.PGraph(g)
+        pg.embed_drawplanar()
+        g = planarity.networkx_graph(pg)
+    
+    
+        node_labels = {}
+        xs = []
+        ys = []
+    
+        nodes_by_height = {}
+        node_xs_by_y = {}
+        node_xs_ys = {}
+        node_lefts_rights = {}
+    
+        for node, data in g.nodes(data=True):
+>           y = data['pos']
+                ^^^^^^^^^^^
+E           KeyError: 'pos'
+
+pyknotid/representations/representation.py:338: KeyError
+----------------------------- Captured stdout call -----------------------------
+Finding crossings
+i = 0 / 97
+3.0 crossings found
+
+Simplifying: initially 6 crossings
+-> 6 crossings after 1 runs
+=========================== short test summary info ============================
+FAILED tests/test_spacecurve.py::test_reconstructed_space_curve - KeyError: '...
+1 failed, 17 passed in 1.11s

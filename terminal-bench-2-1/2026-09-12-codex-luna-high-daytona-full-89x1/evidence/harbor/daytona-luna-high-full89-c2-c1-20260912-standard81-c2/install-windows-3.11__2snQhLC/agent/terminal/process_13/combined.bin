@@ -1,0 +1,66 @@
+Usage: 
+    websockify [options] [source_addr:]source_port [target_addr:target_port]
+    websockify [options] [source_addr:]source_port -- WRAP_COMMAND_LINE
+
+Options:
+  -h, --help            show this help message and exit
+  -v, --verbose         verbose messages
+  --traffic             per frame traffic
+  --record=FILE         record sessions to FILE.[session_number]
+  -D, --daemon          become a daemon (background process)
+  --run-once            handle a single WebSocket connection and exit
+  --timeout=TIMEOUT     after TIMEOUT seconds exit when not connected
+  --idle-timeout=IDLE_TIMEOUT
+                        server exits after TIMEOUT seconds if there are no
+                        active connections
+  --cert=CERT           SSL certificate file
+  --key=KEY             SSL key file (if separate from cert)
+  --key-password=KEY_PASSWORD
+                        SSL key password
+  --ssl-only            disallow non-encrypted client connections
+  --ssl-target          connect to SSL target as SSL client
+  --verify-client       require encrypted client to present a valid
+                        certificate (needs Python 2.7.9 or newer or Python 3.4
+                        or newer)
+  --cafile=FILE         file of concatenated certificates of authorities
+                        trusted for validating clients (only effective with
+                        --verify-client). If omitted, system default list of
+                        CAs is used.
+  --ssl-version=SSL_VERSION
+                        minimum TLS version to use (default, tlsv1_1, tlsv1_2,
+                        tlsv1_3)
+  --ssl-ciphers=SSL_CIPHERS
+                        list of ciphers allowed for connection. For a list of
+                        supported ciphers run `openssl ciphers`
+  --unix-target=FILE    connect to unix socket target
+  --inetd               inetd mode, receive listening socket from stdin
+  --web=DIR             run webserver on same port. Serve files from DIR.
+  --web-auth            require authentication to access webserver.
+  --wrap-mode=MODE      action to take when the wrapped program exits or
+                        daemonizes: exit (default), ignore, respawn
+  -6, --prefer-ipv6     prefer IPv6 when resolving source_addr
+  --libserver           use Python library SocketServer engine
+  --target-config=FILE  Configuration file containing valid targets in the
+                        form 'token: host:port' or, alternatively, a directory
+                        containing configuration files of this form
+                        (DEPRECATED: use `--token-plugin TokenFile --token-
+                        source  path/to/token/file` instead)
+  --token-plugin=CLASS  use a Python class, usually one from
+                        websockify.token_plugins, such as TokenFile, to
+                        process tokens into host:port pairs
+  --token-source=ARG    an argument to be passed to the token plugin on
+                        instantiation
+  --host-token          use the host HTTP header as token instead of the token
+                        URL query parameter
+  --auth-plugin=CLASS   use a Python class, usually one from
+                        websockify.auth_plugins, such as BasicHTTPAuth, to
+                        determine if a connection is allowed
+  --auth-source=ARG     an argument to be passed to the auth plugin on
+                        instantiation
+  --heartbeat=INTERVAL  send a ping to the client every INTERVAL seconds
+  --log-file=FILE       File where logs will be saved
+  --syslog=SERVER       Log to syslog server. SERVER can be local socket, such
+                        as /dev/log, or a UDP host:port pair.
+  --legacy-syslog       Use the old syslog protocol instead of RFC 5424. Use
+                        this if the messages produced by websockify seem
+                        abnormal.

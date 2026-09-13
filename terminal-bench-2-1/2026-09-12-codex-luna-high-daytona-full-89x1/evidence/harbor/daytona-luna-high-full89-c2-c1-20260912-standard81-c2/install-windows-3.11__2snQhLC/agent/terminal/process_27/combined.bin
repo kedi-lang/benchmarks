@@ -1,0 +1,9 @@
+LISTEN 0      100        127.0.0.1:6080       0.0.0.0:*    users:(("websockify",pid=2186,fd=3))                   
+LISTEN 0      1            0.0.0.0:5901       0.0.0.0:*    users:(("qemu-system-i38",pid=2175,fd=10))             
+LISTEN 0      511          0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=2208,fd=5),("nginx",pid=2198,fd=5))
+755 0 /tmp/qemu-monitor.sock
+644 268435456 /app/isos/win311.img
+    PID STAT     ELAPSED CMD
+   2175 Ssl  441077040-18:57:04 qemu-system-i386 -name win311 -M pc-i440fx-5.2 -m 16M -drive file=/app/isos/win311.img,format=raw,if=ide -boot c -vga cirrus -usb -device usb-kbd -snapshot -display none -vnc 0.0.0.0:1 -monitor unix:/tmp/qemu-monitor.sock,server=on,wait=off
+   2186 Ss   441077040-18:57:04 /usr/bin/python3 /usr/bin/websockify 127.0.0.1:6080 127.0.0.1:5901
+   2198 Ss   441077040-18:57:04 nginx: master process nginx -c /app/qemu-vnc-nginx.conf -g daemon off;

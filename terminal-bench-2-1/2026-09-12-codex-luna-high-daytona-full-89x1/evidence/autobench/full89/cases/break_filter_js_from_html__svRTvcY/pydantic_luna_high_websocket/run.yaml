@@ -1,0 +1,2016 @@
+# yaml-language-server: $schema=.autobench-schema-cache/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+  experiment: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+  benchmark: kedi-tb21-full89-daytona-publication
+  case: break-filter-js-from-html__svRTvcY
+  variant: pydantic-luna-high-websocket
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: break-filter-js-from-html__svRTvcY
+  input:
+    job_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-20260912-standard81-c2
+    trial_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-20260912-standard81-c2/break-filter-js-from-html__svRTvcY
+    trial_name: break-filter-js-from-html__svRTvcY
+    task_name: break-filter-js-from-html
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+    batch: standard81-c2
+    qemu_fixed: false
+variant:
+  id: pydantic-luna-high-websocket
+  factors:
+    capture_only: true
+    adapter: pydantic
+    model: codex/gpt-5.6-luna
+    effort: high
+    transport: websocket-http-fallback
+    evidence_payload: sanitized-harbor-sibling
+metrics:
+  factors:
+    capture_only:
+      sequence: 1
+      id: obs_1
+      name: capture_only
+      kind: factor
+      value: true
+      source: variant
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: pydantic
+      source: variant
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    model:
+      sequence: 3
+      id: obs_3
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    effort:
+      sequence: 4
+      id: obs_4
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    transport:
+      sequence: 5
+      id: obs_5
+      name: transport
+      kind: factor
+      value: websocket-http-fallback
+      source: variant
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    evidence_payload:
+      sequence: 6
+      id: obs_6
+      name: evidence_payload
+      kind: factor
+      value: sanitized-harbor-sibling
+      source: variant
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.cost_usd:
+      sequence: 18
+      id: obs_18
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.03357
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 527.098999
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.input_tokens:
+      sequence: 11
+      id: obs_11
+      name: kedi.input_tokens
+      kind: metric
+      value: 289662
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.cache_read_tokens:
+      sequence: 12
+      id: obs_12
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 235520
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.cache_write_tokens:
+      sequence: 13
+      id: obs_13
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.output_tokens:
+      sequence: 14
+      id: obs_14
+      name: kedi.output_tokens
+      kind: metric
+      value: 15026
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.total_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.total_tokens
+      kind: metric
+      value: 304688
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.requests:
+      sequence: 16
+      id: obs_16
+      name: kedi.requests
+      kind: metric
+      value: 24
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.tool_calls:
+      sequence: 17
+      id: obs_17
+      name: kedi.tool_calls
+      kind: metric
+      value: 30
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+    kedi.cache_read_ratio:
+      sequence: 19
+      id: obs_19
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.8130855963157059
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+  events:
+    terminal_bench.public_evidence_reference:
+      sequence: 20
+      id: obs_20
+      name: terminal_bench.public_evidence_reference
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      case: break-filter-js-from-html__svRTvcY
+      variant: pydantic-luna-high-websocket
+trace:
+  protocol: abp
+  protocol_version: 1
+  trace_id: 105e24a6433c6463e1018affd6738364
+  execution:
+    benchmark_id: kedi-tb21-full89-daytona-publication
+    experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+    run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+    case_id: break-filter-js-from-html__svRTvcY
+    variant_id: pydantic-luna-high-websocket
+  root_span_ids:
+    - 4c3c6fa57f4c66e6
+  spans:
+    - trace_id: 105e24a6433c6463e1018affd6738364
+      span_id: 4c3c6fa57f4c66e6
+      operation: benchmark.run
+      kind: task
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-13T11:24:25.055952Z'
+      ended_at: '2026-09-13T11:24:25.059422Z'
+      start_monotonic_ns: 120055743973708
+      end_monotonic_ns: 120055747442958
+      duration_ns: 3469250
+      start_sequence: 1
+      end_sequence: 26
+      attributes:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8e8bc53d-4d59-4384-8271-21871c6cf353
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.056036Z'
+          monotonic_ns: 120055744057458
+          sequence: 2
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 4c3c6fa57f4c66e6
+          name: capture_only
+          semantic_type: factor.value
+          body: true
+          attributes:
+            observation_id: obs_1
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c04ec7e6-2759-4683-9e84-3428085f617b
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.056083Z'
+          monotonic_ns: 120055744104125
+          sequence: 3
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 4c3c6fa57f4c66e6
+          name: adapter
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 8
+          attributes:
+            observation_id: obs_2
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 27576b59-7def-470a-9355-357c6c2d1353
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.056162Z'
+          monotonic_ns: 120055744184583
+          sequence: 4
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 4c3c6fa57f4c66e6
+          name: model
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 18
+          attributes:
+            observation_id: obs_3
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 83a66186-b4e7-40eb-be43-b3853087a68a
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.056203Z'
+          monotonic_ns: 120055744224666
+          sequence: 5
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 4c3c6fa57f4c66e6
+          name: effort
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 4
+          attributes:
+            observation_id: obs_4
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5388990e-2e5b-48f4-adc2-fb791b37b3a4
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.056235Z'
+          monotonic_ns: 120055744256333
+          sequence: 6
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 4c3c6fa57f4c66e6
+          name: transport
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 23
+          attributes:
+            observation_id: obs_5
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 33a6c8f4-e91c-4894-8dc8-571443f60ab0
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.056265Z'
+          monotonic_ns: 120055744286250
+          sequence: 7
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 4c3c6fa57f4c66e6
+          name: evidence_payload
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 24
+          attributes:
+            observation_id: obs_6
+            kind: factor
+            source: variant
+      partial: false
+    - trace_id: 105e24a6433c6463e1018affd6738364
+      span_id: 30ebe38285750d89
+      parent_span_id: 4c3c6fa57f4c66e6
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-09-13T11:24:25.058616Z'
+      ended_at: '2026-09-13T11:24:25.059319Z'
+      start_monotonic_ns: 120055746638208
+      end_monotonic_ns: 120055747340666
+      duration_ns: 702458
+      start_sequence: 8
+      end_sequence: 25
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: acb37328-87dd-4aed-8bc4-011e65470028
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058695Z'
+          monotonic_ns: 120055746716333
+          sequence: 9
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 30ebe38285750d89
+          name: input
+          semantic_type: operation.input
+          body:
+            type: dict
+            length: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 23f9dc4c-193b-49f0-8fd8-edd83b262ca2
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.059257Z'
+          monotonic_ns: 120055747278500
+          sequence: 24
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 30ebe38285750d89
+          name: terminal_bench.public_evidence_reference
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_20
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+      measurements:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f091af8a-a701-40db-9c59-202c5100dbd2
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058750Z'
+          monotonic_ns: 120055746771458
+          sequence: 10
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: terminal_bench.reward.reward
+          semantic_type: quality.correctness
+          value: 1.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_7
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: fd666040-96b1-4b9f-a7ec-12e9a3459d01
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058799Z'
+          monotonic_ns: 120055746820750
+          sequence: 11
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: terminal_bench.grader_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_8
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 41
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a91ad32a-e84a-4207-bcd9-3253b378bdd3
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058840Z'
+          monotonic_ns: 120055746861041
+          sequence: 12
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.trial_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_9
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 21
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 53e65681-401d-4888-b247-657ee7ba7ca6
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058869Z'
+          monotonic_ns: 120055746890916
+          sequence: 13
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: terminal_bench.duration
+          semantic_type: time.latency
+          value: 527.098999
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_10
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d75dc1f7-aa20-4127-b182-0139ebc0e71b
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058892Z'
+          monotonic_ns: 120055746912833
+          sequence: 14
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.input_tokens
+          semantic_type: llm.tokens.input
+          value: 289662
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_11
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 11289f74-f607-41cc-a61c-572c4644b0e1
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058910Z'
+          monotonic_ns: 120055746931666
+          sequence: 15
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.cache_read_tokens
+          semantic_type: llm.tokens.cached_input
+          value: 235520
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_12
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 1d1f7d29-bb6b-46ed-88eb-0a0549a46f80
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058928Z'
+          monotonic_ns: 120055746949166
+          sequence: 16
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.cache_write_tokens
+          semantic_type: llm.tokens.cache_write
+          value: 0
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_13
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 82f7bff3-e3f3-4bd1-8f1f-dfbe94d3fdab
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058945Z'
+          monotonic_ns: 120055746966166
+          sequence: 17
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.output_tokens
+          semantic_type: llm.tokens.output
+          value: 15026
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_14
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 441fd02f-2f27-44a7-a813-9d169ce87f09
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058962Z'
+          monotonic_ns: 120055746982833
+          sequence: 18
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.total_tokens
+          semantic_type: llm.tokens.total
+          value: 304688
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_15
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 80072e3d-a340-4d56-8203-96e7f9410ce1
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.058978Z'
+          monotonic_ns: 120055746999375
+          sequence: 19
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.requests
+          semantic_type: llm.request.count
+          value: 24
+          unit: request
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_16
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3cb6d7a0-e33b-4746-9005-97c391b14770
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.059001Z'
+          monotonic_ns: 120055747022375
+          sequence: 20
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.tool_calls
+          semantic_type: tool.call.count
+          value: 30
+          unit: call
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_17
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 26ccee12-0207-4426-9278-a388f6c356c4
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.059022Z'
+          monotonic_ns: 120055747043791
+          sequence: 21
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.cost_usd
+          semantic_type: money.cost
+          value: 0.03357
+          unit: USD
+          direction: minimize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_18
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 0e82256b-72e8-4e07-8742-2dd3f7a47a67
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.059041Z'
+          monotonic_ns: 120055747061958
+          sequence: 22
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: 30ebe38285750d89
+          name: kedi.cache_read_ratio
+          semantic_type: coverage.ratio
+          value: 0.8130855963157059
+          unit: ratio
+          direction: maximize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_19
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+      references:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a0fd1ecf-64ad-4931-8313-4e70a227b3d9
+          trace_id: 105e24a6433c6463e1018affd6738364
+          emitted_at: '2026-09-13T11:24:25.059219Z'
+          monotonic_ns: 120055747240000
+          sequence: 23
+          execution:
+            benchmark_id: kedi-tb21-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+            run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+            case_id: break-filter-js-from-html__svRTvcY
+            variant_id: pydantic-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: 30ebe38285750d89
+          semantic_type: artifact.content
+          name: terminal_bench.public_evidence_reference
+          reference:
+            kind: artifact
+            id: artifact_80a673d082de4b1edcbb3a94
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_1
+      partial: false
+  signals:
+    - protocol: abp
+      protocol_version: 1
+      signal_id: bf41cb4d-b3eb-49e6-8e4d-d4727764b897
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.055952Z'
+      monotonic_ns: 120055743973708
+      sequence: 1
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: 4c3c6fa57f4c66e6
+      operation: benchmark.run
+      kind: task
+      attributes:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8e8bc53d-4d59-4384-8271-21871c6cf353
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.056036Z'
+      monotonic_ns: 120055744057458
+      sequence: 2
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 4c3c6fa57f4c66e6
+      name: capture_only
+      semantic_type: factor.value
+      body: true
+      attributes:
+        observation_id: obs_1
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c04ec7e6-2759-4683-9e84-3428085f617b
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.056083Z'
+      monotonic_ns: 120055744104125
+      sequence: 3
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 4c3c6fa57f4c66e6
+      name: adapter
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 8
+      attributes:
+        observation_id: obs_2
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 27576b59-7def-470a-9355-357c6c2d1353
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.056162Z'
+      monotonic_ns: 120055744184583
+      sequence: 4
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 4c3c6fa57f4c66e6
+      name: model
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 18
+      attributes:
+        observation_id: obs_3
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 83a66186-b4e7-40eb-be43-b3853087a68a
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.056203Z'
+      monotonic_ns: 120055744224666
+      sequence: 5
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 4c3c6fa57f4c66e6
+      name: effort
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 4
+      attributes:
+        observation_id: obs_4
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5388990e-2e5b-48f4-adc2-fb791b37b3a4
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.056235Z'
+      monotonic_ns: 120055744256333
+      sequence: 6
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 4c3c6fa57f4c66e6
+      name: transport
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 23
+      attributes:
+        observation_id: obs_5
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 33a6c8f4-e91c-4894-8dc8-571443f60ab0
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.056265Z'
+      monotonic_ns: 120055744286250
+      sequence: 7
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 4c3c6fa57f4c66e6
+      name: evidence_payload
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 24
+      attributes:
+        observation_id: obs_6
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 24391615-a5c5-401b-b160-163a66546dcb
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058616Z'
+      monotonic_ns: 120055746638208
+      sequence: 8
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: 30ebe38285750d89
+      parent_span_id: 4c3c6fa57f4c66e6
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: acb37328-87dd-4aed-8bc4-011e65470028
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058695Z'
+      monotonic_ns: 120055746716333
+      sequence: 9
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 30ebe38285750d89
+      name: input
+      semantic_type: operation.input
+      body:
+        type: dict
+        length: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f091af8a-a701-40db-9c59-202c5100dbd2
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058750Z'
+      monotonic_ns: 120055746771458
+      sequence: 10
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: terminal_bench.reward.reward
+      semantic_type: quality.correctness
+      value: 1.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_7
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: fd666040-96b1-4b9f-a7ec-12e9a3459d01
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058799Z'
+      monotonic_ns: 120055746820750
+      sequence: 11
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: terminal_bench.grader_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_8
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 41
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a91ad32a-e84a-4207-bcd9-3253b378bdd3
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058840Z'
+      monotonic_ns: 120055746861041
+      sequence: 12
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.trial_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_9
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 21
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 53e65681-401d-4888-b247-657ee7ba7ca6
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058869Z'
+      monotonic_ns: 120055746890916
+      sequence: 13
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: terminal_bench.duration
+      semantic_type: time.latency
+      value: 527.098999
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_10
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d75dc1f7-aa20-4127-b182-0139ebc0e71b
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058892Z'
+      monotonic_ns: 120055746912833
+      sequence: 14
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.input_tokens
+      semantic_type: llm.tokens.input
+      value: 289662
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_11
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 11289f74-f607-41cc-a61c-572c4644b0e1
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058910Z'
+      monotonic_ns: 120055746931666
+      sequence: 15
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.cache_read_tokens
+      semantic_type: llm.tokens.cached_input
+      value: 235520
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_12
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1d1f7d29-bb6b-46ed-88eb-0a0549a46f80
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058928Z'
+      monotonic_ns: 120055746949166
+      sequence: 16
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.cache_write_tokens
+      semantic_type: llm.tokens.cache_write
+      value: 0
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_13
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 82f7bff3-e3f3-4bd1-8f1f-dfbe94d3fdab
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058945Z'
+      monotonic_ns: 120055746966166
+      sequence: 17
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.output_tokens
+      semantic_type: llm.tokens.output
+      value: 15026
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_14
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 441fd02f-2f27-44a7-a813-9d169ce87f09
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058962Z'
+      monotonic_ns: 120055746982833
+      sequence: 18
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.total_tokens
+      semantic_type: llm.tokens.total
+      value: 304688
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_15
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 80072e3d-a340-4d56-8203-96e7f9410ce1
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.058978Z'
+      monotonic_ns: 120055746999375
+      sequence: 19
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.requests
+      semantic_type: llm.request.count
+      value: 24
+      unit: request
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_16
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3cb6d7a0-e33b-4746-9005-97c391b14770
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.059001Z'
+      monotonic_ns: 120055747022375
+      sequence: 20
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.tool_calls
+      semantic_type: tool.call.count
+      value: 30
+      unit: call
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_17
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 26ccee12-0207-4426-9278-a388f6c356c4
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.059022Z'
+      monotonic_ns: 120055747043791
+      sequence: 21
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.cost_usd
+      semantic_type: money.cost
+      value: 0.03357
+      unit: USD
+      direction: minimize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_18
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 0e82256b-72e8-4e07-8742-2dd3f7a47a67
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.059041Z'
+      monotonic_ns: 120055747061958
+      sequence: 22
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: 30ebe38285750d89
+      name: kedi.cache_read_ratio
+      semantic_type: coverage.ratio
+      value: 0.8130855963157059
+      unit: ratio
+      direction: maximize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_19
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a0fd1ecf-64ad-4931-8313-4e70a227b3d9
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.059219Z'
+      monotonic_ns: 120055747240000
+      sequence: 23
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: 30ebe38285750d89
+      semantic_type: artifact.content
+      name: terminal_bench.public_evidence_reference
+      reference:
+        kind: artifact
+        id: artifact_80a673d082de4b1edcbb3a94
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 23f9dc4c-193b-49f0-8fd8-edd83b262ca2
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.059257Z'
+      monotonic_ns: 120055747278500
+      sequence: 24
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 30ebe38285750d89
+      name: terminal_bench.public_evidence_reference
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_20
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 7102556c-18e5-4fd1-88c5-dbff60eeef59
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.059319Z'
+      monotonic_ns: 120055747340666
+      sequence: 25
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: 30ebe38285750d89
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 2d609610-8bb2-48ab-859f-167f6efa988d
+      trace_id: 105e24a6433c6463e1018affd6738364
+      emitted_at: '2026-09-13T11:24:25.059422Z'
+      monotonic_ns: 120055747442958
+      sequence: 26
+      execution:
+        benchmark_id: kedi-tb21-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_full89_daytona_publication_20260913T112424859761Z
+        run_id: run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket
+        case_id: break-filter-js-from-html__svRTvcY
+        variant_id: pydantic-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: 4c3c6fa57f4c66e6
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+  started_at: '2026-09-13T11:24:25.055952Z'
+  ended_at: '2026-09-13T11:24:25.059422Z'
+  partial: false
+spans:
+  span_1:
+    name: capture terminal-bench publication metrics
+    kind: workflow
+    started_at: '2026-09-13T11:24:25.058616+00:00'
+    ended_at: '2026-09-13T11:24:25.059319+00:00'
+    duration: 0.000702458
+    input:
+      task_name: terminal-bench/break-filter-js-from-html
+      trial_name: break-filter-js-from-html__svRTvcY
+    output:
+      task_name: break-filter-js-from-html
+      trial_name: break-filter-js-from-html__svRTvcY
+      rewards:
+        reward: 1.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 235520
+        cache_write_tokens: 0
+        cost_usd: 0.03357
+        input_tokens: 289662
+        output_tokens: 15026
+        requests: 24
+        tool_calls: 30
+        total_tokens: 304688
+        uncached_input_tokens: 54142
+      evidence_reference:
+        trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-20260912-standard81-c2/break-filter-js-from-html__svRTvcY
+        result_sha256: dda4fa4884306d3e77e5b5614d3a99831488a0d39c73d148f8aa8f1d4e25998b
+        kedi_result_sha256: d1b1dd8c9aa7d9566edbbf2624657cd90040aa76798b87b695c9c5b4eda7c291
+        sanitization_manifest: evidence/sanitization-report.json
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+    artifacts:
+      - artifact_1
+artifacts:
+  terminal_bench.public_evidence_reference:
+    id: artifact_1
+    name: terminal_bench.public_evidence_reference
+    media: application/json
+    path: artifacts/run_0003_0001_break_filter_js_from_html_svrtvcy__pydantic_luna_high_websocket/artifact_1.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 8cff5c9acf5c909c1b68ed16a48c90ab667d53c9b37b9528e6fd61228fce32d9
+    byte_count: 608
+output:
+  task_name: break-filter-js-from-html
+  trial_name: break-filter-js-from-html__svRTvcY
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 235520
+    cache_write_tokens: 0
+    cost_usd: 0.03357
+    input_tokens: 289662
+    output_tokens: 15026
+    requests: 24
+    tool_calls: 30
+    total_tokens: 304688
+    uncached_input_tokens: 54142
+  evidence_reference:
+    trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-20260912-standard81-c2/break-filter-js-from-html__svRTvcY
+    result_sha256: dda4fa4884306d3e77e5b5614d3a99831488a0d39c73d148f8aa8f1d4e25998b
+    kedi_result_sha256: d1b1dd8c9aa7d9566edbbf2624657cd90040aa76798b87b695c9c5b4eda7c291
+    sanitization_manifest: evidence/sanitization-report.json

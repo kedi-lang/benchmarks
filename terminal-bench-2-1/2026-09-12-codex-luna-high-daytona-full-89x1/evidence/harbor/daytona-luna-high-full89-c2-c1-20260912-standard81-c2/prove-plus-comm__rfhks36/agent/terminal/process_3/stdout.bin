@@ -1,0 +1,19 @@
+Welcome to Coq 8.18.0
+[Loading ML file ring_plugin.cmxs (using legacy method) ... done]
+Nat.add =
+fix add (n m : nat) {struct n} : nat :=
+  match n with
+  | 0 => m
+  | S p => S (add p m)
+  end
+     : nat -> nat -> nat
+
+Arguments Nat.add (n m)%nat_scope
+plus_n_Sm
+     : forall n m : nat, S (n + m) = n + S m
+plus_Sn_m
+     : forall n m : nat, S n + m = S (n + m)
+plus_n_O
+     : forall n : nat, n = n + 0
+plus_O_n
+     : forall n : nat, 0 + n = n

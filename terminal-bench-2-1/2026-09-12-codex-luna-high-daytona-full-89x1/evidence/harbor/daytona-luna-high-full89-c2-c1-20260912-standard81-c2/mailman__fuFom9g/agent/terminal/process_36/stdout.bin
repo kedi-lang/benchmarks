@@ -1,0 +1,200 @@
+190-#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
+191-#	mail.$mydomain, www.$mydomain, ftp.$mydomain
+192-
+193-# REJECTING MAIL FOR UNKNOWN LOCAL USERS
+194-#
+195:# The local_recipient_maps parameter specifies optional lookup tables
+196-# with all names or addresses of users that are local with respect
+197-# to $mydestination, $inet_interfaces or $proxy_interfaces.
+198-#
+199-# If this parameter is defined, then the SMTP server will reject
+200-# mail for unknown local users. This parameter is defined by default.
+201-#
+202-# To turn off local recipient checking in the SMTP server, specify
+203:# local_recipient_maps = (i.e. empty).
+204-#
+205-# The default setting assumes that you use the default Postfix local
+206-# delivery agent for local delivery. You need to update the
+207:# local_recipient_maps setting if:
+208-#
+209-# - You define $mydestination domain recipients in files other than
+210-#   /etc/passwd, /etc/aliases, or the $virtual_alias_maps files.
+211-#   For example, you define $mydestination domain recipients in    
+212-#   the $virtual_mailbox_maps files.
+213-#
+214-# - You redefine the local delivery agent in master.cf.
+215-#
+216-# - You redefine the "local_transport" setting in main.cf.
+217-#
+218-# - You use the "luser_relay", "mailbox_transport", or "fallback_transport"
+219-#   feature of the Postfix local delivery agent (see local(8)).
+220-#
+221-# Details are described in the LOCAL_RECIPIENT_README file.
+222-#
+223-# Beware: if the Postfix SMTP server runs chrooted, you probably have
+224-# to access the passwd file via the proxymap service, in order to
+225-# overcome chroot restrictions. The alternative, having a copy of
+226-# the system passwd file in the chroot jail is just not practical.
+227-#
+228-# The right-hand side of the lookup tables is conveniently ignored.
+229-# In the left-hand side, specify a bare username, an @domain.tld
+230-# wild-card, or specify a user@domain.tld address.
+231-# 
+232:#local_recipient_maps = unix:passwd.byname $alias_maps
+233:#local_recipient_maps = proxy:unix:passwd.byname $alias_maps
+234:#local_recipient_maps =
+235-
+236-# The unknown_local_recipient_reject_code specifies the SMTP server
+237-# response code when a recipient domain matches $mydestination or
+238:# ${proxy,inet}_interfaces, while $local_recipient_maps is non-empty
+239-# and the recipient address or address local-part is not found.
+240-#
+241-# The default setting is 550 (reject mail) but it is safer to start
+242-# with 450 (try again later) until you are certain that your
+243:# local_recipient_maps settings are OK.
+244-#
+245-unknown_local_recipient_reject_code = 550
+246-
+247-# TRUST AND RELAY CONTROL
+248-
+249-# The mynetworks parameter specifies the list of "trusted" SMTP
+250-# clients that have more privileges than "strangers".
+251-#
+252-# In particular, "trusted" SMTP clients are allowed to relay mail
+253-# through Postfix.  See the smtpd_recipient_restrictions parameter
+254-# in postconf(5).
+255-#
+256-# You can specify the list of "trusted" network addresses by hand
+257-# or you can let Postfix do it for you (which is the default).
+258-#
+259-# By default (mynetworks_style = host), Postfix "trusts" only
+260-# the local machine.
+261-# 
+262-# Specify "mynetworks_style = subnet" when Postfix should "trust"
+263-# SMTP clients in the same IP subnetworks as the local machine.
+264-# On Linux, this works correctly only with interfaces specified
+265-# with the "ifconfig" or "ip" command.
+266-#
+267-# Specify "mynetworks_style = class" when Postfix should "trust" SMTP
+268-# clients in the same IP class A/B/C networks as the local machine.
+269-# Don't do this with a dialup site - it would cause Postfix to "trust"
+270-# your entire provider's network.  Instead, specify an explicit
+271-# mynetworks list by hand, as described below.
+272-#  
+273-# Specify "mynetworks_style = host" when Postfix should "trust"
+274-# only the local machine.
+275-# 
+276-#mynetworks_style = class
+277-#mynetworks_style = subnet
+278-#mynetworks_style = host
+279-
+280-# Alternatively, you can specify the mynetworks list by hand, in
+281-# which case Postfix ignores the mynetworks_style setting.
+282-#
+283-# Specify an explicit list of network/netmask patterns, where the
+284-# mask specifies the number of bits in the network part of a host
+285-# address.
+286-#
+287-# You can also specify the absolute pathname of a pattern file instead
+288-# of listing the patterns here. Specify type:table for table-based lookups
+--
+486-# the name of a mail delivery transport defined in master.cf.  The
+487-# :nexthop part is optional. For more details see the sample transport
+488-# configuration file.
+489-#
+490-# NOTE: if you use this feature for accounts not in the UNIX password
+491:# file, then you must update the "local_recipient_maps" setting in
+492-# the main.cf file, otherwise the SMTP server will reject mail for    
+493-# non-UNIX accounts with "User unknown in local recipient table".
+494-#
+495-# Cyrus IMAP over LMTP. Specify ``lmtpunix      cmd="lmtpd"
+496-# listen="/var/imap/socket/lmtp" prefork=0'' in cyrus.conf.
+497-#mailbox_transport = lmtp:unix:/var/imap/socket/lmtp
+498-#
+499-# Cyrus IMAP via command line. Uncomment the "cyrus...pipe" and
+500-# subsequent line in master.cf.
+501-#mailbox_transport = cyrus
+502-
+503-# The fallback_transport specifies the optional transport in master.cf
+504-# to use for recipients that are not found in the UNIX passwd database.
+505-# This parameter has precedence over the luser_relay parameter.
+506-#
+507-# Specify a string of the form transport:nexthop, where transport is
+508-# the name of a mail delivery transport defined in master.cf.  The
+509-# :nexthop part is optional. For more details see the sample transport
+510-# configuration file.
+511-#
+512-# NOTE: if you use this feature for accounts not in the UNIX password
+513:# file, then you must update the "local_recipient_maps" setting in
+514-# the main.cf file, otherwise the SMTP server will reject mail for    
+515-# non-UNIX accounts with "User unknown in local recipient table".
+516-#
+517-#fallback_transport = lmtp:unix:/file/name
+518-#fallback_transport = cyrus
+519-#fallback_transport =
+520-
+521-# The luser_relay parameter specifies an optional destination address
+522-# for unknown recipients.  By default, mail for unknown@$mydestination,
+523-# unknown@[$inet_interfaces] or unknown@[$proxy_interfaces] is returned
+524-# as undeliverable.
+525-#
+526-# The following expansions are done on luser_relay: $user (recipient
+527-# username), $shell (recipient shell), $home (recipient home directory),
+528-# $recipient (full recipient address), $extension (recipient address
+529-# extension), $domain (recipient domain), $local (entire recipient
+530-# localpart), $recipient_delimiter. Specify ${name?value} or
+531-# ${name:value} to expand value only when $name does (does not) exist.
+532-#
+533-# luser_relay works only for the default Postfix local delivery agent.
+534-#
+535-# NOTE: if you use this feature for accounts not in the UNIX password
+536:# file, then you must specify "local_recipient_maps =" (i.e. empty) in
+537-# the main.cf file, otherwise the SMTP server will reject mail for    
+538-# non-UNIX accounts with "User unknown in local recipient table".
+539-#
+540-#luser_relay = $user@other.host
+541-#luser_relay = $local@other.host
+542-#luser_relay = admin+$local
+543-  
+544-# JUNK MAIL CONTROLS
+545-# 
+546-# The controls listed here are only a very small subset. The file
+547-# SMTPD_ACCESS_README provides an overview.
+548-
+549-# The header_checks parameter specifies an optional table with patterns
+550-# that each logical message header is matched against, including
+551-# headers that span multiple physical lines.
+552-#
+553-# By default, these patterns also apply to MIME headers and to the
+554-# headers of attached messages. With older Postfix versions, MIME and
+555-# attached message headers were treated as body text.
+556-#
+557-# For details, see "man header_checks".
+558-#
+559-#header_checks = regexp:/etc/postfix/header_checks
+560-
+561-# FAST ETRN SERVICE
+562-#
+563-# Postfix maintains per-destination logfiles with information about
+564-# deferred mail, so that mail can be flushed quickly with the SMTP
+565-# "ETRN domain.tld" command, or by executing "sendmail -qRdomain.tld".
+566-# See the ETRN_README document for a detailed description.
+567-# 
+568-# The fast_flush_domains parameter controls what destinations are
+569-# eligible for this service. By default, they are all domains that
+570-# this server is willing to relay mail to.
+571-# 
+572-#fast_flush_domains = $relay_domains
+573-
+574-# SHOW SOFTWARE VERSION OR NOT
+575-#
+576-# The smtpd_banner parameter specifies the text that follows the 220
+577-# code in the SMTP server's greeting banner. Some people like to see
+578-# the mail version advertised. By default, Postfix shows no version.
+579-#
+580-# You MUST specify $myhostname at the start of the text. That is an
+581-# RFC requirement. Postfix itself does not care.
+yes
+local_recipient_maps = proxy:unix:passwd.byname $alias_maps
+smtpd_reject_unlisted_recipient = yes
+smtpd_recipient_restrictions =

@@ -1,0 +1,201 @@
+# Copyright (C) 2007-2023 by the Free Software Foundation, Inc.
+#
+# This file is part of GNU Mailman.
+#
+# GNU Mailman is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option)
+# any later version.
+#
+# GNU Mailman is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# GNU Mailman.  If not, see <https://www.gnu.org/licenses/>.
+
+"""Interface for a mailing list."""
+
+from enum import Enum
+from mailman.interfaces.address import InvalidEmailAddressError
+from mailman.interfaces.member import MemberRole
+from public import public
+from zope.interface import Attribute, Interface
+
+
+@public
+class InvalidListNameError(InvalidEmailAddressError):
+    """List name is invalid."""
+
+    def __init__(self, listname):
+        super().__init__('{}@'.format(listname))
+        self.listname = listname
+
+
+@public
+class DMARCMitigateAction(Enum):
+    # Mitigations to apply to messages From: domains publishing an applicable
+    # DMARC policy, or unconditionally depending on settings.
+    #
+    # No DMARC mitigations.
+    no_mitigation = 0
+    # Messages From: domains with DMARC policy will have From: replaced by the
+    # list posting address and the original From: added to Reply-To: or Cc:.
+    munge_from = 1
+    # Messages From: domains with DMARC policy will be wrapped in an outer
+    # message From: the list posting address.
+    wrap_message = 2
+    # Messages From: domains with DMARC policy will be rejected.
+    reject = 3
+    # Messages From: domains with DMARC policy will be discarded.
+    discard = 4
+
+
+@public
+class Personalization(Enum):
+    none = 0
+    # Everyone gets a unique copy of the message, and there are a few more
+    # substitution variables, but no headers are modified.
+    individual = 1
+    # All of the 'individual' personalization plus recipient header
+    # modification.
+    full = 2
+
+
+@public
+class ReplyToMunging(Enum):
+    # The Reply-To header is passed through untouched
+    no_munging = 0
+    # The mailing list's posting address is appended to the Reply-To header
+    point_to_list = 1
+    # An explicit Reply-To header is added
+    explicit_header = 2
+    # An explicit Reply-To header is added and
+    # the list address is removed from CC
+    explicit_header_only = 3
+
+
+@public
+class SubscriptionPolicy(Enum):
+    regular_members = Attribute(
+        """A roster of all the IMembers who are to receive regular postings
+        (i.e. non-digests) from the mailing list, regardless of whether they
+        have their delivery disabled or not.""")
+
+    digest_members = Attribute(
+        """A roster of all the IMembers who are to receive digests of postings
+        to this mailing list, regardless of whether they have their deliver
+        disabled or not, or of the type of digest they are to receive.""")
+
+    subscription_policy = Attribute(
+        """The policy for subscribing new members to the list.""")
+
+    unsubscription_policy = Attribute(
+        """The policy for unsubscribing members from the list.""")
+
+    subscribers = Attribute(
+        """An iterator over all IMembers subscribed to this list, with any
+        role.
+        """)
+
+    def get_roster(role):
+        """Return the appropriate roster for the given role.
+
+        :param role: The requested roster's role.
+        :type role: MemberRole
+        :return: The requested roster.
+        :rtype: Roster
+        """
+
+    def is_subscribed(subscriber, role=MemberRole.member):
+        """Is the given address or user subscribed to the mailing list?
+
+        :param subscriber: The address or user to check.
+        :type subscriber: `IUser` or `IAddress`
+        :param role: The role being checked (e.g. a member, owner, or
+            moderator of a mailing list).
+        :type role: `MemberRole`
+        :return: A flag indicating whether the subscriber is already
+            subscribed to the mailing list or not.
+        """
+
+    def subscribe(subscriber, role=MemberRole.member):
+        """Subscribe the given address or user to the mailing list.
+
+        :param subscriber: The address or user to subscribe to the mailing
+            list.  The user's preferred address receives deliveries, if she
+            has one, otherwise no address for the user appears in the rosters.
+        :type subscriber: `IUser` or `IAddress`
+        :param role: The role being subscribed to (e.g. a member, owner, or
+            moderator of a mailing list).
+    filter_extensions = Attribute(
+        """Sequence of file extensions that should be filtered out.
+
+        Set this attribute to a sequence to change it, or to None to empty it.
+        """)
+
+    pass_extensions = Attribute(
+        """Sequence of file extensions to explicitly pass.
+
+        Set this attribute to a sequence to change it, or to None to empty it.
+        Pass extensions are consulted after filter extensions, and only if
+        `pass_extensions` is non-empty.
+        """)
+
+    # Moderation.
+
+    default_member_action = Attribute(
+        """The default action to take for postings from members.
+
+        When an address is subscribed to the mailing list, this attribute sets
+        the initial moderation action (as an `Action`).  When the action is
+        `Action.defer` (the default), then normal posting decisions are made.
+        When the action is `Action.accept`, the postings are accepted without
+        any other checks.
+        """)
+
+    default_nonmember_action = Attribute(
+        """The default action to take for postings from nonmembers.
+
+        When a nonmember address posts to the mailing list, this attribute
+        sets the initial moderation action (as an `Action`).  When the action
+        is `Action.defer` (the default), then normal posting decisions are
+        made.  When the action is `Action.accept`, the postings are accepted
+        without any other checks.
+        """)
+
+    # Bounces.
+    bounce_info_stale_after = Attribute(
+        """Number of days after which bounce info is considered stale.
+
+        The number of days after which a member's bounce information is
+        considered stale. If no new bounces have been received in the interim,
+        the bounce score is reset to zero. This value must be an integer.
+        """)
+
+    bounce_notify_owner_on_bounce_increment = Attribute(
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/7b254d88f122_members_and_list_moderation_action.py:30:    sa.sql.column('default_member_action', Enum(Action)),
+/usr/lib/python3/dist-packages/mailman/database/alembic/versions/7b254d88f122_members_and_list_moderation_action.py:53:# where property-name will be either default_member_action or
+/usr/lib/python3/dist-packages/mailman/database/tests/test_migrations.py:247:            default_member_action = ant.default_member_action
+/usr/lib/python3/dist-packages/mailman/database/tests/test_migrations.py:253:            sa.sql.column('default_member_action', Enum(Action)),
+/usr/lib/python3/dist-packages/mailman/database/tests/test_migrations.py:301:        self.assertEqual(action, default_member_action)
+/usr/lib/python3/dist-packages/mailman/interfaces/mailinglist.py:641:    default_member_action = Attribute(
+/usr/lib/python3/dist-packages/mailman/model/mailinglist.py:168:    default_member_action = Column(Enum(Action))
+/usr/lib/python3/dist-packages/mailman/rest/listconf.py:197:    default_member_action=GetterSetter(enum_validator(Action)),
+/usr/lib/python3/dist-packages/mailman/rest/tests/test_listconf.py:71:    default_member_action='hold',
+/usr/lib/python3/dist-packages/mailman/rules/moderation.py:79:        action = (mlist.default_member_action
+/usr/lib/python3/dist-packages/mailman/rules/tests/test_moderation.py:349:        self._mlist.default_member_action = Action.accept
+/usr/lib/python3/dist-packages/mailman/rules/tests/test_moderation.py:371:        self._mlist.default_member_action = Action.hold
+/usr/lib/python3/dist-packages/mailman/rules/tests/test_moderation.py:406:        self._mlist.default_member_action = Action.accept
+/usr/lib/python3/dist-packages/mailman/styles/base.py:73:        mlist.default_member_action = Action.defer
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:342:    # The mlist.default_member_action and mlist.default_nonmember_action enum
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:352:        mlist.default_member_action = member_moderation_action_mapping(
+/usr/lib/python3/dist-packages/mailman/utilities/importer.py:355:        mlist.default_member_action = Action.defer
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:723:    # The mlist.default_member_action and mlist.default_nonmember_action enum
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:727:    # For default_member_action, which used to be called
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:739:        self._mlist.default_member_action = DummyEnum.val
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:759:            self._do_test(dict(default_member_action=Action.defer))
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:764:        self._do_test(dict(default_member_action=Action.hold))
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:769:        self._do_test(dict(default_member_action=Action.reject))
+/usr/lib/python3/dist-packages/mailman/utilities/tests/test_import.py:774:        self._do_test(dict(default_member_action=Action.discard))

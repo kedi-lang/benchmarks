@@ -1,0 +1,4 @@
+  File "<string>", line 1
+    import socket,json; s=socket.socket(socket.AF_UNIX); s.connect('/tmp/alpine-qmp.sock'); print(s.recv(4096).decode()); def send(x): s.sendall((json.dumps(x)+'\r\n').encode()); print(s.recv(4096).decode()); send({'execute':'qmp_capabilities'}); send({'execute':'input-send-event','arguments':{'events':[{'type':'key','data':{'down':True,'key':{'type':'qcode','data':'ret'}}},{'type':'key','data':{'down':False,'key':{'type':'qcode','data':'ret'}}}]}})
+                                                                                                                          ^^^
+SyntaxError: invalid syntax

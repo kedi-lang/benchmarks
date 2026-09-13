@@ -1,0 +1,96 @@
+            "PublicHealthQA",
+            "MedrxivClusteringP2P.v2",
+            "MedrxivClusteringS2S.v2",
+            "CmedqaRetrieval",
+            "CMedQAv2-reranking",
+        ],
+    ),
+    description="Medical information retrieval across clinical, biomedical, and consumer health domains, spanning retrieval, reranking, and clustering tasks.",
+    reference=None,
+    citation=None,
+)
+
+MTEB_MINERS_BITEXT_MINING = Benchmark(
+    name="MINERSBitextMining",
+    tasks=get_tasks(
+        tasks=[
+            "BUCC",
+            "LinceMTBitextMining",
+            "NollySentiBitextMining",
+            "NusaXBitextMining",
+            "NusaTranslationBitextMining",
+            "PhincBitextMining",
+            "Tatoeba",
+        ]
+    ),
+    description="Multilingual bitext mining quality across diverse language pairs, drawn from the MINERS benchmark for evaluating semantic retrieval in multilingual settings.",
+    reference="https://arxiv.org/pdf/2406.07424",
+    citation=r"""
+@article{winata2024miners,
+  author = {Winata, Genta Indra and Zhang, Ruochen and Adelani, David Ifeoluwa},
+  journal = {arXiv preprint arXiv:2406.07424},
+  title = {MINERS: Multilingual Language Models as Semantic Retrievers},
+  year = {2024},
+}
+""",
+)
+
+SEB = Benchmark(
+    name="MTEB(Scandinavian, v1)",
+    aliases=["MTEB(Scandinavian)", "SEB"],
+    display_name="Scandinavian",
+    icon="https://github.com/lipis/flag-icons/raw/260c91531be024944c6514130c5defb2ebb02b7d/flags/4x3/dk.svg",
+    language_view=["dan-Latn", "swe-Latn", "nno-Latn", "nob-Latn"],
+    tasks=get_tasks(
+        tasks=[
+            # Bitext
+            "BornholmBitextMining",
+            "NorwegianCourtsBitextMining",
+            # Classification
+            "AngryTweetsClassification",
+            "DanishPoliticalCommentsClassification",
+            "DalajClassification",
+            "DKHateClassification",
+            "LccSentimentClassification",
+            "MassiveIntentClassification",
+            "MassiveScenarioClassification",
+            "NordicLangClassification",
+            "NoRecClassification",
+            "NorwegianParliamentClassification",
+            "ScalaClassification",
+            "SwedishSentimentClassification",
+            "SweRecClassification",
+            # Retrieval
+            "DanFeverRetrieval",
+            "NorQuadRetrieval",
+            "SNLRetrieval",
+            "SwednRetrieval",
+            "SweFaqRetrieval",
+            "TV2Nordretrieval",
+            "TwitterHjerneRetrieval",
+            # Clustering
+            "SNLHierarchicalClusteringS2S",
+            "SNLHierarchicalClusteringP2P",
+            "SwednClusteringP2P",
+            "SwednClusteringS2S",
+            "VGHierarchicalClusteringS2S",
+            "VGHierarchicalClusteringP2P",
+        ],
+        languages=["dan", "swe", "nno", "nob"],
+    ),
+    description="Scandinavian text embedding quality covering Danish, Swedish, Norwegian Bokmål, and Nynorsk and spanning classification, clustering, retrieval as well as bitext  tasks across dialects or written forms.",
+    reference="https://kennethenevoldsen.github.io/scandinavian-embedding-benchmark/",
+    citation=r"""
+@article{enevoldsenScandinavianEmbeddingBenchmarks2024,
+  author = {Enevoldsen, Kenneth and Kardos, Márton and Muennighoff, Niklas and Nielbo, Kristoffer},
+  language = {en},
+  month = feb,
+  shorttitle = {The {Scandinavian} {Embedding} {Benchmarks}},
+  title = {The {Scandinavian} {Embedding} {Benchmarks}: {Comprehensive} {Assessment} of {Multilingual} and {Monolingual} {Text} {Embedding}},
+  url = {https://openreview.net/forum?id=pJl_i7HIA72},
+  urldate = {2024-04-12},
+  year = {2024},
+}
+""",
+    contacts=["KennethEnevoldsen", "x-tabdeveloping", "Samoed"],
+)

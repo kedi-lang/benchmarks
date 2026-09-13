@@ -1,0 +1,80 @@
+doomgeneric/doomgeneric/w_checksum.c:58:static void ChecksumAddLump(sha1_context_t *sha1_context, lumpinfo_t *lump)
+doomgeneric/doomgeneric/w_checksum.c-59-{
+doomgeneric/doomgeneric/w_checksum.c-60-    char buf[9];
+doomgeneric/doomgeneric/w_checksum.c-61-
+doomgeneric/doomgeneric/w_checksum.c-62-    M_StringCopy(buf, lump->name, sizeof(buf));
+doomgeneric/doomgeneric/w_checksum.c-63-    SHA1_UpdateString(sha1_context, buf);
+doomgeneric/doomgeneric/w_checksum.c-64-    SHA1_UpdateInt32(sha1_context, GetFileNumber(lump->wad_file));
+doomgeneric/doomgeneric/w_checksum.c-65-    SHA1_UpdateInt32(sha1_context, lump->position);
+doomgeneric/doomgeneric/w_checksum.c-66-    SHA1_UpdateInt32(sha1_context, lump->size);
+doomgeneric/doomgeneric/w_checksum.c-67-}
+doomgeneric/doomgeneric/w_checksum.c-68-
+doomgeneric/doomgeneric/w_checksum.c-69-void W_Checksum(sha1_digest_t digest)
+doomgeneric/doomgeneric/w_checksum.c-70-{
+doomgeneric/doomgeneric/w_checksum.c-71-    sha1_context_t sha1_context;
+doomgeneric/doomgeneric/w_checksum.c-72-    unsigned int i;
+doomgeneric/doomgeneric/w_checksum.c-73-
+doomgeneric/doomgeneric/w_checksum.c-74-    SHA1_Init(&sha1_context);
+doomgeneric/doomgeneric/w_checksum.c-75-
+doomgeneric/doomgeneric/w_checksum.c-76-    num_open_wadfiles = 0;
+doomgeneric/doomgeneric/w_checksum.c-77-
+doomgeneric/doomgeneric/w_checksum.c-78-    // Go through each entry in the WAD directory, adding information
+doomgeneric/doomgeneric/w_checksum.c-79-    // about each entry to the SHA1 hash.
+doomgeneric/doomgeneric/w_checksum.c-80-
+doomgeneric/doomgeneric/w_checksum.c-81-    for (i=0; i<numlumps; ++i)
+doomgeneric/doomgeneric/w_checksum.c-82-    {
+doomgeneric/doomgeneric/w_checksum.c-83-        ChecksumAddLump(&sha1_context, &lumpinfo[i]);
+--
+doomgeneric/doomgeneric/w_wad.c:62:lumpinfo_t *lumpinfo;		
+doomgeneric/doomgeneric/w_wad.c-63-unsigned int numlumps = 0;
+doomgeneric/doomgeneric/w_wad.c-64-
+doomgeneric/doomgeneric/w_wad.c-65-// Hash table for fast lookups
+doomgeneric/doomgeneric/w_wad.c-66-
+doomgeneric/doomgeneric/w_wad.c:67:static lumpinfo_t **lumphash;
+doomgeneric/doomgeneric/w_wad.c-68-
+doomgeneric/doomgeneric/w_wad.c-69-// Hash function used for lump names.
+doomgeneric/doomgeneric/w_wad.c-70-
+doomgeneric/doomgeneric/w_wad.c-71-unsigned int W_LumpNameHash(const char *s)
+doomgeneric/doomgeneric/w_wad.c-72-{
+doomgeneric/doomgeneric/w_wad.c-73-    // This is the djb2 string hash function, modded to work on strings
+doomgeneric/doomgeneric/w_wad.c-74-    // that have a maximum length of 8.
+doomgeneric/doomgeneric/w_wad.c-75-
+doomgeneric/doomgeneric/w_wad.c-76-    unsigned int result = 5381;
+doomgeneric/doomgeneric/w_wad.c-77-    unsigned int i;
+doomgeneric/doomgeneric/w_wad.c-78-
+doomgeneric/doomgeneric/w_wad.c-79-    for (i=0; i < 8 && s[i] != '\0'; ++i)
+doomgeneric/doomgeneric/w_wad.c-80-    {
+doomgeneric/doomgeneric/w_wad.c-81-        result = ((result << 5) ^ result ) ^ toupper((int)s[i]);
+doomgeneric/doomgeneric/w_wad.c-82-    }
+doomgeneric/doomgeneric/w_wad.c-83-
+doomgeneric/doomgeneric/w_wad.c-84-    return result;
+doomgeneric/doomgeneric/w_wad.c-85-}
+doomgeneric/doomgeneric/w_wad.c-86-
+doomgeneric/doomgeneric/w_wad.c-87-// Increase the size of the lumpinfo[] array to the specified size.
+doomgeneric/doomgeneric/w_wad.c-88-static void ExtendLumpInfo(int newnumlumps)
+doomgeneric/doomgeneric/w_wad.c-89-{
+doomgeneric/doomgeneric/w_wad.c:90:    lumpinfo_t *newlumpinfo;
+doomgeneric/doomgeneric/w_wad.c-91-    unsigned int i;
+doomgeneric/doomgeneric/w_wad.c-92-
+doomgeneric/doomgeneric/w_wad.c:93:    newlumpinfo = calloc(newnumlumps, sizeof(lumpinfo_t));
+doomgeneric/doomgeneric/w_wad.c-94-
+doomgeneric/doomgeneric/w_wad.c-95-    if (newlumpinfo == NULL)
+doomgeneric/doomgeneric/w_wad.c-96-    {
+doomgeneric/doomgeneric/w_wad.c-97-	I_Error ("Couldn't realloc lumpinfo");
+doomgeneric/doomgeneric/w_wad.c-98-    }
+doomgeneric/doomgeneric/w_wad.c-99-
+doomgeneric/doomgeneric/w_wad.c:100:    // Copy over lumpinfo_t structures from the old array. If any of
+doomgeneric/doomgeneric/w_wad.c-101-    // these lumps have been cached, we need to update the user
+doomgeneric/doomgeneric/w_wad.c-102-    // pointers to the new location.
+doomgeneric/doomgeneric/w_wad.c-103-    for (i = 0; i < numlumps && i < newnumlumps; ++i)
+doomgeneric/doomgeneric/w_wad.c-104-    {
+doomgeneric/doomgeneric/w_wad.c:105:        memcpy(&newlumpinfo[i], &lumpinfo[i], sizeof(lumpinfo_t));
+doomgeneric/doomgeneric/w_wad.c-106-
+doomgeneric/doomgeneric/w_wad.c-107-        if (newlumpinfo[i].cache != NULL)
+doomgeneric/doomgeneric/w_wad.c-108-        {
+doomgeneric/doomgeneric/w_wad.c-109-            Z_ChangeUser(newlumpinfo[i].cache, &newlumpinfo[i].cache);
+doomgeneric/doomgeneric/w_wad.c-110-        }
+doomgeneric/doomgeneric/w_wad.c-111-
+doomgeneric/doomgeneric/w_wad.c-112-        // We shouldn't be generating a hash table until after all WADs have
+doomgeneric/doomgeneric/w_wad.c-113-        // been loaded, but just in case...
+doomgeneric/doomgeneric/w_wad.c-114-        if (lumpinfo[i].next != NULL)

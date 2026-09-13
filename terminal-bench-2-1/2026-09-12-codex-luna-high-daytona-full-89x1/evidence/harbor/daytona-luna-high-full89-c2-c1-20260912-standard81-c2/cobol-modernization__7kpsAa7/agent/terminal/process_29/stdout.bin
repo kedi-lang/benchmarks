@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""Python equivalent of src/program.cbl (BOOKFORUM).
+
+The files used by the COBOL program are fixed-width sequential files.  They
+are deliberately handled as bytes here: GnuCOBOL writes these records without
+line terminators, and rewriting a record must not alter any other bytes.
+"""
+
+from pathlib import Path
+
+
+DATA_DIR = Path("/app/data")
+INPUT_FILE = Path("/app/src/INPUT.DAT")
+
+ACCOUNT_SIZE = 34                 # 4 + 20 + 10
+BOOK_SIZE = 28                    # 4 + 20 + 4
+TRANSACTION_SIZE = 22             # 4 + 10 + 4 + 4
+
+
+def records(data: bytes, size: int):
+    """Yield the fixed-size records read by a COBOL sequential file."""
+    for start in range(0, len(data), size):
+        yield start, data[start:start + size]
+
+
+def field(record: bytes, start: int, length: int) -> bytes:
+    """Return a fixed-width field, including COBOL-style zero padding."""
+    return record[start:start + length].ljust(length, b"\x00")
+
+
+def input_values() -> tuple[bytes, bytes, bytes, int] | None:
+    """Read the first INPUT-RECORD.
+
+    INPUT.DAT in the supplied data is shorter than its 22-byte COBOL FD.  On
+    a short fixed sequential record, GnuCOBOL leaves the missing numeric
+    positions as zeroes; padding the amount with zeroes reproduces that
+    behavior (and also handles a normally padded 10-digit amount).
+    """
+    raw = INPUT_FILE.read_bytes()
+    if not raw:
+        return None
+
+    buyer = field(raw, 0, 4)
+    seller = field(raw, 4, 4)
+    book = field(raw, 8, 4)
+    amount_bytes = field(raw, 12, 10)
+    # INPUT-AMOUNT is PIC 9(10); each byte is an ASCII digit in the data files.
+    amount = int(bytes((b if 48 <= b <= 57 else 48) for b in amount_bytes))
+    return buyer, seller, book, amount
+
+
+def main() -> None:
+    values = input_values()
+    if values is None:
+        print("Error: Input file is empty")
+        return
+
+    buyer, seller, book, amount = values
+
+    accounts_path = DATA_DIR / "ACCOUNTS.DAT"
+    books_path = DATA_DIR / "BOOKS.DAT"
+    transactions_path = DATA_DIR / "TRANSACTIONS.DAT"
+
+    accounts = bytearray(accounts_path.read_bytes())
+    books = bytearray(books_path.read_bytes())
+
+    buyer_found = False
+    seller_found = False
+    book_found = False
+    valid_owner = False
+
+    # VALIDATE-USERS-AND-BOOK
+    for _, record in records(accounts, ACCOUNT_SIZE):
+        account_id = field(record, 0, 4)
+        if account_id == buyer:
+            buyer_found = True
+        if account_id == seller:
+            seller_found = True
+
+    for _, record in records(books, BOOK_SIZE):
+        if field(record, 0, 4) == book:
+            book_found = True
+            if field(record, 24, 4) == seller:
+                valid_owner = True
+
+    print(" ")
+
+    if not (buyer_found and seller_found and book_found and valid_owner):
+        print("Transaction failed due to validation errors")
+        return
+
+    # PROCESS-TRANSACTION.  PIC 9(10) receives the arithmetic result.  A
+    # negative result loses its sign when moved to that unsigned field, while
+    # an overflow retains the rightmost ten digits.
+    limit = 10_000_000_000
+
+    # With identical buyer and seller IDs the COBOL program attempts two
+    # REWRITEs for one READ.  The second REWRITE raises file status 43, so the
+    # first (debit) rewrite is the only persistent change and processing stops.
+    if buyer == seller:
+        for start, record in records(accounts, ACCOUNT_SIZE):
+            if field(record, 0, 4) == buyer:
+                old_balance = int(field(record, 24, 10))
+                new_balance = abs(old_balance - amount) % limit
+                accounts[start + 24:start + 34] = f"{new_balance:010d}".encode("ascii")
+                accounts_path.write_bytes(accounts)
+                return
+
+    for start, record in records(accounts, ACCOUNT_SIZE):
+        account_id = field(record, 0, 4)
+        if account_id == buyer:
+            old_balance = int(field(record, 24, 10))
+            new_balance = abs(old_balance - amount) % limit
+            accounts[start + 24:start + 34] = f"{new_balance:010d}".encode("ascii")
+        if account_id == seller:
+            old_balance = int(field(record, 24, 10))
+            new_balance = (old_balance + amount) % limit
+            accounts[start + 24:start + 34] = f"{new_balance:010d}".encode("ascii")
+
+    accounts_path.write_bytes(accounts)
+
+    for start, record in records(books, BOOK_SIZE):
+        if field(record, 0, 4) == book:
+            books[start + 24:start + 28] = buyer
+
+    books_path.write_bytes(books)
+
+    transaction = book + f"{amount % limit:010d}".encode("ascii") + seller + buyer
+    with transactions_path.open("ab") as output:
+        output.write(transaction)
+
+    print("Transaction completed successfully")
+
+
+if __name__ == "__main__":
+    main()

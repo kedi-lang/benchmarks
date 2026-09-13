@@ -1,0 +1,41 @@
+localscore <- function(child, pars) {
+ y <- d[[child]]
+ if(length(pars)==0) rss <- sum((y-mean(y))^2) else rss <- sum(residuals(lm(y ~ as.matrix(d[,vars[pars],drop=FALSE])) )^2)
+ if(length(pars)>0) rss <- sum(residuals(lm(y ~ as.matrix(d[,vars[pars],drop=FALSE])) )^2)
+ n*log(rss/n) + (length(pars)+2)*log(n)
+}
+--
+for (ch in 1:p) { ls[[ch]] <- numeric(2^p); for(m in 0:(2^p-1)) {pa<-which(as.logical(intToBits(m)[1:p])); pa<-setdiff(pa,ch); ls[[ch]][m+1]<-localscore(ch,pa)}}
+acyclic <- function(es) { # es matrix from,to
+ adj <- matrix(FALSE,p,p); for(k in 1:nrow(es)) adj[es[k,1],es[k,2]]<-TRUE
+ # topo
+ indeg <- colSums(adj); rem<-1:p
+ while(length(rem)) { z<-rem[indeg[rem]==0]; if(!length(z)) return(FALSE); rem<-setdiff(rem,z); for(v in z) indeg[which(adj[v,])]<-indeg[which(adj[v,])]-1 }
+> d <- read.csv('/app/bn_sample_10k.csv')
+> vars <- names(d); n <- nrow(d); p <- length(vars)
+> # directed edges from -> to, exclude into U
+> edges <- do.call(rbind,lapply(1:p,function(i) do.call(rbind,lapply(1:p,function(j) if(i!=j && j!=1) c(i,j) else NULL))))
+> # matrices edge rows from,to
+> # local fit residual and BIC (constant included, parent coefficients)
+> localscore <- function(child, pars) {
++  y <- d[[child]]
++  if(length(pars)==0) rss <- sum((y-mean(y))^2) else rss <- sum(residuals(lm(y ~ as.matrix(d[,vars[pars],drop=FALSE])) )^2)
++  if(length(pars)>0) rss <- sum(residuals(lm(y ~ as.matrix(d[,vars[pars],drop=FALSE])) )^2)
++  n*log(rss/n) + (length(pars)+2)*log(n)
++ }
+> # precompute local by child mask
+> ls <- vector('list',p)
+> for (ch in 1:p) { ls[[ch]] <- numeric(2^p); for(m in 0:(2^p-1)) {pa<-which(as.logical(intToBits(m)[1:p])); pa<-setdiff(pa,ch); ls[[ch]][m+1]<-localscore(ch,pa)}}
+> acyclic <- function(es) { # es matrix from,to
++  adj <- matrix(FALSE,p,p); for(k in 1:nrow(es)) adj[es[k,1],es[k,2]]<-TRUE
++  # topo
++  indeg <- colSums(adj); rem<-1:p
++  while(length(rem)) { z<-rem[indeg[rem]==0]; if(!length(z)) return(FALSE); rem<-setdiff(rem,z); for(v in z) indeg[which(adj[v,])]<-indeg[which(adj[v,])]-1 }
++  TRUE
++ }
+> res <- list(); z<-0
+> combnidx <- combn(nrow(edges),6)
+> for(ii in 1:ncol(combnidx)) { es<-edges[combnidx[,ii],,drop=FALSE]; if(!acyclic(es)) next; pars<-lapply(1:p,function(ch) which(es[,2]==ch) |> function(ix) if(length(ix)) es[ix,1] else integer()) ; sc<-sum(sapply(1:p,function(ch) ls[[ch]][sum(2^(pars[[ch]]))+1])); z<-z+1; res[[z]]<-list(score=sc,es=es,pars=pars)}
+Error in function(ix) if (length(ix)) es[ix, 1] else integer() : 
+  function 'function' not supported in RHS call of a pipe (<input>:1:143)
+Execution halted

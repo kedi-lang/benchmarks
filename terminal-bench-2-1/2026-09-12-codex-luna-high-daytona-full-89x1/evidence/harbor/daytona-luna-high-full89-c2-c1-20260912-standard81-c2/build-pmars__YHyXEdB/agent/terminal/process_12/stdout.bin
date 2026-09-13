@@ -1,0 +1,54 @@
+src/config.h:28: * The most important switches are GRAPHX, SERVER, SMALLMEM, EXT94 and KEYPRESS.
+src/config.h:38:   GRAPHX: pMARS supports a graphical core display on DOS and Unix
+src/config.h:45:   Uncomment the next lines or add -DGRAPHX to CFLAGS to compile in a
+src/config.h:50:#ifndef GRAPHX
+src/config.h:51:#define GRAPHX
+src/config.h:60:   GRAPHX and SERVER are mutually exclusive.
+src/config.h:146:   "cls" command. It is not used in GRAPHX versions of pMARS. The
+src/config.h:153:   XWINGRAPHX: If defined, specifies that pMARS should use the XWindows
+src/config.h:154:    interface for graphical display. Specifying XWINGRAPHX overrides all
+src/config.h:155:    other graphical displays (e.g. LINUXGRAPHX or CURSESGRAPHX)
+src/config.h:159:#ifndef XWINGRAPHX
+src/config.h:160:#define XWINGRAPHX
+src/config.h:239:    defined. If you specified GRAPHX, the SVGA version will be built by
+src/config.h:240:    default. Define CURSESGRAPHX to override this option and build pmars
+src/config.h:283:#if (defined(DOSTXTGRAPHX) && defined(DOSGRXGRAPHX)) || defined(OS2PMGRAPHX)\
+src/config.h:284:    || defined(MACGRAPHX) || defined(CURSESGRAPHX) || defined(DOSALLGRAPHX)\
+src/config.h:285:     || defined(LINUXGRAPHX) || defined(XWINGRAPHX)
+src/config.h:286:#ifndef GRAPHX
+src/config.h:287:#define GRAPHX
+src/config.h:291:#if defined(__MSDOS__) && defined(GRAPHX)
+src/config.h:292:#ifndef DOSALLGRAPHX
+src/config.h:293:#define DOSALLGRAPHX
+src/config.h:295:#endif                                /* __MSDOS__ && GRAPHX */
+src/config.h:297:#if defined(DOSTXTGRAPHX) && defined(DOSGRXGRAPHX)
+src/config.h:298:#define DOSALLGRAPHX
+src/config.h:300:#if defined(DOSALLGRAPHX)
+src/config.h:301:#define DOSTXTGRAPHX
+src/config.h:302:#define DOSGRXGRAPHX
+src/config.h:310:#ifdef GRAPHX
+src/config.h:311:#define MACGRAPHX
+src/config.h:315:#if defined(GRAPHX) && defined(unix) && !defined(DJGPP) && !defined(__linux__)
+src/config.h:316:#ifndef CURSESGRAPHX
+src/config.h:317:#define CURSESGRAPHX
+src/config.h:319:#endif                                /* GRAPHX && unix */
+src/config.h:321:#if defined(GRAPHX) && defined(__linux__)
+src/config.h:322:#ifndef LINUXGRAPHX
+src/config.h:323:#ifndef CURSESGRAPHX
+src/config.h:324:#define LINUXGRAPHX
+src/config.h:327:#ifdef CURSESGRAPHX
+src/config.h:328:#undef CURSESGRAPHX
+src/config.h:333:#ifdef CURSESGRAPHX
+src/config.h:334:#ifndef DOSTXTGRAPHX
+src/config.h:335:#define DOSTXTGRAPHX
+src/config.h:339:#if defined(__OS2__) && defined(GRAPHX)
+src/config.h:340:#ifndef OS2PMGRAPHX
+src/config.h:341:#define OS2PMGRAPHX
+src/config.h:345:#if defined(GRAPHX)
+src/config.h:351:#if defined(XWINGRAPHX)
+src/config.h:352:#ifdef CURSESGRAPHX
+src/config.h:353:#undef CURSESGRAPHX
+src/config.h:355:#ifdef LINUXGRAPHX
+src/config.h:356:#undef LINUXGRAPHX
+src/config.h:358:#ifdef DOSTXTGRAPHX
+src/config.h:359:#undef DOSTXTGRAPHX

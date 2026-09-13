@@ -1,0 +1,58 @@
+ls: cannot access 'ocamlc.opt': No such file or directory
+ls: cannot access 'ocamlopt.opt': No such file or directory
+-rwxr-xr-x 1 root root 25185529 Sep 12 20:21 ocamlc
+-rwxr-xr-x 1 root root 31343640 Sep 12 20:24 ocamlopt
+-rwxr-xr-x 1 root root  1952280 Sep 12 20:19 runtime/ocamlrun
+760:opt-core: runtimeopt
+765:opt: checknative
+773:opt.opt: checknative
+787:	$(MAKE) ocamlopt.opt
+849:world: coldstart
+878:ifeq "$(wildcard ocamlopt.opt$(EXE))" ""
+881:  FLEXLINK_OCAMLOPT=../ocamlopt.opt$(EXE)
+977:	rm -f ocamlopt ocamlopt.exe ocamlopt.opt ocamlopt.opt.exe
+2932:	if test -f ocamlopt.opt$(EXE); then $(MAKE) installoptopt; else \
+2941:	if test -f ocamlopt.opt$(EXE); then $(MAKE) installoptopt; fi
+2950:	$(INSTALL_PROG) ocamlopt.opt$(EXE) "$(INSTALL_BINDIR)"
+2954:	   $(LN) ocamlopt.opt$(EXE) ocamlopt$(EXE); \
+opam custom-install --no-recompilations ocaml-variants -- make install
+-----
+
+Note about the first installation:
+When you start from an empty switch, and install a compiler (in our case,
+the `ocaml-variants` package provided by the compiler's `opam` file), then
+a number of additional packages are installed to ensure that the switch
+will work correctly. Mainly, the `ocaml` package needs to be installed,
+and while it's done automatically when using regular `opam` commands, the
+`custom-install` plugin will not force installation of dependencies.
+Moreover, if you try to fix the problem by manually installing the `ocaml`
+package, `opam` will try to recompile `ocaml-variants`, using the default
+instructions. You can get around this by running
+`opam reinstall --forget-pending` just after the `opam custom-install` command
+and just before the `opam install ocaml command`.
+Full example:
+
+-----
+opam switch create . --empty
+./configure --prefix=$(opam var prefix) --disable-ocamldoc --disable-ocamltest
+make world && make opt
+opam custom-install ocaml-variants -- make install
+opam reinstall --forget-pending --yes
+opam install ocaml
+# You now have a working switch, in which you can start installing packages
+-----
+
+One advantage of this plugin over a plain `make install` is that it
+correctly tracks the files associated with the compiler, so if your
+`make install` command only installs the bytecode versions of the tools,
+then with `opam-custom-install` you will end up in a state where only the
+bytecode tools are installed, whereas with a raw `make install` you will have
+stale native binaries remaining in your switch.
+Since it's significantly faster to build the bytecode version of the tools,
+and many `opam` packages will pick the native version of the compilers if
+present and the bytecode version otherwise, you can build your initial switch
+with the native versions (to get quickly to a state where a bug appears),
+then clean your working directory and start building bytecode tools only
+for the actual debugging phase.
+
+===== Without `opam-custom-install`

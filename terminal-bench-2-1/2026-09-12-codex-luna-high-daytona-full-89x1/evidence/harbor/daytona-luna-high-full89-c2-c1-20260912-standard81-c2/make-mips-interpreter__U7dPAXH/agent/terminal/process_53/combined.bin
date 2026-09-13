@@ -1,0 +1,152 @@
+
+doomgeneric_mips:	file format elf32-mips
+
+Disassembly of section .text:
+
+00439938 <printf>:
+  439938: f8 ff bd 27  	addiu	$sp, $sp, -8 <_end+0xffffffffbfb4e868>
+  43993c: 04 00 bf af  	sw	$ra, 4($sp)
+  439940: 14 00 a7 af  	sw	$7, 20($sp)
+  439944: 10 00 a6 af  	sw	$6, 16($sp)
+  439948: 0c 00 a5 af  	sw	$5, 12($sp)
+  43994c: 0c 00 a5 27  	addiu	$5, $sp, 12 <z_zone.c+0xc>
+  439950: 00 00 06 24  	addiu	$6, $zero, 0 <z_zone.c>
+  439954: 00 00 07 24  	addiu	$7, $zero, 0 <z_zone.c>
+  439958: 00 00 08 24  	addiu	$8, $zero, 0 <z_zone.c>
+  43995c: 37 eb 10 0c  	jal	4435164 <vprintf_internal>
+  439960: 00 00 a5 af  	sw	$5, 0($sp)
+  439964: 04 00 bf 8f  	lw	$ra, 4($sp)
+  439968: 08 00 e0 03  	jr	$ra
+  43996c: 08 00 bd 27  	addiu	$sp, $sp, 8 <z_zone.c+0x8>
+
+doomgeneric_mips:	file format elf32-mips
+
+Disassembly of section .text:
+
+0043acdc <vprintf_internal>:
+  43d160: 25 18 40 00  	move	$3, $2
+  43d164: 04 00 61 04  	bgez	$3, 20 <vprintf_internal+0x249c>
+  43d168: 00 00 00 00  	nop <z_zone.c>
+  43d16c: 23 08 03 00  	negu	$1, $3
+  43d170: 4b 00 02 3c  	lui	$2, 75 <z_zone.c+0x4b>
+  43d174: 80 0a 41 ac  	sw	$1, 2688($2)
+  43d178: 5e f4 10 08  	j	4444536 <vprintf_internal+0x249c>
+  43d17c: 00 00 00 00  	nop <z_zone.c>
+
+0043d180 <fprintf>:
+  43d180: f8 ff bd 27  	addiu	$sp, $sp, -8 <_end+0xffffffffbfb4e868>
+  43d184: 04 00 bf af  	sw	$ra, 4($sp)
+  43d188: 25 08 a0 00  	move	$1, $5
+  43d18c: 14 00 a7 af  	sw	$7, 20($sp)
+  43d190: 25 40 80 00  	move	$8, $4
+  43d194: 10 00 a6 af  	sw	$6, 16($sp)
+  43d198: 10 00 a5 27  	addiu	$5, $sp, 16 <z_zone.c+0x10>
+  43d19c: 00 00 06 24  	addiu	$6, $zero, 0 <z_zone.c>
+  43d1a0: 00 00 07 24  	addiu	$7, $zero, 0 <z_zone.c>
+  43d1a4: 25 20 20 00  	move	$4, $1
+  43d1a8: 37 eb 10 0c  	jal	4435164 <vprintf_internal>
+  43d1ac: 00 00 a5 af  	sw	$5, 0($sp)
+  43d1b0: 04 00 bf 8f  	lw	$ra, 4($sp)
+  43d1b4: 08 00 e0 03  	jr	$ra
+  43d1b8: 08 00 bd 27  	addiu	$sp, $sp, 8 <z_zone.c+0x8>
+
+0043d1bc <snprintf>:
+  43d1bc: f8 ff bd 27  	addiu	$sp, $sp, -8 <_end+0xffffffffbfb4e868>
+103-    // provided is accepted.
+104-
+105-    zonemem = NULL;
+106-
+107-    while (zonemem == NULL)
+108-    {
+109-        // We need a reasonable minimum amount of RAM to start.
+110-
+111-        if (default_ram < min_ram)
+112-        {
+113:            I_Error("Unable to allocate %i MiB of RAM for zone", default_ram);
+114-        }
+115-
+116-        // Try to allocate the zone memory.
+117-
+118-        *size = default_ram * 1024 * 1024;
+119-
+120-        zonemem = malloc(*size);
+121-
+122-        // Failed to allocate?  Reduce zone size until we reach a size
+123-        // that is acceptable.
+124-
+125-        if (zonemem == NULL)
+126-        {
+127-            default_ram -= 1;
+128-        }
+129-    }
+130-
+131-    return zonemem;
+132-}
+133-
+134-byte *I_ZoneBase (int *size)
+135-{
+136-    byte *zonemem;
+137-    int min_ram, default_ram;
+138-    int p;
+139-
+140-    //!
+141-    // @arg <mb>
+142-    //
+143-    // Specify the heap size, in MiB (default 16).
+--
+345-    free(errorboxpath);
+346-    free(escaped_message);
+347-
+348-    return result;
+349-}
+350-
+351-#endif /* !defined(_WIN32) && !defined(__MACOSX__) && !defined(__DJGPP__) */
+352-
+353-
+354-//
+355:// I_Error
+356-//
+357-
+358-static boolean already_quitting = false;
+359-
+360:void I_Error (char *error, ...)
+361-{
+362-  puts(error);
+363-    char msgbuf[512];
+364-    va_list argptr;
+365-    atexit_listentry_t *entry;
+366-    boolean exit_gui_popup;
+367-
+368-    if (already_quitting)
+369-    {
+370:        fprintf(stderr, "Warning: recursive call to I_Error detected.\n");
+371-#if ORIGCODE
+372-        exit(-1);
+373-#endif
+374-    }
+375-    else
+376-    {
+377-        already_quitting = true;
+378-    }
+379-
+380-    // Message first.
+381-    va_start(argptr, error);
+382-    //fprintf(stderr, "\nError: ");
+383-    vfprintf(stderr, error, argptr);
+384-    fprintf(stderr, "\n\n");
+385-    va_end(argptr);
+386-    fflush(stderr);
+387-
+388-    // Write a copy of the message into buffer.
+389-    va_start(argptr, error);
+390-    memset(msgbuf, 0, sizeof(msgbuf));
+391-    M_vsnprintf(msgbuf, sizeof(msgbuf), error, argptr);
+392-    va_end(argptr);
+393-
+394-    // Shutdown. Here might be other errors.
+395-
+396-    entry = exit_funcs;
+397-
+398-    while (entry != NULL)
+399-    {
+400-        if (entry->run_on_error)

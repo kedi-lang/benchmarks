@@ -1,0 +1,64 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0 1310436 77320 ?       Ssl  16:28   0:01 /usr/local/bin/daytona sleep infinity
+root          87  0.0  0.0   4332  3396 ?        S    16:28   0:00 /usr/bin/bash
+root          90  0.0  0.0  17108 11684 ?        S    16:28   0:00 python3 /tmp/daytona_repl_worker.py
+root          94  0.0  0.0   4332  2048 ?        S    16:28   0:00 /usr/bin/bash
+root          95  0.0  0.0   4332  2048 ?        S    16:28   0:00 /usr/bin/bash
+root          96  0.0  0.0   2736  1752 ?        S    16:28   0:00 tail -f /dev/null
+root          99  0.0  0.0   2704  1464 ?        S    16:28   0:00 sleep infinity
+root         106  0.0  0.0   4848  4164 ?        S    16:28   0:00 /usr/bin/bash
+root         117  0.0  0.0   4848  4076 ?        S    16:28   0:00 /usr/bin/bash
+root         129  0.0  0.0   4848  4152 ?        S    16:28   0:00 /usr/bin/bash
+root         140  0.0  0.0   4848  4076 ?        S    16:28   0:00 /usr/bin/bash
+root         151  0.0  0.0   4848  3940 ?        S    16:28   0:00 /usr/bin/bash
+root         772  0.0  0.0   4848  4124 ?        S    16:29   0:00 /usr/bin/bash
+root         944  0.0  0.0   4848  4104 ?        S    16:29   0:00 /usr/bin/bash
+root         971  0.0  0.0   4848  4064 ?        S    16:29   0:00 /usr/bin/bash
+root         982  0.0  0.0   4848  4044 ?        S    16:29   0:00 /usr/bin/bash
+root         994  0.0  0.0   4848  3996 ?        S    16:29   0:00 /usr/bin/bash
+root        1004  0.0  0.0   4848  4020 ?        S    16:29   0:00 /usr/bin/bash
+root        1015  0.0  0.0   4332  3548 ?        S    16:29   0:00 /usr/bin/bash
+root        1018  0.0  0.0   4332  1980 ?        S    16:29   0:00 /usr/bin/bash
+root        1019  0.0  0.0   4332  1976 ?        S    16:29   0:00 /usr/bin/bash
+root        1020  0.0  0.0   2736  1736 ?        S    16:29   0:00 tail -f /dev/null
+root        1021  0.0  0.0   2712  1792 ?        S    16:29   0:00 timeout 21629 env KEDI_HOME=/installed-agent/kedi-home KEDI_CODEX_AUTH_FILE=/installed-agent/kedi-codex-auth.json bash -c set -o pipefail; set -o pipefail; trap 'rm -f -- /installed-agent/kedi-codex-auth.json' EXIT; rm -f -- /installed-agent/kedi-runner.pid /logs/agent/runner-exit.json /logs/agent/.runner-exit.tmp; /installed-agent/kedi/bin/python -m kedi.integrations.harbor.runner --instruction-file /installed-agent/kedi-instruction.txt --model codex/gpt-5.6-luna --adapter pydantic --workspace . --result-file /logs/agent/kedi-result.json --trial-id 5b470d7b-2518-4da2-b6f8-8dcd13c4fe50 --compaction-mode disabled --history-enabled --artifacts-enabled --no-codemode-enabled --no-batching-guidance-enabled --request-observation --artifact-threshold-bytes 16384 --artifact-quota-bytes 256000000 --command-timeout-seconds 600.0 --terminal-preview-bytes 32768 --terminal-output-limit-bytes 512000000 --retained-process-timeout-seconds 21600.0 --model-request-limit 512 --model-cumulative-input-tokens 50000000 --effort high --trial-timeout-seconds 21600.0 --trial-deadline-unix 1789252165.3599935 --manifest-digest 9d8b5edf17a9b91a65b78f026871333df856d064e41d273798f8e84bad88f15e > /logs/agent/kedi.txt 2>&1 & runner_pid="$!"; printf '%s\n' "$runner_pid" > /installed-agent/kedi-runner.pid; wait "$runner_pid"; runner_status="$?"; printf '{"schema_version":1,"exit_code":%s,"finished_at":"%s"}\n' "$runner_status" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /logs/agent/.runner-exit.tmp && mv -- /logs/agent/.runner-exit.tmp /logs/agent/runner-exit.json; rm -f -- /installed-agent/kedi-runner.pid; exit "$runner_status"
+root        1022  0.0  0.0   4332  3564 ?        S    16:29   0:00 bash -c set -o pipefail; set -o pipefail; trap 'rm -f -- /installed-agent/kedi-codex-auth.json' EXIT; rm -f -- /installed-agent/kedi-runner.pid /logs/agent/runner-exit.json /logs/agent/.runner-exit.tmp; /installed-agent/kedi/bin/python -m kedi.integrations.harbor.runner --instruction-file /installed-agent/kedi-instruction.txt --model codex/gpt-5.6-luna --adapter pydantic --workspace . --result-file /logs/agent/kedi-result.json --trial-id 5b470d7b-2518-4da2-b6f8-8dcd13c4fe50 --compaction-mode disabled --history-enabled --artifacts-enabled --no-codemode-enabled --no-batching-guidance-enabled --request-observation --artifact-threshold-bytes 16384 --artifact-quota-bytes 256000000 --command-timeout-seconds 600.0 --terminal-preview-bytes 32768 --terminal-output-limit-bytes 512000000 --retained-process-timeout-seconds 21600.0 --model-request-limit 512 --model-cumulative-input-tokens 50000000 --effort high --trial-timeout-seconds 21600.0 --trial-deadline-unix 1789252165.3599935 --manifest-digest 9d8b5edf17a9b91a65b78f026871333df856d064e41d273798f8e84bad88f15e > /logs/agent/kedi.txt 2>&1 & runner_pid="$!"; printf '%s\n' "$runner_pid" > /installed-agent/kedi-runner.pid; wait "$runner_pid"; runner_status="$?"; printf '{"schema_version":1,"exit_code":%s,"finished_at":"%s"}\n' "$runner_status" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /logs/agent/.runner-exit.tmp && mv -- /logs/agent/.runner-exit.tmp /logs/agent/runner-exit.json; rm -f -- /installed-agent/kedi-runner.pid; exit "$runner_status"
+root        1024  0.0  0.0 741108 153280 ?       Sl   16:29   0:02 /installed-agent/kedi/bin/python -m kedi.integrations.harbor.runner --instruction-file /installed-agent/kedi-instruction.txt --model codex/gpt-5.6-luna --adapter pydantic --workspace . --result-file /logs/agent/kedi-result.json --trial-id 5b470d7b-2518-4da2-b6f8-8dcd13c4fe50 --compaction-mode disabled --history-enabled --artifacts-enabled --no-codemode-enabled --no-batching-guidance-enabled --request-observation --artifact-threshold-bytes 16384 --artifact-quota-bytes 256000000 --command-timeout-seconds 600.0 --terminal-preview-bytes 32768 --terminal-output-limit-bytes 512000000 --retained-process-timeout-seconds 21600.0 --model-request-limit 512 --model-cumulative-input-tokens 50000000 --effort high --trial-timeout-seconds 21600.0 --trial-deadline-unix 1789252165.3599935 --manifest-digest 9d8b5edf17a9b91a65b78f026871333df856d064e41d273798f8e84bad88f15e
+root        1033  0.0  0.0   4716  3692 ?        Ss   16:29   0:00 /bin/bash -c ps aux | head -30; ls -la /etc/ssh 2>/dev/null || true; ls -la /etc/nginx 2>/dev/null || true
+root        1034  0.0  0.0   4716  3668 ?        Ss   16:29   0:00 /bin/bash -c cat /etc/os-release; command -v sshd || true; command -v nginx || true; command -v git || true; id; ss -ltnp || true
+root        1037  0.0  0.0   8280  4464 ?        R    16:29   0:00 ps aux
+root        1038  0.0  0.0   3100  1908 ?        S    16:29   0:00 head -30
+total 648
+drwxr-xr-x 4 root root   4096 Oct 31  2025 .
+drwxr-xr-x 1 root root     43 Sep 12 16:29 ..
+-rw-r--r-- 1 root root 620042 Aug 26  2025 moduli
+-rw-r--r-- 1 root root   1649 Aug 26  2025 ssh_config
+drwxr-xr-x 2 root root      6 Aug 26  2025 ssh_config.d
+-rw------- 1 root root    513 Oct 31  2025 ssh_host_ecdsa_key
+-rw-r--r-- 1 root root    182 Oct 31  2025 ssh_host_ecdsa_key.pub
+-rw------- 1 root root    411 Oct 31  2025 ssh_host_ed25519_key
+-rw-r--r-- 1 root root    102 Oct 31  2025 ssh_host_ed25519_key.pub
+-rw------- 1 root root   2610 Oct 31  2025 ssh_host_rsa_key
+-rw-r--r-- 1 root root    574 Oct 31  2025 ssh_host_rsa_key.pub
+-rw-r--r-- 1 root root    342 Dec  7  2020 ssh_import_id
+-rw-r--r-- 1 root root   3517 Aug 26  2025 sshd_config
+drwxr-xr-x 2 root root      6 Aug 26  2025 sshd_config.d
+total 44
+drwxr-xr-x 1 root root   37 Oct 31  2025 .
+drwxr-xr-x 1 root root   43 Sep 12 16:29 ..
+drwxr-xr-x 2 root root   10 Aug 22  2025 conf.d
+-rw-r--r-- 1 root root 1125 Nov 30  2023 fastcgi.conf
+-rw-r--r-- 1 root root 1055 Nov 30  2023 fastcgi_params
+-rw-r--r-- 1 root root 2837 Nov 30  2023 koi-utf
+-rw-r--r-- 1 root root 2223 Nov 30  2023 koi-win
+-rw-r--r-- 1 root root 5465 Nov 30  2023 mime.types
+drwxr-xr-x 2 root root   10 Aug 22  2025 modules-available
+drwxr-xr-x 2 root root   10 Aug 22  2025 modules-enabled
+-rw-r--r-- 1 root root 1446 Nov 30  2023 nginx.conf
+-rw-r--r-- 1 root root  180 Nov 30  2023 proxy_params
+-rw-r--r-- 1 root root  636 Nov 30  2023 scgi_params
+drwxr-xr-x 1 root root   29 Oct 31  2025 sites-available
+drwxr-xr-x 2 root root   29 Oct 31  2025 sites-enabled
+drwxr-xr-x 2 root root   63 Oct 31  2025 snippets
+-rw-r--r-- 1 root root  664 Nov 30  2023 uwsgi_params
+-rw-r--r-- 1 root root 3071 Nov 30  2023 win-utf

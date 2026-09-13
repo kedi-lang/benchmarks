@@ -1,0 +1,96 @@
+    wad_file_t *result;
+    int i;
+
+    //!
+    // Use the OS's virtual memory subsystem to map WAD files
+    // directly into memory.
+    //
+
+    if (!M_CheckParm("-mmap"))
+    {
+        return stdc_wad_file.OpenFile(path);
+    }
+
+    // Try all classes in order until we find one that works
+
+    result = NULL;
+
+    for (i = 0; i < arrlen(wad_file_classes); ++i)
+    {
+        result = wad_file_classes[i]->OpenFile(path);
+
+        if (result != NULL)
+        {
+            break;
+        }
+    }
+
+    return result;
+}
+
+void W_CloseFile(wad_file_t *wad)
+{
+    wad->file_class->CloseFile(wad);
+}
+
+size_t W_Read(wad_file_t *wad, unsigned int offset,
+              void *buffer, size_t buffer_len)
+{
+    return wad->file_class->Read(wad, offset, buffer, buffer_len);
+}
+
+
+struct _wad_file_s
+{
+    // Class of this file.
+
+    wad_file_class_t *file_class;
+
+    // If this is NULL, the file cannot be mapped into memory.  If this
+    // is non-NULL, it is a pointer to the mapped file.
+
+    byte *mapped;
+
+    // Length of the file, in bytes.
+
+    unsigned int length;
+};
+
+// Open the specified file. Returns a pointer to a new wad_file_t 
+// handle for the WAD file, or NULL if it could not be opened.
+
+wad_file_t *W_OpenFile(char *path);
+
+// Close the specified WAD file.
+
+void W_CloseFile(wad_file_t *wad);
+
+// Read data from the specified file into the provided buffer.  The
+// data is read from the specified offset from the start of the file.
+// Returns the number of bytes read.
+
+size_t W_Read(wad_file_t *wad, unsigned int offset,
+              void *buffer, size_t buffer_len);
+
+#endif /* #ifndef __W_FILE__ */
+004335d8 <W_Read>:
+  4335d8:	27bdffe8 	addiu	sp,sp,-24
+  4335dc:	afbf0014 	sw	ra,20(sp)
+  4335e0:	8c820000 	lw	v0,0(a0)
+  4335e4:	8c420008 	lw	v0,8(v0)
+  4335e8:	0040f809 	jalr	v0
+  4335ec:	00000000 	nop
+  4335f0:	8fbf0014 	lw	ra,20(sp)
+  4335f4:	03e00008 	jr	ra
+  4335f8:	27bd0018 	addiu	sp,sp,24
+  4335fc:	00000000 	nop
+
+00433600 <W_StdC_Read>:
+  433600:	27bdffe0 	addiu	sp,sp,-32
+  433604:	afbf001c 	sw	ra,28(sp)
+  433608:	afb20018 	sw	s2,24(sp)
+  43360c:	afb10014 	sw	s1,20(sp)
+  433610:	afb00010 	sw	s0,16(sp)
+  433614:	00808025 	move	s0,a0
+  433618:	00c08825 	move	s1,a2
+  43361c:	00e09025 	move	s2,a3

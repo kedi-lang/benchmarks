@@ -1,0 +1,59 @@
+> d <- read.csv('/app/bn_sample_10k.csv')
+> vars <- names(d); n <- nrow(d); p <- length(vars)
+> # directed edges from -> to, exclude into U
+> edges <- do.call(rbind,lapply(1:p,function(i) do.call(rbind,lapply(1:p,function(j) if(i!=j && j!=1) c(i,j) else NULL))))
+> # matrices edge rows from,to
+> # local fit residual and BIC (constant included, parent coefficients)
+> localscore <- function(child, pars) {
++  y <- d[[child]]
++  if(length(pars)==0) rss <- sum((y-mean(y))^2) else rss <- sum(residuals(lm(y ~ as.matrix(d[,vars[pars],drop=FALSE])) )^2)
++  if(length(pars)>0) rss <- sum(residuals(lm(y ~ as.matrix(d[,vars[pars],drop=FALSE])) )^2)
++  n*log(rss/n) + (length(pars)+2)*log(n)
++ }
+> # precompute local by child mask
+> ls <- vector('list',p)
+> for (ch in 1:p) { ls[[ch]] <- numeric(2^p); for(m in 0:(2^p-1)) {pa<-which(as.logical(intToBits(m)[1:p])); pa<-setdiff(pa,ch); ls[[ch]][m+1]<-localscore(ch,pa)}}
+> acyclic <- function(es) { # es matrix from,to
++  adj <- matrix(FALSE,p,p); for(k in 1:nrow(es)) adj[es[k,1],es[k,2]]<-TRUE
++  # topo
++  indeg <- colSums(adj); rem<-1:p
++  while(length(rem)) { z<-rem[indeg[rem]==0]; if(!length(z)) return(FALSE); rem<-setdiff(rem,z); for(v in z) indeg[which(adj[v,])]<-indeg[which(adj[v,])]-1 }
++  TRUE
++ }
+> res <- list(); z<-0
+> combnidx <- combn(nrow(edges),6)
+> for(ii in 1:ncol(combnidx)) { es<-edges[combnidx[,ii],,drop=FALSE]; if(!acyclic(es)) next; pars<-lapply(1:p,function(ch) {ix<-which(es[,2]==ch); if(length(ix)) es[ix,1] else integer()}) ; sc<-sum(sapply(1:p,function(ch) ls[[ch]][sum(2^(pars[[ch]]))+1])); z<-z+1; res[[z]]<-list(score=sc,es=es,pars=pars)}
+> ord<-order(sapply(res,`[[`,'score')); cat('valid',z,'\n')
+valid 2240 
+> for(ii in head(ord,30)) {r<-res[[ii]];cat(sprintf('%.3f ',r$score)); cat(paste(vars[r$es[,1]],'->',vars[r$es[,2]],collapse=', '), '\n')}
+250467.806 U -> R, U -> D, Y -> M, R -> Y, D -> Y, D -> R 
+250797.854 U -> R, U -> D, U -> M, Y -> M, R -> Y, D -> R 
+250847.879 U -> R, U -> D, Y -> M, R -> Y, R -> M, D -> R 
+250915.586 U -> D, U -> M, Y -> M, R -> Y, D -> Y, D -> R 
+250965.612 U -> D, Y -> M, R -> Y, R -> M, D -> Y, D -> R 
+251102.284 U -> Y, U -> R, U -> D, Y -> M, R -> Y, D -> R 
+251102.284 U -> R, U -> D, Y -> M, R -> Y, D -> R, D -> M 
+251220.016 U -> Y, U -> D, Y -> M, R -> Y, D -> Y, D -> R 
+251220.016 U -> D, Y -> M, R -> Y, D -> Y, D -> R, D -> M 
+251471.333 U -> D, U -> M, Y -> M, R -> Y, R -> M, D -> R 
+251550.064 U -> Y, U -> D, U -> M, Y -> M, R -> Y, D -> R 
+251550.064 U -> D, U -> M, Y -> M, R -> Y, D -> R, D -> M 
+251600.089 U -> Y, U -> D, Y -> M, R -> Y, R -> M, D -> R 
+251600.089 U -> D, Y -> M, R -> Y, R -> M, D -> R, D -> M 
+251854.493 U -> Y, U -> D, Y -> M, R -> Y, D -> R, D -> M 
+252635.126 U -> R, U -> D, U -> M, Y -> M, D -> Y, D -> R 
+252685.151 U -> R, U -> D, Y -> M, R -> M, D -> Y, D -> R 
+252939.556 U -> Y, U -> R, U -> D, Y -> M, D -> Y, D -> R 
+252939.556 U -> R, U -> D, Y -> R, Y -> M, D -> Y, D -> R 
+252939.556 U -> R, U -> D, Y -> M, D -> Y, D -> R, D -> M 
+253302.863 U -> R, U -> D, U -> M, Y -> M, R -> Y, D -> Y 
+253302.863 U -> R, U -> D, U -> M, R -> Y, D -> Y, D -> R 
+253308.605 U -> D, U -> M, Y -> M, R -> M, D -> Y, D -> R 
+253352.888 U -> R, U -> D, Y -> M, R -> Y, R -> M, D -> Y 
+253387.336 U -> Y, U -> D, U -> M, Y -> M, D -> Y, D -> R 
+253387.336 U -> D, U -> M, Y -> R, Y -> M, D -> Y, D -> R 
+253387.336 U -> D, U -> M, Y -> M, D -> Y, D -> R, D -> M 
+253437.361 U -> Y, U -> D, Y -> M, R -> M, D -> Y, D -> R 
+253437.361 U -> D, Y -> R, Y -> M, R -> M, D -> Y, D -> R 
+253437.361 U -> D, Y -> M, R -> M, D -> Y, D -> R, D -> M 
+> 

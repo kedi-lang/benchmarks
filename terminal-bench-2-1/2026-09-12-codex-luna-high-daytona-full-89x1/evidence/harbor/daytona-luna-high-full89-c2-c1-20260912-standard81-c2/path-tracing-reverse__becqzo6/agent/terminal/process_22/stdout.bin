@@ -1,0 +1,197 @@
+
+mystery:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+00000000004021a0 <sphere_intersect>:
+  4021a0:	endbr64
+  4021a4:	sub    rsp,0x78
+  4021a8:	mov    rax,rdi
+  4021ab:	movss  xmm2,DWORD PTR [rsp+0x8c]
+  4021b4:	movq   QWORD PTR [rsp+0x60],xmm0
+  4021ba:	movss  xmm10,DWORD PTR [rsp+0x90]
+  4021c4:	movss  xmm7,DWORD PTR [rsp+0x94]
+  4021cd:	movss  xmm4,DWORD PTR [rsp+0x60]
+  4021d3:	movq   QWORD PTR [rsp+0x68],xmm1
+  4021d9:	movaps xmm12,xmm2
+  4021dd:	movaps xmm0,xmm10
+  4021e1:	movss  xmm8,DWORD PTR [rsp+0x80]
+  4021eb:	movss  xmm9,DWORD PTR [rsp+0x84]
+  4021f5:	mulss  xmm0,xmm10
+  4021fa:	movss  xmm5,DWORD PTR [rsp+0x64]
+  402200:	movss  xmm11,DWORD PTR [rsp+0x88]
+  40220a:	mulss  xmm12,xmm2
+  40220f:	movaps xmm3,xmm9
+  402213:	movaps xmm1,xmm8
+  402217:	movss  xmm6,DWORD PTR [rsp+0x68]
+  40221d:	subss  xmm3,xmm5
+  402221:	subss  xmm1,xmm4
+  402225:	movaps xmm14,xmm11
+  402229:	movss  xmm13,DWORD PTR [rsp+0x6c]
+  402230:	subss  xmm14,xmm6
+  402235:	mulss  xmm13,xmm13
+  40223a:	movaps xmm15,xmm3
+  40223e:	addss  xmm12,xmm0
+  402243:	mulss  xmm15,xmm10
+  402248:	movaps xmm0,xmm7
+  40224b:	mulss  xmm0,xmm7
+  40224f:	mulss  xmm3,xmm3
+  402253:	addss  xmm12,xmm0
+  402258:	movaps xmm0,xmm1
+  40225b:	mulss  xmm0,xmm2
+  40225f:	mulss  xmm1,xmm1
+  402263:	addss  xmm0,xmm15
+  402268:	movaps xmm15,xmm14
+  40226c:	mulss  xmm15,xmm7
+  402271:	addss  xmm3,xmm1
+  402275:	movss  xmm1,DWORD PTR [rip+0x7dd87]        # 480004 <_IO_stdin_used+0x4>
+  40227d:	mulss  xmm14,xmm14
+  402282:	mulss  xmm1,xmm12
+  402287:	addss  xmm0,xmm15
+  40228c:	addss  xmm3,xmm14
+  402291:	addss  xmm0,xmm0
+  402295:	subss  xmm3,xmm13
+  40229a:	movaps xmm15,xmm0
+  40229e:	mulss  xmm15,xmm0
+  4022a3:	mulss  xmm3,xmm1
+  4022a7:	movaps xmm1,xmm15
+  4022ab:	subss  xmm1,xmm3
+  4022af:	pxor   xmm3,xmm3
+  4022b3:	comiss xmm3,xmm1
+  4022b6:	ja     4023a0 <sphere_intersect+0x200>
+  4022bc:	xorps  xmm0,XMMWORD PTR [rip+0x837ed]        # 485ab0 <sigall_set+0x10>
+  4022c3:	pxor   xmm13,xmm13
+  4022c8:	cvtss2sd xmm1,xmm1
+  4022cc:	cvtss2sd xmm13,xmm0
+  4022d1:	pxor   xmm0,xmm0
+  4022d5:	ucomisd xmm0,xmm1
+  4022d9:	ja     4023ca <sphere_intersect+0x22a>
+  4022df:	sqrtsd xmm1,xmm1
+  4022e3:	movapd xmm3,xmm13
+  4022e8:	addss  xmm12,xmm12
+  4022ed:	movss  xmm14,DWORD PTR [rip+0x7dd12]        # 480008 <_IO_stdin_used+0x8>
+  4022f6:	subsd  xmm3,xmm1
+  4022fa:	cvtss2sd xmm12,xmm12
+  4022ff:	divsd  xmm3,xmm12
+  402304:	cvtsd2ss xmm3,xmm3
+  402308:	comiss xmm14,xmm3
+  40230c:	jbe    40232a <sphere_intersect+0x18a>
+  40230e:	movapd xmm0,xmm13
+  402313:	pxor   xmm3,xmm3
+  402317:	addsd  xmm0,xmm1
+  40231b:	divsd  xmm0,xmm12
+  402320:	cvtsd2ss xmm3,xmm0
+  402324:	comiss xmm14,xmm3
+  402328:	ja     4023a0 <sphere_intersect+0x200>
+  40232a:	mulss  xmm2,xmm3
+  40232e:	movaps xmm1,xmm10
+  402332:	mov    edx,0x1
+  402337:	mulss  xmm1,xmm3
+  40233b:	mulss  xmm7,xmm3
+  40233f:	addss  xmm2,xmm8
+  402344:	addss  xmm1,xmm9
+  402349:	movaps xmm0,xmm7
+  40234c:	unpcklps xmm3,xmm2
+  40234f:	subss  xmm2,xmm4
+  402353:	addss  xmm0,xmm11
+  402358:	movaps xmm7,xmm1
+  40235b:	subss  xmm1,xmm5
+  40235f:	movaps xmm4,xmm2
+  402362:	unpcklps xmm7,xmm0
+  402365:	subss  xmm0,xmm6
+  402369:	mulss  xmm4,xmm2
+  40236d:	movaps xmm5,xmm1
+  402370:	movlhps xmm3,xmm7
+  402373:	mulss  xmm5,xmm1
+  402377:	addss  xmm4,xmm5
+  40237b:	movaps xmm5,xmm0
+  40237e:	mulss  xmm5,xmm0
+  402382:	addss  xmm4,xmm5
+  402386:	sqrtss xmm4,xmm4
+  40238a:	divss  xmm0,xmm4
+  40238e:	divss  xmm1,xmm4
+  402392:	divss  xmm2,xmm4
+  402396:	jmp    4023b0 <sphere_intersect+0x210>
+  402398:	nop    DWORD PTR [rax+rax*1+0x0]
+  4023a0:	pxor   xmm2,xmm2
+  4023a4:	pxor   xmm3,xmm3
+  4023a8:	xor    edx,edx
+  4023aa:	movaps xmm1,xmm2
+  4023ad:	movaps xmm0,xmm2
+  4023b0:	mov    DWORD PTR [rax+0x1c],edx
+  4023b3:	movups XMMWORD PTR [rax],xmm3
+  4023b6:	movss  DWORD PTR [rax+0x10],xmm2
+  4023bb:	movss  DWORD PTR [rax+0x14],xmm1
+  4023c0:	movss  DWORD PTR [rax+0x18],xmm0
+  4023c5:	add    rsp,0x78
+  4023c9:	ret
+  4023ca:	movapd xmm0,xmm1
+  4023ce:	movss  DWORD PTR [rsp+0x54],xmm7
+  4023d4:	movss  DWORD PTR [rsp+0x30],xmm10
+  4023db:	movss  DWORD PTR [rsp+0x2c],xmm2
+  4023e1:	movss  DWORD PTR [rsp+0x28],xmm6
+  4023e7:	movss  DWORD PTR [rsp+0x24],xmm5
+  4023ed:	movss  DWORD PTR [rsp+0x20],xmm4
+  4023f3:	movss  DWORD PTR [rsp+0x1c],xmm11
+  4023fa:	movss  DWORD PTR [rsp+0x18],xmm12
+  402401:	movss  DWORD PTR [rsp+0x14],xmm8
+  402408:	movss  DWORD PTR [rsp+0x10],xmm9
+  40240f:	movsd  QWORD PTR [rsp+0x8],xmm13
+  402416:	mov    QWORD PTR [rsp+0x58],rdi
+  40241b:	movsd  QWORD PTR [rsp+0x48],xmm1
+  402421:	call   402f30 <__sqrt>
+  402426:	movsd  xmm13,QWORD PTR [rsp+0x8]
+  40242d:	movss  xmm12,DWORD PTR [rsp+0x18]
+  402434:	movss  xmm14,DWORD PTR [rip+0x7dbcb]        # 480008 <_IO_stdin_used+0x8>
+  40243d:	movss  xmm9,DWORD PTR [rsp+0x10]
+  402444:	movapd xmm3,xmm13
+  402449:	addss  xmm12,xmm12
+  40244e:	movss  xmm8,DWORD PTR [rsp+0x14]
+  402455:	movss  xmm11,DWORD PTR [rsp+0x1c]
+  40245c:	subsd  xmm3,xmm0
+  402460:	movss  xmm4,DWORD PTR [rsp+0x20]
+  402466:	movss  xmm5,DWORD PTR [rsp+0x24]
+  40246c:	movsd  QWORD PTR [rsp+0x40],xmm13
+  402473:	movss  xmm6,DWORD PTR [rsp+0x28]
+  402479:	movss  xmm2,DWORD PTR [rsp+0x2c]
+  40247f:	movss  DWORD PTR [rsp+0x50],xmm14
+  402486:	cvtss2sd xmm12,xmm12
+  40248b:	movss  xmm7,DWORD PTR [rsp+0x54]
+  402491:	movss  xmm10,DWORD PTR [rsp+0x30]
+  402498:	movsd  QWORD PTR [rsp+0x38],xmm12
+  40249f:	divsd  xmm3,xmm12
+  4024a4:	mov    rax,QWORD PTR [rsp+0x58]
+  4024a9:	cvtsd2ss xmm3,xmm3
+  4024ad:	comiss xmm14,xmm3
+  4024b1:	jbe    40232a <sphere_intersect+0x18a>
+  4024b7:	movsd  xmm1,QWORD PTR [rsp+0x48]
+  4024bd:	mov    QWORD PTR [rsp+0x30],rax
+  4024c2:	movss  DWORD PTR [rsp+0x2c],xmm7
+  4024c8:	movapd xmm0,xmm1
+  4024cc:	movss  DWORD PTR [rsp+0x28],xmm10
+  4024d3:	movss  DWORD PTR [rsp+0x24],xmm2
+  4024d9:	movss  DWORD PTR [rsp+0x20],xmm6
+  4024df:	movss  DWORD PTR [rsp+0x1c],xmm5
+  4024e5:	movss  DWORD PTR [rsp+0x18],xmm4
+  4024eb:	movss  DWORD PTR [rsp+0x14],xmm11
+  4024f2:	movss  DWORD PTR [rsp+0x10],xmm8
+  4024f9:	movss  DWORD PTR [rsp+0x8],xmm9
+  402500:	call   402f30 <__sqrt>
+  402505:	mov    rax,QWORD PTR [rsp+0x30]
+  40250a:	movss  xmm7,DWORD PTR [rsp+0x2c]
+  402510:	movsd  xmm13,QWORD PTR [rsp+0x40]
+  402517:	movsd  xmm12,QWORD PTR [rsp+0x38]
+  40251e:	movapd xmm1,xmm0
+  402522:	movss  xmm14,DWORD PTR [rsp+0x50]
+  402529:	movss  xmm10,DWORD PTR [rsp+0x28]
+  402530:	movss  xmm2,DWORD PTR [rsp+0x24]
+  402536:	movss  xmm6,DWORD PTR [rsp+0x20]
+  40253c:	movss  xmm5,DWORD PTR [rsp+0x1c]
+  402542:	movss  xmm4,DWORD PTR [rsp+0x18]
+  402548:	movss  xmm11,DWORD PTR [rsp+0x14]
+  40254f:	movss  xmm8,DWORD PTR [rsp+0x10]
+  402556:	movss  xmm9,DWORD PTR [rsp+0x8]
+  40255d:	jmp    40230e <sphere_intersect+0x16e>
+  402562:	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  40256d:	nop    DWORD PTR [rax]

@@ -1,0 +1,910 @@
+/tmp/lb2/src/app.css:177:   the /models, /tasks, and /benchmarks hero. Defined once here so the
+/tmp/lb2/src/app.css:443:   custom summary affordance. */
+/tmp/lb2/src/app.css:444:.details-flat > summary {
+/tmp/lb2/src/app.css:447:.details-flat > summary::-webkit-details-marker {
+/tmp/lb2/src/app.css:787:/* Shared title + clamped description used by BenchmarkCard and TaskCard. */
+/tmp/lb2/src/app.css:815:   SummaryTable render share 55 distinct percentages. Static classes let
+/tmp/lb2/src/app.html:11:		<!-- Backend preconnect is emitted by +layout.svelte from PUBLIC_API_URL. -->
+/tmp/lb2/src/app.html:29:		     - Home + /benchmarks stay `moderate` (~200 ms hover) since those are
+/tmp/lb2/src/app.html:41:							"or": [{ "href_matches": "/" }, { "href_matches": "/benchmarks" }]
+/tmp/lb2/src/lib/actions/sticky-events.ts:3:// PerTaskTab + PerLanguageTab + Summary, that meant up to 6 redundant
+/tmp/lb2/src/lib/actions/sticky-hscroll.ts:134:		// this both Summary's and Per Task's overlays paint at the same
+/tmp/lb2/src/lib/charts/figures.test.ts:2:import type { BenchmarkSummary, ModelMeta, SummaryRow, TaskMeta } from '$lib/types';
+/tmp/lb2/src/lib/charts/figures.test.ts:24:function row(rank: number, m: ModelMeta, mean: number | null, byType = {}): SummaryRow {
+/tmp/lb2/src/lib/charts/figures.test.ts:52:function summary(rows: SummaryRow[], taskTypes: string[] = []): BenchmarkSummary {
+/tmp/lb2/src/lib/charts/figures.test.ts:54:		benchmarkName: 'TestBench',
+/tmp/lb2/src/lib/charts/figures.test.ts:68:		const spec = performanceSizePlot(summary([a, b, c]));
+/tmp/lb2/src/lib/charts/figures.test.ts:80:		const spec = performanceSizePlot(summary([a]));
+/tmp/lb2/src/lib/charts/figures.test.ts:89:		const spec = performanceSizePlot(summary([known, unknown]));
+/tmp/lb2/src/lib/charts/figures.test.ts:104:		const spec = performanceSizePlot(summary([a, b]), new Set(['b']));
+/tmp/lb2/src/lib/charts/figures.test.ts:111:		const spec = performanceSizePlot(summary([row(1, model('a'), 0.5)]));
+/tmp/lb2/src/lib/charts/figures.test.ts:122:		const spec = performanceOverTimePlot(summary([a]));
+/tmp/lb2/src/lib/charts/figures.test.ts:131:		const spec = performanceOverTimePlot(summary([dated, undated, nullMean]));
+/tmp/lb2/src/lib/charts/figures.test.ts:143:		const spec = performanceOverTimePlot(summary([a, b, c, d]));
+/tmp/lb2/src/lib/charts/figures.test.ts:153:		expect(radarPlot(summary([a], ['OnlyOne'])).data).toEqual([]);
+/tmp/lb2/src/lib/charts/figures.test.ts:157:		expect(radarPlot(summary([], ['A', 'B'])).data).toEqual([]);
+/tmp/lb2/src/lib/charts/figures.test.ts:164:		const spec = radarPlot(summary(rows, ['A', 'B', 'C']));
+/tmp/lb2/src/lib/charts/figures.ts:2:import type { BenchmarkSummary } from '$lib/types';
+/tmp/lb2/src/lib/charts/figures.ts:18:	summary: BenchmarkSummary,
+/tmp/lb2/src/lib/charts/figures.ts:21:	const rows = summary.rows.filter(
+/tmp/lb2/src/lib/charts/figures.ts:22:		(r): r is BenchmarkSummary['rows'][number] & { meanTask: number; activeParamsB: number } =>
+/tmp/lb2/src/lib/charts/figures.ts:33:	// the backend returns `null` for models whose metadata doesn't pin them
+/tmp/lb2/src/lib/charts/figures.ts:105:	summary: BenchmarkSummary,
+/tmp/lb2/src/lib/charts/figures.ts:108:	const points = summary.rows
+/tmp/lb2/src/lib/charts/figures.ts:110:			(r): r is BenchmarkSummary['rows'][number] & { meanTask: number } =>
+/tmp/lb2/src/lib/charts/figures.ts:174:export function radarPlot(summary: BenchmarkSummary): PlotSpec {
+/tmp/lb2/src/lib/charts/figures.ts:175:	const top = summary.rows.slice(0, 5);
+/tmp/lb2/src/lib/charts/figures.ts:176:	const taskTypes = summary.taskTypes;
+/tmp/lb2/src/lib/column-info.ts:3: * table — `SummaryTable` (/benchmark/[name]) and `ModelsTable` (/models) both
+/tmp/lb2/src/lib/column-info.ts:7: * differently: a user who reads "Parameters" on a benchmark page and then on
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:3:	 * Per-benchmark scores for a single model — used by the model detail
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:4:	 * page. Each row is one benchmark the model appears in, with the
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:6:	 * benchmark. Sort + heat-shading are local to this component.
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:9:		benchmarkName: string;
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:10:		benchmarkDisplay: string;
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:32:	type SortKey = 'benchmark' | 'rank' | 'meanTask' | 'meanTaskType' | 'zeroShot';
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:35:		ascKeys: ['benchmark', 'rank'],
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:44:			if (k === 'benchmark') {
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:46:					a.benchmarkDisplay.toLowerCase().localeCompare(b.benchmarkDisplay.toLowerCase()) * dir
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:70:		<caption class="sr-only">Per-benchmark scores for this model</caption>
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:73:				<th scope="col" class="sticky" aria-sort={sort.aria('benchmark')}>
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:74:					<SortHeader {sort} field="benchmark" label="Benchmark" align="left" />
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:91:			{#each sortedRows as s (s.benchmarkName)}
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:96:							href={resolve('/benchmark/[name]', { name: slug(s.benchmarkName) })}
+/tmp/lb2/src/lib/components/BenchScoreTable.svelte:98:							{s.benchmarkDisplay}
+/tmp/lb2/src/lib/components/BenchmarkCard.svelte:4:	import type { Benchmark } from '$lib/types';
+/tmp/lb2/src/lib/components/BenchmarkCard.svelte:11:		b: Benchmark;
+/tmp/lb2/src/lib/components/BenchmarkCard.svelte:24:	href={resolve('/benchmark/[name]', { name: slug(b.name) })}
+/tmp/lb2/src/lib/components/BenchmarkCard.svelte:47:			<CopyableId value={b.name} ariaLabel="Copy benchmark id" />
+/tmp/lb2/src/lib/components/BenchmarkCard.svelte:78:				goto(resolve('/benchmark/[name]', { name: slug(b.newVersion![0]) }));
+/tmp/lb2/src/lib/components/BenchmarksTable.svelte:3:	import type { Benchmark } from '$lib/types';
+/tmp/lb2/src/lib/components/BenchmarksTable.svelte:13:		rows: Benchmark[];
+/tmp/lb2/src/lib/components/BenchmarksTable.svelte:24:					<SortHeader {sort} field="name" label="Benchmark" align="left" />
+/tmp/lb2/src/lib/components/BenchmarksTable.svelte:45:							href={resolve('/benchmark/[name]', { name: slug(b.name) })}
+/tmp/lb2/src/lib/components/CiteBlock.svelte:3:		// What we're citing — used in the summary line ("Cite this {kind}")
+/tmp/lb2/src/lib/components/CiteBlock.svelte:5:		kind: 'benchmark' | 'task' | 'model';
+/tmp/lb2/src/lib/components/CiteBlock.svelte:29:		<summary>Cite this {kind}</summary>
+/tmp/lb2/src/lib/components/CiteBlock.svelte:51:	summary {
+/tmp/lb2/src/lib/components/CiteBlock.svelte:61:	summary::after {
+/tmp/lb2/src/lib/components/CiteBlock.svelte:67:	details[open] summary::after {
+/tmp/lb2/src/lib/components/ComparePinnedButton.svelte:31:			parts.push(`benchmark=${encodeURIComponent(leaderboard.selected)}`);
+/tmp/lb2/src/lib/components/CopyableId.svelte:7:	// is one <button>). Used next to benchmark display names so the
+/tmp/lb2/src/lib/components/CopyableId.svelte:9:	// user who needs it to cite the benchmark or wire it into a script.
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:16:	// the backend appear without a frontend change.
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:23:	// Order matches the backend TypedDict declaration order so retrieval's
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:329:			<summary>
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:332:				<span class="split-summary">
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:337:			</summary>
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:342:						<summary>
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:347:						</summary>
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:391:	.split > summary {
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:401:	.split > summary::-webkit-details-marker {
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:414:	.split[open] > summary .chev,
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:415:	.subsets[open] > summary .chev {
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:424:	.split-summary {
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:455:	.subsets > summary {
+/tmp/lb2/src/lib/components/DescriptiveStatsSection.svelte:466:	.subsets > summary::-webkit-details-marker {
+/tmp/lb2/src/lib/components/FilterContent.svelte:25:	// Size slider works in log10(M-of-params). Bounds are derived per benchmark
+/tmp/lb2/src/lib/components/FilterContent.svelte:28:	// no benchmark is loaded yet.
+/tmp/lb2/src/lib/components/FilterContent.svelte:74:	// Distribute ~4 tick marks across the benchmark's log-size window. Both
+/tmp/lb2/src/lib/components/FilterContent.svelte:101:		// On pages without a benchmark context (e.g. the Models directory) the
+/tmp/lb2/src/lib/components/FilterContent.svelte:102:		// Customize / Benchmark scope section is irrelevant — hide it entirely.
+/tmp/lb2/src/lib/components/FilterContent.svelte:108:		// /models is benchmark-agnostic, so the per-benchmark "Zero-shot"
+/tmp/lb2/src/lib/components/FilterContent.svelte:114:		// — benchmark detail pages have their own language picker in the
+/tmp/lb2/src/lib/components/FilterContent.svelte:115:		// benchmark scope section). When `languageOptions` is undefined or
+/tmp/lb2/src/lib/components/FilterContent.svelte:318:	// Tip portal for filter group-labels (mirrors the SummaryTable pattern
+/tmp/lb2/src/lib/components/FilterContent.svelte:386:						data-tip="Zero-shot indicates the portion of the benchmark a model has not been trained on. 'Only zero-shot' keeps fully out-of-distribution models; 'Hide unknown zero-shot' drops models whose training overlap is unknown."
+/tmp/lb2/src/lib/components/FilterContent.svelte:532:				<span class="block-title">Benchmark scope</span>
+/tmp/lb2/src/lib/components/FilterSidebar.svelte:9:		/** Zero-shot is benchmark-scoped; /models hides it. */
+/tmp/lb2/src/lib/components/FilterSidebar.svelte:17:		/** When provided, replaces FilterContent — used by /benchmarks. */
+/tmp/lb2/src/lib/components/HoverPortal.svelte:4:	// behaviour; specialised tooltips (ModelHoverPortal, SummaryTable's
+/tmp/lb2/src/lib/components/MarkdownText.svelte:8:	// nested links. The descriptions on benchmarks and tasks are short bits
+/tmp/lb2/src/lib/components/MenuSection.svelte:2:	// Collapsible home-page section. Header shows title + benchmark count
+/tmp/lb2/src/lib/components/MenuSection.svelte:3:	// + chevron; body renders the first ``initialCount`` benchmark cards
+/tmp/lb2/src/lib/components/MenuSection.svelte:7:	// Retrieval / Domain), each driven by one entry from the backend's
+/tmp/lb2/src/lib/components/MenuSection.svelte:8:	// `HOME_BENCHMARK_ENTRIES`.
+/tmp/lb2/src/lib/components/MenuSection.svelte:11:	import { isBenchmark, type Benchmark, type MenuEntry } from '$lib/types';
+/tmp/lb2/src/lib/components/MenuSection.svelte:12:	import BenchmarkCard from './BenchmarkCard.svelte';
+/tmp/lb2/src/lib/components/MenuSection.svelte:20:		// from the backend by default; pass to force.
+/tmp/lb2/src/lib/components/MenuSection.svelte:25:	// Only direct-child benchmarks land in the cards; nested MenuEntries
+/tmp/lb2/src/lib/components/MenuSection.svelte:27:	let cards = $derived(entry.children.filter(isBenchmark) as Benchmark[]);
+/tmp/lb2/src/lib/components/MenuSection.svelte:57:					<BenchmarkCard {b} />
+/tmp/lb2/src/lib/components/MenuSection.svelte:69:						: `Show ${cards.length - initialCount} more benchmark${cards.length - initialCount === 1 ? '' : 's'}`}
+/tmp/lb2/src/lib/components/ModelCellName.svelte:3:	// appears in SummaryTable, PerTaskTab, PerLanguageTab, and
+/tmp/lb2/src/lib/components/ModelHoverPortal.svelte:2:	import type { SummaryRow } from '$lib/types';
+/tmp/lb2/src/lib/components/ModelHoverPortal.svelte:10:	// Shared hover-row set for SummaryTable, PerTaskTab, PerLanguageTab.
+/tmp/lb2/src/lib/components/ModelHoverPortal.svelte:14:	const _rowsCache = new WeakMap<SummaryRow, { k: string; v: string }[]>();
+/tmp/lb2/src/lib/components/ModelHoverPortal.svelte:15:	export function rowsForModel(row: SummaryRow): { k: string; v: string }[] {
+/tmp/lb2/src/lib/components/ModelHoverPortal.svelte:52:	export function showFor(target: HTMLElement, row: SummaryRow) {
+/tmp/lb2/src/lib/components/ModelScoreTable.svelte:13:		benchmarkName: string;
+/tmp/lb2/src/lib/components/ModelScoreTable.svelte:167:			{#each sortedRows as s (s.model.name + s.benchmarkName)}
+/tmp/lb2/src/lib/components/ModelScoreTable.svelte:284:	   SummaryTable, PerTaskTab, and PerLanguageTab. */
+/tmp/lb2/src/lib/components/ModelScoreTable.svelte:290:	   with SummaryTable so both views render the rank identically. */
+/tmp/lb2/src/lib/components/ModelsTable.svelte:14:	// Shared with SummaryTable so both tables describe these columns identically.
+/tmp/lb2/src/lib/components/ModelsTable.svelte:34:	// mirrors SummaryTable, and keeps the column out of the way entirely on an
+/tmp/lb2/src/lib/components/ModelsTable.svelte:251:	   src/lib/styles/leaderboard-table.css — shared with SummaryTable. Only the
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:2:	import type { BenchmarkPerLanguage, BenchmarkSummary, SummaryRow } from '$lib/types';
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:18:	// `/v1/benchmarks/{name}/per-language`. Lazy-fetched on tab mount so
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:19:	// the Summary tab doesn't pay the explode + group_by cost. Until the
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:22:	let data = $state<BenchmarkPerLanguage | null>(null);
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:30:		loadPerLanguage(summary.benchmarkName).then((d) => {
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:34:	function langScore(row: SummaryRow, lang: string): number | null {
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:40:		showFor: (t: HTMLElement, row: SummaryRow) => void;
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:45:	function onCellEnter(e: PointerEvent | FocusEvent, row: SummaryRow) {
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:55:		summary: BenchmarkSummary;
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:56:		// Mirrors `Benchmark.language_view`. `'all'` = union of every
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:59:		// See `SummaryTable.svelte` — `false` when the pane is mounted but
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:65:	let { summary, languageView, active = true }: Props = $props();
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:72:			for (const t of summary.tasksMeta ?? []) {
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:92:		const rowMeanMap = new WeakMap<SummaryRow, number | null>();
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:101:		for (const r of summary.rows) {
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:121:	const rowMean = (r: SummaryRow): number | null => rowStats.rowMeanMap.get(r) ?? null;
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:134:		let rows = summary.rows;
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:165:	// the search bar — same layout as the Summary and Per-task tabs —
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:171:		const rows: CsvCell[][] = summary.rows.map((row) => [
+/tmp/lb2/src/lib/components/PerLanguageTab.svelte:184:		simulated until the backend exposes the real per-language breakdown.
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:2:	import type { BenchmarkSummary, SummaryRow } from '$lib/types';
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:19:		showFor: (t: HTMLElement, row: SummaryRow) => void;
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:24:	function onCellEnter(e: PointerEvent | FocusEvent, row: SummaryRow) {
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:34:		summary: BenchmarkSummary;
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:35:		// See `SummaryTable.svelte` — `false` when the pane is mounted but
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:41:	let { summary, active = true }: Props = $props();
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:91:	// SummaryTable). One element reused across every column.
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:120:	// WeakMap so filter-driven summary recomputes that return the same
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:123:		readonly (typeof summary.tasksMeta)[number][],
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:124:		Map<string, (typeof summary.tasksMeta)[number]>
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:127:		const meta = summary.tasksMeta ?? [];
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:131:			cached = new Map<string, (typeof summary.tasksMeta)[number]>();
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:164:	// API ordering is whatever the benchmark registered; alphabetising
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:166:	// `summary.tasks` is pre-sorted at the service boundary.
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:167:	let sortedTasks = $derived(summary.tasks);
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:168:	function scoreFor(row: SummaryRow, task: string): number | undefined {
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:171:	let taskBests = $derived(bestWorstPerColumn(sortedTasks, summary.rows, scoreFor));
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:179:		for (const r of summary.rows) {
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:186:		let rows = summary.rows;
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:273:	{#if summary.tasks.length === 0}
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:274:		<p class="muted">This benchmark has no tasks defined in the mock data.</p>
+/tmp/lb2/src/lib/components/PerTaskTab.svelte:277:			Per-task scores for each visible model. {summary.tasks.length} tasks; scroll horizontally to see
+/tmp/lb2/src/lib/components/PerfSizeTab.svelte:2:	import type { BenchmarkSummary } from '$lib/types';
+/tmp/lb2/src/lib/components/PerfSizeTab.svelte:8:		summary: BenchmarkSummary;
+/tmp/lb2/src/lib/components/PerfSizeTab.svelte:10:	let { summary }: Props = $props();
+/tmp/lb2/src/lib/components/PerfSizeTab.svelte:11:	let spec = $derived(performanceSizePlot(summary, pinnedModels.value));
+/tmp/lb2/src/lib/components/PerfTimeTab.svelte:2:	import type { BenchmarkSummary } from '$lib/types';
+/tmp/lb2/src/lib/components/PerfTimeTab.svelte:8:		summary: BenchmarkSummary;
+/tmp/lb2/src/lib/components/PerfTimeTab.svelte:10:	let { summary }: Props = $props();
+/tmp/lb2/src/lib/components/PerfTimeTab.svelte:11:	let spec = $derived(performanceOverTimePlot(summary, pinnedModels.value));
+/tmp/lb2/src/lib/components/PinButton.svelte:3:	// stays in each consumer because the cell position varies — Summary
+/tmp/lb2/src/lib/components/PlotlyChart.svelte:13:		 *  /benchmark/[name]; the /compare radar passes `scatterpolar`
+/tmp/lb2/src/lib/components/PlotlyChart.svelte:14:		 *  so we don't bundle polar code into the benchmark route, and the
+/tmp/lb2/src/lib/components/PlotlyChart.svelte:139:		// modules it needs. /benchmark/[name] pulls only `scatter` (~1 MB);
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:3:	import type { Benchmark, BenchmarkLeaders } from '$lib/types';
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:9:	type LeadersResult = BenchmarkLeaders | { error: string };
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:13:		benchmark: Benchmark;
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:16:	let { tintKey, label, benchmark, leaders }: Props = $props();
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:18:	let leadersData = $derived<BenchmarkLeaders | undefined>(
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:41:	href={resolve('/benchmark/[name]', { name: slug(benchmark.name) })}
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:42:	aria-label={`Open ${benchmark.displayName} leaderboard`}
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:46:			{#if benchmark.icon}
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:47:				{#if isIconUrl(benchmark.icon)}
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:50:						src={apiUrl(benchmark.icon)}
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:60:					<span class="prim-icon icon-tile icon-tile-text" aria-hidden="true">{benchmark.icon}</span
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:64:			<span class="prim-title-text">{benchmark.displayName}</span>
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:68:	<span class="prim-sub">{benchmark.numModels ?? 0} models · {benchmark.tasks.length} tasks</span>
+/tmp/lb2/src/lib/components/PrimaryLeaderTile.svelte:122:	   "general" benchmarks, and the original green was reading like a
+/tmp/lb2/src/lib/components/ShareMeta.svelte:6:	// Detail pages (per-benchmark, per-task, per-model) call this with their
+/tmp/lb2/src/lib/components/ShareMeta.svelte:8:	// the actual page. The root layout sets sane defaults so /, /benchmarks,
+/tmp/lb2/src/lib/components/ShareMeta.svelte:24:		// is always visible. Pass the entity name (benchmark / task / model)
+/tmp/lb2/src/lib/components/ShareMeta.svelte:27:		// 1-2 sentence summary. Truncated to 200 chars at render time — most
+/tmp/lb2/src/lib/components/ShareMeta.svelte:36:		// at the backend's pre-rendered card:
+/tmp/lb2/src/lib/components/ShareMeta.svelte:38:		// The backend's `generate.mjs` renders one per entity, so any
+/tmp/lb2/src/lib/components/ShareMeta.svelte:39:		// benchmark / task / model gets a custom hero — no top-N cut.
+/tmp/lb2/src/lib/components/ShareMeta.svelte:42:		entity?: { kind: 'benchmark' | 'task' | 'model'; name: string };
+/tmp/lb2/src/lib/components/ShareMeta.svelte:43:		// Twitter card style. `summary_large_image` displays a wide hero card
+/tmp/lb2/src/lib/components/ShareMeta.svelte:44:		// (recommended for the benchmark / task / model detail pages so the
+/tmp/lb2/src/lib/components/ShareMeta.svelte:45:		// MTEB brand reads at a glance). `summary` is a smaller square card.
+/tmp/lb2/src/lib/components/ShareMeta.svelte:46:		twitterCard?: 'summary' | 'summary_large_image';
+/tmp/lb2/src/lib/components/ShareMeta.svelte:48:	let { title, description, image, entity, twitterCard = 'summary_large_image' }: Props = $props();
+/tmp/lb2/src/lib/components/ShareMeta.svelte:62:	// PNG is served by the mteb FastAPI backend out of its persistent
+/tmp/lb2/src/lib/components/ShareMeta.svelte:63:	// /data/og volume (see `mteb/api/og/generate.mjs`). When PUBLIC_API_URL
+/tmp/lb2/src/lib/components/ShareMeta.svelte:122:	     mirror the same image + text; `summary_large_image` shows a wide
+/tmp/lb2/src/lib/components/ShareMeta.svelte:123:	     hero, `summary` shows a square thumb next to text. -->
+/tmp/lb2/src/lib/components/SkeletonCard.svelte:2:	// Skeleton placeholder for one card in the /models /tasks /benchmarks grids.
+/tmp/lb2/src/lib/components/SkeletonGrid.svelte:3:	// /models, /tasks, /benchmarks, and the home page. `count` defaults to a
+/tmp/lb2/src/lib/components/SkeletonTable.svelte:2:	// Skeleton placeholder for the leaderboard tables (SummaryTable,
+/tmp/lb2/src/lib/components/SummaryTable.svelte:4:	// Tooltip copy is invariant across instances and benchmarks. Promoted
+/tmp/lb2/src/lib/components/SummaryTable.svelte:5:	// to a module-scope const so each SummaryTable mount doesn't re-build
+/tmp/lb2/src/lib/components/SummaryTable.svelte:16:			text: 'Missing results — the model may not have been run on the tasks in the benchmark. We only display models that have been run on at least one task. To submit results, see the [submitting results guide](https://embeddings-benchmark.github.io/mteb/contributing/submitting_results/).'
+/tmp/lb2/src/lib/components/SummaryTable.svelte:20:			text: "What portion of the benchmark a model has not been trained on. 100% means fully out-of-distribution; 50% means it was fine-tuned on half the tasks. '⚠️ NA' means we don't know."
+/tmp/lb2/src/lib/components/SummaryTable.svelte:24:			text: "Naïve average of the model's scores across every task in the benchmark. Continuous, simple to read, but tasks with higher score variance pull the mean around."
+/tmp/lb2/src/lib/components/SummaryTable.svelte:32:			text: "Average score across the benchmark's public (openly-released) task subset. Recomputed live when you narrow the visible task set with filters."
+/tmp/lb2/src/lib/components/SummaryTable.svelte:36:			text: "Average score across the benchmark's private (held-out) task subset — datasets the benchmark keeps closed to discourage training-set contamination. Recomputed live with filters."
+/tmp/lb2/src/lib/components/SummaryTable.svelte:43:	// table into awkward horizontal scrolling on benchmarks with many task
+/tmp/lb2/src/lib/components/SummaryTable.svelte:85:	// `summary.taskTypes` form the backend strips) — see `realTaskType` below.
+/tmp/lb2/src/lib/components/SummaryTable.svelte:120:	import type { BenchmarkSummary, SummaryRow } from '$lib/types';
+/tmp/lb2/src/lib/components/SummaryTable.svelte:150:		summary: BenchmarkSummary;
+/tmp/lb2/src/lib/components/SummaryTable.svelte:155:		// (e.g. /benchmark/[name] only mounts the active tab when prerender
+/tmp/lb2/src/lib/components/SummaryTable.svelte:159:	let { summary, active = true }: Props = $props();
+/tmp/lb2/src/lib/components/SummaryTable.svelte:173:	// Per-summary-tab sort. URL prefix `s.summary` / `d.summary` keeps
+/tmp/lb2/src/lib/components/SummaryTable.svelte:178:		urlKeys: ['s.summary', 'd.summary'],
+/tmp/lb2/src/lib/components/SummaryTable.svelte:183:	function getValue(row: SummaryRow, key: SortKey): { v: number | string; missing: boolean } {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:221:		let rows = summary.rows;
+/tmp/lb2/src/lib/components/SummaryTable.svelte:230:			const byRow = new Map<SummaryRow, { v: number | string; missing: boolean }>();
+/tmp/lb2/src/lib/components/SummaryTable.svelte:264:		// Anchor the progressive render to the underlying `summary.rows`
+/tmp/lb2/src/lib/components/SummaryTable.svelte:271:		// new `sortedRows` array but `summary.rows` is the same array, so
+/tmp/lb2/src/lib/components/SummaryTable.svelte:274:		const baseRows = summary.rows;
+/tmp/lb2/src/lib/components/SummaryTable.svelte:302:	// benchmark-specific order, but readers scan a wide table faster
+/tmp/lb2/src/lib/components/SummaryTable.svelte:306:	// `summary.taskTypes` is pre-sorted at the service boundary.
+/tmp/lb2/src/lib/components/SummaryTable.svelte:307:	let sortedTaskTypes = $derived(summary.taskTypes);
+/tmp/lb2/src/lib/components/SummaryTable.svelte:309:	// `summary.taskTypes` carries the backend's stripped form (no parens,
+/tmp/lb2/src/lib/components/SummaryTable.svelte:316:		for (const t of summary.tasksMeta) {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:324:		bestWorstPerColumn(sortedTaskTypes, summary.rows, (r, tt) => r.scoresByTaskType[tt])
+/tmp/lb2/src/lib/components/SummaryTable.svelte:336:		for (const r of summary.rows) {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:359:	// Column visibility is declarative — `summary.aggregations` lists exactly
+/tmp/lb2/src/lib/components/SummaryTable.svelte:360:	// which mean columns belong on this benchmark's leaderboard. Avoids
+/tmp/lb2/src/lib/components/SummaryTable.svelte:363:	let showMeanTask = $derived(summary.aggregations?.includes('mean_task') ?? false);
+/tmp/lb2/src/lib/components/SummaryTable.svelte:364:	let showMeanTaskType = $derived(summary.aggregations?.includes('mean_task_type') ?? false);
+/tmp/lb2/src/lib/components/SummaryTable.svelte:365:	let showTaskTypes = $derived(summary.aggregations?.includes('task_types') ?? false);
+/tmp/lb2/src/lib/components/SummaryTable.svelte:366:	let showPublicPrivate = $derived(summary.aggregations?.includes('public_private') ?? false);
+/tmp/lb2/src/lib/components/SummaryTable.svelte:369:	let showZeroShot = $derived(summary.showZeroShot ?? true);
+/tmp/lb2/src/lib/components/SummaryTable.svelte:372:	let showOpenness = $derived(summary.rows.some((r) => opennessScore(r.model) !== null));
+/tmp/lb2/src/lib/components/SummaryTable.svelte:374:	// using the benchmark's `tasksMeta[].isPublic` flag. This way the means
+/tmp/lb2/src/lib/components/SummaryTable.svelte:376:	// at the original benchmark-level values.
+/tmp/lb2/src/lib/components/SummaryTable.svelte:378:		new Set(summary.tasksMeta.filter((t) => t.isPublic !== false).map((t) => t.name))
+/tmp/lb2/src/lib/components/SummaryTable.svelte:381:		new Set(summary.tasksMeta.filter((t) => t.isPublic === false).map((t) => t.name))
+/tmp/lb2/src/lib/components/SummaryTable.svelte:383:	function meanOver(row: SummaryRow, names: Set<string>): number | null {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:398:	// No fallback to the backend's row.meanPublic / row.meanPrivate: the user
+/tmp/lb2/src/lib/components/SummaryTable.svelte:403:	function liveMeanPublic(row: SummaryRow): number | null {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:407:	function liveMeanPrivate(row: SummaryRow): number | null {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:413:	let publicMeans = $derived(summary.rows.map(liveMeanPublic));
+/tmp/lb2/src/lib/components/SummaryTable.svelte:414:	let privateMeans = $derived(summary.rows.map(liveMeanPrivate));
+/tmp/lb2/src/lib/components/SummaryTable.svelte:420:		const m = new Map<SummaryRow, number | null>();
+/tmp/lb2/src/lib/components/SummaryTable.svelte:421:		summary.rows.forEach((r, i) => m.set(r, publicMeans[i]));
+/tmp/lb2/src/lib/components/SummaryTable.svelte:426:		const m = new Map<SummaryRow, number | null>();
+/tmp/lb2/src/lib/components/SummaryTable.svelte:427:		summary.rows.forEach((r, i) => m.set(r, privateMeans[i]));
+/tmp/lb2/src/lib/components/SummaryTable.svelte:435:	// Tooltip portal: we render a single tooltip element at the SummaryTable's
+/tmp/lb2/src/lib/components/SummaryTable.svelte:462:		showFor: (t: HTMLElement, row: SummaryRow) => void;
+/tmp/lb2/src/lib/components/SummaryTable.svelte:467:		showFor: (t: HTMLElement, model: SummaryRow['model']) => void;
+/tmp/lb2/src/lib/components/SummaryTable.svelte:497:	function showModelTip(e: PointerEvent | FocusEvent, row: SummaryRow) {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:506:	function showOpennessTip(e: PointerEvent | FocusEvent, row: SummaryRow) {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:542:<div class="summary">
+/tmp/lb2/src/lib/components/SummaryTable.svelte:544:		<table class="tbl summary-table" use:stickyHead>
+/tmp/lb2/src/lib/components/SummaryTable.svelte:865:	     leaderboard tables (Summary / PerTask / PerLanguage) render
+/tmp/lb2/src/lib/components/SummaryTable.svelte:877:	.summary-table {
+/tmp/lb2/src/lib/components/SummaryTable.svelte:891:	   (only on SummaryTable's tip-bearing cells) still applies. */
+/tmp/lb2/src/lib/components/SummaryTable.svelte:973:	.summary-table {
+/tmp/lb2/src/lib/components/TaskCard.svelte:4:	// index and the "Task information" tab on `/benchmark/[name]`. Stats
+/tmp/lb2/src/lib/components/TaskCard.svelte:6:	// "Benchmarks" count, the benchmark-detail variant omits it because
+/tmp/lb2/src/lib/components/TaskCard.svelte:7:	// the surrounding benchmark IS the count.
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:2:	import type { Benchmark, TaskMeta } from '$lib/types';
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:6:		benchmark: Benchmark;
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:7:		// Real per-task metadata (TaskMeta[]) from the loaded summary. When
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:8:		// absent (cold visit, summary still loading) we fall back to bare
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:9:		// task names from `benchmark.tasks`.
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:12:	let { benchmark, tasksMeta = [] }: Props = $props();
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:29:		return benchmark.tasks.map((name) => {
+/tmp/lb2/src/lib/components/TaskInfoTab.svelte:52:	<p class="muted">{benchmark.tasks.length} tasks in this benchmark.</p>
+/tmp/lb2/src/lib/components/TasksTable.svelte:9:	type SortId = 'name' | 'type' | 'benchmarks' | 'languages' | 'models' | 'metric';
+/tmp/lb2/src/lib/components/TasksTable.svelte:18:		benchmarks: string[];
+/tmp/lb2/src/lib/components/TasksTable.svelte:42:					<SortHeader {sort} field="benchmarks" label="Benchmarks" />
+/tmp/lb2/src/lib/components/TasksTable.svelte:77:					<td class="tbl-num tbl-col-num">{fmtCompact(t.benchmarks.length)}</td>
+/tmp/lb2/src/lib/data/defaults.ts:1:// Module-tiny default benchmark name, split out so consumers (the leaderboard
+/tmp/lb2/src/lib/data/defaults.ts:3:// in `mockBenchmarks.ts` just to read a single string.
+/tmp/lb2/src/lib/data/defaults.ts:4:export const DEFAULT_BENCHMARK_NAME = 'MTEB(Multilingual, v2)';
+/tmp/lb2/src/lib/data/languages.ts:2:// Covers every code emitted by the mock benchmark data. Falls back to the
+/tmp/lb2/src/lib/data/service.ts:4:	Benchmark,
+/tmp/lb2/src/lib/data/service.ts:5:	BenchmarkLeaders,
+/tmp/lb2/src/lib/data/service.ts:6:	BenchmarkPerLanguage,
+/tmp/lb2/src/lib/data/service.ts:7:	BenchmarkSummary,
+/tmp/lb2/src/lib/data/service.ts:23:	return new Error(`${scope}: PUBLIC_API_URL is not set. Configure a backend URL.`);
+/tmp/lb2/src/lib/data/service.ts:32:// Typed so loaders can distinguish 404s from transient backend failures and
+/tmp/lb2/src/lib/data/service.ts:53:// visiting many benchmarks (each summary MB-sized) doesn't grow unbounded.
+/tmp/lb2/src/lib/data/service.ts:54:// Raised during prerender so `loadBenchmarks() / loadTasks() / loadModels()`
+/tmp/lb2/src/lib/data/service.ts:110:// WeakSet marks already-enriched payloads — a second call on a cached summary
+/tmp/lb2/src/lib/data/service.ts:112:const _enrichedSummaries = new WeakSet<BenchmarkSummary>();
+/tmp/lb2/src/lib/data/service.ts:113:function enrichSummary(s: BenchmarkSummary): BenchmarkSummary {
+/tmp/lb2/src/lib/data/service.ts:143:export async function loadBenchmarkMenu(fetchFn?: FetchFn): Promise<MenuEntry[]> {
+/tmp/lb2/src/lib/data/service.ts:144:	if (!API) throw noApiError('loadBenchmarkMenu');
+/tmp/lb2/src/lib/data/service.ts:145:	return cachedHttp<MenuEntry[]>('/benchmarks/menu', fetchFn);
+/tmp/lb2/src/lib/data/service.ts:148:/** Flat list of every benchmark, including off-menu and hidden entries. */
+/tmp/lb2/src/lib/data/service.ts:149:export async function loadBenchmarks(fetchFn?: FetchFn): Promise<Benchmark[]> {
+/tmp/lb2/src/lib/data/service.ts:150:	if (!API) throw noApiError('loadBenchmarks');
+/tmp/lb2/src/lib/data/service.ts:151:	const out = await cachedHttp<Benchmark[]>(`/benchmarks?include_hidden=true`, fetchFn);
+/tmp/lb2/src/lib/data/service.ts:152:	// Prime per-name slots so the prerender enumerator's `loadBenchmark` calls
+/tmp/lb2/src/lib/data/service.ts:154:	for (const b of out) cacheTouch(`/benchmarks/${encodeURIComponent(b.name)}`, b);
+/tmp/lb2/src/lib/data/service.ts:158:export async function loadBenchmark(name: string, fetchFn?: FetchFn): Promise<Benchmark> {
+/tmp/lb2/src/lib/data/service.ts:159:	if (!API) throw noApiError('loadBenchmark');
+/tmp/lb2/src/lib/data/service.ts:160:	return cachedHttp<Benchmark>(`/benchmarks/${encodeURIComponent(name)}`, fetchFn);
+/tmp/lb2/src/lib/data/service.ts:164:// `loadBenchmark(name)` call resolves synchronously.
+/tmp/lb2/src/lib/data/service.ts:165:export function primeBenchmarkCache(name: string, value: Benchmark): void {
+/tmp/lb2/src/lib/data/service.ts:166:	cacheTouch(`/benchmarks/${encodeURIComponent(name)}`, value);
+/tmp/lb2/src/lib/data/service.ts:169:export async function loadSummary(
+/tmp/lb2/src/lib/data/service.ts:170:	benchmarkName: string,
+/tmp/lb2/src/lib/data/service.ts:173:): Promise<BenchmarkSummary> {
+/tmp/lb2/src/lib/data/service.ts:174:	if (!API) throw noApiError('loadSummary');
+/tmp/lb2/src/lib/data/service.ts:181:	return enrichSummary(
+/tmp/lb2/src/lib/data/service.ts:182:		await cachedHttp<BenchmarkSummary>(
+/tmp/lb2/src/lib/data/service.ts:183:			`/benchmarks/${encodeURIComponent(benchmarkName)}/scores${qs}`,
+/tmp/lb2/src/lib/data/service.ts:191:	benchmarkName: string,
+/tmp/lb2/src/lib/data/service.ts:193:): Promise<BenchmarkPerLanguage> {
+/tmp/lb2/src/lib/data/service.ts:195:	return cachedHttp<BenchmarkPerLanguage>(
+/tmp/lb2/src/lib/data/service.ts:196:		`/benchmarks/${encodeURIComponent(benchmarkName)}/per-language`,
+/tmp/lb2/src/lib/data/service.ts:203:	benchmarkName: string,
+/tmp/lb2/src/lib/data/service.ts:206:): Promise<BenchmarkLeaders> {
+/tmp/lb2/src/lib/data/service.ts:210:	return cachedHttp<BenchmarkLeaders>(
+/tmp/lb2/src/lib/data/service.ts:211:		`/benchmarks/${encodeURIComponent(benchmarkName)}/leaders?${qs}`,
+/tmp/lb2/src/lib/data/service.ts:244:	// Mirror the benchmarks priming: warm per-name slots so each detail
+/tmp/lb2/src/lib/format.test.ts:87:		const original = 'My Benchmark / with / slashes & stuff';
+/tmp/lb2/src/lib/format.test.ts:137:	it('respects a custom inactive glyph (SummaryTable uses an empty string)', () => {
+/tmp/lb2/src/lib/format.ts:6: * identifiers read naturally in the UI. The backend canonicalises these to
+/tmp/lb2/src/lib/format.ts:45: * backend can serve cache-friendly proxy paths (e.g. /v1/icon/<name>) without
+/tmp/lb2/src/lib/format.ts:57: * A benchmark icon may be a URL (flag SVG, hosted PNG, our /v1/icon proxy path)
+/tmp/lb2/src/lib/format.ts:67: * URL-safe form of a benchmark / model / task name for use in route paths
+/tmp/lb2/src/lib/format.ts:68: * (e.g. ``/models/{slug(name)}``). Benchmark names contain parens, commas,
+/tmp/lb2/src/lib/format.ts:94: * before showing the stat at all). Used by the benchmark cards' stats-line
+/tmp/lb2/src/lib/format.ts:95: * so massive multilingual benchmarks (1000+ languages, 300+ models) still
+/tmp/lb2/src/lib/format.ts:112:export interface ModelLanguageSummary {
+/tmp/lb2/src/lib/format.ts:121:): ModelLanguageSummary | null {
+/tmp/lb2/src/lib/format.ts:163: * ``<1`` switches to millions. The backend emits ``null`` for
+/tmp/lb2/src/lib/format.ts:191: * ``inactiveGlyph`` (default ``↕``, SummaryTable uses ``''``) otherwise.
+/tmp/lb2/src/lib/format.ts:244: * rather than zero. Shared across SummaryTable, BenchScoreTable, ModelHoverPortal.
+/tmp/lb2/src/lib/idle.ts:3:// SummaryTable / PerTaskTab / tasks / models) used to inline the same
+/tmp/lb2/src/lib/openness.ts:6:// across every surface (model card, filters, benchmark table, compare).
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:2:import type { BenchmarkSummary, ModelMeta, SummaryRow, TaskMeta } from '$lib/types';
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:7:// synthetic summary, toggle filters, assert.
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:47:): SummaryRow {
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:71:function fixtureSummary(): BenchmarkSummary {
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:88:	const rows: SummaryRow[] = [
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:96:		benchmarkName: 'TestBench',
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:113:	filters.initFor(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:120:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:127:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:139:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:148:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:157:		// The backend re-runs the summary scoped to the picked languages via
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:159:		// new summary carries. Filtering tasks client-side by language would
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:161:		// re-apply the new filter to the OLD summary's per-task slots).
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:163:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:171:		let out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:175:		out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:181:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:187:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:194:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:201:		const out = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.test.ts:207:		const empty = applyFilters(fixtureSummary());
+/tmp/lb2/src/lib/stores/filters.svelte.ts:4:import type { BenchmarkSummary, ModelType, SummaryRow, TaskMeta } from '$lib/types';
+/tmp/lb2/src/lib/stores/filters.svelte.ts:45:	// Slider bounds; fall back to global defaults when no benchmark is loaded.
+/tmp/lb2/src/lib/stores/filters.svelte.ts:68:	// and contain hundreds of entries per Multilingual benchmark.
+/tmp/lb2/src/lib/stores/filters.svelte.ts:74:	// Same-benchmark refetches (e.g. language-scoped) refresh available-* without
+/tmp/lb2/src/lib/stores/filters.svelte.ts:76:	let lastBenchmarkName: string | null = null;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:80:	// currently loaded benchmark.
+/tmp/lb2/src/lib/stores/filters.svelte.ts:127:	// `scope` = benchmark-scope facets (driven by availableX, dropped on /models).
+/tmp/lb2/src/lib/stores/filters.svelte.ts:154:	function initFor(summary: BenchmarkSummary | null) {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:155:		if (!summary) return;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:157:		// (the `/benchmark/[name]` page does exactly that) doesn't subscribe
+/tmp/lb2/src/lib/stores/filters.svelte.ts:166:			const isNewBenchmark = lastBenchmarkName !== summary.benchmarkName;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:167:			lastBenchmarkName = summary.benchmarkName;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:175:			for (const t of summary.tasksMeta) {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:187:			// outwards, otherwise a benchmark whose largest model is 7B shows a slider
+/tmp/lb2/src/lib/stores/filters.svelte.ts:191:			for (const row of summary.rows) {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:202:			availableTaskTypes = summary.taskTypes;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:203:			availableTasks = summary.tasksMeta;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:206:			// Languages only refresh on benchmark change so the language-scoped
+/tmp/lb2/src/lib/stores/filters.svelte.ts:208:			if (isNewBenchmark) {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:213:			// Same-benchmark refetch: keep picks, just trim ones no longer in the
+/tmp/lb2/src/lib/stores/filters.svelte.ts:215:			if (!isNewBenchmark) {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:220:			// New benchmark — reset every scope facet to its (just-updated) universe.
+/tmp/lb2/src/lib/stores/filters.svelte.ts:403:		// contract the legacy store provided, so SummaryTable / FilterFacet
+/tmp/lb2/src/lib/stores/filters.svelte.ts:404:		// subscribers don't re-bind on every benchmark switch.
+/tmp/lb2/src/lib/stores/filters.svelte.ts:457:		// Public for pages without a benchmark summary (e.g. /models); /benchmark
+/tmp/lb2/src/lib/stores/filters.svelte.ts:480:// Cached per (summary, task-filter signature) so name-search keystrokes
+/tmp/lb2/src/lib/stores/filters.svelte.ts:490:		SummaryRow,
+/tmp/lb2/src/lib/stores/filters.svelte.ts:501:const _narrowingCache = new WeakMap<BenchmarkSummary, NarrowingResult>();
+/tmp/lb2/src/lib/stores/filters.svelte.ts:503:function narrowTasks(summary: BenchmarkSummary, lenient: boolean): NarrowingResult {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:515:	const cached = _narrowingCache.get(summary);
+/tmp/lb2/src/lib/stores/filters.svelte.ts:518:	const fullTypes = isFullSet(filters.taskTypes, summary.taskTypes);
+/tmp/lb2/src/lib/stores/filters.svelte.ts:521:	const fullTasks = isFullSet(filters.tasks, summary.tasks);
+/tmp/lb2/src/lib/stores/filters.svelte.ts:530:		visibleTasks = summary.tasksMeta;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:531:		taskTypesOut = summary.taskTypes;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:532:		taskNamesOut = summary.tasks;
+/tmp/lb2/src/lib/stores/filters.svelte.ts:534:		visibleTasks = summary.tasksMeta.filter((t) => {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:544:		taskTypesOut = summary.taskTypes.filter((t) => visibleTaskTypes.has(t));
+/tmp/lb2/src/lib/stores/filters.svelte.ts:545:		taskNamesOut = summary.tasks.filter((t) => visibleTaskNames.has(t));
+/tmp/lb2/src/lib/stores/filters.svelte.ts:564:	_narrowingCache.set(summary, result);
+/tmp/lb2/src/lib/stores/filters.svelte.ts:568:export function applyFilters(summary: BenchmarkSummary): BenchmarkSummary {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:569:	// Empty language pick set = "exclude everything"; the backend's `?languages=`
+/tmp/lb2/src/lib/stores/filters.svelte.ts:573:			...summary,
+/tmp/lb2/src/lib/stores/filters.svelte.ts:583:	const narrow = narrowTasks(summary, lenient);
+/tmp/lb2/src/lib/stores/filters.svelte.ts:590:			...summary,
+/tmp/lb2/src/lib/stores/filters.svelte.ts:610:	const passesRowFilter = (row: SummaryRow): boolean => {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:651:	let rows: SummaryRow[];
+/tmp/lb2/src/lib/stores/filters.svelte.ts:653:		rows = summary.rows.filter(passesRowFilter);
+/tmp/lb2/src/lib/stores/filters.svelte.ts:657:		// the backend's `_skipna_false_mean` policy.
+/tmp/lb2/src/lib/stores/filters.svelte.ts:662:		const computeAgg = (row: SummaryRow) => {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:705:		for (const row of summary.rows) {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:735:				for (const r of summary.rows) {
+/tmp/lb2/src/lib/stores/filters.svelte.ts:773:		...summary,
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:1:import type { Benchmark, BenchmarkSummary } from '$lib/types';
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:2:import { loadBenchmark, loadSummary } from '$lib/data/service';
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:3:import { DEFAULT_BENCHMARK_NAME } from '$lib/data/defaults';
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:16:		selected: DEFAULT_BENCHMARK_NAME,
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:22:	let benchmark = $state.raw<Benchmark | null>(null);
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:23:	let summary = $state.raw<BenchmarkSummary | null>(null);
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:45:			const [b, s] = await Promise.all([loadBenchmark(name), loadSummary(name)]);
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:47:			benchmark = b;
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:48:			summary = s;
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:57:	// Debounced refetch of the summary scoped to `languages` (empty = unfiltered).
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:58:	function requestSummaryForLanguages(languages?: ReadonlyArray<string>) {
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:68:			void _fetchSummaryForLanguages(name, lang, key);
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:72:	async function _fetchSummaryForLanguages(
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:80:			const s = await loadSummary(name, lang.length ? lang : undefined);
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:82:			summary = s;
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:95:		get benchmark() {
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:96:			return benchmark;
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:98:		get summary() {
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:99:			return summary;
+/tmp/lb2/src/lib/stores/leaderboard.svelte.ts:111:		requestSummaryForLanguages
+/tmp/lb2/src/lib/stores/pinned.svelte.ts:7:// top of every table that shows it (Summary, PerTask, PerLanguage, Spreadsheet).
+/tmp/lb2/src/lib/stores/sort.svelte.ts:11: * (SummaryTable, PerTaskTab, PerLanguageTab, ModelScoreTable,
+/tmp/lb2/src/lib/stores/sort.svelte.ts:20: *     urlKeys: ['s.summary', 'd.summary'],
+/tmp/lb2/src/lib/styles/detail-page.css:1:/* Chrome shared by /benchmark/[name], /models/[...name], /tasks/[name]. */
+/tmp/lb2/src/lib/styles/leaderboard-table.css:1:/* Shared chrome for leaderboard tables (SummaryTable, PerTaskTab, PerLanguageTab).
+/tmp/lb2/src/lib/styles/leaderboard-table.css:74:/* Skip render/paint for off-screen rows on long tables (SummaryTable can
+/tmp/lb2/src/lib/styles/leaderboard-table.css:250:   SummaryTable overrides per-model-type tints in its own \3c style>). */
+/tmp/lb2/src/lib/styles/leaderboard-table.css:344:/* Rank pill — shared across SummaryTable and ModelScoreTable so the
+/tmp/lb2/src/lib/styles/leaderboard-table.css:357:/* ─── Overview-page tables (Benchmarks / Models / Tasks index views) ─────
+/tmp/lb2/src/lib/styles/leaderboard-table.css:504:/* Openness column — shared by SummaryTable (/benchmark/[name]) and
+/tmp/lb2/src/lib/styles/leaderboard-table.css:515:   it sits — SummaryTable centres the column, /models leaves it left-aligned
+/tmp/lb2/src/lib/styles/leaderboard-table.css:535:   SummaryTable (/benchmark/[name]) and ModelsTable (/models); scoped to `.tbl`
+/tmp/lb2/src/lib/styles/sidebar.css:1:/* Filter sidebar shell + pills shared by /benchmarks and /tasks (and the
+/tmp/lb2/src/lib/styles/sidebar.css:2:   FilterSidebar component used by /benchmark/[name] + /models). One source
+/tmp/lb2/src/lib/styles/sidebar.css:226:   the FilterContent.svelte .pill:hover treatment used on the benchmark
+/tmp/lb2/src/lib/styles/sidebar.css:276:   `data-modality` attribute so the tint kicks in only on the benchmarks
+/tmp/lb2/src/lib/types.ts:1:export type BenchmarkAggregation = 'mean_task' | 'mean_task_type' | 'task_types' | 'public_private';
+/tmp/lb2/src/lib/types.ts:3:export interface Benchmark {
+/tmp/lb2/src/lib/types.ts:12:	// Simplified task groups (Borda-compatible buckets) this benchmark
+/tmp/lb2/src/lib/types.ts:15:	// on /benchmarks. Empty when the backend hasn't populated it.
+/tmp/lb2/src/lib/types.ts:20:	// `false` = hidden from the curated menu; /benchmarks shows them anyway.
+/tmp/lb2/src/lib/types.ts:22:	// Names of newer benchmarks that supersede this one.
+/tmp/lb2/src/lib/types.ts:24:	// Aggregation columns this benchmark's summary table should render. Mirrors
+/tmp/lb2/src/lib/types.ts:25:	// `Benchmark.aggregations` upstream — frontend uses it to hide irrelevant
+/tmp/lb2/src/lib/types.ts:27:	aggregations: BenchmarkAggregation[];
+/tmp/lb2/src/lib/types.ts:28:	// Whether the Zero-shot column is meaningful on this benchmark. Off for
+/tmp/lb2/src/lib/types.ts:32:	// Distinct models with at least one score on this benchmark. Surfaced on
+/tmp/lb2/src/lib/types.ts:33:	// the catalogue / home benchmark cards so the user can size up coverage
+/tmp/lb2/src/lib/types.ts:34:	// without opening each benchmark. Set by the backend from the cached
+/tmp/lb2/src/lib/types.ts:35:	// per-benchmark frames; `0` means unknown (cache not populated) or empty.
+/tmp/lb2/src/lib/types.ts:38:	// view. Mirrors `Benchmark.language_view` upstream. `'all'` means
+/tmp/lb2/src/lib/types.ts:39:	// "every language present"; `null`/missing means the benchmark didn't
+/tmp/lb2/src/lib/types.ts:41:	// hidden entirely on this benchmark's detail page.
+/tmp/lb2/src/lib/types.ts:64:	// / Mean (Private) when filters narrow the task set on benchmarks that
+/tmp/lb2/src/lib/types.ts:87:	children: Array<MenuEntry | Benchmark>;
+/tmp/lb2/src/lib/types.ts:90:export function isBenchmark(item: MenuEntry | Benchmark): item is Benchmark {
+/tmp/lb2/src/lib/types.ts:95: * Flatten the nested menu tree to its leaf benchmarks, preserving menu order.
+/tmp/lb2/src/lib/types.ts:97: * `responseCache`, so subsequent walks (compare, /tasks, /benchmarks,
+/tmp/lb2/src/lib/types.ts:100:const _flattenCache = new WeakMap<readonly MenuEntry[], Benchmark[]>();
+/tmp/lb2/src/lib/types.ts:101:export function flattenMenu(entries: readonly MenuEntry[]): Benchmark[] {
+/tmp/lb2/src/lib/types.ts:104:	const out: Benchmark[] = [];
+/tmp/lb2/src/lib/types.ts:107:			if (isBenchmark(c)) out.push(c);
+/tmp/lb2/src/lib/types.ts:124:	// Nullable: backend emits `null` for proprietary models that don't
+/tmp/lb2/src/lib/types.ts:128:	// Nullable: backend returns `null` for models whose ModelMeta doesn't
+/tmp/lb2/src/lib/types.ts:137:	// model is, plus a 0–6 summary score. Both optional — older cached payloads
+/tmp/lb2/src/lib/types.ts:163:export interface SummaryRow {
+/tmp/lb2/src/lib/types.ts:177:	// Public/Private split means for benchmarks that hold out a private task
+/tmp/lb2/src/lib/types.ts:178:	// subset (ViDoRe family). `null` for benchmarks without that split.
+/tmp/lb2/src/lib/types.ts:186:	// Tasks (within this benchmark) the model declares in its training
+/tmp/lb2/src/lib/types.ts:198:export interface BenchmarkSummary {
+/tmp/lb2/src/lib/types.ts:199:	benchmarkName: string;
+/tmp/lb2/src/lib/types.ts:203:	rows: SummaryRow[];
+/tmp/lb2/src/lib/types.ts:204:	// Mirrors the Benchmark.aggregations declaration so SummaryTable knows
+/tmp/lb2/src/lib/types.ts:206:	aggregations: BenchmarkAggregation[];
+/tmp/lb2/src/lib/types.ts:207:	// Mirrors `Benchmark.showZeroShot` — SummaryTable hides the Zero-shot
+/tmp/lb2/src/lib/types.ts:212:// `/v1/benchmarks/{name}/per-language` payload — one row per model with
+/tmp/lb2/src/lib/types.ts:215:// labels emitted on `Benchmark.languages` / `TaskMeta.languages` so
+/tmp/lb2/src/lib/types.ts:217:export interface BenchmarkPerLanguageRow {
+/tmp/lb2/src/lib/types.ts:221:export interface BenchmarkPerLanguage {
+/tmp/lb2/src/lib/types.ts:222:	benchmarkName: string;
+/tmp/lb2/src/lib/types.ts:223:	rows: BenchmarkPerLanguageRow[];
+/tmp/lb2/src/lib/types.ts:226:// Slim per-size-bucket response from `/benchmarks/{name}/leaders` —
+/tmp/lb2/src/lib/types.ts:228:// payload (several MB on multilingual benchmarks) just to render
+/tmp/lb2/src/lib/types.ts:249:export interface BenchmarkLeaders {
+/tmp/lb2/src/lib/types.ts:250:	benchmarkName: string;
+/tmp/lb2/src/lib/types.ts:268:	benchmarks: string[];
+/tmp/lb2/src/lib/types.ts:269:	// Three-state per-task training-overlap signal from the backend:
+/tmp/lb2/src/lib/types.ts:278:	benchmarks: string[];
+/tmp/lb2/src/lib/types.ts:288:	benchmarkName: string;
+/tmp/lb2/src/lib/types.ts:289:	benchmarkDisplayName: string;
+/tmp/lb2/src/lib/types.ts:305:// Snake_case is intentional: the backend ships these via TypedDicts (not
+/tmp/lb2/src/lib/types.ts:313:// task-type stats classes added on the backend are forward-compatible
+/tmp/lb2/src/lib/types.ts:341:	// Backend keys these by int (sampling rate Hz); JSON forces string keys.
+/tmp/lb2/src/lib/types.ts:378:	// metadata bag so the backend can grow it without bumping the schema.
+/tmp/lb2/src/lib/url-state.test.ts:60:		const benchmarks = ['MTEB(Multilingual, v2)', 'BEIR'];
+/tmp/lb2/src/lib/url-state.test.ts:61:		applyParamUpdates(url, { model: models, benchmark: benchmarks });
+/tmp/lb2/src/lib/url-state.test.ts:65:				'&benchmark=MTEB%28Multilingual%2C+v2%29&benchmark=BEIR'
+/tmp/lb2/src/lib/url-state.test.ts:68:		expect(url.searchParams.getAll('benchmark')).toEqual(benchmarks);
+/tmp/lb2/src/lib/url-state.test.ts:93:		applyParamUpdates(url, { tab: 'summary', model: ['a', 'b'] });
+/tmp/lb2/src/lib/url-state.test.ts:94:		expect(url.searchParams.get('tab')).toBe('summary');
+/tmp/lb2/src/routes/+error.svelte:26:				The link you followed doesn't match a benchmark, model, task, or comparison page.
+/tmp/lb2/src/routes/+error.svelte:36:			<a href={resolve('/benchmarks')}>Benchmarks</a>
+/tmp/lb2/src/routes/+layout.svelte:16:	// Preconnect to the backend so the first fetch lands ~150ms faster on cold
+/tmp/lb2/src/routes/+layout.svelte:61:	// `/benchmark/{name}` matches the Benchmarks tab too.
+/tmp/lb2/src/routes/+layout.svelte:66:	function isBenchmarksRoute(p: string) {
+/tmp/lb2/src/routes/+layout.svelte:68:		if (trimmed === '/benchmarks' || trimmed.startsWith('/benchmarks/')) return true;
+/tmp/lb2/src/routes/+layout.svelte:69:		if (trimmed === '/benchmark' || trimmed.startsWith('/benchmark/')) return true;
+/tmp/lb2/src/routes/+layout.svelte:74:		{ label: 'Benchmarks', href: resolve('/benchmarks'), match: isBenchmarksRoute },
+/tmp/lb2/src/routes/+layout.svelte:127:				href="https://github.com/embeddings-benchmark/mteb/"
+/tmp/lb2/src/routes/+layout.svelte:142:				href="https://embeddings-benchmark.github.io/mteb/"
+/tmp/lb2/src/routes/+layout.svelte:164:			href="https://github.com/embeddings-benchmark/leaderboardv2"
+/tmp/lb2/src/routes/+layout.ts:2:// (e.g. `BUILD_NO_PRERENDER=1 npm run build` against a slow backend). CI
+/tmp/lb2/src/routes/+page.svelte:13:	title="Benchmark Overview"
+/tmp/lb2/src/routes/+page.svelte:14:	description="MTEB Leaderboard home — primary General / Retrieval / English benchmark winners plus curated sections for language, modality, retrieval, and domain-specific evaluations."
+/tmp/lb2/src/routes/+page.svelte:19:		<h1>Benchmark Overview</h1>
+/tmp/lb2/src/routes/+page.svelte:20:		<a class="all-link" href={resolve('/benchmarks')}>See all benchmarks →</a>
+/tmp/lb2/src/routes/+page.svelte:46:					<PrimaryLeaderTile tintKey={p.key} label={p.label} benchmark={p.b} leaders={p.leaders} />
+/tmp/lb2/src/routes/+page.svelte:50:					Couldn't load featured leaderboards. The backend may be unavailable — try refreshing in a
+/tmp/lb2/src/routes/+page.svelte:60:				<div class="menu-skel" aria-busy="true" aria-label="Loading benchmark sections">
+/tmp/lb2/src/routes/+page.svelte:75:				Couldn't load benchmark sections. The backend may be unavailable — try refreshing in a
+/tmp/lb2/src/routes/+page.ts:4:import { flattenMenu, type Benchmark, type BenchmarkLeaders } from '$lib/types';
+/tmp/lb2/src/routes/+page.ts:5:import { loadBenchmark, loadBenchmarkMenu, loadLeaders } from '$lib/data/service';
+/tmp/lb2/src/routes/+page.ts:28:export type LeadersResult = BenchmarkLeaders | { error: string };
+/tmp/lb2/src/routes/+page.ts:31:	b: Benchmark;
+/tmp/lb2/src/routes/+page.ts:36:	const menuPromise = loadBenchmarkMenu(fetch);
+/tmp/lb2/src/routes/+page.ts:41:			PRIMARIES.map(async (p): Promise<(Primary & { b: Benchmark }) | null> => {
+/tmp/lb2/src/routes/+page.ts:45:					return { ...p, b: await loadBenchmark(p.preferred, fetch) };
+/tmp/lb2/src/routes/+page.ts:51:		const found = resolved.filter((p): p is Primary & { b: Benchmark } => p !== null);
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:10:	import { primeBenchmarkCache } from '$lib/data/service';
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:18:		primeBenchmarkCache(data.benchmark.name, data.benchmark);
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:35:	import SummaryTable from '$lib/components/SummaryTable.svelte';
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:44:	let benchmarkName = $derived(data.benchmark.name);
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:45:	// Loader guarantees `data.benchmark` for the current slug (a miss throws
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:46:	// error(404)). Prefer the store's copy once it lands so summary-derived
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:48:	let benchmark = $derived(
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:49:		leaderboard.benchmark?.name === benchmarkName ? leaderboard.benchmark : data.benchmark
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:52:	// (`video → audio → image → text`) — matches the BenchmarkCard tint
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:53:	// on /benchmarks so a card and its detail page read as the same surface.
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:54:	let accentModality = $derived(sortModalities(benchmark?.modalities)[0] ?? 'text');
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:56:	type TabId = 'summary' | 'perf_size' | 'perf_time' | 'perf_task' | 'perf_language' | 'task_info';
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:57:	// `perf_language` is filtered out below when the benchmark has no
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:60:		{ id: 'summary', label: 'Summary' },
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:68:		benchmark.languageView === 'all' ||
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:69:			(Array.isArray(benchmark.languageView) && benchmark.languageView.length > 0)
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:72:	// Fall back to Summary if the deep-linked tab is no longer available
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:73:	// (e.g. ?tab=perf_language on a benchmark without language_view).
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:76:			activeTab = 'summary';
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:85:		initialTab && TAB_IDS.has(initialTab as TabId) ? (initialTab as TabId) : 'summary'
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:90:		updateUrl({ tab: activeTab === 'summary' ? null : activeTab });
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:103:	// Pre-mount the heavy table panes once the active tab + filteredSummary
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:109:	// of pin-state reactivity (see the `active` prop in SummaryTable /
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:114:		if (!filteredSummary) return;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:145:		if (!benchmarkName) return;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:146:		// Trigger load both when the URL benchmark differs from the store's
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:147:		// current selection AND when it matches but the summary hasn't loaded yet
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:148:		// (cold visit where selected already defaulted to this benchmark name).
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:149:		const needsSwitch = leaderboard.selected !== benchmarkName;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:150:		const needsInitialLoad = !leaderboard.summary && !leaderboard.loading;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:152:			leaderboard.select(benchmarkName);
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:156:	// Pins are benchmark-scoped: persist across tab switches but
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:157:	// reset when the active benchmark changes. The $effect handles
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:158:	// stay-within-route nav (component reused, benchmarkName flips);
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:161:	let prevBenchmarkForPins: string | null = null;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:163:		const current = benchmarkName;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:164:		if (prevBenchmarkForPins !== null && prevBenchmarkForPins !== current) {
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:167:		prevBenchmarkForPins = current;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:175:		// Only feed initFor a summary that matches the current page. During
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:176:		// in-app navigation between two /benchmark/* pages, this effect can
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:177:		// fire while `leaderboard.summary` still holds the previous
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:178:		// benchmark's data (the async `select()` hasn't completed). If we
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:179:		// ran initFor with the stale summary, it would see "same benchmark"
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:180:		// against its `lastBenchmarkName` tracker, skip the reset, and call
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:181:		// sync() — which writes the previous benchmark's narrowed filter
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:183:		if (!leaderboard.summary || leaderboard.summary.benchmarkName !== benchmarkName) return;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:184:		filters.initFor(leaderboard.summary);
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:187:	// When the language filter narrows, refetch the summary with
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:190:	// the unfiltered summary (and hits the preload-warmed cache).
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:192:		if (!leaderboard.summary || leaderboard.selected !== benchmarkName) return;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:196:		leaderboard.requestSummaryForLanguages(langs);
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:199:	// Guard on `summary.benchmarkName`, NOT `leaderboard.selected`. `select()`
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:201:	// `selected === benchmarkName` check passes while `summary` still holds the
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:202:	// previous benchmark's rows — the table flashes stale data for the duration
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:203:	// of the fetch. The summary's own `benchmarkName` is the authoritative
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:204:	// "which benchmark does this payload represent" identifier.
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:205:	let filteredSummary = $derived(
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:206:		leaderboard.summary && leaderboard.summary.benchmarkName === benchmarkName
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:207:			? applyFilters(leaderboard.summary)
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:211:	// missing any task cell, so non-null means every task in the benchmark
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:214:		filteredSummary?.rows.filter((r) => r.meanTask !== null).length ?? 0
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:219:	function buildSummaryCsv() {
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:220:		const s = filteredSummary!;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:301:		const s = filteredSummary!;
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:314:	title={benchmark?.displayName ?? benchmarkName}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:315:	description={benchmark?.description
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:316:		? `${benchmark.tasks.length} tasks, ${benchmark.languages.length} languages, ${filteredSummary?.rows.length ?? '—'} models — ${benchmark.description}`
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:317:		: `Benchmark on the MTEB Leaderboard.`}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:318:	entity={{ kind: 'benchmark', name: benchmarkName }}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:319:	image={benchmark?.icon && isIconUrl(benchmark.icon) ? apiUrl(benchmark.icon) : undefined}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:327:			<a href={resolve('/benchmarks')}>Benchmarks</a>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:329:			<span class="current">{benchmark?.displayName ?? benchmarkName}</span>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:334:				<h1>Couldn't load benchmark</h1>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:342:						{#if benchmark.icon}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:343:							{#if isIconUrl(benchmark.icon)}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:346:									src={apiUrl(benchmark.icon)}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:347:									alt="{benchmark.displayName} icon"
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:355:									>{benchmark.icon}</span
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:360:							<h1>{benchmark.displayName}</h1>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:361:							<CopyableId value={benchmark.name} ariaLabel="Copy benchmark id" />
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:364:					<p class="desc"><MarkdownText text={benchmark.description} /></p>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:365:					{#if benchmark.reference}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:368:						<a class="ref" href={benchmark.reference} target="_blank" rel="noreferrer">
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:372:					<CiteBlock kind="benchmark" citation={benchmark.citation} />
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:377:						<span class="kpi-value">{benchmark.languages.length}</span>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:381:						<span class="kpi-value">{filteredSummary?.tasks.length ?? benchmark.tasks.length}</span>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:386:							>{filteredSummary?.taskTypes.length ?? benchmark.taskTypes.length}</span
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:400:				label={leaderboard.refetching ? 'Recomputing scores' : 'Loading benchmark'}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:403:			{#if activeTab === 'summary' || activeTab === 'perf_task' || activeTab === 'perf_language'}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:406:						matchCount={filteredSummary?.rows.length}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:407:						totalCount={leaderboard.summary?.rows.length}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:409:					{#if activeTab === 'summary' && filteredSummary}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:411:							filename="{sanitizeFilename(benchmark.name)}_summary"
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:412:							build={buildSummaryCsv}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:414:					{:else if activeTab === 'perf_task' && filteredSummary}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:416:							filename="{sanitizeFilename(benchmark.name)}_per_task"
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:419:					{:else if activeTab === 'perf_language' && filteredSummary && perLanguageTab}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:421:							filename="{sanitizeFilename(benchmark.name)}_per_language"
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:429:				{#if !filteredSummary}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:431:				{:else if filteredSummary.rows.length === 0}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:441:					{#if visited.has('summary')}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:442:						<div class="tab-pane" class:active={activeTab === 'summary'}>
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:443:							<SummaryTable summary={filteredSummary} active={activeTab === 'summary'} />
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:448:							<PerfSizeTab summary={filteredSummary} />
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:453:							<PerfTimeTab summary={filteredSummary} />
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:463:							<PerTaskTab summary={filteredSummary} active={activeTab === 'perf_task'} />
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:466:					{#if visited.has('perf_language') && hasLanguageView && benchmark.languageView}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:469:								summary={filteredSummary}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:470:								languageView={benchmark.languageView}
+/tmp/lb2/src/routes/benchmark/[name]/+page.svelte:478:							<TaskInfoTab {benchmark} tasksMeta={filteredSummary.tasksMeta} />
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:5:import { HttpError, loadBenchmark, loadBenchmarks } from '$lib/data/service';
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:6:import type { Benchmark } from '$lib/types';
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:11:	const benches = await loadBenchmarks();
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:16:// before the store's loadBenchmark fires.
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:17:export const load: PageLoad = async ({ params, fetch }): Promise<{ benchmark: Benchmark }> => {
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:18:	const benchmark = await loadBenchmark(params.name, fetch).catch((e) => {
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:20:			error(404, `Benchmark "${params.name}" not found`);
+/tmp/lb2/src/routes/benchmark/[name]/+page.ts:24:	return { benchmark };
+/tmp/lb2/src/routes/benchmarks/+page.svelte:3:	import type { Benchmark } from '$lib/types';
+/tmp/lb2/src/routes/benchmarks/+page.svelte:5:	import BenchmarkCard from '$lib/components/BenchmarkCard.svelte';
+/tmp/lb2/src/routes/benchmarks/+page.svelte:6:	import BenchmarksTable from '$lib/components/BenchmarksTable.svelte';
+/tmp/lb2/src/routes/benchmarks/+page.svelte:22:	import type { BenchmarksData } from './+page';
+/tmp/lb2/src/routes/benchmarks/+page.svelte:26:	// Stale-guard via `data.benchmarks === p` on rapid nav.
+/tmp/lb2/src/routes/benchmarks/+page.svelte:27:	let resolved = $state<BenchmarksData | null>(null);
+/tmp/lb2/src/routes/benchmarks/+page.svelte:30:		const p = data.benchmarks;
+/tmp/lb2/src/routes/benchmarks/+page.svelte:33:			if (data.benchmarks === p) resolved = r;
+/tmp/lb2/src/routes/benchmarks/+page.svelte:35:			if (data.benchmarks === p) loadError = e instanceof Error ? e.message : String(e);
+/tmp/lb2/src/routes/benchmarks/+page.svelte:39:	let allBenchmarks = $derived<Benchmark[]>(resolved?.all ?? []);
+/tmp/lb2/src/routes/benchmarks/+page.svelte:58:	// "Model count" desc surfaces popular benchmarks first.
+/tmp/lb2/src/routes/benchmarks/+page.svelte:190:		const matches = (b: Benchmark) => {
+/tmp/lb2/src/routes/benchmarks/+page.svelte:200:		const cmp = (a: Benchmark, b: Benchmark) => {
+/tmp/lb2/src/routes/benchmarks/+page.svelte:209:		const matched: Benchmark[] = [];
+/tmp/lb2/src/routes/benchmarks/+page.svelte:210:		for (const b of allBenchmarks) if (matches(b)) matched.push(b);
+/tmp/lb2/src/routes/benchmarks/+page.svelte:217:	title="All benchmarks"
+/tmp/lb2/src/routes/benchmarks/+page.svelte:218:	description={`Every benchmark registered in MTEB — ${allBenchmarks.length || '100+'} suites spanning multilingual, multimodal, retrieval, classification, clustering, semantic similarity, and domain-specific evaluations.`}
+/tmp/lb2/src/routes/benchmarks/+page.svelte:224:			<h1>All benchmarks</h1>
+/tmp/lb2/src/routes/benchmarks/+page.svelte:226:				Every benchmark registered in mteb — including ones that aren't on the curated explorer
+/tmp/lb2/src/routes/benchmarks/+page.svelte:227:				menu. Use the search box to find a benchmark by name.
+/tmp/lb2/src/routes/benchmarks/+page.svelte:230:				To add your benchmark, follow our
+/tmp/lb2/src/routes/benchmarks/+page.svelte:232:					href="https://embeddings-benchmark.github.io/mteb/contributing/adding_a_benchmark/"
+/tmp/lb2/src/routes/benchmarks/+page.svelte:242:				placeholder="Search benchmarks…"
+/tmp/lb2/src/routes/benchmarks/+page.svelte:243:				ariaLabel="Search benchmarks"
+/tmp/lb2/src/routes/benchmarks/+page.svelte:270:				{filteredAll.length} / {allBenchmarks.length}
+/tmp/lb2/src/routes/benchmarks/+page.svelte:279:			<p class="muted">No benchmark matches that search.</p>
+/tmp/lb2/src/routes/benchmarks/+page.svelte:281:			<BenchmarksTable rows={filteredAll} sort={sortAdapter} />
+/tmp/lb2/src/routes/benchmarks/+page.svelte:285:					<h2>Benchmarks</h2>
+/tmp/lb2/src/routes/benchmarks/+page.svelte:290:						<BenchmarkCard {b} />
+/tmp/lb2/src/routes/benchmarks/+page.ts:3:import { loadBenchmarks } from '$lib/data/service';
+/tmp/lb2/src/routes/benchmarks/+page.ts:4:import type { Benchmark } from '$lib/types';
+/tmp/lb2/src/routes/benchmarks/+page.ts:8:export interface BenchmarksData {
+/tmp/lb2/src/routes/benchmarks/+page.ts:9:	all: Benchmark[];
+/tmp/lb2/src/routes/benchmarks/+page.ts:25:async function deriveBenchmarksData(fetchFn?: typeof fetch): Promise<BenchmarksData> {
+/tmp/lb2/src/routes/benchmarks/+page.ts:26:	const list = (await loadBenchmarks(fetchFn)).sort((a, b) =>
+/tmp/lb2/src/routes/benchmarks/+page.ts:55:	return { benchmarks: deriveBenchmarksData(fetch) };
+/tmp/lb2/src/routes/compare/+page.svelte:4:	import { loadBenchmarkMenu, loadModelScores, loadSummary } from '$lib/data/service';
+/tmp/lb2/src/routes/compare/+page.svelte:12:	import type { Benchmark, BenchmarkSummary, ModelMeta, SummaryRow } from '$lib/types';
+/tmp/lb2/src/routes/compare/+page.svelte:26:	// Read `model=` and `benchmark=` from the URL. Accepts both the legacy
+/tmp/lb2/src/routes/compare/+page.svelte:32:	// the auto-decoded `searchParams.get()` result. Benchmark / model
+/tmp/lb2/src/routes/compare/+page.svelte:62:	const MAX_BENCHMARKS = 6;
+/tmp/lb2/src/routes/compare/+page.svelte:66:	let ALL_BENCHMARKS = $state<Benchmark[]>([]);
+/tmp/lb2/src/routes/compare/+page.svelte:69:	let benchIndex = $derived(new Map(ALL_BENCHMARKS.map((b) => [b.name, b])));
+/tmp/lb2/src/routes/compare/+page.svelte:71:	// proxy. Consumers bump `summaryCacheVersion` on insert to invalidate
+/tmp/lb2/src/routes/compare/+page.svelte:74:	const summaryCache = new Map<string, BenchmarkSummary>();
+/tmp/lb2/src/routes/compare/+page.svelte:75:	let summaryCacheVersion = $state(0);
+/tmp/lb2/src/routes/compare/+page.svelte:78:		loadBenchmarkMenu().then((menu) => {
+/tmp/lb2/src/routes/compare/+page.svelte:79:			ALL_BENCHMARKS = flattenMenu(menu);
+/tmp/lb2/src/routes/compare/+page.svelte:84:	// clobber `?model=` / `?benchmark=` before the read-side effect can use
+/tmp/lb2/src/routes/compare/+page.svelte:87:	function _initialPicks(name: 'model' | 'benchmark' | 'task' | 'xtask'): string[] {
+/tmp/lb2/src/routes/compare/+page.svelte:91:	const _initialBenchmarks = _initialPicks('benchmark');
+/tmp/lb2/src/routes/compare/+page.svelte:92:	let pickedBenchmarks = $state<string[]>(
+/tmp/lb2/src/routes/compare/+page.svelte:93:		_initialBenchmarks.length > 0
+/tmp/lb2/src/routes/compare/+page.svelte:94:			? _initialBenchmarks.slice(0, MAX_BENCHMARKS)
+/tmp/lb2/src/routes/compare/+page.svelte:99:	// model" the URL carries ?model=X (and now ?benchmark=Y — passed from
+/tmp/lb2/src/routes/compare/+page.svelte:102:	// benchmark that actually has the model.
+/tmp/lb2/src/routes/compare/+page.svelte:104:	// `?benchmark=`, derive a benchmark from /models/X/scores. After the URL
+/tmp/lb2/src/routes/compare/+page.svelte:106:	// don't include a benchmark hint.
+/tmp/lb2/src/routes/compare/+page.svelte:108:		if (_initialBenchmarks.length > 0) return;
+/tmp/lb2/src/routes/compare/+page.svelte:116:					const benches = p.rows.map((r) => r.benchmarkName);
+/tmp/lb2/src/routes/compare/+page.svelte:118:					if (benches.includes(pickedBenchmarks[0] ?? '')) return;
+/tmp/lb2/src/routes/compare/+page.svelte:119:					pickedBenchmarks = [benches[0], ...pickedBenchmarks.slice(1)];
+/tmp/lb2/src/routes/compare/+page.svelte:125:	// Kick off summary loads for every picked benchmark not yet in the cache.
+/tmp/lb2/src/routes/compare/+page.svelte:127:		const missing = pickedBenchmarks.filter((n) => !summaryCache.has(n));
+/tmp/lb2/src/routes/compare/+page.svelte:131:				loadSummary(name).then((s) => {
+/tmp/lb2/src/routes/compare/+page.svelte:132:					summaryCache.set(name, s);
+/tmp/lb2/src/routes/compare/+page.svelte:133:					summaryCacheVersion++;
+/tmp/lb2/src/routes/compare/+page.svelte:139:	let benchSummaries = $derived.by<BenchmarkSummary[]>(() => {
+/tmp/lb2/src/routes/compare/+page.svelte:141:		void summaryCacheVersion;
+/tmp/lb2/src/routes/compare/+page.svelte:142:		return pickedBenchmarks
+/tmp/lb2/src/routes/compare/+page.svelte:143:			.map((name) => summaryCache.get(name))
+/tmp/lb2/src/routes/compare/+page.svelte:144:			.filter((s): s is BenchmarkSummary => s !== undefined);
+/tmp/lb2/src/routes/compare/+page.svelte:146:	let primarySummary = $derived<BenchmarkSummary | null>(benchSummaries[0] ?? null);
+/tmp/lb2/src/routes/compare/+page.svelte:148:	// Pre-seed picks with the top two models from the primary benchmark once
+/tmp/lb2/src/routes/compare/+page.svelte:155:		const s = primarySummary;
+/tmp/lb2/src/routes/compare/+page.svelte:156:		const bench = pickedBenchmarks[0] ?? '';
+/tmp/lb2/src/routes/compare/+page.svelte:162:				// Drop any URL-hydrated model that isn't in this benchmark — keeps
+/tmp/lb2/src/routes/compare/+page.svelte:164:				// the chosen benchmark doesn't include.
+/tmp/lb2/src/routes/compare/+page.svelte:174:	// Per-benchmark lookup: rows by model name for each picked benchmark.
+/tmp/lb2/src/routes/compare/+page.svelte:176:	// byModel cached by summary identity so reordering picks or revisiting
+/tmp/lb2/src/routes/compare/+page.svelte:177:	// the same benchmark doesn't rebuild the Map.
+/tmp/lb2/src/routes/compare/+page.svelte:178:	type BenchView = { name: string; summary: BenchmarkSummary; byModel: Map<string, SummaryRow> };
+/tmp/lb2/src/routes/compare/+page.svelte:179:	const _byModelCache = new WeakMap<BenchmarkSummary, Map<string, SummaryRow>>();
+/tmp/lb2/src/routes/compare/+page.svelte:180:	function byModelFor(s: BenchmarkSummary): Map<string, SummaryRow> {
+/tmp/lb2/src/routes/compare/+page.svelte:190:			name: s.benchmarkName,
+/tmp/lb2/src/routes/compare/+page.svelte:191:			summary: s,
+/tmp/lb2/src/routes/compare/+page.svelte:199:		const out: SummaryRow[] = [];
+/tmp/lb2/src/routes/compare/+page.svelte:222:	// `pickedTasks` so the "follow the benchmarks" default stays usable: with
+/tmp/lb2/src/routes/compare/+page.svelte:240:		const b = pickedBenchmarks.slice();
+/tmp/lb2/src/routes/compare/+page.svelte:243:		queueMicrotask(() => updateUrl({ model: m, benchmark: b, task: t, xtask: x }));
+/tmp/lb2/src/routes/compare/+page.svelte:273:	function toggleBenchmark(name: string) {
+/tmp/lb2/src/routes/compare/+page.svelte:274:		if (pickedBenchmarks.includes(name)) {
+/tmp/lb2/src/routes/compare/+page.svelte:275:			if (pickedBenchmarks.length === 1) return; // keep at least one
+/tmp/lb2/src/routes/compare/+page.svelte:276:			pickedBenchmarks = pickedBenchmarks.filter((n) => n !== name);
+/tmp/lb2/src/routes/compare/+page.svelte:277:		} else if (pickedBenchmarks.length < MAX_BENCHMARKS) {
+/tmp/lb2/src/routes/compare/+page.svelte:278:			pickedBenchmarks = [...pickedBenchmarks, name];
+/tmp/lb2/src/routes/compare/+page.svelte:294:	// un-picking it outright; in follow-the-benchmarks mode it goes on the
+/tmp/lb2/src/routes/compare/+page.svelte:304:	// Union of tasks from picked benchmarks (deduped), each tagged with type +
+/tmp/lb2/src/routes/compare/+page.svelte:305:	// the first benchmark that supplies its scores.
+/tmp/lb2/src/routes/compare/+page.svelte:306:	type TaskCandidate = { name: string; type: string; benchmark: string };
+/tmp/lb2/src/routes/compare/+page.svelte:314:					seen.set(meta.name, { name: meta.name, type: meta.type, benchmark: s.benchmarkName });
+/tmp/lb2/src/routes/compare/+page.svelte:320:	// Union of task types across picked benchmarks, preserving first-seen order.
+/tmp/lb2/src/routes/compare/+page.svelte:338:	// benchmark supplying them is removed. Exclusions have to be pruned on the
+/tmp/lb2/src/routes/compare/+page.svelte:341:	// benchmark carrying that task comes back, silently hiding a row the user
+/tmp/lb2/src/routes/compare/+page.svelte:342:	// has no way to connect to a drop they made benchmarks ago.
+/tmp/lb2/src/routes/compare/+page.svelte:344:		// Skip until a summary has loaded — otherwise a URL-hydrated `?task=`
+/tmp/lb2/src/routes/compare/+page.svelte:354:	// Task selection *follows* the benchmark selection by default: an empty
+/tmp/lb2/src/routes/compare/+page.svelte:355:	// `pickedTasks` means "every task in the picked benchmarks", not "no tasks".
+/tmp/lb2/src/routes/compare/+page.svelte:375:	// outside the current benchmark scope shouldn't be advertised as active.
+/tmp/lb2/src/routes/compare/+page.svelte:382:	// benchmarks, so the first benchmark that scored one supplies its values.
+/tmp/lb2/src/routes/compare/+page.svelte:385:	// follow-the-benchmarks mode there are hundreds of tasks, and the ones that
+/tmp/lb2/src/routes/compare/+page.svelte:391:		benchmark: string;
+/tmp/lb2/src/routes/compare/+page.svelte:398:		// Per-summary indexes built once: task-name Set for membership +
+/tmp/lb2/src/routes/compare/+page.svelte:401:			tasksSet: new Set(bv.summary.tasks ?? []),
+/tmp/lb2/src/routes/compare/+page.svelte:402:			metaByName: new Map(bv.summary.tasksMeta.map((m) => [m.name, m]))
+/tmp/lb2/src/routes/compare/+page.svelte:416:					benchmark: bv.name,
+/tmp/lb2/src/routes/compare/+page.svelte:461:	// Follow-the-benchmarks mode can mean hundreds of tasks; show the most
+/tmp/lb2/src/routes/compare/+page.svelte:469:	// Per task-type mean, computed over *tasks* — not over per-benchmark type
+/tmp/lb2/src/routes/compare/+page.svelte:470:	// averages, which weighted each benchmark equally regardless of how many
+/tmp/lb2/src/routes/compare/+page.svelte:471:	// tasks it contributed and produced axes resting on different benchmark
+/tmp/lb2/src/routes/compare/+page.svelte:525:		if (!primarySummary) return [];
+/tmp/lb2/src/routes/compare/+page.svelte:527:		return primarySummary.rows.filter((r) => {
+/tmp/lb2/src/routes/compare/+page.svelte:535:		return ALL_BENCHMARKS.filter((b) => {
+/tmp/lb2/src/routes/compare/+page.svelte:555:		valueOf: (r: SummaryRow) => number | null;
+/tmp/lb2/src/routes/compare/+page.svelte:556:		format: (r: SummaryRow) => string;
+/tmp/lb2/src/routes/compare/+page.svelte:558:	// Model attributes — architectural facts that don't depend on the benchmark.
+/tmp/lb2/src/routes/compare/+page.svelte:559:	// (Zero-shot is benchmark-specific, so it lives in the per-benchmark section;
+/tmp/lb2/src/routes/compare/+page.svelte:593:	// Radar plot uses the primary (first picked) benchmark's task types.
+/tmp/lb2/src/routes/compare/+page.svelte:633:	// Task-type figure, built from the (benchmark-averaged) `typeScores` so one
+/tmp/lb2/src/routes/compare/+page.svelte:634:	// spec works for a single benchmark or several. Radar needs ≥3 axes to read
+/tmp/lb2/src/routes/compare/+page.svelte:705:	// Zero-shot comparability: within a benchmark, flag when the picked models
+/tmp/lb2/src/routes/compare/+page.svelte:706:	// were trained on different subsets of that benchmark's tasks — their scores
+/tmp/lb2/src/routes/compare/+page.svelte:707:	// then aren't directly comparable. `trainedOnTasks` is already benchmark-scoped.
+/tmp/lb2/src/routes/compare/+page.svelte:737:	description="Side-by-side metric cards plus a radar chart for up to four embedding models on any MTEB benchmark — per-metric winners highlighted, deep-linkable via ?model=… &benchmark=…"
+/tmp/lb2/src/routes/compare/+page.svelte:758:	{#snippet benchmarkPicker()}
+/tmp/lb2/src/routes/compare/+page.svelte:761:				{#each pickedBenchmarks as bn (bn)}
+/tmp/lb2/src/routes/compare/+page.svelte:765:						{#if pickedBenchmarks.length > 1}
+/tmp/lb2/src/routes/compare/+page.svelte:769:								onclick={() => toggleBenchmark(bn)}
+/tmp/lb2/src/routes/compare/+page.svelte:770:								aria-label="Remove benchmark"
+/tmp/lb2/src/routes/compare/+page.svelte:777:				{#if pickedBenchmarks.length < MAX_BENCHMARKS}
+/tmp/lb2/src/routes/compare/+page.svelte:784:						+ Add benchmark
+/tmp/lb2/src/routes/compare/+page.svelte:789:				<div class="picker-panel panel bench-panel" role="dialog" aria-label="Pick benchmark">
+/tmp/lb2/src/routes/compare/+page.svelte:793:						placeholder="Search benchmarks…"
+/tmp/lb2/src/routes/compare/+page.svelte:798:							{@const isOn = pickedBenchmarks.includes(b.name)}
+/tmp/lb2/src/routes/compare/+page.svelte:803:								disabled={!isOn && pickedBenchmarks.length >= MAX_BENCHMARKS}
+/tmp/lb2/src/routes/compare/+page.svelte:804:								onclick={() => toggleBenchmark(b.name)}
+/tmp/lb2/src/routes/compare/+page.svelte:880:		{#if !primarySummary}
+/tmp/lb2/src/routes/compare/+page.svelte:1045:				<!-- Score per benchmark — table + zero-shot comparability -->
+/tmp/lb2/src/routes/compare/+page.svelte:1048:						<h2>Score per benchmark</h2>
+/tmp/lb2/src/routes/compare/+page.svelte:1050:							{@render benchmarkPicker()}
+/tmp/lb2/src/routes/compare/+page.svelte:1051:							<span class="cmp-count">{pickedBenchmarks.length} / {MAX_BENCHMARKS}</span>
+/tmp/lb2/src/routes/compare/+page.svelte:1056:						{@render compareHead('Benchmark')}
+/tmp/lb2/src/routes/compare/+page.svelte:1080:													? 'Fully zero-shot: this model was not trained on any of this benchmark’s tasks, so every score here is out-of-distribution.'
+/tmp/lb2/src/routes/compare/+page.svelte:1081:													: `Zero-shot on ${r.zeroShotPct}% of this benchmark’s tasks — the model was trained on the rest, which inflates its score relative to a fully zero-shot model.`}
+/tmp/lb2/src/routes/compare/+page.svelte:1095:							title="These models were trained on different subsets of this benchmark's tasks. A model that saw a task's training set during training has an advantage on it, so the mean scores above are not a like-for-like comparison."
+/tmp/lb2/src/routes/compare/+page.svelte:1129:							the selected benchmarks.
+/tmp/lb2/src/routes/compare/+page.svelte:1131:							Every task in the selected benchmarks. Pick specific tasks above to narrow the
+/tmp/lb2/src/routes/compare/+page.svelte:1204:						<p class="cmp-hint">No tasks available for the selected benchmarks.</p>
+/tmp/lb2/src/routes/compare/+page.svelte:1293:	/* Benchmark picker bar -------------------------------------------------- */
+/tmp/lb2/src/routes/compare/+page.svelte:1711:	/* Param unit (B/M) — subtle, matches the summary table's `.unit`. */
+/tmp/lb2/src/routes/compare/+page.svelte:1765:	/* Per-benchmark cell: mean score + rank pill + zero-shot */
+/tmp/lb2/src/routes/models/+page.svelte:138:		// No summary here, so call hydrateFromUrl directly.
+/tmp/lb2/src/routes/models/+page.svelte:163:	// benchmark-scope / sort / re-rank parts that only make sense for a
+/tmp/lb2/src/routes/models/+page.svelte:164:	// summary's rows.
+/tmp/lb2/src/routes/models/+page.svelte:306:				every benchmark detail page.
+/tmp/lb2/src/routes/models/+page.svelte:311:					href="https://embeddings-benchmark.github.io/mteb/contributing/adding_a_model/"
+/tmp/lb2/src/routes/models/+page.svelte:316:					href="https://embeddings-benchmark.github.io/mteb/contributing/submitting_results/"
+/tmp/lb2/src/routes/models/+page.svelte:362:					{@const languageSummary = summarizeModelLanguages(m.languages)}
+/tmp/lb2/src/routes/models/+page.svelte:416:							{#if languageSummary}
+/tmp/lb2/src/routes/models/+page.svelte:419:									title={languageSummary.title}
+/tmp/lb2/src/routes/models/+page.svelte:420:									aria-label={languageSummary.ariaLabel}
+/tmp/lb2/src/routes/models/+page.svelte:422:									<span>{languageSummary.label}</span>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:49:	// Scores payload carries a refined model with summary-derived fields;
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:57:			benchmarkName: r.benchmarkName,
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:58:			benchmarkDisplay: r.benchmarkDisplayName,
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:67:	// `bestBenchmark` keeps the API's rank-1 entry regardless of user-applied
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:69:	// benchmark for the "Compare with another model" link.
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:70:	let bestBenchmark = $derived(rawRows[0] ?? null);
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:99:		if (seed) params.set('benchmark', seed.benchmarkName);
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:103:		// Column order mirrors the on-screen `BenchScoreTable`: Benchmark,
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:106:			'Benchmark',
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:115:			s.benchmarkName,
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:169:				<a class="ref muted" href={compareHref(model.name, bestBenchmark)}>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:207:									<summary>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:215:									</summary>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:316:									<summary>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:334:									</summary>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:401:			<h2>Benchmark scores</h2>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:404:				{:else}{rawRows.length} benchmark{rawRows.length === 1 ? '' : 's'}{/if}
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:407:				<DownloadButton filename="{sanitizeFilename(model.name)}_benchmarks" build={buildCsv} />
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:507:	/* Chip fold-out (shared by "Trained on" + "Languages"): <summary>
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:510:	.chip-foldout summary {
+/tmp/lb2/src/routes/models/[...name=modelName]/+page.svelte:513:	.chip-foldout summary:focus-visible {
+/tmp/lb2/src/routes/tasks/+page.svelte:59:		{ id: 'benchmarks', label: 'Benchmark count' },
+/tmp/lb2/src/routes/tasks/+page.svelte:69:		benchmarks: 'desc',
+/tmp/lb2/src/routes/tasks/+page.svelte:236:			} else if (sort === 'benchmarks') {
+/tmp/lb2/src/routes/tasks/+page.svelte:237:				cmp = a.benchmarks.length - b.benchmarks.length;
+/tmp/lb2/src/routes/tasks/+page.svelte:295:	description={`Every task across every benchmark on the MTEB Leaderboard — ${ALL_TASKS.length || '1700+'} entries spanning retrieval, classification, clustering, pair classification, and semantic similarity.`}
+/tmp/lb2/src/routes/tasks/+page.svelte:303:				Every task across every benchmark, deduped by name. Click a card to see how each model
+/tmp/lb2/src/routes/tasks/+page.svelte:309:					href="https://embeddings-benchmark.github.io/mteb/contributing/adding_a_dataset/"
+/tmp/lb2/src/routes/tasks/+page.svelte:314:					href="https://embeddings-benchmark.github.io/mteb/contributing/submitting_results/"
+/tmp/lb2/src/routes/tasks/+page.svelte:378:							{ label: 'Benchmarks', value: t.benchmarks.length },
+/tmp/lb2/src/routes/tasks/+page.ts:4:import { loadBenchmarkMenu, loadTasks } from '$lib/data/service';
+/tmp/lb2/src/routes/tasks/+page.ts:20:	benchmarks: string[];
+/tmp/lb2/src/routes/tasks/+page.ts:22:	/** Backend overlay; 0 when the cache isn't filled. */
+/tmp/lb2/src/routes/tasks/+page.ts:48:	const [menu, tasks] = await Promise.all([loadBenchmarkMenu(fetchFn), loadTasks({}, fetchFn)]);
+/tmp/lb2/src/routes/tasks/+page.ts:83:			benchmarks: occurrences.get(m.name) ?? [],
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:25:	interface TaskWithBenchmark {
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:27:		benchmarkName: string;
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:28:		benchmarkDisplay: string;
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:32:	let allBenchmarks = $derived(data.allBenchmarks);
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:84:	// Pre-index task membership for the "In benchmarks: …" strip.
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:85:	let benchTasksSets = $derived(allBenchmarks.map((b) => new Set(b.tasks)));
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:86:	let benchmarks = $derived.by(() => {
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:87:		if (!taskName || allBenchmarks.length === 0) return [];
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:89:		for (let i = 0; i < allBenchmarks.length; i++) {
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:91:				const b = allBenchmarks[i];
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:99:	let task = $derived.by<TaskWithBenchmark>(() => {
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:100:		const first = benchmarks[0];
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:103:			benchmarkName: first?.name ?? '',
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:104:			benchmarkDisplay: first?.display ?? ''
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:183:				benchmarkName: r.benchmarks[0] ?? '',
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:206:	let multipleBenchmarks = $derived(benchmarks.length > 1);
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:209:	// Same fixed-portal pattern as SummaryTable's column tips and
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:341:				<span class="eyebrow dim">In benchmark{multipleBenchmarks ? 's' : ''}:</span>
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:342:				{#each benchmarks as b (b.name)}
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:343:					<a class="bench-chip" href={resolve('/benchmark/[name]', { name: slug(b.name) })}
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:474:			<summary>
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:487:			</summary>
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:693:	   summary; open state reveals the iframe. The custom chevron sits
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:703:	.dataset-preview > summary {
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:712:	.dataset-preview > summary::before {
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:722:	.dataset-preview[open] > summary::before {
+/tmp/lb2/src/routes/tasks/[name]/+page.svelte:725:	.dataset-preview > summary:focus-visible {
+/tmp/lb2/src/routes/tasks/[name]/+page.ts:6:import { HttpError, loadBenchmarkMenu, loadTask, loadTasks } from '$lib/data/service';
+/tmp/lb2/src/routes/tasks/[name]/+page.ts:7:import { flattenMenu, type Benchmark, type TaskMeta } from '$lib/types';
+/tmp/lb2/src/routes/tasks/[name]/+page.ts:18:	allBenchmarks: Benchmark[];
+/tmp/lb2/src/routes/tasks/[name]/+page.ts:25:		loadBenchmarkMenu(fetch),
+/tmp/lb2/src/routes/tasks/[name]/+page.ts:35:		allBenchmarks: flattenMenu(menu),

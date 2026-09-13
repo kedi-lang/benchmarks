@@ -1,0 +1,31 @@
+131-	}
+132-	return;
+133-    }
+134-	
+135-    // the lump is only used for one rotation
+136-    if (sprtemp[frame].rotate == false)
+137-	I_Error ("R_InitSprites: Sprite %s frame %c has rotations "
+138-		 "and a rot=0 lump", spritename, 'A'+frame);
+139-		
+140-    sprtemp[frame].rotate = true;
+141-
+142-    // make 0 based
+143-    rotation--;		
+144-    if (sprtemp[frame].lump[rotation] != -1)
+145-	I_Error ("R_InitSprites: Sprite %s : %c : %c "
+146:		 "has two lumps mapped to it",
+147-		 spritename, 'A'+frame, '1'+rotation);
+148-		
+149-    sprtemp[frame].lump[rotation] = lump - firstspritelump;
+150-    sprtemp[frame].flip[rotation] = (byte)flipped;
+151-}
+152-
+153-
+154-
+155-
+156-//
+157-// R_InitSpriteDefs
+158-// Pass a null terminated list of sprite names
+159-//  (4 chars exactly) to be used.
+160-// Builds the sprite rotation matrixes to account
+161-//  for horizontally flipped sprites.

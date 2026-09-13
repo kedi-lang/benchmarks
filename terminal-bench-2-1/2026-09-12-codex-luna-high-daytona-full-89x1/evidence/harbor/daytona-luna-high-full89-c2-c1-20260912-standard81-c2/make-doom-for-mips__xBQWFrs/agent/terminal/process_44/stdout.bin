@@ -1,0 +1,52 @@
+
+    //!
+    // @arg <s>
+    // @vanilla
+    //
+    // Load the game in slot s.
+    //
+
+    p = M_CheckParmWithArgs("-loadgame", 1);
+    
+    if (p)
+    {
+        startloadgame = atoi(myargv[p+1]);
+    }
+    else
+    {
+        // Not loading a game
+        startloadgame = -1;
+    }
+
+    DEH_printf("M_Init: Init miscellaneous info.\n");
+    M_Init ();
+
+    DEH_printf("R_Init: Init DOOM refresh daemon - ");
+    R_Init ();
+
+    DEH_printf("\nP_Init: Init Playloop state.\n");
+    P_Init ();
+
+    DEH_printf("S_Init: Setting up sound.\n");
+    S_Init (sfxVolume * 8, musicVolume * 8);
+
+    DEH_printf("D_CheckNetGame: Checking network game status.\n");
+    D_CheckNetGame ();
+
+    PrintGameVersion();
+
+    DEH_printf("HU_Init: Setting up heads up display.\n");
+    HU_Init ();
+
+    DEH_printf("ST_Init: Init status bar.\n");
+    ST_Init ();
+
+    // If Doom II without a MAP01 lump, this is a store demo.
+    // Moved this here so that MAP01 isn't constantly looked up
+    // in the main loop.
+
+    if (gamemode == commercial && W_CheckNumForName("map01") < 0)
+        storedemo = true;
+
+    if (M_CheckParmWithArgs("-statdump", 1))
+359:void I_Error (char *error, ...)

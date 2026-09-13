@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "be7796bb61268ab4c3a0b93e8aec24abc5ce6b0fe158f5c41dd3a82a85ce36ae",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 44371,
+    "created_at": "2026-09-12T20:03:56.366587Z",
+    "expires_at": "2026-09-12T21:03:56.366587Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"duration_seconds\":0.066,\"exit_code\":0,\"process_id\":\"process_1\",\"stderr\":\"\",\"stdout\":\"===== test/01-factorial.scm\\n;; Test 1: Factorial - Classic recursive function\\n\\n(define (factorial n)\\n  (if (= n 0)\\n      1\\n      (* n (factorial (- n 1)))))\\n\\n;; Test factorial of 5\\n(display (factorial 5))\\n(newline)\\n\\n;; Test factorial of 10\\n(display (factorial 10))\\n(newline)\\n\\n;; Tail-recursive version\\n(define (factorial-tail n)\\n  (define (fact-iter n acc)\\n    (if (= n 0)\\n        acc\\n        (fact-iter (- n 1) (* n acc))))\\n  (fact-iter n 1))\\n\\n;; Test factorial of 20 (tail-recursive)\\n(display (factorial-tail 20))\\n(newline)===== test/02-fibonacci.scm\\n;; Test 2: Fibonacci - Another classic recursive function\\n\\n(define (fib n)\\n  (cond ((= n 0) 0)\\n        ((= n 1) 1)\\n        (else (+ (fib (- n 1)) (fib (- n 2))))))\\n\\n;; Generate list of first n Fibonacci numbers\\n(define (fib-list n)\\n  (define (fib-list-helper i)\\n    (if (>= i n)\\n        '()\\n        (cons (fib i) (fib-list-helper (+ i 1)))))\\n  (fib-list-helper 0))\\n\\n;; Display first 10 Fibonacci numbers as a list\\n(display (fib-list 10))\\n(newline)\\n\\n;; Efficient iterative version\\n(define (fib-iter n)\\n  (define …",
+    "ref_id": "tool_call_result_2",
+    "sensitive": false,
+    "size_bytes": 44371,
+    "summary": "builtins.dict value with 44371 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_21326382-16fc-48e5-8e39-372817e09d97",
+  "source": "tool:run_shell",
+  "status": "active"
+}

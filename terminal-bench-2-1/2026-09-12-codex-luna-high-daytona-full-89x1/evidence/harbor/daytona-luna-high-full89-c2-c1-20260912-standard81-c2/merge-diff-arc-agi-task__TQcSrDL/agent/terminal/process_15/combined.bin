@@ -1,0 +1,17 @@
+import numpy as np
+def transform(g_np):
+    num_rows, num_cols = g_np.shape
+    d = {}
+
+    for i in range(num_rows):
+        for j in range(num_cols):
+            c = g_np[i, j]
+            key = (i - j) % 3
+            d[key] = c
+    
+    result = np.zeros_like(g_np)
+    for i in range(num_rows):
+        for j in range(num_cols):
+            result[i, j] = d.get((i + j) % 3, 0)
+            
+    return result

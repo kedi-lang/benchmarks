@@ -1,0 +1,31 @@
+Usage: mailman delmembers [OPTIONS]
+
+  Delete members from a mailing list.
+
+Options:
+  -l, --list LISTSPEC             The list to operate on.  Required unless
+                                  --fromall is specified.
+  -f, --file FILENAME             Delete list members whose addresses are in
+                                  FILENAME in addition to those specified with
+                                  -m/--member if any.  FILENAME can be '-' to
+                                  indicate standard input.  Blank lines and
+                                  lines that start with a '#' are ignored.
+  -m, --member ADDRESS            Delete the list member whose address is
+                                  ADDRESS in addition to those specified with
+                                  -f/--file if any.  This option may be
+                                  repeated for multiple addresses.
+  -a, --all                       Delete all the members of the list.  If
+                                  specified, none of -f/--file, -m/--member or
+                                  --fromall may be specified.
+  --fromall                       Delete the member(s) specified by
+                                  -m/--member and/or -f/--file from all lists
+                                  in the installation.  This may not be
+                                  specified together with -a/--all or
+                                  -l/--list.
+  -g, --goodbye-msg / -G, --no-goodbye-msg
+                                  Override the list's setting for
+                                  send_goodbye_message to deleted members.
+  -n, --admin-notify / -N, --no-admin-notify
+                                  Override the list's setting for
+                                  admin_notify_mchanges.
+  -h, --help                      Show this message and exit.

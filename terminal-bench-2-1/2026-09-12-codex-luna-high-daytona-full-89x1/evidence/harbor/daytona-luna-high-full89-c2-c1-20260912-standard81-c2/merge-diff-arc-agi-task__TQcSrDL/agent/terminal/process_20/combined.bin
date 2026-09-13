@@ -1,0 +1,37 @@
+diff --git a/algo.py b/algo.py
+index f7ad31f..f5b668f 100644
+--- a/algo.py
++++ b/algo.py
+@@ -1,22 +1,17 @@
+-def map(g):
+-    num_rows = len(g)
+-    num_cols = len(g[0])
+-
++import numpy as np
++def transform(g_np):
++    num_rows, num_cols = g_np.shape
+     d = {}
+ 
+     for i in range(num_rows):
+         for j in range(num_cols):
+-            c = g[i][j]
+-            key = (i + j) % 4
+-            if key not in d:
+-                d[key] = c
+-
+-    result = []
++            c = g_np[i, j]
++            key = (i - j) % 3
++            d[key] = c
++    
++    result = np.zeros_like(g_np)
+     for i in range(num_rows):
+-        row = []
+         for j in range(num_cols):
+-            value = d.get((i + j) % 4, 0)
+-            row.append(value)
+-        result.append(row)
+-
++            result[i, j] = d.get((i + j) % 3, 0)
++            
+     return result

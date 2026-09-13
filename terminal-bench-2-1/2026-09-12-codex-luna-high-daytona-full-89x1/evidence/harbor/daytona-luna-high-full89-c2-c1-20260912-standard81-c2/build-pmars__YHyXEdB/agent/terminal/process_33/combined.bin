@@ -1,0 +1,81 @@
+#endif
+#endif
+  return returnValue;
+}
+/*---------------------------------------------------------------------------
+ queue - return address at process queue position
+ ---------------------------------------------------------------------------*/
+ADDR_T
+queue(index)
+  int     index;
+{
+  if (!index)
+    return progCnt;
+  else
+#ifdef DOS16
+    return *(QW->taskHead + index - 1);
+#else
+    return *(QW->taskHead + ((QW->taskHead + index - 1 >= endQueue) ?
+                             (index - 1 - totaltask) : index - 1));
+#endif
+}
+/*---------------------------------------------------------------------------
+ get_cmd - get command from user or from command chain (cmd1~cmd2~cmd3..)
+         returns null-term cmd?
+         <return> recalls last cmd (chain)
+         <space>.... supresses saving cmd (chain) to last-cmd
+         ~~ (empty cmd) repeats last cmd in chain (also ~\0)
+         ~ ~ is same as \n (used in print/edit/fill_core())
+        !e repeats the chain before e times (no e, repeat forever)
+        expands macro "flat" by a rather obscure method
+ Warning: this is probably the worst spaghetti code in pmars; change at your
+        your own risk!
+ ---------------------------------------------------------------------------*/
+char   *
+get_cmd(prompt)
+  char   *prompt;
+{
+  static int curCmd = 0, nextCmd = 0, loopNesting;
+  static long repeating = 0, loopStack[MAXLOOPNESTING];
+  static char holding[MAXCMDSTR + 1], inputStr[MAXCMDSTR + 1], lastCmdStr[MAXCMDSTR + 1];
+  int     inpPtr, marking, loopStart, conLine, i;
+  char   *rv, *ptr;                /* return value for *gets */
+
+  if (cmdMod == RESET)                /* "reset" command was issued to terminate
+                                 * macro */
+    cmdMod = curCmd = nextCmd = 0;
+new_input:
+
+#if 0
+  printf("entering with inputStr+(curCmd=%d)=\"%s\",inputStr+(nextCmd=%d)=\"%s\"\n",
+         curCmd, inputStr + curCmd, nextCmd, inputStr + nextCmd);
+#endif
+  if (nextMacro) {                /* last command was "macro <name>"" */
+#if defined(CURSESGRAPHX)
+    winupdate();
+#else
+#if defined(DJGPP)
+#if defined(DOSALLGRAPHX)
+    if (displayLevel == TEXT)
+      SCREENUPDATE(Screen[CDB_PAGE]);
+#else
+#if defined(DOSTXTGRAPHX)
+    SCREENUPDATE(Screen[CDB_PAGE]);
+#endif                                /* DOSTXTGRAPHX */
+#endif                                /* DOSALLGRAPHX */
+#endif                                /* DJGPP */
+#endif                                /* CURSESGRAPHX */
+    if (strlen(inputStr + nextCmd) + nextCmd + strlen(nextMacro)
+        <= MAXCMDSTR) {                /* check for buffer overflow */
+      if (nextCmd) {                /* save remaining chain for later appending */
+        *holding = CMDSEP;
+        strcpy(holding + 1, inputStr + nextCmd);
+      } else
+        *holding = 0;
+#ifdef CYCLE_CHECK
+      if ((tmpEnd = curCmd + strlen(nextMacro)) > macroEnd) {
+        /* done with last macro, clear cycle-check array */
+        for (macroIdx = 0; macroTab[macroIdx]; ++macroIdx)
+          macroCycle[macroIdx] = 0;
+        macroEnd = tmpEnd;
+      }

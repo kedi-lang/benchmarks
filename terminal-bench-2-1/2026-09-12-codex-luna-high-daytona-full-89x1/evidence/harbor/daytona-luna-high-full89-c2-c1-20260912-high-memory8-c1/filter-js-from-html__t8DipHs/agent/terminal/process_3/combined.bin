@@ -1,0 +1,22 @@
+107-    # attribute when it actually contains a dangerous URL, preserving normal
+108-    # metadata and its original spelling otherwise.
+109-    if tag.casefold() == "meta" and name == "content" and value is not None:
+110:        http_equiv = next((v for n, v in attrs if n.casefold() == "http-equiv"), None)
+111:        if http_equiv is not None and _unobscure(http_equiv) == "refresh":
+112-            m = re.search(r"(?:^|;)\s*url\s*=\s*(.*)", html.unescape(value), re.I)
+113-            if m and _bad_url(m.group(1).strip().strip('"\'')):
+114-                return True
+115-    return False
+116-
+117-
+118-def _filtered_start_tag(raw: str, tag: str, attrs: list[tuple[str, str | None]]) -> str:
+119-    """Remove unsafe attributes while retaining every other source character.
+216:    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+217-        if self.drop_element is not None:
+218-            return
+219-        raw = self.get_starttag_text() or ("<" + tag + "/>" )
+220-        if tag.casefold() in _DROP_ELEMENTS:
+221-            return
+222-        self._put(_filtered_start_tag(raw, tag, attrs))
+223-
+224-    def handle_endtag(self, tag: str) -> None:

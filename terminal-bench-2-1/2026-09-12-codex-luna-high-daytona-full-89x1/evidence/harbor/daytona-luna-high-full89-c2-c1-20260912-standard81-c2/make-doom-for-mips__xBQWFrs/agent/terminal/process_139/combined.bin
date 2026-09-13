@@ -1,0 +1,62 @@
+
+/tmp/doom-build/m_fixed.o:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text:
+
+00000000 <FixedMul>:
+   0:	000417c3 	sra	v0,a0,0x1f
+   4:	00051fc3 	sra	v1,a1,0x1f
+   8:	00640018 	mult	v1,a0
+   c:	70450000 	madd	v0,a1
+  10:	00001012 	mflo	v0
+  14:	00850019 	multu	a0,a1
+  18:	00002012 	mflo	a0
+  1c:	00002810 	mfhi	a1
+  20:	00452821 	addu	a1,v0,a1
+  24:	00051400 	sll	v0,a1,0x10
+  28:	00042402 	srl	a0,a0,0x10
+  2c:	03e00008 	jr	ra
+  30:	00441025 	or	v0,v0,a0
+
+00000034 <FixedDiv>:
+  34:	27bdffe0 	addiu	sp,sp,-32
+  38:	afbf001c 	sw	ra,28(sp)
+  3c:	afb20018 	sw	s2,24(sp)
+  40:	afb10014 	sw	s1,20(sp)
+  44:	afb00010 	sw	s0,16(sp)
+  48:	00809025 	move	s2,a0
+  4c:	0c000000 	jal	0 <FixedMul>
+			4c: R_MIPS_26	abs
+  50:	00a08825 	move	s1,a1
+  54:	00408025 	move	s0,v0
+  58:	0c000000 	jal	0 <FixedMul>
+			58: R_MIPS_26	abs
+  5c:	02202025 	move	a0,s1
+  60:	00108383 	sra	s0,s0,0xe
+  64:	0202802a 	slt	s0,s0,v0
+  68:	16000009 	bnez	s0,90 <FixedDiv+0x5c>
+  6c:	00122c02 	srl	a1,s2,0x10
+  70:	02518826 	xor	s1,s2,s1
+  74:	06200004 	bltz	s1,88 <FixedDiv+0x54>
+  78:	00000000 	nop
+  7c:	3c027fff 	lui	v0,0x7fff
+  80:	1000000a 	b	ac <FixedDiv+0x78>
+  84:	3442ffff 	ori	v0,v0,0xffff
+  88:	10000008 	b	ac <FixedDiv+0x78>
+  8c:	3c028000 	lui	v0,0x8000
+  90:	001217c3 	sra	v0,s2,0x1f
+  94:	00021400 	sll	v0,v0,0x10
+  98:	02203025 	move	a2,s1
+  9c:	00113fc3 	sra	a3,s1,0x1f
+  a0:	00122400 	sll	a0,s2,0x10
+  a4:	0c000000 	jal	0 <FixedMul>
+			a4: R_MIPS_26	__divdi3
+  a8:	00a22825 	or	a1,a1,v0
+  ac:	8fbf001c 	lw	ra,28(sp)
+  b0:	8fb20018 	lw	s2,24(sp)
+  b4:	8fb10014 	lw	s1,20(sp)
+  b8:	8fb00010 	lw	s0,16(sp)
+  bc:	03e00008 	jr	ra
+  c0:	27bd0020 	addiu	sp,sp,32
+	...

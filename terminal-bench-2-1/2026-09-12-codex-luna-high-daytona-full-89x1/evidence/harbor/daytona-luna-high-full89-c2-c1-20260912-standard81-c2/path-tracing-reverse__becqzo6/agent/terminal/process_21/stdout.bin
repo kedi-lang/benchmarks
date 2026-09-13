@@ -1,0 +1,89 @@
+
+mystery:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000402060 <vector_length>:
+  402060:	endbr64
+  402064:	movq   QWORD PTR [rsp-0x10],xmm0
+  40206a:	movss  xmm2,DWORD PTR [rsp-0x10]
+  402070:	mulss  xmm1,xmm1
+  402074:	movss  xmm0,DWORD PTR [rsp-0xc]
+  40207a:	mulss  xmm2,xmm2
+  40207e:	mulss  xmm0,xmm0
+  402082:	addss  xmm2,xmm0
+  402086:	addss  xmm2,xmm1
+  40208a:	sqrtss xmm2,xmm2
+  40208e:	movaps xmm0,xmm2
+  402091:	ret
+  402092:	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  40209d:	nop    DWORD PTR [rax]
+
+00000000004020a0 <vector_normalize>:
+  4020a0:	endbr64
+  4020a4:	movaps xmm4,xmm0
+  4020a7:	movaps xmm2,xmm0
+  4020aa:	shufps xmm4,xmm4,0xe5
+  4020ae:	mulss  xmm2,xmm0
+  4020b2:	movaps xmm3,xmm4
+  4020b5:	mulss  xmm3,xmm4
+  4020b9:	addss  xmm2,xmm3
+  4020bd:	movaps xmm3,xmm1
+  4020c0:	mulss  xmm3,xmm1
+  4020c4:	addss  xmm2,xmm3
+  4020c8:	sqrtss xmm2,xmm2
+  4020cc:	divss  xmm1,xmm2
+  4020d0:	movaps xmm3,xmm2
+  4020d3:	shufps xmm3,xmm3,0xe0
+  4020d7:	movhps xmm3,QWORD PTR [rip+0x8397a]        # 485a58 <__PRETTY_FUNCTION__.0+0x40>
+  4020de:	divps  xmm0,xmm3
+  4020e1:	ret
+  4020e2:	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  4020ed:	nop    DWORD PTR [rax]
+
+00000000004020f0 <ray_create>:
+  4020f0:	endbr64
+  4020f4:	movq   QWORD PTR [rsp-0x28],xmm2
+  4020fa:	mov    rax,rdi
+  4020fd:	movss  DWORD PTR [rsp-0x20],xmm3
+  402103:	movss  xmm3,DWORD PTR [rsp-0x28]
+  402109:	movq   xmm2,QWORD PTR [rsp-0x24]
+  40210f:	movq   QWORD PTR [rsp-0x18],xmm0
+  402115:	movaps xmm5,xmm2
+  402118:	movaps xmm0,xmm3
+  40211b:	movaps xmm6,xmm2
+  40211e:	mulss  xmm5,xmm2
+  402122:	shufps xmm6,xmm6,0xe5
+  402126:	movaps xmm4,xmm6
+  402129:	mulss  xmm0,xmm3
+  40212d:	mulss  xmm4,xmm6
+  402131:	addss  xmm0,xmm5
+  402135:	addss  xmm0,xmm4
+  402139:	movss  xmm4,DWORD PTR [rsp-0x14]
+  40213f:	sqrtss xmm0,xmm0
+  402143:	divss  xmm3,xmm0
+  402147:	shufps xmm0,xmm0,0xe0
+  40214b:	movhps xmm0,QWORD PTR [rip+0x83906]        # 485a58 <__PRETTY_FUNCTION__.0+0x40>
+  402152:	divps  xmm2,xmm0
+  402155:	unpcklps xmm1,xmm3
+  402158:	movss  xmm3,DWORD PTR [rsp-0x18]
+  40215e:	unpcklps xmm3,xmm4
+  402161:	movlhps xmm3,xmm1
+  402164:	movups XMMWORD PTR [rdi],xmm3
+  402167:	movlps QWORD PTR [rdi+0x10],xmm2
+  40216b:	ret
+  40216c:	nop    DWORD PTR [rax+0x0]
+
+0000000000402170 <ray_at>:
+  402170:	endbr64
+  402174:	movss  xmm1,DWORD PTR [rsp+0x1c]
+  40217a:	movq   xmm2,QWORD PTR [rsp+0x14]
+  402180:	mulss  xmm1,xmm0
+  402184:	shufps xmm0,xmm0,0xe0
+  402188:	mulps  xmm2,xmm0
+  40218b:	movq   xmm0,QWORD PTR [rsp+0x8]
+  402191:	addss  xmm1,DWORD PTR [rsp+0x10]
+  402197:	addps  xmm0,xmm2
+  40219a:	ret
+  40219b:	nop    DWORD PTR [rax+rax*1+0x0]

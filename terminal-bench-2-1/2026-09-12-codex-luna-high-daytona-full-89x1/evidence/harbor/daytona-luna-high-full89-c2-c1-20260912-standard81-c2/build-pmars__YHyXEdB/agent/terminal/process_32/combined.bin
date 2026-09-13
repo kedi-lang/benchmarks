@@ -1,0 +1,441 @@
+char   *warriorview();
+static char *(*targetview) () = locview;
+char   *strstr();
+extern int parse();
+#ifdef CURSESGRAPHX
+extern void init_curses();
+extern void end_curses();
+extern void winupdate();
+extern char *agets5();
+#endif
+#endif
+
+/* strings */
+extern char *pagePrompt, *exitingCdbToFinishSimulation, *usageDisplay, *usageExecute,
+       *usageMoveable, *pressAnyKeyToContinue, *usageSkip, *usageWrite,
+       *closingLogfile, *cannotOpenLogfile, *openingLogfile, *unknownCommand,
+       *macroStringExpansionTooLong, *EOFreadingCommandInput, *maximumLoopNestingExceeded,
+       *badRepeatCountExpression, *writeErrorDiskFull, *badArgument, *helpText[],
+       *roundOfCycle, *currentlyExecutingWarrior, *processesActive, *otherWarrior,
+       *warriorAtAddressHasActiveProcesses, *pluralEndingOfProcess, *ofWarriorsAreAlive,
+       *fillWith, *dotByItselfEndsKeyboardInput, *cannotOpenMacroFile,
+       *maximumNumberOfMacrosExceeded, *outOfMacroMemory, *unknownMacro,
+       *badExprErr, *divZeroErr, *overflowErr;
+
+/* global variables */
+static FILE *logfile = 0;
+ADDR_T  curAddr;
+static long skipCounter = 0;
+unsigned char commaSep;                /* parse_cmd flag indicating 2 argument
+                                 * command, also used by CALC_H */
+static int silent = 0;
+static ADDR_T targetSize;
+static int targetID = CORE;
+#if defined(DJGPP) && !defined(CURSESGRAPHX) && defined(DOSTXTGRAPHX)
+extern short *Screen[];
+#endif
+#if defined(DOSTXTGRAPHX)
+extern int screenY;
+#endif
+
+#ifdef CYCLE_CHECK
+static char *nextMacro = NULL, *macroTab[MAXMACROS], macroCycle[MAXMACROS];
+#else
+static char *nextMacro = NULL, *macroTab[MAXMACROS];
+#endif
+
+warrior_struct *W2, *QW;
+char    outs[MAXSTR + 1], buffer1[MAXSTR + 1], buffer2[MAXSTR + 1];
+char   *xInpP;                        /* pointer to inputStr[], used by
+                                 * input-requiring functions called by cdb() */
+#if defined(DOSTXTGRAPHX) || defined(DOSGRXGRAPHX) || defined(LINUXGRAPHX) \
+    || defined(XWINGRAPHX)
+int     printAttr;
+int     curPanel = 0;
+ADDR_T  curAddr2;
+#endif
+
+#if !defined(NEW_STYLE) && !defined(VMS)
+char   *
+strstr(cs, ct)
+  char   *cs, *ct;
+{
+  char   *p, *q, *r;
+
+  for (p = cs; *p != 0; ++p) {
+    for (q = p, r = ct; *r != 0; ++q, ++r) {
+      if (*q != *r)
+        goto next_sub;
+    }
+    return p;
+next_sub:;
+  }
+  return NULL;
+}
+#endif
+/*---------------------------------------------------------------------------
+ cdb - main debugger loop, command dispatcher
+ ---------------------------------------------------------------------------*/
+int
+cdb(message)
+  char   *message;
+{
+  char   *cmdStr, *fnStr, verbStr[MAXCMD + 1], argStr[MAXARG + 1];
+  static long start, stop;
+  int     argType, returnValue;
+  unsigned int i;
+
+  /* skip execution */
+  if (skipCounter > 0) {
+    --skipCounter;
+    return STEP;
+  }
+  inCdb = TRUE;
+  /* do some display related stuff */
+#if defined(DOSALLGRAPHX)
+  if (displayMode == TEXT) {
+    switch_page(CDB_PAGE);
+    /* show_cursor();  */
+  } else
+    write_menu();
+#else
+#if defined(DOSTXTGRAPHX)
+  switch_page(CDB_PAGE);
+  /* show_cursor(); */
+#else
+#if defined(DOSGRXGRAPHX)
+  write_menu();
+#else
+#if defined(LINUXGRAPHX)
+  svga_write_menu();
+#else
+#if defined(XWINGRAPHX)
+  xWin_write_menu();
+#endif
+#endif
+#endif
+#endif
+#endif
+
+  W2 = W->nextWarrior;
+  if (targetID == QUEUE) {
+    curAddr = 0;
+    QW = W;
+    targetSize = (QW->tasks ? QW->tasks : 1);        /* at least 1, otherwise
+                                                 * we'll get an exception in
+                                                 * pqueue mode */
+#ifdef QUEUEDEBUG
+    for (i = 0; i < targetSize; i++)
+      printf("%d ", queue(i));
+    printf("\n");
+#endif
+  } else if (targetID == WARRIOR) {
+    curAddr = W - warrior;
+    /* targetSize = warriors; */
+  } else if (targetID == PSP) {
+    QW = W;
+  } else {
+    curAddr = progCnt;
+    targetSize = coreSize;
+  }
+
+  cdb_fputs(message, COND);
+  print_core(curAddr, curAddr);
+  do {                                /* command interpreter loop */
+    cmdStr = get_cmd(CDB_PROMPT);        /* get (chained) command */
+    argType = parse_cmd(cmdStr, verbStr, &start, &stop, argStr);
+    switch (hash_str(verbStr, VERBLEN)) {        /* decode on hash value for
+                                                 * speed */
+    case CAL_H:
+    case CA_H:                        /* calculate */
+      if (argType == RANGE_T) {
+        if (!commaSep)
+          sprintf(outs, "%ld\n", start);
+        else
+          sprintf(outs, "%ld,%ld\n", start, stop);
+        cdb_fputs(outs, COND);
+      } else
+        bad_arg(argStr);
+      break;
+    case CLS_H:
+    case CLE_H:
+    case CL_H:
+#if defined(DOSALLGRAPHX)
+      if (displayMode == TEXT)
+        clear_page5();
+      else
+        grclear();
+#else
+#if defined(DOSTXTGRAPHX)
+      clear_page5();
+#else
+#if defined(DOSGRXGRAPHX)
+      grclear();
+#else
+#ifdef DOS16
+      clrscr();
+#else
+#if defined(MACGRAPHX)
+      mac_clear_screen();
+#else
+#if defined(LINUXGRAPHX)
+      svga_clear();
+#else
+#if defined(XWINGRAPHX)
+      xWin_clear();
+#else
+      cdb_fputs(CLRSCR, COND);        /* escape sequence for your terminal */
+#endif                                /* XWINGRAPHX */
+#endif                                /* LINUXGRAPHX */
+#endif                                /* MACGRAPHX */
+#endif                                /* MSDOS */
+#endif                                /* GRX */
+#endif                                /* TXT */
+#endif                                /* ALL */
+      break;
+#if defined(DOSGRXGRAPHX) || defined(DOSTXTGRAPHX) || defined(LINUXGRAPHX) \
+    || defined(XWINGRAPHX)
+    case CLO_H:                /* close display panel 2 */
+      if (curPanel == 2) {
+        i = curAddr;
+        curAddr = curAddr2;
+        curAddr2 = i;
+      }
+#if defined(DOSALLGRAPHX)
+      if (displayMode == TEXT)
+        text_panel_update(0);
+      else
+        grupdate(0);
+#else
+#if defined(DOSTXTGRAPHX)
+      text_panel_update(0);
+#else
+#if defined(LINUXGRAPHX)
+      svga_update(0);
+#else
+#if defined(XWINGRAPHX)
+      xWin_update(0);
+#else
+      grupdate(0);
+#endif                                /* XWINGRAPHX */
+#endif                                /* LINUXGRAPHX */
+#endif                                /* DOSTXTGRAPHX */
+#endif                                /* DOSALLGRAPHX */
+      break;
+#endif                                /* DOSTXTGRAPHX || DOSGRXGRAPHX */
+    case CON_H:
+    case CO_H:
+    case C_H:
+      cdb_fputs(exitingCdbToFinishSimulation, COND);
+      if (logfile) {
+        fclose(logfile);
+        logfile = NULL;
+      }
+      if (*argStr && ((start = FOLD(start)) == FOLD(stop)))
+        progCnt = start;
+      returnValue = NOBREAK;
+      inCdb = FALSE;
+      break;
+#if defined(CURSESGRAPHX) || defined(DOSTXTGRAPHX) || defined(DOSGRXGRAPHX) \
+    || defined(LINUXGRAPHX) || defined(XWINGRAPHX)
+    case DIS_H:
+    case DI_H:
+    case D_H:
+      if (argStr) {
+        if (((i = hash_str(argStr, 3)) == CLE_H) || (i == CLS_H)) {
+#if defined(DOSALLGRAPHX)
+          if (displayMode == TEXT)
+            text_display_clear();
+          else
+            bgi_clear_arena();
+#else
+#if defined(DOSTXTGRAPHX)
+          text_display_clear();
+#else
+#if defined(DOSGRXGRAPHX)
+          bgi_clear_arena();
+#else
+#if defined(LINUXGRAPHX)
+          svga_clear_arena();
+#endif                                /* SVGA */
+#endif                                /* GRX */
+#endif                                /* TXT */
+#endif                                /* ALL */
+        } else {
+          if ((i = hash_str(argStr, 2)) == ON_H)
+            displayLevel = 3;
+          else if (i == OF_H)
+            displayLevel = 0;
+          else if (FOLD(start) == FOLD(stop)) {
+#if defined(DOSALLGRAPHX)
+            if (displayMode != TEXT)
+              bgi_display_close(NOWAIT);
+#else
+#if defined(LINUXGRAPHX)
+            svga_display_close(NOWAIT);
+#endif
+#endif
+            decode_vopt(start);
+#if defined(DOSALLGRAPHX)
+            display_init();
+            if (displayMode == TEXT)
+              switch_page(CDB_PAGE);
+#else
+#if defined(LINUXGRAPHX)
+            svga_open_graphics();
+#endif
+#endif
+#if defined(XWINGRAPHX)
+            xWin_resize();
+#endif
+          }
+        }
+      } else
+        cdb_fputs(usageDisplay, FORCE);
+      break;
+#endif
+    case ECH_H:
+    case EC_H:
+      sprintf(outs, "%s\n", argStr);
+      cdb_fputs(outs, COND);
+      break;
+    case EDI_H:
+    case ED_H:
+    case E_H:
+      curAddr = FOLD(stop);
+      edit_core(FOLD(start), curAddr);
+      break;
+    case EXE_H:
+    case EX_H:
+    case XEC_H:
+    case XE_H:
+    case X_H:
+      if ((start = FOLD(start)) == FOLD(stop)) {
+        W->taskHead = W->taskTail;
+        W->tasks = 1;
+        progCnt = start;
+        returnValue = STEP;
+        inCdb = FALSE;
+      } else
+        cdb_fputs(usageExecute, FORCE);
+      break;
+    case FIL_H:
+    case FI_H:
+    case F_H:
+      fill_core(FOLD(start), FOLD(stop));
+      break;
+    case GO_H:
+    case G_H:
+      if (*argStr && ((start = FOLD(start)) == FOLD(stop)))
+        progCnt = start;
+      returnValue = BREAK;
+      inCdb = FALSE;
+      break;
+    case HAS_H:                /* HASH: developer hook for adding new *
+                                 * commands */
+      for (i = 0; argStr[i]; ++i)
+        argStr[i] = toupper_(argStr[i]);
+      sprintf(outs, "#define %s_H %d\n", argStr, hash_str(argStr, VERBLEN));
+      cdb_fputs(outs, COND);
+      break;
+    case HEL_H:
+    case HE_H:
+    case H_H:
+      help();
+      break;
+    case IF_H:
+      if (argType == RANGE_T) {
+        if (!start)
+          cmdMod = SKIP;
+      } else
+        bad_arg(argStr);
+      break;
+    case LIS_H:
+    case LI_H:
+    case L_H:
+    case NULL_H:                /* no command, use default */
+      if (argType == RANGE_T) {
+        curAddr = FOLD(stop);
+        print_core(FOLD(start), curAddr);
+      } else if (argStr[0] != CMDREP && argStr[1] != CMDREP)        /* kludge to make !!~!!
+                                                                 * work */
+        bad_arg(argStr);
+      break;
+#ifdef VMS
+    case LSE_H:
+    case LS_H:
+      cdb_fputs("Currently not implemented\n", FORCE);
+      break;
+#endif
+    case MAC_H:
+    case MA_H:
+    case M_H:
+      /* filename ? */
+      for (fnStr = argStr; *fnStr && (*fnStr != ',') && !isspace(*fnStr); ++fnStr);
+      while (*fnStr && ((*fnStr == ',') || isspace(*fnStr)))
+        *fnStr++ = 0;
+      if (!macroTab[0] || *fnStr)
+        load_macros(fnStr);
+      if (!*argStr)
+        print_macros();
+      else
+        exec_macro(argStr);
+      break;
+    case MOV_H:
+    case MO_H:
+      if ((i = hash_str(argStr, 2)) == ON_H)
+        copyDebugInfo = TRUE;
+      else if (i == OF_H)
+        copyDebugInfo = FALSE;
+      else
+        cdb_fputs(usageMoveable, FORCE);
+      break;
+    case PRO_H:
+    case PR_H:
+    case P_H:
+#if defined(DOSALLGRAPHX)
+      if (displayMode == TEXT)
+        results(NULL);
+      else
+        results(STDOUT);
+#else
+#if defined(DOSTXTGRAPHX) || defined(DOSGRXGRAPHX) || defined(LINUXGRAPHX) \
+    || defined(XWINGRAPHX)
+      results(NULL);
+#else
+      results(STDOUT);
+#endif
+#endif
+      if (logfile)
+        results(logfile);
+      break;
+    case PQU_H:
+    case PQ_H:
+      if ((i = hash_str(argStr, 2)) == OF_H) {
+        curAddr = targetSelect(curAddr);
+        targetSize = coreSize;
+        targetID = CORE;
+        targetview = locview;
+      } else {
+        if (*argStr && start == stop && start >= 1 && start <= warriors)
+          QW = warrior + start - 1;
+        else
+          QW = W;
+        curAddr = 0;
+        targetSize = (QW->tasks ? QW->tasks : 1);
+        targetID = QUEUE;
+        targetview = queueview;
+      }
+      print_core(curAddr, curAddr);
+      break;
+#ifdef PSPACE
+    case PSP_H:                /* P-space list mode */
+    case PS_H:
+      if ((i = hash_str(argStr, 2)) == OF_H) {
+        curAddr = targetSelect(curAddr);
+        targetSize = coreSize;
+        targetID = CORE;
+        targetview = locview;
+      } else {
+        if (*argStr && start == stop && start >= 1 && start <= warriors)
+          QW = warrior + start - 1;

@@ -1,0 +1,51 @@
+Traceback (most recent call last):
+  File "/usr/bin/mailman", line 33, in <module>
+    sys.exit(load_entry_point('mailman==3.3.8', 'console_scripts', 'mailman')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1077, in main
+    with self.make_context(prog_name, args, **extra) as ctx:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/click/core.py", line 943, in make_context
+    self.parse_args(ctx, args)
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1644, in parse_args
+    rest = super().parse_args(ctx, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/click/core.py", line 1408, in parse_args
+    value, args = param.handle_parse_result(ctx, opts, args)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/click/core.py", line 2400, in handle_parse_result
+    value = self.process_value(ctx, value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/click/core.py", line 2362, in process_value
+    value = self.callback(ctx, self, value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/mailman/bin/mailman.py", line 95, in initialize_config
+    initialize(value)
+  File "/usr/lib/python3/dist-packages/mailman/core/initialize.py", line 229, in initialize
+    initialize_2(propagate_logs=propagate_logs)
+  File "/usr/lib/python3/dist-packages/mailman/core/initialize.py", line 172, in initialize_2
+    mailman.core.logging.initialize(propagate_logs)
+  File "/usr/lib/python3/dist-packages/mailman/core/logging.py", line 168, in initialize
+    _init_logger(propagate, sub_name, log, logger_config)
+  File "/usr/lib/python3/dist-packages/mailman/core/logging.py", line 121, in _init_logger
+    handler = ReopenableFileHandler(sub_name, path_abs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/mailman/core/logging.py", line 51, in __init__
+    self._stream = self._open()
+                   ^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/mailman/core/logging.py", line 64, in _open
+    return codecs.open(self.filename, open_mode, 'utf-8')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen codecs>", line 918, in open
+PermissionError: [Errno 13] Permission denied: '/var/log/mailman3/mailman.log'
+Exception ignored in atexit callback: <function shutdown at 0x72d4f269c0e0>
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/__init__.py", line 2264, in shutdown
+    h.flush()
+  File "/usr/lib/python3/dist-packages/mailman/core/logging.py", line 67, in flush
+    if self._stream:
+       ^^^^^^^^^^^^
+AttributeError: 'ReopenableFileHandler' object has no attribute '_stream'

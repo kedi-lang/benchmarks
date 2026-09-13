@@ -1,0 +1,108 @@
+ 300:	8b 05 00 00 00 00    	mov    0x0(%rip),%eax        # 306 <main+0x306>
+			302: R_X86_64_PC32	Options-0x4
+ 306:	f6 c4 02             	test   $0x2,%ah
+ 309:	0f 85 d7 00 00 00    	jne    3e6 <main+0x3e6>
+ 30f:	31 c0                	xor    %eax,%eax
+ 311:	e8 00 00 00 00       	call   316 <main+0x316>
+			312: R_X86_64_PLT32	Start_Tracing-0x4
+ 316:	f6 05 00 00 00 00 02 	testb  $0x2,0x0(%rip)        # 31d <main+0x31d>
+			318: R_X86_64_PC32	Options-0x5
+ 31d:	75 54                	jne    373 <main+0x373>
+ 31f:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 326 <main+0x326>
+			322: R_X86_64_PC32	tstop-0x4
+ 326:	e8 00 00 00 00       	call   32b <main+0x32b>
+			327: R_X86_64_PLT32	time-0x4
+ 32b:	48 8b 35 00 00 00 00 	mov    0x0(%rip),%rsi        # 332 <main+0x332>
+			32e: R_X86_64_PC32	tstart-0x4
+ 332:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 339 <main+0x339>
+			335: R_X86_64_PC32	tstop-0x4
+ 339:	e8 00 00 00 00       	call   33e <main+0x33e>
+			33a: R_X86_64_PLT32	difftime-0x4
+ 33e:	31 c0                	xor    %eax,%eax
+ 340:	f2 0f 11 05 00 00 00 	movsd  %xmm0,0x0(%rip)        # 348 <main+0x348>
+ 347:	00 
+			344: R_X86_64_PC32	tused-0x4
+ 348:	e8 00 00 00 00       	call   34d <main+0x34d>
+			349: R_X86_64_PLT32	display_finished-0x4
+ 34d:	31 c0                	xor    %eax,%eax
+ 34f:	e8 00 00 00 00       	call   354 <main+0x354>
+			350: R_X86_64_PLT32	close_all-0x4
+ 354:	31 c0                	xor    %eax,%eax
+ 356:	e8 00 00 00 00       	call   35b <main+0x35b>
+			357: R_X86_64_PLT32	print_stats-0x4
+ 35b:	f6 05 00 00 00 00 02 	testb  $0x2,0x0(%rip)        # 362 <main+0x362>
+			35d: R_X86_64_PC32	Options-0x4
+ 362:	0f 85 61 01 00 00    	jne    4c9 <main+0x4c9>
+ 368:	48 83 c4 08          	add    $0x8,%rsp
+ 36c:	5b                   	pop    %rbx
+ 36d:	5d                   	pop    %rbp
+ 36e:	41 5c                	pop    %r12
+ 370:	41 5d                	pop    %r13
+ 372:	c3                   	ret
+ 373:	80 3d 00 00 00 00 31 	cmpb   $0x31,0x0(%rip)        # 37a <main+0x37a>
+			375: R_X86_64_PC32	VerboseFormat-0x5
+ 37a:	75 a3                	jne    31f <main+0x31f>
+ 37c:	48 8b 35 00 00 00 00 	mov    0x0(%rip),%rsi        # 383 <main+0x383>
+			37f: R_X86_64_PC32	stderr-0x4
+ 383:	bf 0a 00 00 00       	mov    $0xa,%edi
+ 388:	e8 00 00 00 00       	call   38d <main+0x38d>
+			389: R_X86_64_PLT32	fputc-0x4
+ 38d:	eb 90                	jmp    31f <main+0x31f>
+ 38f:	31 c0                	xor    %eax,%eax
+ 391:	e8 00 00 00 00       	call   396 <main+0x396>
+			392: R_X86_64_PLT32	Get_Targa_File_Handle-0x4
+ 396:	48 89 05 00 00 00 00 	mov    %rax,0x0(%rip)        # 39d <main+0x39d>
+			399: R_X86_64_PC32	Output_File_Handle-0x4
+ 39d:	48 85 c0             	test   %rax,%rax
+ 3a0:	0f 85 8f fd ff ff    	jne    135 <main+0x135>
+ 3a6:	31 c0                	xor    %eax,%eax
+ 3a8:	e8 00 00 00 00       	call   3ad <main+0x3ad>
+			3a9: R_X86_64_PLT32	close_all-0x4
+ 3ad:	bf 01 00 00 00       	mov    $0x1,%edi
+ 3b2:	e8 00 00 00 00       	call   3b7 <main+0x3b7>
+			3b3: R_X86_64_PLT32	exit-0x4
+ 3b7:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 3be <main+0x3be>
+			3ba: R_X86_64_PC32	stderr-0x4
+ 3be:	4c 8d 05 00 00 00 00 	lea    0x0(%rip),%r8        # 3c5 <main+0x3c5>
+			3c1: R_X86_64_PC32	Output_File_Name-0x4
+ 3c5:	48 89 d9             	mov    %rbx,%rcx
+ 3c8:	31 c0                	xor    %eax,%eax
+ 3ca:	48 8d 15 00 00 00 00 	lea    0x0(%rip),%rdx        # 3d1 <main+0x3d1>
+			3cd: R_X86_64_PC32	.LC123-0x4
+ 3d1:	be 02 00 00 00       	mov    $0x2,%esi
+ 3d6:	e8 00 00 00 00       	call   3db <main+0x3db>
+			3d7: R_X86_64_PLT32	__fprintf_chk-0x4
+ 3db:	8b 05 00 00 00 00    	mov    0x0(%rip),%eax        # 3e1 <main+0x3e1>
+			3dd: R_X86_64_PC32	Options-0x4
+ 3e1:	e9 20 ff ff ff       	jmp    306 <main+0x306>
+ 3e6:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 3ed <main+0x3ed>
+			3e9: R_X86_64_PC32	.LC59-0x4
+ 3ed:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 3f4 <main+0x3f4>
+			3f0: R_X86_64_PC32	Stat_File_Name-0x4
+ 3f4:	e8 00 00 00 00       	call   3f9 <main+0x3f9>
+			3f5: R_X86_64_PLT32	fopen-0x4
+ 3f9:	4c 8d 05 00 00 00 00 	lea    0x0(%rip),%r8        # 400 <main+0x400>
+			3fc: R_X86_64_PC32	Output_File_Name-0x4
+ 400:	48 89 d9             	mov    %rbx,%rcx
+ 403:	48 8d 15 00 00 00 00 	lea    0x0(%rip),%rdx        # 40a <main+0x40a>
+			406: R_X86_64_PC32	.LC124-0x4
+ 40a:	48 89 c5             	mov    %rax,%rbp
+ 40d:	48 89 c7             	mov    %rax,%rdi
+ 410:	be 02 00 00 00       	mov    $0x2,%esi
+ 415:	31 c0                	xor    %eax,%eax
+ 417:	e8 00 00 00 00       	call   41c <main+0x41c>
+			418: R_X86_64_PLT32	__fprintf_chk-0x4
+ 41c:	48 89 ef             	mov    %rbp,%rdi
+ 41f:	e8 00 00 00 00       	call   424 <main+0x424>
+			420: R_X86_64_PLT32	fclose-0x4
+ 424:	e9 e6 fe ff ff       	jmp    30f <main+0x30f>
+ 429:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 430 <main+0x430>
+			42c: R_X86_64_PC32	.LC118-0x4
+ 430:	e8 00 00 00 00       	call   435 <main+0x435>
+			431: R_X86_64_PLT32	puts-0x4
+ 435:	8b 35 00 00 00 00    	mov    0x0(%rip),%esi        # 43b <main+0x43b>
+			437: R_X86_64_PC32	Frame+0x4
+ 43b:	8b 3d 00 00 00 00    	mov    0x0(%rip),%edi        # 441 <main+0x441>
+			43d: R_X86_64_PC32	Frame+0x8
+ 441:	31 c0                	xor    %eax,%eax
+ 443:	e8 00 00 00 00       	call   448 <main+0x448>

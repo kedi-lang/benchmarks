@@ -1,0 +1,61 @@
+PREFIX uni: <http://university.org/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?professorName
+       (GROUP_CONCAT(DISTINCT ?country; separator=", ") AS ?countries)
+WHERE {
+  ?professor a uni:Person ;
+             uni:hasName ?professorName ;
+             uni:role ?role ;
+             uni:worksIn ?department .
+
+  # A full professor has a role beginning with "Professor", not "Assistant Professor".
+  FILTER(STRSTARTS(STR(?role), "Professor"))
+
+  # Keep every country in which the professor works for GROUP_CONCAT.
+  ?department a uni:Department ;
+              uni:belongsTo ?university .
+  ?university uni:locatedInCountry ?country .
+
+  # The professor must work in at least one EU-member-state department.
+  FILTER EXISTS {
+    ?professor uni:worksIn ?euDepartment .
+    ?euDepartment a uni:Department ;
+                  uni:belongsTo ?euUniversity .
+    ?euUniversity uni:locatedInCountry ?euCountry .
+    FILTER(?euCountry IN (
+      "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR",
+      "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL",
+      "PL", "PT", "RO", "SK", "SI", "ES", "SE"
+    ))
+  }
+
+  # At least one department the professor works in has more than 10
+  # currently enrolled students in its courses.
+  FILTER EXISTS {
+    SELECT ?professor ?qualifyingDepartment
+    WHERE {
+      ?professor uni:worksIn ?qualifyingDepartment .
+      ?qualifyingDepartment a uni:Department .
+      ?course a uni:Course ;
+              uni:isTaughtIn ?qualifyingDepartment .
+      ?student a uni:Person ;
+               uni:role "Student" ;
+               uni:isEnrolledIn ?course ;
+               uni:hasEnrollmentDate ?enrollmentDate .
+      FILTER(
+        ?enrollmentDate <= "2025-08-16"^^xsd:date &&
+        NOT EXISTS {
+          ?student uni:hasGraduationDate ?graduationDate .
+          FILTER(?graduationDate <= "2025-08-16"^^xsd:date)
+        }
+      )
+    }
+    GROUP BY ?professor ?qualifyingDepartment
+    HAVING(COUNT(DISTINCT ?student) > 10)
+  }
+}
+GROUP BY ?professorName
+
+--- files ---
+-rw-r--r-- 1 root root 2033 Sep 12 17:43 /app/solution.sparql

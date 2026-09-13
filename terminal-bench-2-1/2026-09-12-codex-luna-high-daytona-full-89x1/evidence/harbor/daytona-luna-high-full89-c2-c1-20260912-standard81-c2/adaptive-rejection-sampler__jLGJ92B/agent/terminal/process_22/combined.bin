@@ -1,0 +1,61 @@
+      if (all(is.finite(yy))) return((yy[2L] - yy[1L]) / (xr - xl))
+    }
+    h <- h / 10
+  }
+  if (!is.null(fallback) && is.finite(fallback)) return(fallback)
+  stop("could not estimate a finite log-density derivative.", call. = FALSE)
+}
+
+.ars_derivatives <- function(x, y, evaluator, domain) {
+  o <- order(x)
+  x <- x[o]
+  y <- y[o]
+  distinct <- c(TRUE, diff(x) > 1e-8 * (1 + abs(x[-length(x)])))
+  x <- x[distinct]
+  y <- y[distinct]
+  n <- length(x)
+  secants <- diff(y) / diff(x)
+  fallback <- c(secants[1L], if (n > 2L) {
+    (secants[-length(secants)] + secants[-1L]) / 2
+  }, secants[length(secants)])
+
+  # Estimate all derivatives in vectorized batches.  Besides being faster for
+  # vectorized R d-functions, this avoids making one R call per knot.
+  h <- 1e-5 * pmax(1, abs(x))
+  if (is.finite(domain[1L])) h <- pmin(h, pmax(1e-8, (x - domain[1L]) / 2))
+  if (is.finite(domain[2L])) h <- pmin(h, pmax(1e-8, (domain[2L] - x) / 2))
+  d <- rep(NA_real_, n)
+  pending <- seq_len(n)
+  for (attempt in seq_len(12L)) {
+    if (!length(pending)) break
+    xl <- x[pending] - h[pending]
+    xr <- x[pending] + h[pending]
+    if (is.finite(domain[1L])) xl <- pmax(xl, domain[1L])
+    if (is.finite(domain[2L])) xr <- pmin(xr, domain[2L])
+    ok_range <- xr > xl
+    values <- rep(-Inf, 2L * length(pending))
+    if (any(ok_range)) {
+      ii <- which(ok_range)
+      values[c(ii, ii + length(pending))] <- .ars_log_density(evaluator,
+        c(xl[ii], xr[ii]))
+    }
+    left_y <- values[seq_along(pending)]
+    right_y <- values[length(pending) + seq_along(pending)]
+    good <- ok_range & is.finite(left_y) & is.finite(right_y)
+    if (any(good)) d[pending[good]] <-
+      (right_y[good] - left_y[good]) / (xr[good] - xl[good])
+    pending <- pending[!good]
+    if (length(pending)) h[pending] <- h[pending] / 10
+  }
+  d[!is.finite(d)] <- fallback[!is.finite(d)]
+  if (any(!is.finite(d))) stop("could not estimate finite log-density derivatives.", call. = FALSE)
+  # Tiny numerical violations can make tangent intersections unstable.  A
+  # substantial violation was already rejected by .ars_check_concavity.
+  d <- cummin(d)
+  list(x = x, y = y, derivative = d)
+}
+
+.ars_log_integral <- function(intercept, slope, left, right) {
+  if (slope > 1e-12) {
+    if (!is.finite(right)) return(-Inf)
+    top <- intercept + slope * right

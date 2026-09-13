@@ -1,0 +1,123 @@
+87:static void ExtendLumpInfo(int newnumlumps)
+88-{
+89-    lumpinfo_t *newlumpinfo;
+90-    unsigned int i;
+91-
+92-    newlumpinfo = calloc(newnumlumps, sizeof(lumpinfo_t));
+93-
+94-    if (newlumpinfo == NULL)
+95-    {
+96-	I_Error ("Couldn't realloc lumpinfo");
+97-    }
+98-
+99-    // Copy over lumpinfo_t structures from the old array. If any of
+100-    // these lumps have been cached, we need to update the user
+101-    // pointers to the new location.
+102-    for (i = 0; i < numlumps && i < newnumlumps; ++i)
+103-    {
+104-        memcpy(&newlumpinfo[i], &lumpinfo[i], sizeof(lumpinfo_t));
+105-
+106-        if (newlumpinfo[i].cache != NULL)
+107-        {
+108-            Z_ChangeUser(newlumpinfo[i].cache, &newlumpinfo[i].cache);
+109-        }
+110-
+111-        // We shouldn't be generating a hash table until after all WADs have
+112-        // been loaded, but just in case...
+113-        if (lumpinfo[i].next != NULL)
+114-        {
+115-            int nextlumpnum = lumpinfo[i].next - lumpinfo;
+116-            newlumpinfo[i].next = &newlumpinfo[nextlumpnum];
+117-        }
+118-    }
+119-
+120-    // All done.
+121-    free(lumpinfo);
+122-    lumpinfo = newlumpinfo;
+123-    numlumps = newnumlumps;
+124-}
+125-
+126-//
+127-// LUMP BASED ROUTINES.
+128-//
+129-
+130-//
+131-// W_AddFile
+132-// All files are optional, but at least one file must be
+133-//  found (PWAD, if all required lumps are present).
+134-// Files with a .wad extension are wadlink files
+135-//  with multiple lumps.
+136-// Other files are single lumps with the base filename
+137-//  for the lump name.
+138-
+139-wad_file_t *W_AddFile (char *filename)
+140-{
+141-    wadinfo_t header;
+142-    lumpinfo_t *lump_p;
+143-    unsigned int i;
+144-    wad_file_t *wad_file;
+145-    int length;
+146-    int startlump;
+147-    filelump_t *fileinfo;
+--
+210:    ExtendLumpInfo(newnumlumps);
+211-
+212-    lump_p = &lumpinfo[startlump];
+213-
+214-    filerover = fileinfo;
+215-
+216-    for (i=startlump; i<numlumps; ++i)
+217-    {
+218-		lump_p->wad_file = wad_file;
+219-		lump_p->position = LONG(filerover->filepos);
+220-		lump_p->size = LONG(filerover->size);
+221-			lump_p->cache = NULL;
+222-		strncpy(lump_p->name, filerover->name, 8);
+223-
+224-			++lump_p;
+225-			++filerover;
+226-    }
+227-
+228-    Z_Free(fileinfo);
+229-
+230-    if (lumphash != NULL)
+231-    {
+232-        Z_Free(lumphash);
+233-        lumphash = NULL;
+234-    }
+235-
+236-    return wad_file;
+237-}
+238-
+239-
+240-
+241-//
+242-// W_NumLumps
+243-//
+244-int W_NumLumps (void)
+245-{
+246-    return numlumps;
+247-}
+248-
+249-
+250-
+251-//
+252-// W_CheckNumForName
+253-// Returns -1 if name not found.
+254-//
+255-
+256-int W_CheckNumForName (char* name)
+257-{
+258-    lumpinfo_t *lump_p;
+259-    int i;
+260-
+261-    // Do we have a hash table yet?
+262-
+263-    if (lumphash != NULL)
+264-    {
+265-        int hash;
+266-        
+267-        // We do! Excellent.
+268-
+269-        hash = W_LumpNameHash(name) % numlumps;
+270-        

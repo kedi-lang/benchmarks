@@ -1,0 +1,75 @@
+This script provides you with a general framework for interacting with a
+mailing list.
+
+There are two ways to use this script: interactively or programmatically.
+Using it interactively allows you to play with, examine and modify a mailing
+list from Python's interactive interpreter.  When running interactively, the
+variable 'm' will be available in the global namespace.  It will reference the
+mailing list object.
+
+Programmatically, you can write a function to operate on a mailing list, and
+this script will take care of the housekeeping (see below for examples).  In
+that case, the general usage syntax is:
+
+% mailman withlist [options] -l listspec [args ...]
+
+where `listspec` is either the posting address of the mailing list
+(e.g. ant@example.com), or the List-ID (e.g. ant.example.com).
+
+Here's an example of how to use the --run option.  Say you have a file in the
+Mailman installation directory called 'listaddr.py', with the following two
+functions:
+
+def listaddr(mlist):
+    print(mlist.posting_address)
+
+def requestaddr(mlist):
+    print(mlist.request_address)
+
+Run methods take at least one argument, the mailing list object to operate
+on.  Any additional arguments given on the command line are passed as
+positional arguments to the callable.
+
+If -l is not given then you can run a function that takes no arguments.
+
+
+You can print the list's posting address by running the following from the
+command line:
+
+% mailman withlist -r listaddr -l ant@example.com
+Importing listaddr ...
+Running listaddr.listaddr() ...
+ant@example.com
+
+And you can print the list's request address by running:
+
+% mailman withlist -r listaddr.requestaddr -l ant@example.com
+Importing listaddr ...
+Running listaddr.requestaddr() ...
+ant-request@example.com
+
+As another example, say you wanted to change the display name for a particular
+mailing list.  You could put the following function in a file called
+`change.py`:
+
+def change(mlist, display_name):
+    mlist.display_name = display_name
+
+and run this from the command line:
+
+% mailman withlist -r change -l ant@example.com 'My List'
+
+Note that you do not have to explicitly commit any database transactions, as
+Mailman will do this for you (assuming no errors occured).
+/usr/lib/python3/dist-packages/mailman/bin/tests/test_mailman.py:92:    def test_transaction_commit_after_successful_subcommand(
+/usr/lib/python3/dist-packages/mailman/commands/cli_withlist.py:49:        from IPython.frontend.terminal.embed import InteractiveShellEmbed
+/usr/lib/python3/dist-packages/mailman/commands/cli_withlist.py:54:    return InteractiveShellEmbed.instance(banner1=banner, user_ns=overrides)
+/usr/lib/python3/dist-packages/mailman/commands/cli_withlist.py:59:        from IPython.terminal.embed import InteractiveShellEmbed
+/usr/lib/python3/dist-packages/mailman/commands/cli_withlist.py:60:        shell = InteractiveShellEmbed.instance()
+/usr/lib/python3/dist-packages/mailman/commands/cli_withlist.py:267:def shell(ctx, interactive, run, listspec, run_args):
+/usr/lib/python3/dist-packages/mailman/commands/cli_withlist.py:315:class Shell(Withlist):
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_shell.py:43:class TestShell(unittest.TestCase):
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_shell.py:82:        posargs, kws = mock.InteractiveShellEmbed.instance().mainloop.call_args
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_shell.py:94:        posargs, kws = mock.InteractiveShellEmbed.instance.call_args
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_shell.py:106:        posargs, kws = mock.InteractiveShellEmbed.instance().mainloop.call_args
+/usr/lib/python3/dist-packages/mailman/commands/tests/test_cli_shell.py:123:            mock.InteractiveShellEmbed.instance().mainloop.call_args)

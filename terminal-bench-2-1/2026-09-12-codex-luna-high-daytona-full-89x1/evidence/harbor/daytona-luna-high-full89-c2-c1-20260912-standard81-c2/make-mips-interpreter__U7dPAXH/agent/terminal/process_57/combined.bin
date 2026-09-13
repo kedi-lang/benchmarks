@@ -1,0 +1,39 @@
+                0x0043d180                fprintf
+                0x0043d1bc                snprintf
+                0x0043d1f8                vfprintf
+                0x0043d224                vsnprintf
+                0x0043d258                sscanf
+
+doomgeneric_mips:	file format elf32-mips
+
+Disassembly of section .text:
+
+0043d1bc <snprintf>:
+  43d1f0: 08 00 e0 03  	jr	$ra
+  43d1f4: 08 00 bd 27  	addiu	$sp, $sp, 8 <z_zone.c+0x8>
+
+0043d1f8 <vfprintf>:
+  43d1f8: f8 ff bd 27  	addiu	$sp, $sp, -8 <_end+0xffffffffbfb4e868>
+  43d1fc: 04 00 bf af  	sw	$ra, 4($sp)
+  43d200: 25 40 80 00  	move	$8, $4
+  43d204: 25 20 a0 00  	move	$4, $5
+  43d208: 25 28 c0 00  	move	$5, $6
+  43d20c: 00 00 06 24  	addiu	$6, $zero, 0 <z_zone.c>
+  43d210: 37 eb 10 0c  	jal	4435164 <vprintf_internal>
+  43d214: 00 00 07 24  	addiu	$7, $zero, 0 <z_zone.c>
+  43d218: 04 00 bf 8f  	lw	$ra, 4($sp)
+  43d21c: 08 00 e0 03  	jr	$ra
+  43d220: 08 00 bd 27  	addiu	$sp, $sp, 8 <z_zone.c+0x8>
+
+0043d224 <vsnprintf>:
+  43d224: f8 ff bd 27  	addiu	$sp, $sp, -8 <_end+0xffffffffbfb4e868>
+  43d228: 04 00 bf af  	sw	$ra, 4($sp)
+  43d22c: 25 08 a0 00  	move	$1, $5
+  43d230: 25 10 80 00  	move	$2, $4
+  43d234: 25 20 c0 00  	move	$4, $6
+  43d238: 25 28 e0 00  	move	$5, $7
+  43d23c: 00 00 08 24  	addiu	$8, $zero, 0 <z_zone.c>
+  43d240: 25 30 40 00  	move	$6, $2
+  43d244: 37 eb 10 0c  	jal	4435164 <vprintf_internal>
+  43d248: 25 38 20 00  	move	$7, $1
+  43d24c: 04 00 bf 8f  	lw	$ra, 4($sp)

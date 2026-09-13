@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "efb8b5cdcf78b73afcf39d59600a1f355ca89b7bac9854bb01f110cc77bea2c1",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 17578,
+    "created_at": "2026-09-12T20:03:41.513515Z",
+    "expires_at": "2026-09-12T21:03:41.513515Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": "#!/usr/bin/env python3\n\nimport sys\n\nsys.setrecursionlimit(10000)  # Increase recursion limit for deep computations\n\nDEBUG = False\n\n\nclass SchemeError(Exception):\n    pass\n\n\nclass Pair:\n    def __init__(self, car, cdr):\n        self.car = car\n        self.cdr = cdr\n\n    def __repr__(self):\n        return f\"({self._to_string()})\"\n\n    def _to_string(self):\n        result = repr(self.car)\n        current = self.cdr\n        while isinstance(current, Pair):\n            result += f\" {repr(current.car)}\"\n            current = current.cdr\n        if current is not None:\n            result += f\" . {repr(current)}\"\n        return result\n\n\nclass Environment:\n    def __init__(self, parent=None):\n        self.bindings = {}\n        self.parent = parent\n\n    def define(self, name, value):\n        self.bindings[name] = value\n\n    def set(self, name, value):\n        if name in self.bindings:\n            self.bindings[name] = value\n        elif self.parent is not None:\n            self.parent.set(name, value)\n        else:\n            raise SchemeError(f\"Undefined variable: {name}\")\n\n    def get(self, name):\n        if name in self.bindings:\n            return self.bindings[name]\n        elif self.…",
+    "ref_id": "tool_call_result_1",
+    "sensitive": false,
+    "size_bytes": 17578,
+    "summary": "str value with 17578 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_21326382-16fc-48e5-8e39-372817e09d97",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

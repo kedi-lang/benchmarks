@@ -1,0 +1,1015 @@
+doomgeneric/doomgeneric/w_wad.h:40:typedef struct lumpinfo_s lumpinfo_t;
+doomgeneric/doomgeneric/w_wad.h-41-
+doomgeneric/doomgeneric/w_wad.h:42:struct lumpinfo_s
+doomgeneric/doomgeneric/w_wad.h-43-{
+doomgeneric/doomgeneric/w_wad.h-44-    char	name[8];
+doomgeneric/doomgeneric/w_wad.h-45-    wad_file_t *wad_file;
+doomgeneric/doomgeneric/w_wad.h-46-    int		position;
+doomgeneric/doomgeneric/w_wad.h-47-    int		size;
+doomgeneric/doomgeneric/w_wad.h-48-    void       *cache;
+doomgeneric/doomgeneric/w_wad.h-49-
+doomgeneric/doomgeneric/w_wad.h-50-    // Used for hash table lookups
+doomgeneric/doomgeneric/w_wad.h-51-
+doomgeneric/doomgeneric/w_wad.h-52-    lumpinfo_t *next;
+doomgeneric/doomgeneric/w_wad.h-53-};
+doomgeneric/doomgeneric/w_wad.h-54-
+doomgeneric/doomgeneric/w_wad.h-55-
+doomgeneric/doomgeneric/w_wad.h-56-extern lumpinfo_t *lumpinfo;
+doomgeneric/doomgeneric/w_wad.h-57-extern unsigned int numlumps;
+doomgeneric/doomgeneric/w_wad.h-58-
+doomgeneric/doomgeneric/w_wad.h-59-wad_file_t *W_AddFile (char *filename);
+doomgeneric/doomgeneric/w_wad.h-60-
+doomgeneric/doomgeneric/w_wad.h-61-int	W_CheckNumForName (char* name);
+doomgeneric/doomgeneric/w_wad.h-62-int	W_GetNumForName (char* name);
+--
+doomgeneric/doomgeneric/build/llvm/d_main.ll:20:%struct.lumpinfo_s = type { [8 x i8], %struct._wad_file_s*, i32, i32, i8*, %struct.lumpinfo_s* }
+doomgeneric/doomgeneric/build/llvm/d_main.ll-21-%struct._wad_file_s = type { %struct.wad_file_class_t*, i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/d_main.ll-22-%struct.wad_file_class_t = type { %struct._wad_file_s* (i8*)*, void (%struct._wad_file_s*)*, i32 (%struct._wad_file_s*, i32, i8*, i32)* }
+doomgeneric/doomgeneric/build/llvm/d_main.ll-23-%struct.anon = type { i8*, i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/d_main.ll-24-%struct.anon.0 = type { i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/d_main.ll-25-%struct.event_t = type { i32, i32, i32, i32, i32 }
+doomgeneric/doomgeneric/build/llvm/d_main.ll-26-%struct.patch_t = type { i16, i16, i16, i16, [8 x i32] }
+doomgeneric/doomgeneric/build/llvm/d_main.ll-27-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-28-@main_loop_started = dso_local local_unnamed_addr global i32 0, align 4, !dbg !0
+doomgeneric/doomgeneric/build/llvm/d_main.ll-29-@show_endoom = dso_local global i32 1, align 4, !dbg !1460
+doomgeneric/doomgeneric/build/llvm/d_main.ll-30-@storedemo = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1514
+doomgeneric/doomgeneric/build/llvm/d_main.ll-31-@wipegamestate = dso_local local_unnamed_addr global i32 3, align 4, !dbg !1462
+doomgeneric/doomgeneric/build/llvm/d_main.ll-32-@D_Display.viewactivestate = internal unnamed_addr global i32 0, align 4, !dbg !1465
+doomgeneric/doomgeneric/build/llvm/d_main.ll-33-@D_Display.menuactivestate = internal unnamed_addr global i32 0, align 4, !dbg !1477
+doomgeneric/doomgeneric/build/llvm/d_main.ll-34-@D_Display.inhelpscreensstate = internal unnamed_addr global i32 0, align 4, !dbg !1479
+doomgeneric/doomgeneric/build/llvm/d_main.ll-35-@D_Display.fullscreen = internal unnamed_addr global i32 0, align 4, !dbg !1481
+doomgeneric/doomgeneric/build/llvm/d_main.ll-36-@D_Display.oldgamestate = internal unnamed_addr global i32 -1, align 4, !dbg !1483
+doomgeneric/doomgeneric/build/llvm/d_main.ll-37-@D_Display.borderdrawcount = internal unnamed_addr global i32 0, align 4, !dbg !1485
+doomgeneric/doomgeneric/build/llvm/d_main.ll-38-@nodrawers = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/d_main.ll-39-@setsizeneeded = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/d_main.ll-40-@gamestate = external local_unnamed_addr global i32, align 4
+--
+doomgeneric/doomgeneric/build/llvm/d_main.ll:107:@lumpinfo = external local_unnamed_addr global %struct.lumpinfo_s*, align 4
+doomgeneric/doomgeneric/build/llvm/d_main.ll-108-@.str.23 = private unnamed_addr constant [6 x i8] c"MAP01\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-109-@.str.24 = private unnamed_addr constant [5 x i8] c"E1M1\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-110-@.str.25 = private unnamed_addr constant [30 x i8] c"Unknown or invalid IWAD file.\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-111-@.str.26 = private unnamed_addr constant [5 x i8] c"E4M1\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-112-@.str.27 = private unnamed_addr constant [5 x i8] c"E3M1\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-113-@.str.28 = private unnamed_addr constant [6 x i8] c"-pack\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-114-@myargv = external local_unnamed_addr global i8**, align 4
+doomgeneric/doomgeneric/build/llvm/d_main.ll-115-@.str.29 = private unnamed_addr constant [9 x i8] c"FREEDOOM\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-116-@.str.30 = private unnamed_addr constant [7 x i8] c"FREEDM\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-117-@.str.31 = private unnamed_addr constant [8 x i8] c"Unknown\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-118-@.str.32 = private unnamed_addr constant [18 x i8] c"Freedoom: Phase 1\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-119-@.str.33 = private unnamed_addr constant [18 x i8] c"The Ultimate DOOM\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-120-@.str.34 = private unnamed_addr constant [16 x i8] c"DOOM Registered\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-121-@.str.35 = private unnamed_addr constant [15 x i8] c"DOOM Shareware\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-122-@.str.36 = private unnamed_addr constant [7 x i8] c"FreeDM\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-123-@.str.37 = private unnamed_addr constant [18 x i8] c"Freedoom: Phase 2\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-124-@.str.38 = private unnamed_addr constant [22 x i8] c"DOOM 2: Hell on Earth\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-125-@.str.39 = private unnamed_addr constant [28 x i8] c"DOOM 2: Plutonia Experiment\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-126-@.str.40 = private unnamed_addr constant [24 x i8] c"DOOM 2: TNT - Evilution\00", align 1
+doomgeneric/doomgeneric/build/llvm/d_main.ll-127-@gameversions = internal unnamed_addr constant [10 x %struct.anon] [%struct.anon { i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.str.109, i32 0, i32 0), i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.110, i32 0, i32 0), i32 1 }, %struct.anon { i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.111, i32 0, i32 0), i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.112, i32 0, i32 0), i32 2 }, %struct.anon { i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.113, i32 0, i32 0), i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.114, i32 0, i32 0), i32 3 }, %struct.anon { i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.115, i32 0, i32 0), i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.116, i32 0, i32 0), i32 4 }, %struct.anon { i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.117, i32 0, i32 0), i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.118, i32 0, i32 0), i32 5 }, %struct.anon { i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.119, i32 0, i32 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.120, i32 0, i32 0), i32 6 }, %struct.anon { i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.str.121, i32 0, i32 0), i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.122, i32 0, i32 0), i32 7 }, %struct.anon { i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.123, i32 0, i32 0), i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.124, i32 0, i32 0), i32 8 }, %struct.anon { i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.str.125, i32 0, i32 0), i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.126, i32 0, i32 0), i32 9 }, %struct.anon zeroinitializer], align 4, !dbg !1560
+--
+doomgeneric/doomgeneric/build/llvm/d_main.ll:1070:  %11 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !2398, !tbaa !1678
+doomgeneric/doomgeneric/build/llvm/d_main.ll:1071:  %12 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %11, i32 %10, i32 0, i32 0, !dbg !2398
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1072-  %13 = tail call i32 @strncasecmp(i8* noundef %12, i8* noundef getelementptr inbounds ([6 x i8], [6 x i8]* @.str.23, i32 0, i32 0), i32 noundef signext 8) #10, !dbg !2401
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1073-  %14 = icmp eq i32 %13, 0, !dbg !2401
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1074-  br i1 %14, label %15, label %16, !dbg !2402
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1075-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1076-15:                                               ; preds = %9
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1077-  store i32 1, i32* @gamemission, align 4, !dbg !2403, !tbaa !1592
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1078-  br label %41, !dbg !2405
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1079-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1080-16:                                               ; preds = %9
+doomgeneric/doomgeneric/build/llvm/d_main.ll:1081:  %17 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !2406, !tbaa !1678
+doomgeneric/doomgeneric/build/llvm/d_main.ll:1082:  %18 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %17, i32 %10, i32 0, i32 0, !dbg !2406
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1083-  %19 = tail call i32 @strncasecmp(i8* noundef %18, i8* noundef getelementptr inbounds ([5 x i8], [5 x i8]* @.str.24, i32 0, i32 0), i32 noundef signext 8) #10, !dbg !2408
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1084-  %20 = icmp eq i32 %19, 0, !dbg !2408
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1085-  %21 = add nuw i32 %10, 1, !dbg !2409
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1086-  call void @llvm.dbg.value(metadata i32 %21, metadata !2381, metadata !DIExpression()), !dbg !2390
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1087-  br i1 %20, label %22, label %6, !dbg !2410
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1088-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1089-22:                                               ; preds = %16
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1090-  store i32 0, i32* @gamemission, align 4, !dbg !2411, !tbaa !1592
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1091-  br label %32, !dbg !2405
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1092-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1093-23:                                               ; preds = %6
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1094-  %24 = load i32, i32* @gamemission, align 4, !dbg !2413, !tbaa !1592
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1095-  %25 = icmp eq i32 %24, 9, !dbg !2415
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1096-  br i1 %25, label %26, label %28, !dbg !2416
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1097-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1098-26:                                               ; preds = %3, %23
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1099-  tail call void (i8*, ...) @I_Error(i8* noundef getelementptr inbounds ([30 x i8], [30 x i8]* @.str.25, i32 0, i32 0)) #10, !dbg !2417
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1100-  %27 = load i32, i32* @gamemission, align 4, !dbg !2419, !tbaa !1592
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1101-  br label %28, !dbg !2420
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1102-
+--
+doomgeneric/doomgeneric/build/llvm/d_main.ll:1616:  %163 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !2822, !tbaa !1678
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1617-  %164 = load i32, i32* @numlumps, align 4, !dbg !2824, !tbaa !1630
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1618-  %165 = add i32 %164, -1, !dbg !2825
+doomgeneric/doomgeneric/build/llvm/d_main.ll:1619:  %166 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %163, i32 %165, i32 0, i32 0, !dbg !2822
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1620-  br label %171, !dbg !2826
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1621-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1622-167:                                              ; preds = %158
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1623-  %168 = load i8**, i8*** @myargv, align 4, !dbg !2827, !tbaa !1678
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1624-  %169 = getelementptr inbounds i8*, i8** %168, i32 %146, !dbg !2827
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1625-  %170 = load i8*, i8** %169, align 4, !dbg !2827, !tbaa !1678
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1626-  br label %171
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1627-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1628-171:                                              ; preds = %167, %162
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1629-  %172 = phi i8* [ %170, %167 ], [ %166, %162 ]
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1630-  %173 = call i32 @M_StringCopy(i8* noundef nonnull %5, i8* noundef %172, i32 noundef signext 9) #10, !dbg !2829
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1631-  %174 = call i32 (i8*, ...) @printf(i8* noundef getelementptr inbounds ([18 x i8], [18 x i8]* @.str.67, i32 0, i32 0), i8* noundef nonnull %4) #10, !dbg !2830
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1632-  br label %175, !dbg !2831
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1633-
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1634-175:                                              ; preds = %171, %140
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1635-  call void @I_AtExit(void ()* noundef bitcast (i32 ()* @G_CheckDemoStatus to void ()*), i32 noundef signext 1) #10, !dbg !2832
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1636-  call void @W_GenerateHashTable() #10, !dbg !2833
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1637-  call void @D_SetGameDescription() #12, !dbg !2834
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1638-  %176 = load i32, i32* @gamemission, align 4, !dbg !2835, !tbaa !1592
+doomgeneric/doomgeneric/build/llvm/d_main.ll-1639-  %177 = call i8* @D_SaveGameIWADName(i32 noundef signext %176) #10, !dbg !2837
+--
+doomgeneric/doomgeneric/build/llvm/r_data.ll:22:%struct.lumpinfo_s = type { [8 x i8], %struct._wad_file_s*, i32, i32, i8*, %struct.lumpinfo_s* }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-23-%struct._wad_file_s = type { %struct.wad_file_class_t*, i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-24-%struct.wad_file_class_t = type { %struct._wad_file_s* (i8*)*, void (%struct._wad_file_s*)*, i32 (%struct._wad_file_s*, i32, i8*, i32)* }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-25-%struct.side_t = type { i32, i32, i16, i16, i16, %struct.sector_t* }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-26-%struct.spritedef_t = type { i32, %struct.spriteframe_t* }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-27-%struct.spriteframe_t = type { i32, [8 x i16], [8 x i8] }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-28-%struct.post_t = type { i8, i8 }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-29-%struct.mappatch_t = type { i16, i16, i16, i16, i16 }
+doomgeneric/doomgeneric/build/llvm/r_data.ll-30-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-31-@textures = dso_local local_unnamed_addr global %struct.texture_s** null, align 4, !dbg !0
+doomgeneric/doomgeneric/build/llvm/r_data.ll-32-@texturecompositesize = dso_local local_unnamed_addr global i32* null, align 4, !dbg !1654
+doomgeneric/doomgeneric/build/llvm/r_data.ll-33-@texturecomposite = dso_local local_unnamed_addr global i8** null, align 4, !dbg !1665
+doomgeneric/doomgeneric/build/llvm/r_data.ll-34-@texturecolumnlump = dso_local local_unnamed_addr global i16** null, align 4, !dbg !1656
+doomgeneric/doomgeneric/build/llvm/r_data.ll-35-@texturecolumnofs = dso_local local_unnamed_addr global i16** null, align 4, !dbg !1660
+doomgeneric/doomgeneric/build/llvm/r_data.ll-36-@.str = private unnamed_addr constant [9 x i8] c"r_data.c\00", align 1
+doomgeneric/doomgeneric/build/llvm/r_data.ll-37-@.str.1 = private unnamed_addr constant [47 x i8] c"R_GenerateLookup: column without a patch (%s)\0A\00", align 1
+doomgeneric/doomgeneric/build/llvm/r_data.ll-38-@.str.2 = private unnamed_addr constant [37 x i8] c"R_GenerateLookup: texture %i is >64k\00", align 1
+doomgeneric/doomgeneric/build/llvm/r_data.ll-39-@texturewidthmask = dso_local local_unnamed_addr global i32* null, align 4, !dbg !1649
+doomgeneric/doomgeneric/build/llvm/r_data.ll-40-@.str.3 = private unnamed_addr constant [7 x i8] c"PNAMES\00", align 1
+doomgeneric/doomgeneric/build/llvm/r_data.ll-41-@.str.4 = private unnamed_addr constant [9 x i8] c"TEXTURE1\00", align 1
+doomgeneric/doomgeneric/build/llvm/r_data.ll-42-@.str.5 = private unnamed_addr constant [9 x i8] c"TEXTURE2\00", align 1
+--
+doomgeneric/doomgeneric/build/llvm/r_data.ll:76:@lumpinfo = external local_unnamed_addr global %struct.lumpinfo_s*, align 4
+doomgeneric/doomgeneric/build/llvm/r_data.ll-77-@numsides = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_data.ll-78-@sides = external local_unnamed_addr global %struct.side_t*, align 4
+doomgeneric/doomgeneric/build/llvm/r_data.ll-79-@skytexture = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_data.ll-80-@texturememory = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1684
+doomgeneric/doomgeneric/build/llvm/r_data.ll-81-@numsprites = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_data.ll-82-@thinkercap = external global %struct.thinker_s, align 4
+doomgeneric/doomgeneric/build/llvm/r_data.ll-83-@spritememory = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1686
+doomgeneric/doomgeneric/build/llvm/r_data.ll-84-@sprites = external local_unnamed_addr global %struct.spritedef_t*, align 4
+doomgeneric/doomgeneric/build/llvm/r_data.ll-85-@firstpatch = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1614
+doomgeneric/doomgeneric/build/llvm/r_data.ll-86-@lastpatch = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1616
+doomgeneric/doomgeneric/build/llvm/r_data.ll-87-@numpatches = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1618
+doomgeneric/doomgeneric/build/llvm/r_data.ll-88-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-89-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/r_data.ll-90-define dso_local void @R_DrawColumnInCache(%struct.post_t* noundef %0, i8* noundef %1, i32 noundef signext %2, i32 noundef signext %3) local_unnamed_addr #0 !dbg !1694 {
+doomgeneric/doomgeneric/build/llvm/r_data.ll-91-  call void @llvm.dbg.value(metadata %struct.post_t* %0, metadata !1698, metadata !DIExpression()), !dbg !1705
+doomgeneric/doomgeneric/build/llvm/r_data.ll-92-  call void @llvm.dbg.value(metadata i8* %1, metadata !1699, metadata !DIExpression()), !dbg !1705
+doomgeneric/doomgeneric/build/llvm/r_data.ll-93-  call void @llvm.dbg.value(metadata i32 %2, metadata !1700, metadata !DIExpression()), !dbg !1705
+doomgeneric/doomgeneric/build/llvm/r_data.ll-94-  call void @llvm.dbg.value(metadata i32 %3, metadata !1701, metadata !DIExpression()), !dbg !1705
+doomgeneric/doomgeneric/build/llvm/r_data.ll-95-  %5 = getelementptr inbounds %struct.post_t, %struct.post_t* %0, i32 0, i32 0, !dbg !1706
+doomgeneric/doomgeneric/build/llvm/r_data.ll-96-  %6 = load i8, i8* %5, align 1, !dbg !1706, !tbaa !1707
+--
+doomgeneric/doomgeneric/build/llvm/r_data.ll:1327:  %37 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !2576, !tbaa !1778
+doomgeneric/doomgeneric/build/llvm/r_data.ll:1328:  %38 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %37, i32 %36, i32 3, !dbg !2577
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1329-  %39 = load i32, i32* %38, align 4, !dbg !2577, !tbaa !2578
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1330-  %40 = load i32, i32* @flatmemory, align 4, !dbg !2580, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1331-  %41 = add nsw i32 %40, %39, !dbg !2580
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1332-  store i32 %41, i32* @flatmemory, align 4, !dbg !2580, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1333-  %42 = tail call i8* @W_CacheLumpNum(i32 noundef signext %36, i32 noundef signext 8) #5, !dbg !2581
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1334-  %43 = load i32, i32* @numflats, align 4, !dbg !2564, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1335-  br label %44, !dbg !2582
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1336-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1337-44:                                               ; preds = %28, %34
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1338-  %45 = phi i32 [ %29, %28 ], [ %43, %34 ], !dbg !2564
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1339-  %46 = add nuw nsw i32 %30, 1, !dbg !2583
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1340-  call void @llvm.dbg.value(metadata i32 %46, metadata !2516, metadata !DIExpression()), !dbg !2538
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1341-  %47 = icmp slt i32 %46, %45, !dbg !2567
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1342-  br i1 %47, label %28, label %48, !dbg !2568, !llvm.loop !2584
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1343-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1344-48:                                               ; preds = %44, %25
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1345-  tail call void @Z_Free(i8* noundef %5) #5, !dbg !2586
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1346-  %49 = load i32, i32* @numtextures, align 4, !dbg !2587, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1347-  %50 = tail call i8* @Z_Malloc(i32 noundef signext %49, i32 noundef signext 1, i8* noundef null) #5, !dbg !2588
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1348-  call void @llvm.dbg.value(metadata i8* %50, metadata !2514, metadata !DIExpression()), !dbg !2538
+--
+doomgeneric/doomgeneric/build/llvm/r_data.ll:1419:  %97 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !2637, !tbaa !1778
+doomgeneric/doomgeneric/build/llvm/r_data.ll:1420:  %98 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %97, i32 %96, i32 3, !dbg !2638
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1421-  %99 = load i32, i32* %98, align 4, !dbg !2638, !tbaa !2578
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1422-  %100 = load i32, i32* @texturememory, align 4, !dbg !2639, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1423-  %101 = add nsw i32 %100, %99, !dbg !2639
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1424-  store i32 %101, i32* @texturememory, align 4, !dbg !2639, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1425-  %102 = tail call i8* @W_CacheLumpNum(i32 noundef signext %96, i32 noundef signext 8) #5, !dbg !2640
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1426-  %103 = add nuw nsw i32 %94, 1, !dbg !2641
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1427-  call void @llvm.dbg.value(metadata i32 %103, metadata !2517, metadata !DIExpression()), !dbg !2538
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1428-  %104 = load i16, i16* %90, align 4, !dbg !2630, !tbaa !1791
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1429-  %105 = sext i16 %104 to i32, !dbg !2642
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1430-  %106 = icmp slt i32 %103, %105, !dbg !2633
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1431-  br i1 %106, label %93, label %107, !dbg !2634, !llvm.loop !2643
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1432-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1433-107:                                              ; preds = %93
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1434-  %108 = load i32, i32* @numtextures, align 4, !dbg !2620, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1435-  br label %109, !dbg !2645
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1436-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1437-109:                                              ; preds = %107, %86, %80
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1438-  %110 = phi i32 [ %108, %107 ], [ %81, %86 ], [ %81, %80 ], !dbg !2620
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1439-  %111 = add nuw nsw i32 %82, 1, !dbg !2645
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1440-  call void @llvm.dbg.value(metadata i32 %111, metadata !2516, metadata !DIExpression()), !dbg !2538
+--
+doomgeneric/doomgeneric/build/llvm/r_data.ll:1524:  %161 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !2701, !tbaa !1778
+doomgeneric/doomgeneric/build/llvm/r_data.ll:1525:  %162 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %161, i32 %160, i32 3, !dbg !2702
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1526-  %163 = load i32, i32* %162, align 4, !dbg !2702, !tbaa !2578
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1527-  %164 = load i32, i32* @spritememory, align 4, !dbg !2703, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1528-  %165 = add nsw i32 %164, %163, !dbg !2703
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1529-  store i32 %165, i32* @spritememory, align 4, !dbg !2703, !tbaa !1781
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1530-  %166 = tail call i8* @W_CacheLumpNum(i32 noundef signext %160, i32 noundef signext 8) #5, !dbg !2704
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1531-  %167 = add nuw nsw i32 %155, 1, !dbg !2705
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1532-  call void @llvm.dbg.value(metadata i32 %167, metadata !2518, metadata !DIExpression()), !dbg !2538
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1533-  %168 = icmp eq i32 %167, 8, !dbg !2706
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1534-  br i1 %168, label %169, label %154, !dbg !2694, !llvm.loop !2707
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1535-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1536-169:                                              ; preds = %154
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1537-  %170 = add nuw nsw i32 %151, 1, !dbg !2709
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1538-  call void @llvm.dbg.value(metadata i32 %170, metadata !2517, metadata !DIExpression()), !dbg !2538
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1539-  %171 = load %struct.spritedef_t*, %struct.spritedef_t** @sprites, align 4, !dbg !2683, !tbaa !1778
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1540-  %172 = getelementptr inbounds %struct.spritedef_t, %struct.spritedef_t* %171, i32 %140, i32 0, !dbg !2686
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1541-  %173 = load i32, i32* %172, align 4, !dbg !2686, !tbaa !2687
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1542-  %174 = icmp slt i32 %170, %173, !dbg !2689
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1543-  br i1 %174, label %149, label %175, !dbg !2690, !llvm.loop !2710
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1544-
+doomgeneric/doomgeneric/build/llvm/r_data.ll-1545-175:                                              ; preds = %169
+--
+doomgeneric/doomgeneric/build/llvm/r_data.ll:4162:!2579 = !{!"lumpinfo_s", !1709, i64 0, !1779, i64 8, !1782, i64 12, !1782, i64 16, !1779, i64 20, !1779, i64 24}
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4163-!2580 = !DILocation(line: 836, column: 17, scope: !2574)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4164-!2581 = !DILocation(line: 837, column: 6, scope: !2574)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4165-!2582 = !DILocation(line: 838, column: 2, scope: !2574)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4166-!2583 = !DILocation(line: 831, column: 30, scope: !2565)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4167-!2584 = distinct !{!2584, !2568, !2585, !1739}
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4168-!2585 = !DILocation(line: 839, column: 5, scope: !2566)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4169-!2586 = !DILocation(line: 841, column: 5, scope: !2511)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4170-!2587 = !DILocation(line: 844, column: 31, scope: !2511)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4171-!2588 = !DILocation(line: 844, column: 22, scope: !2511)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4172-!2589 = !DILocation(line: 845, column: 31, scope: !2511)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4173-!2590 = !DILocation(line: 845, column: 5, scope: !2511)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4174-!2591 = !DILocation(line: 847, column: 18, scope: !2592)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4175-!2592 = distinct !DILexicalBlock(scope: !2593, file: !3, line: 847, column: 5)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4176-!2593 = distinct !DILexicalBlock(scope: !2511, file: !3, line: 847, column: 5)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4177-!2594 = !DILocation(line: 847, column: 17, scope: !2592)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4178-!2595 = !DILocation(line: 847, column: 5, scope: !2593)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4179-!2596 = !DILocation(line: 849, column: 17, scope: !2597)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4180-!2597 = distinct !DILexicalBlock(scope: !2592, file: !3, line: 848, column: 5)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4181-!2598 = !DILocation(line: 849, column: 26, scope: !2597)
+doomgeneric/doomgeneric/build/llvm/r_data.ll-4182-!2599 = !{!2600, !1793, i64 8}
+--
+doomgeneric/doomgeneric/build/llvm/r_things.ll:8:%struct.lumpinfo_s = type { [8 x i8], %struct._wad_file_s*, i32, i32, i8*, %struct.lumpinfo_s* }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-9-%struct._wad_file_s = type { %struct.wad_file_class_t*, i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-10-%struct.wad_file_class_t = type { %struct._wad_file_s* (i8*)*, void (%struct._wad_file_s*)*, i32 (%struct._wad_file_s*, i32, i8*, i32)* }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-11-%struct.vissprite_s = type { %struct.vissprite_s*, %struct.vissprite_s*, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-12-%struct.player_s = type { %struct.mobj_s*, i32, %struct.ticcmd_t, i32, i32, i32, i32, i32, i32, i32, [6 x i32], [6 x i32], i32, [4 x i32], i32, i32, [9 x i32], [4 x i32], [4 x i32], i32, i32, i32, i32, i32, i32, i32, i8*, i32, i32, %struct.mobj_s*, i32, i32, i32, [2 x %struct.pspdef_t], i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-13-%struct.ticcmd_t = type { i8, i8, i16, i8, i8, i8, i8, i32, i8, i8 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-14-%struct.mobj_s = type { %struct.thinker_s, i32, i32, i32, %struct.mobj_s*, %struct.mobj_s*, i32, i32, i32, %struct.mobj_s*, %struct.mobj_s*, %struct.subsector_s*, i32, i32, i32, i32, i32, i32, i32, i32, i32, %struct.mobjinfo_t*, i32, %struct.state_t*, i32, i32, i32, i32, %struct.mobj_s*, i32, i32, %struct.player_s*, i32, %struct.mapthing_t, %struct.mobj_s* }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-15-%struct.thinker_s = type { %struct.thinker_s*, %struct.thinker_s*, %union.actionf_t }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-16-%union.actionf_t = type { void (...)* }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-17-%struct.subsector_s = type { %struct.sector_t*, i16, i16 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-18-%struct.sector_t = type { i32, i32, i16, i16, i16, i16, i16, i32, %struct.mobj_s*, [4 x i32], %struct.degenmobj_t, i32, %struct.mobj_s*, i8*, i32, %struct.line_s** }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-19-%struct.degenmobj_t = type { %struct.thinker_s, i32, i32, i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-20-%struct.line_s = type { %struct.vertex_t*, %struct.vertex_t*, i32, i32, i16, i16, i16, [2 x i16], [4 x i32], i32, %struct.sector_t*, %struct.sector_t*, i32, i8* }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-21-%struct.vertex_t = type { i32, i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-22-%struct.mobjinfo_t = type { i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-23-%struct.state_t = type { i32, i32, i32, %union.actionf_t, i32, i32, i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-24-%struct.mapthing_t = type { i16, i16, i16, i16, i16 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-25-%struct.pspdef_t = type { %struct.state_t*, i32, i32, i32 }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-26-%struct.drawseg_s = type { %struct.seg_t*, i32, i32, i32, i32, i32, i32, i32, i32, i16*, i16*, i16* }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-27-%struct.seg_t = type { %struct.vertex_t*, %struct.vertex_t*, i32, i32, %struct.side_t*, %struct.line_s*, %struct.sector_t*, %struct.sector_t* }
+doomgeneric/doomgeneric/build/llvm/r_things.ll-28-%struct.side_t = type { i32, i32, i16, i16, i16, %struct.sector_t* }
+--
+doomgeneric/doomgeneric/build/llvm/r_things.ll:42:@lumpinfo = external local_unnamed_addr global %struct.lumpinfo_s*, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-43-@modifiedgame = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-44-@.str.4 = private unnamed_addr constant [48 x i8] c"R_InitSprites: No patches found for %s frame %c\00", align 1
+doomgeneric/doomgeneric/build/llvm/r_things.ll-45-@.str.5 = private unnamed_addr constant [55 x i8] c"R_InitSprites: Sprite %s frame %c is missing rotations\00", align 1
+doomgeneric/doomgeneric/build/llvm/r_things.ll-46-@negonearray = dso_local global [320 x i16] zeroinitializer, align 2, !dbg !1379
+doomgeneric/doomgeneric/build/llvm/r_things.ll-47-@vissprites = dso_local global [128 x %struct.vissprite_s] zeroinitializer, align 4, !dbg !1416
+doomgeneric/doomgeneric/build/llvm/r_things.ll-48-@vissprite_p = dso_local local_unnamed_addr global %struct.vissprite_s* null, align 4, !dbg !1440
+doomgeneric/doomgeneric/build/llvm/r_things.ll-49-@overflowsprite = dso_local global %struct.vissprite_s zeroinitializer, align 4, !dbg !1445
+doomgeneric/doomgeneric/build/llvm/r_things.ll-50-@dc_texturemid = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-51-@sprtopscreen = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1454
+doomgeneric/doomgeneric/build/llvm/r_things.ll-52-@spryscale = dso_local local_unnamed_addr global i32 0, align 4, !dbg !1452
+doomgeneric/doomgeneric/build/llvm/r_things.ll-53-@dc_yl = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-54-@dc_yh = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-55-@mfloorclip = dso_local local_unnamed_addr global i16* null, align 4, !dbg !1447
+doomgeneric/doomgeneric/build/llvm/r_things.ll-56-@dc_x = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-57-@mceilingclip = dso_local local_unnamed_addr global i16* null, align 4, !dbg !1450
+doomgeneric/doomgeneric/build/llvm/r_things.ll-58-@dc_source = external local_unnamed_addr global i8*, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-59-@colfunc = external local_unnamed_addr global void ()*, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-60-@dc_colormap = external local_unnamed_addr global i8*, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-61-@fuzzcolfunc = external local_unnamed_addr global void ()*, align 4
+doomgeneric/doomgeneric/build/llvm/r_things.ll-62-@transcolfunc = external local_unnamed_addr global void ()*, align 4
+--
+doomgeneric/doomgeneric/build/llvm/r_things.ll:282:  %29 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !1599, !tbaa !1501
+doomgeneric/doomgeneric/build/llvm/r_things.ll:283:  %30 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %29, i32 %28, i32 0, i32 0, !dbg !1599
+doomgeneric/doomgeneric/build/llvm/r_things.ll-284-  %31 = load i8*, i8** @spritename, align 4, !dbg !1603, !tbaa !1501
+doomgeneric/doomgeneric/build/llvm/r_things.ll-285-  %32 = tail call i32 @strncasecmp(i8* noundef %30, i8* noundef %31, i32 noundef signext 4) #8, !dbg !1604
+doomgeneric/doomgeneric/build/llvm/r_things.ll-286-  %33 = icmp eq i32 %32, 0, !dbg !1604
+doomgeneric/doomgeneric/build/llvm/r_things.ll-287-  br i1 %33, label %34, label %62, !dbg !1605
+doomgeneric/doomgeneric/build/llvm/r_things.ll-288-
+doomgeneric/doomgeneric/build/llvm/r_things.ll-289-34:                                               ; preds = %27
+doomgeneric/doomgeneric/build/llvm/r_things.ll:290:  %35 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !1606, !tbaa !1501
+doomgeneric/doomgeneric/build/llvm/r_things.ll:291:  %36 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %35, i32 %28, i32 0, i32 4, !dbg !1606
+doomgeneric/doomgeneric/build/llvm/r_things.ll-292-  %37 = load i8, i8* %36, align 4, !dbg !1606, !tbaa !1523
+doomgeneric/doomgeneric/build/llvm/r_things.ll-293-  %38 = sext i8 %37 to i32, !dbg !1606
+doomgeneric/doomgeneric/build/llvm/r_things.ll-294-  %39 = add nsw i32 %38, -65, !dbg !1608
+doomgeneric/doomgeneric/build/llvm/r_things.ll-295-  call void @llvm.dbg.value(metadata i32 %39, metadata !1566, metadata !DIExpression()), !dbg !1571
+doomgeneric/doomgeneric/build/llvm/r_things.ll:296:  %40 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %35, i32 %28, i32 0, i32 5, !dbg !1609
+doomgeneric/doomgeneric/build/llvm/r_things.ll-297-  %41 = load i8, i8* %40, align 1, !dbg !1609, !tbaa !1523
+doomgeneric/doomgeneric/build/llvm/r_things.ll-298-  %42 = sext i8 %41 to i32, !dbg !1609
+doomgeneric/doomgeneric/build/llvm/r_things.ll-299-  %43 = add nsw i32 %42, -48, !dbg !1610
+doomgeneric/doomgeneric/build/llvm/r_things.ll-300-  call void @llvm.dbg.value(metadata i32 %43, metadata !1567, metadata !DIExpression()), !dbg !1571
+doomgeneric/doomgeneric/build/llvm/r_things.ll-301-  %44 = load i32, i32* @modifiedgame, align 4, !dbg !1611, !tbaa !1523
+doomgeneric/doomgeneric/build/llvm/r_things.ll-302-  %45 = icmp eq i32 %44, 0, !dbg !1611
+doomgeneric/doomgeneric/build/llvm/r_things.ll-303-  br i1 %45, label %49, label %46, !dbg !1613
+doomgeneric/doomgeneric/build/llvm/r_things.ll-304-
+doomgeneric/doomgeneric/build/llvm/r_things.ll-305-46:                                               ; preds = %34
+doomgeneric/doomgeneric/build/llvm/r_things.ll:306:  %47 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %35, i32 %28, i32 0, i32 0, !dbg !1614
+doomgeneric/doomgeneric/build/llvm/r_things.ll-307-  %48 = tail call i32 @W_GetNumForName(i8* noundef %47) #8, !dbg !1615
+doomgeneric/doomgeneric/build/llvm/r_things.ll-308-  call void @llvm.dbg.value(metadata i32 %48, metadata !1570, metadata !DIExpression()), !dbg !1571
+doomgeneric/doomgeneric/build/llvm/r_things.ll-309-  br label %49, !dbg !1616
+doomgeneric/doomgeneric/build/llvm/r_things.ll-310-
+doomgeneric/doomgeneric/build/llvm/r_things.ll-311-49:                                               ; preds = %34, %46
+doomgeneric/doomgeneric/build/llvm/r_things.ll-312-  %50 = phi i32 [ %48, %46 ], [ %28, %34 ], !dbg !1617
+doomgeneric/doomgeneric/build/llvm/r_things.ll-313-  call void @llvm.dbg.value(metadata i32 %50, metadata !1570, metadata !DIExpression()), !dbg !1571
+doomgeneric/doomgeneric/build/llvm/r_things.ll-314-  tail call void @R_InstallSpriteLump(i32 noundef signext %50, i32 noundef signext %39, i32 noundef signext %43, i32 noundef signext 0) #9, !dbg !1618
+doomgeneric/doomgeneric/build/llvm/r_things.ll:315:  %51 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !1619, !tbaa !1501
+doomgeneric/doomgeneric/build/llvm/r_things.ll:316:  %52 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %51, i32 %28, i32 0, i32 6, !dbg !1619
+doomgeneric/doomgeneric/build/llvm/r_things.ll-317-  %53 = load i8, i8* %52, align 2, !dbg !1619, !tbaa !1523
+doomgeneric/doomgeneric/build/llvm/r_things.ll-318-  %54 = icmp eq i8 %53, 0, !dbg !1619
+doomgeneric/doomgeneric/build/llvm/r_things.ll-319-  br i1 %54, label %62, label %55, !dbg !1621
+doomgeneric/doomgeneric/build/llvm/r_things.ll-320-
+doomgeneric/doomgeneric/build/llvm/r_things.ll-321-55:                                               ; preds = %49
+doomgeneric/doomgeneric/build/llvm/r_things.ll-322-  %56 = sext i8 %53 to i32, !dbg !1622
+doomgeneric/doomgeneric/build/llvm/r_things.ll-323-  %57 = add nsw i32 %56, -65, !dbg !1624
+doomgeneric/doomgeneric/build/llvm/r_things.ll-324-  call void @llvm.dbg.value(metadata i32 %57, metadata !1566, metadata !DIExpression()), !dbg !1571
+doomgeneric/doomgeneric/build/llvm/r_things.ll:325:  %58 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %51, i32 %28, i32 0, i32 7, !dbg !1625
+doomgeneric/doomgeneric/build/llvm/r_things.ll-326-  %59 = load i8, i8* %58, align 1, !dbg !1625, !tbaa !1523
+doomgeneric/doomgeneric/build/llvm/r_things.ll-327-  %60 = sext i8 %59 to i32, !dbg !1625
+doomgeneric/doomgeneric/build/llvm/r_things.ll-328-  %61 = add nsw i32 %60, -48, !dbg !1626
+doomgeneric/doomgeneric/build/llvm/r_things.ll-329-  call void @llvm.dbg.value(metadata i32 %61, metadata !1567, metadata !DIExpression()), !dbg !1571
+doomgeneric/doomgeneric/build/llvm/r_things.ll-330-  tail call void @R_InstallSpriteLump(i32 noundef signext %28, i32 noundef signext %57, i32 noundef signext %61, i32 noundef signext 1) #9, !dbg !1627
+doomgeneric/doomgeneric/build/llvm/r_things.ll-331-  br label %62, !dbg !1628
+doomgeneric/doomgeneric/build/llvm/r_things.ll-332-
+doomgeneric/doomgeneric/build/llvm/r_things.ll-333-62:                                               ; preds = %27, %55, %49
+doomgeneric/doomgeneric/build/llvm/r_things.ll-334-  %63 = add i32 %28, 1, !dbg !1629
+doomgeneric/doomgeneric/build/llvm/r_things.ll-335-  call void @llvm.dbg.value(metadata i32 %63, metadata !1565, metadata !DIExpression()), !dbg !1571
+doomgeneric/doomgeneric/build/llvm/r_things.ll-336-  %64 = icmp eq i32 %28, %17, !dbg !1630
+doomgeneric/doomgeneric/build/llvm/r_things.ll-337-  br i1 %64, label %65, label %27, !dbg !1597, !llvm.loop !1631
+doomgeneric/doomgeneric/build/llvm/r_things.ll-338-
+doomgeneric/doomgeneric/build/llvm/r_things.ll-339-65:                                               ; preds = %62
+doomgeneric/doomgeneric/build/llvm/r_things.ll-340-  %66 = load i32, i32* @maxframe, align 4, !dbg !1633, !tbaa !1484
+doomgeneric/doomgeneric/build/llvm/r_things.ll-341-  %67 = icmp eq i32 %66, -1, !dbg !1635
+doomgeneric/doomgeneric/build/llvm/r_things.ll-342-  br i1 %67, label %68, label %71, !dbg !1636
+doomgeneric/doomgeneric/build/llvm/r_things.ll-343-
+doomgeneric/doomgeneric/build/llvm/r_things.ll-344-68:                                               ; preds = %22, %65
+doomgeneric/doomgeneric/build/llvm/r_things.ll-345-  %69 = load %struct.spritedef_t*, %struct.spritedef_t** @sprites, align 4, !dbg !1637, !tbaa !1501
+--
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:6:%struct.lumpinfo_s = type { [8 x i8], %struct._wad_file_s*, i32, i32, i8*, %struct.lumpinfo_s* }
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-7-%struct._wad_file_s = type { %struct.wad_file_class_t*, i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-8-%struct.wad_file_class_t = type { %struct._wad_file_s* (i8*)*, void (%struct._wad_file_s*)*, i32 (%struct._wad_file_s*, i32, i8*, i32)* }
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-9-%struct.sha1_context_s = type { i32, i32, i32, i32, i32, i32, [64 x i8], i32 }
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-10-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-11-@num_open_wadfiles = internal unnamed_addr global i32 0, align 4, !dbg !0
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-12-@numlumps = external local_unnamed_addr global i32, align 4
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:13:@lumpinfo = external local_unnamed_addr global %struct.lumpinfo_s*, align 4
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-14-@open_wadfiles = internal unnamed_addr global %struct._wad_file_s** null, align 4, !dbg !13
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-15-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-16-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-17-define dso_local void @W_Checksum(i8* noundef %0) local_unnamed_addr #0 !dbg !57 {
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-18-  %2 = alloca [9 x i8], align 1
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-19-  %3 = alloca %struct.sha1_context_s, align 4
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-20-  call void @llvm.dbg.value(metadata i8* %0, metadata !61, metadata !DIExpression()), !dbg !80
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-21-  %4 = bitcast %struct.sha1_context_s* %3 to i8*, !dbg !81
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-22-  call void @llvm.lifetime.start.p0i8(i64 92, i8* nonnull %4) #5, !dbg !81
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-23-  call void @llvm.dbg.declare(metadata %struct.sha1_context_s* %3, metadata !62, metadata !DIExpression()), !dbg !82
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-24-  call void @SHA1_Init(%struct.sha1_context_s* noundef nonnull %3) #6, !dbg !83
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-25-  store i32 0, i32* @num_open_wadfiles, align 4, !dbg !84, !tbaa !85
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-26-  call void @llvm.dbg.value(metadata i32 0, metadata !79, metadata !DIExpression()), !dbg !80
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-27-  %5 = load i32, i32* @numlumps, align 4, !dbg !89, !tbaa !85
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-28-  %6 = icmp eq i32 %5, 0, !dbg !92
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-29-  br i1 %6, label %49, label %7, !dbg !93
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-30-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-31-7:                                                ; preds = %1
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-32-  %8 = getelementptr inbounds [9 x i8], [9 x i8]* %2, i32 0, i32 0
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-33-  br label %9, !dbg !93
+--
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:38:  %11 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !94, !tbaa !96
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-39-  call void @llvm.dbg.value(metadata %struct.sha1_context_s* %3, metadata !98, metadata !DIExpression()) #5, !dbg !123
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:40:  call void @llvm.dbg.value(metadata !DIArgList(%struct.lumpinfo_s* %11, i32 %10), metadata !118, metadata !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 28, DW_OP_mul, DW_OP_plus, DW_OP_stack_value)) #5, !dbg !123
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-41-  call void @llvm.lifetime.start.p0i8(i64 9, i8* nonnull %8) #5, !dbg !125
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-42-  call void @llvm.dbg.declare(metadata [9 x i8]* %2, metadata !119, metadata !DIExpression()) #5, !dbg !126
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:43:  %12 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %11, i32 %10, i32 0, i32 0, !dbg !127
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-44-  %13 = call i32 @M_StringCopy(i8* noundef nonnull %8, i8* noundef %12, i32 noundef signext 9) #6, !dbg !128
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-45-  call void @SHA1_UpdateString(%struct.sha1_context_s* noundef nonnull %3, i8* noundef nonnull %8) #6, !dbg !129
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:46:  %14 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %11, i32 %10, i32 1, !dbg !130
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-47-  %15 = load %struct._wad_file_s*, %struct._wad_file_s** %14, align 4, !dbg !130, !tbaa !131
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-48-  call void @llvm.dbg.value(metadata %struct._wad_file_s* %15, metadata !133, metadata !DIExpression()) #5, !dbg !140
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-49-  call void @llvm.dbg.value(metadata i32 0, metadata !138, metadata !DIExpression()) #5, !dbg !140
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-50-  %16 = load i32, i32* @num_open_wadfiles, align 4, !tbaa !85
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-51-  call void @llvm.dbg.value(metadata i32 0, metadata !138, metadata !DIExpression()) #5, !dbg !140
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-52-  %17 = icmp sgt i32 %16, 0, !dbg !142
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-53-  br i1 %17, label %20, label %18, !dbg !145
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-54-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-55-18:                                               ; preds = %9
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-56-  %19 = load i8*, i8** bitcast (%struct._wad_file_s*** @open_wadfiles to i8**), align 4, !dbg !146, !tbaa !96
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-57-  br label %31, !dbg !145
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-58-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-59-20:                                               ; preds = %9
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-60-  %21 = load %struct._wad_file_s**, %struct._wad_file_s*** @open_wadfiles, align 4, !tbaa !96
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-61-  %22 = bitcast %struct._wad_file_s** %21 to i8*, !dbg !145
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-62-  br label %23, !dbg !145
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-63-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-64-23:                                               ; preds = %28, %20
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-65-  %24 = phi i32 [ 0, %20 ], [ %29, %28 ]
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-66-  call void @llvm.dbg.value(metadata i32 %24, metadata !138, metadata !DIExpression()) #5, !dbg !140
+--
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:96:  %42 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %11, i32 %10, i32 2, !dbg !165
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-97-  %43 = load i32, i32* %42, align 4, !dbg !165, !tbaa !166
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-98-  call void @SHA1_UpdateInt32(%struct.sha1_context_s* noundef nonnull %3, i32 noundef signext %43) #6, !dbg !167
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:99:  %44 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %11, i32 %10, i32 3, !dbg !168
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-100-  %45 = load i32, i32* %44, align 4, !dbg !168, !tbaa !169
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-101-  call void @SHA1_UpdateInt32(%struct.sha1_context_s* noundef nonnull %3, i32 noundef signext %45) #6, !dbg !170
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-102-  call void @llvm.lifetime.end.p0i8(i64 9, i8* nonnull %8) #5, !dbg !171
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-103-  %46 = add nuw i32 %10, 1, !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-104-  call void @llvm.dbg.value(metadata i32 %46, metadata !79, metadata !DIExpression()), !dbg !80
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-105-  %47 = load i32, i32* @numlumps, align 4, !dbg !89, !tbaa !85
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-106-  %48 = icmp ult i32 %46, %47, !dbg !92
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-107-  br i1 %48, label %9, label %49, !dbg !93, !llvm.loop !173
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-108-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-109-49:                                               ; preds = %40, %1
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-110-  call void @SHA1_Final(i8* noundef %0, %struct.sha1_context_s* noundef nonnull %3) #6, !dbg !175
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-111-  call void @llvm.lifetime.end.p0i8(i64 92, i8* nonnull %4) #5, !dbg !176
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-112-  ret void, !dbg !176
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-113-}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-114-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-115-; Function Attrs: mustprogress nofree nosync nounwind readnone speculatable willreturn
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-116-declare void @llvm.dbg.declare(metadata, metadata, metadata) #1
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-117-
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-118-; Function Attrs: argmemonly mustprogress nofree nosync nounwind willreturn
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-119-declare void @llvm.lifetime.start.p0i8(i64 immarg, i8* nocapture) #2
+--
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:263:!106 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "lumpinfo_s", file: !105, line: 42, size: 224, elements: !107)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-264-!107 = !{!108, !112, !113, !114, !115, !116}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-265-!108 = !DIDerivedType(tag: DW_TAG_member, name: "name", scope: !106, file: !105, line: 44, baseType: !109, size: 64)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-266-!109 = !DICompositeType(tag: DW_TAG_array_type, baseType: !31, size: 64, elements: !110)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-267-!110 = !{!111}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-268-!111 = !DISubrange(count: 8)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-269-!112 = !DIDerivedType(tag: DW_TAG_member, name: "wad_file", scope: !106, file: !105, line: 45, baseType: !16, size: 32, offset: 64)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-270-!113 = !DIDerivedType(tag: DW_TAG_member, name: "position", scope: !106, file: !105, line: 46, baseType: !50, size: 32, offset: 96)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-271-!114 = !DIDerivedType(tag: DW_TAG_member, name: "size", scope: !106, file: !105, line: 47, baseType: !50, size: 32, offset: 128)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-272-!115 = !DIDerivedType(tag: DW_TAG_member, name: "cache", scope: !106, file: !105, line: 48, baseType: !43, size: 32, offset: 160)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-273-!116 = !DIDerivedType(tag: DW_TAG_member, name: "next", scope: !106, file: !105, line: 52, baseType: !103, size: 32, offset: 192)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-274-!117 = !{!98, !118, !119}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-275-!118 = !DILocalVariable(name: "lump", arg: 2, scope: !99, file: !3, line: 58, type: !103)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-276-!119 = !DILocalVariable(name: "buf", scope: !99, file: !3, line: 60, type: !120)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-277-!120 = !DICompositeType(tag: DW_TAG_array_type, baseType: !31, size: 72, elements: !121)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-278-!121 = !{!122}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-279-!122 = !DISubrange(count: 9)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-280-!123 = !DILocation(line: 0, scope: !99, inlinedAt: !124)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-281-!124 = distinct !DILocation(line: 83, column: 9, scope: !95)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-282-!125 = !DILocation(line: 60, column: 5, scope: !99, inlinedAt: !124)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-283-!126 = !DILocation(line: 60, column: 10, scope: !99, inlinedAt: !124)
+--
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll:289:!132 = !{!"lumpinfo_s", !87, i64 0, !97, i64 8, !86, i64 12, !86, i64 16, !97, i64 20, !97, i64 24}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-290-!133 = !DILocalVariable(name: "handle", arg: 1, scope: !134, file: !3, line: 32, type: !16)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-291-!134 = distinct !DISubprogram(name: "GetFileNumber", scope: !3, file: !3, line: 32, type: !135, scopeLine: 33, flags: DIFlagPrototyped | DIFlagAllCallsDescribed, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !2, retainedNodes: !137)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-292-!135 = !DISubroutineType(types: !136)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-293-!136 = !{!50, !16}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-294-!137 = !{!133, !138, !139}
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-295-!138 = !DILocalVariable(name: "i", scope: !134, file: !3, line: 34, type: !50)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-296-!139 = !DILocalVariable(name: "result", scope: !134, file: !3, line: 35, type: !50)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-297-!140 = !DILocation(line: 0, scope: !134, inlinedAt: !141)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-298-!141 = distinct !DILocation(line: 64, column: 36, scope: !99, inlinedAt: !124)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-299-!142 = !DILocation(line: 37, column: 16, scope: !143, inlinedAt: !141)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-300-!143 = distinct !DILexicalBlock(scope: !144, file: !3, line: 37, column: 5)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-301-!144 = distinct !DILexicalBlock(scope: !134, file: !3, line: 37, column: 5)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-302-!145 = !DILocation(line: 37, column: 5, scope: !144, inlinedAt: !141)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-303-!146 = !DILocation(line: 48, column: 29, scope: !134, inlinedAt: !141)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-304-!147 = !DILocation(line: 39, column: 13, scope: !148, inlinedAt: !141)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-305-!148 = distinct !DILexicalBlock(scope: !149, file: !3, line: 39, column: 13)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-306-!149 = distinct !DILexicalBlock(scope: !143, file: !3, line: 38, column: 5)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-307-!150 = !DILocation(line: 39, column: 30, scope: !148, inlinedAt: !141)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-308-!151 = !DILocation(line: 39, column: 13, scope: !149, inlinedAt: !141)
+doomgeneric/doomgeneric/build/llvm/w_checksum.ll-309-!152 = !DILocation(line: 37, column: 36, scope: !143, inlinedAt: !141)
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:6:%struct.lumpinfo_s = type { [8 x i8], %struct._wad_file_s*, i32, i32, i8*, %struct.lumpinfo_s* }
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-7-%struct._wad_file_s = type { %struct.wad_file_class_t*, i8*, i32 }
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-8-%struct.wad_file_class_t = type { {}*, void (%struct._wad_file_s*)*, i32 (%struct._wad_file_s*, i32, i8*, i32)* }
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-9-%struct.anon = type { i32, i8* }
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-10-%struct.wadinfo_t = type { [4 x i8], i32, i32 }
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-11-%struct.filelump_t = type { i32, i32, [8 x i8] }
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-12-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-13-@numlumps = dso_local local_unnamed_addr global i32 0, align 4, !dbg !0
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-14-@.str = private unnamed_addr constant [19 x i8] c" couldn't open %s\0A\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-15-@.str.1 = private unnamed_addr constant [4 x i8] c"wad\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-16-@.str.2 = private unnamed_addr constant [5 x i8] c"IWAD\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-17-@.str.3 = private unnamed_addr constant [14 x i8] c"'%s' '%s' %d\0A\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-18-@.str.4 = private unnamed_addr constant [5 x i8] c"PAWD\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-19-@.str.5 = private unnamed_addr constant [5 x i8] c"PWAD\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-20-@.str.6 = private unnamed_addr constant [42 x i8] c"Wad file %s doesn't have IWAD or PWAD id\0A\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:21:@lumpinfo = dso_local local_unnamed_addr global %struct.lumpinfo_s* null, align 4, !dbg !42
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:22:@lumphash = internal unnamed_addr global %struct.lumpinfo_s** null, align 4, !dbg !92
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-23-@.str.7 = private unnamed_addr constant [31 x i8] c"W_GetNumForName: %s not found!\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-24-@.str.8 = private unnamed_addr constant [29 x i8] c"W_LumpLength: %i >= numlumps\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-25-@.str.9 = private unnamed_addr constant [27 x i8] c"W_ReadLump: %i >= numlumps\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-26-@.str.10 = private unnamed_addr constant [42 x i8] c"W_ReadLump: only read %i of %i on lump %i\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-27-@.str.11 = private unnamed_addr constant [31 x i8] c"W_CacheLumpNum: %i >= numlumps\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-28-@.str.12 = private unnamed_addr constant [8 x i8] c"w_wad.c\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-29-@.str.13 = private unnamed_addr constant [33 x i8] c"W_ReleaseLumpNum: %i >= numlumps\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-30-@unique_lumps = internal unnamed_addr constant [4 x %struct.anon] [%struct.anon { i32 0, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.17, i32 0, i32 0) }, %struct.anon { i32 6, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.18, i32 0, i32 0) }, %struct.anon { i32 7, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.19, i32 0, i32 0) }, %struct.anon { i32 8, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.20, i32 0, i32 0) }], align 4, !dbg !95
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-31-@.str.14 = private unnamed_addr constant [128 x i8] c"\0AYou are trying to use a %s IWAD file with the %s%s binary.\0AThis isn't going to work.\0AYou probably want to use the %s%s binary.\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-32-@.str.15 = private unnamed_addr constant [12 x i8] c"doomgeneric\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-33-@.str.16 = private unnamed_addr constant [26 x i8] c"Couldn't realloc lumpinfo\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-34-@.str.17 = private unnamed_addr constant [7 x i8] c"POSSA1\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-35-@.str.18 = private unnamed_addr constant [7 x i8] c"IMPXA1\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-36-@.str.19 = private unnamed_addr constant [7 x i8] c"ETTNA1\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-37-@.str.20 = private unnamed_addr constant [7 x i8] c"AGRDA1\00", align 1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-38-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-39-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-40-define dso_local i32 @W_LumpNameHash(i8* nocapture noundef readonly %0) local_unnamed_addr #0 !dbg !112 {
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-41-  call void @llvm.dbg.value(metadata i8* %0, metadata !118, metadata !DIExpression()), !dbg !121
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-42-  call void @llvm.dbg.value(metadata i32 5381, metadata !119, metadata !DIExpression()), !dbg !121
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:169:  %50 = bitcast i8* %49 to %struct.lumpinfo_s*, !dbg !250
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:170:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* %50, metadata !240, metadata !DIExpression()) #7, !dbg !248
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-171-  %51 = icmp eq i8* %49, null, !dbg !251
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-172-  br i1 %51, label %52, label %53, !dbg !253
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-173-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-174-52:                                               ; preds = %44
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-175-  call void (i8*, ...) @I_Error(i8* noundef getelementptr inbounds ([26 x i8], [26 x i8]* @.str.16, i32 0, i32 0)) #6, !dbg !254
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-176-  br label %53, !dbg !256
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-177-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-178-53:                                               ; preds = %52, %44
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-179-  call void @llvm.dbg.value(metadata i32 0, metadata !241, metadata !DIExpression()) #7, !dbg !248
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-180-  %54 = load i32, i32* @numlumps, align 4, !dbg !257, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-181-  %55 = icmp ne i32 %54, 0, !dbg !258
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-182-  %56 = icmp ne i32 %46, 0, !dbg !259
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-183-  %57 = and i1 %56, %55, !dbg !259
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-184-  br i1 %57, label %60, label %58, !dbg !260
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-185-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-186-58:                                               ; preds = %53
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:187:  %59 = load i8*, i8** bitcast (%struct.lumpinfo_s** @lumpinfo to i8**), align 4, !dbg !261, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-188-  br label %94, !dbg !260
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-189-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-190-60:                                               ; preds = %53
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:191:  %61 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !263, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-192-  br label %62, !dbg !260
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-193-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-194-62:                                               ; preds = %85, %60
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:195:  %63 = phi %struct.lumpinfo_s* [ %86, %85 ], [ %61, %60 ], !dbg !263
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-196-  %64 = phi i32 [ %87, %85 ], [ 0, %60 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-197-  call void @llvm.dbg.value(metadata i32 %64, metadata !241, metadata !DIExpression()) #7, !dbg !248
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:198:  %65 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %50, i32 %64, i32 0, i32 0, !dbg !264
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:199:  %66 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %63, i32 %64, i32 0, i32 0, !dbg !265
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-200-  %67 = call i8* @memcpy(i8* noundef %65, i8* noundef %66, i32 noundef signext 28) #6, !dbg !266
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:201:  %68 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %50, i32 %64, i32 4, !dbg !267
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-202-  %69 = load i8*, i8** %68, align 4, !dbg !267, !tbaa !269
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-203-  %70 = icmp eq i8* %69, null, !dbg !271
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-204-  br i1 %70, label %72, label %71, !dbg !272
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-205-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-206-71:                                               ; preds = %62
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-207-  call void @Z_ChangeUser(i8* noundef nonnull %69, i8** noundef nonnull %68) #6, !dbg !273
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-208-  br label %72, !dbg !275
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-209-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-210-72:                                               ; preds = %71, %62
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:211:  %73 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !276, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:212:  %74 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %73, i32 %64, i32 5, !dbg !277
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:213:  %75 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** %74, align 4, !dbg !277, !tbaa !278
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:214:  %76 = icmp eq %struct.lumpinfo_s* %75, null, !dbg !279
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-215-  br i1 %76, label %85, label %77, !dbg !280
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-216-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-217-77:                                               ; preds = %72
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:218:  %78 = ptrtoint %struct.lumpinfo_s* %75 to i32, !dbg !281
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:219:  %79 = ptrtoint %struct.lumpinfo_s* %73 to i32, !dbg !281
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-220-  %80 = sub i32 %78, %79, !dbg !281
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-221-  %81 = sdiv exact i32 %80, 28, !dbg !281
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-222-  call void @llvm.dbg.value(metadata i32 %81, metadata !242, metadata !DIExpression()) #7, !dbg !282
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:223:  %82 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %50, i32 %81, !dbg !283
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:224:  %83 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %50, i32 %64, i32 5, !dbg !284
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:225:  store %struct.lumpinfo_s* %82, %struct.lumpinfo_s** %83, align 4, !dbg !285, !tbaa !278
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:226:  %84 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !263, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-227-  br label %85, !dbg !286
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-228-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-229-85:                                               ; preds = %77, %72
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:230:  %86 = phi %struct.lumpinfo_s* [ %73, %72 ], [ %84, %77 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-231-  %87 = add nuw i32 %64, 1, !dbg !287
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-232-  call void @llvm.dbg.value(metadata i32 %87, metadata !241, metadata !DIExpression()) #7, !dbg !248
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-233-  %88 = load i32, i32* @numlumps, align 4, !dbg !257, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-234-  %89 = icmp ult i32 %87, %88, !dbg !258
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-235-  %90 = icmp ult i32 %87, %46, !dbg !259
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-236-  %91 = and i1 %90, %89, !dbg !259
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-237-  br i1 %91, label %62, label %92, !dbg !260, !llvm.loop !288
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-238-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-239-92:                                               ; preds = %85
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:240:  %93 = getelementptr %struct.lumpinfo_s, %struct.lumpinfo_s* %86, i32 0, i32 0, i32 0, !dbg !290
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-241-  br label %94, !dbg !261
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-242-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-243-94:                                               ; preds = %58, %92
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-244-  %95 = phi i8* [ %59, %58 ], [ %93, %92 ], !dbg !261
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-245-  call void @free(i8* noundef %95) #6, !dbg !291
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:246:  store i8* %49, i8** bitcast (%struct.lumpinfo_s** @lumpinfo to i8**), align 4, !dbg !292, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-247-  store i32 %46, i32* @numlumps, align 4, !dbg !293, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:248:  call void @llvm.dbg.value(metadata !DIArgList(%struct.lumpinfo_s* %50, i32 %48), metadata !157, metadata !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 28, DW_OP_mul, DW_OP_plus, DW_OP_stack_value)), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-249-  call void @llvm.dbg.value(metadata %struct.filelump_t* %47, metadata !170, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-250-  call void @llvm.dbg.value(metadata i32 %48, metadata !158, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-251-  %96 = icmp ult i32 %48, %46, !dbg !294
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-252-  br i1 %96, label %97, label %119, !dbg !297
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-253-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-254-97:                                               ; preds = %94
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:255:  %98 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %50, i32 %48, !dbg !298
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:256:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* %98, metadata !157, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-257-  br label %99, !dbg !297
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-258-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-259-99:                                               ; preds = %97, %99
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-260-  %100 = phi %struct.filelump_t* [ %115, %99 ], [ %47, %97 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:261:  %101 = phi %struct.lumpinfo_s* [ %114, %99 ], [ %98, %97 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-262-  %102 = phi i32 [ %116, %99 ], [ %48, %97 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-263-  call void @llvm.dbg.value(metadata %struct.filelump_t* %100, metadata !170, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:264:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* %101, metadata !157, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-265-  call void @llvm.dbg.value(metadata i32 %102, metadata !158, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:266:  %103 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %101, i32 0, i32 1, !dbg !299
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-267-  store %struct._wad_file_s* %4, %struct._wad_file_s** %103, align 4, !dbg !301, !tbaa !302
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-268-  %104 = getelementptr inbounds %struct.filelump_t, %struct.filelump_t* %100, i32 0, i32 0, !dbg !303
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-269-  %105 = load i32, i32* %104, align 1, !dbg !303, !tbaa !195
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:270:  %106 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %101, i32 0, i32 2, !dbg !304
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-271-  store i32 %105, i32* %106, align 4, !dbg !305, !tbaa !306
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-272-  %107 = getelementptr inbounds %struct.filelump_t, %struct.filelump_t* %100, i32 0, i32 1, !dbg !307
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-273-  %108 = load i32, i32* %107, align 1, !dbg !307, !tbaa !203
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:274:  %109 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %101, i32 0, i32 3, !dbg !308
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-275-  store i32 %108, i32* %109, align 4, !dbg !309, !tbaa !310
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:276:  %110 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %101, i32 0, i32 4, !dbg !311
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-277-  store i8* null, i8** %110, align 4, !dbg !312, !tbaa !269
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:278:  %111 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %101, i32 0, i32 0, i32 0, !dbg !313
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-279-  %112 = getelementptr inbounds %struct.filelump_t, %struct.filelump_t* %100, i32 0, i32 2, i32 0, !dbg !314
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-280-  %113 = call i8* @strncpy(i8* noundef %111, i8* noundef nonnull %112, i32 noundef signext 8) #6, !dbg !315
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:281:  %114 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %101, i32 1, !dbg !316
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:282:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* %114, metadata !157, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-283-  %115 = getelementptr inbounds %struct.filelump_t, %struct.filelump_t* %100, i32 1, !dbg !317
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-284-  call void @llvm.dbg.value(metadata %struct.filelump_t* %115, metadata !170, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-285-  %116 = add nuw i32 %102, 1, !dbg !318
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-286-  call void @llvm.dbg.value(metadata i32 %116, metadata !158, metadata !DIExpression()), !dbg !172
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-287-  %117 = load i32, i32* @numlumps, align 4, !dbg !319, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-288-  %118 = icmp ult i32 %116, %117, !dbg !294
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-289-  br i1 %118, label %99, label %119, !dbg !297, !llvm.loop !320
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-290-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-291-119:                                              ; preds = %99, %94
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-292-  call void @Z_Free(i8* noundef %45) #6, !dbg !322
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:293:  %120 = load %struct.lumpinfo_s**, %struct.lumpinfo_s*** @lumphash, align 4, !dbg !323, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:294:  %121 = icmp eq %struct.lumpinfo_s** %120, null, !dbg !325
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-295-  br i1 %121, label %124, label %122, !dbg !326
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-296-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-297-122:                                              ; preds = %119
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:298:  %123 = bitcast %struct.lumpinfo_s** %120 to i8*, !dbg !327
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-299-  call void @Z_Free(i8* noundef nonnull %123) #6, !dbg !329
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:300:  store %struct.lumpinfo_s** null, %struct.lumpinfo_s*** @lumphash, align 4, !dbg !330, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-301-  br label %124, !dbg !331
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-302-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-303-124:                                              ; preds = %119, %122, %6
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-304-  call void @llvm.lifetime.end.p0i8(i64 12, i8* nonnull %3) #7, !dbg !332
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-305-  ret %struct._wad_file_s* %4, !dbg !332
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-306-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-307-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-308-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-309-declare !dbg !333 %struct._wad_file_s* @W_OpenFile(i8* noundef) local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-310-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-311-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-312-declare !dbg !334 i32 @printf(i8* noundef, ...) local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-313-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-314-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-315-declare !dbg !337 i32 @strcasecmp(i8* noundef, i8* noundef) local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-316-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-317-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-318-declare !dbg !340 i32 @strlen(i8* noundef) local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-319-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-320-; Function Attrs: optsize
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:350:  %2 = load %struct.lumpinfo_s**, %struct.lumpinfo_s*** @lumphash, align 4, !dbg !380, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:351:  %3 = icmp eq %struct.lumpinfo_s** %2, null, !dbg !381
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-352-  br i1 %3, label %27, label %4, !dbg !382
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-353-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-354-4:                                                ; preds = %1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-355-  %5 = tail call i32 @W_LumpNameHash(i8* noundef %0) #8, !dbg !383
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-356-  %6 = load i32, i32* @numlumps, align 4, !dbg !384, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-357-  %7 = urem i32 %5, %6, !dbg !385
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-358-  call void @llvm.dbg.value(metadata i32 %7, metadata !376, metadata !DIExpression()), !dbg !386
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:359:  %8 = load %struct.lumpinfo_s**, %struct.lumpinfo_s*** @lumphash, align 4, !dbg !387, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:360:  %9 = getelementptr inbounds %struct.lumpinfo_s*, %struct.lumpinfo_s** %8, i32 %7, !dbg !387
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:361:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* undef, metadata !374, metadata !DIExpression()), !dbg !379
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:362:  %10 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** %9, align 4, !dbg !389, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:363:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* %10, metadata !374, metadata !DIExpression()), !dbg !379
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:364:  %11 = icmp eq %struct.lumpinfo_s* %10, null, !dbg !390
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-365-  br i1 %11, label %38, label %12, !dbg !392
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-366-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-367-12:                                               ; preds = %4, %17
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:368:  %13 = phi %struct.lumpinfo_s* [ %19, %17 ], [ %10, %4 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:369:  %14 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %13, i32 0, i32 0, i32 0, !dbg !393
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-370-  %15 = tail call i32 @strncasecmp(i8* noundef nonnull %14, i8* noundef %0, i32 noundef signext 8) #6, !dbg !396
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-371-  %16 = icmp eq i32 %15, 0, !dbg !396
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-372-  br i1 %16, label %21, label %17, !dbg !397
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-373-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-374-17:                                               ; preds = %12
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:375:  %18 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %13, i32 0, i32 5, !dbg !398
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:376:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* undef, metadata !374, metadata !DIExpression()), !dbg !379
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:377:  %19 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** %18, align 4, !dbg !389, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:378:  call void @llvm.dbg.value(metadata %struct.lumpinfo_s* %19, metadata !374, metadata !DIExpression()), !dbg !379
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:379:  %20 = icmp eq %struct.lumpinfo_s* %19, null, !dbg !390
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-380-  br i1 %20, label %38, label %12, !dbg !392, !llvm.loop !399
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-381-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-382-21:                                               ; preds = %12
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:383:  %22 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !401, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:384:  %23 = ptrtoint %struct.lumpinfo_s* %13 to i32, !dbg !403
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:385:  %24 = ptrtoint %struct.lumpinfo_s* %22 to i32, !dbg !403
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-386-  %25 = sub i32 %23, %24, !dbg !403
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-387-  %26 = sdiv exact i32 %25, 28, !dbg !403
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-388-  br label %38
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-389-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-390-27:                                               ; preds = %1
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-391-  %28 = load i32, i32* @numlumps, align 4, !dbg !404, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-392-  call void @llvm.dbg.value(metadata i32 %28, metadata !375, metadata !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value)), !dbg !379
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-393-  br label %29, !dbg !407
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-394-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-395-29:                                               ; preds = %33, %27
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-396-  %30 = phi i32 [ %28, %27 ], [ %31, %33 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-397-  %31 = add i32 %30, -1, !dbg !408
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-398-  call void @llvm.dbg.value(metadata i32 %31, metadata !375, metadata !DIExpression()), !dbg !379
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-399-  %32 = icmp sgt i32 %31, -1, !dbg !409
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-400-  br i1 %32, label %33, label %38, !dbg !411
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-401-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-402-33:                                               ; preds = %29
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:403:  %34 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !412, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:404:  %35 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %34, i32 %31, i32 0, i32 0, !dbg !412
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-405-  %36 = tail call i32 @strncasecmp(i8* noundef %35, i8* noundef %0, i32 noundef signext 8) #6, !dbg !415
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-406-  %37 = icmp eq i32 %36, 0, !dbg !415
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-407-  br i1 %37, label %38, label %29, !dbg !416, !llvm.loop !417
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-408-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-409-38:                                               ; preds = %17, %29, %33, %4, %21
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-410-  %39 = phi i32 [ %26, %21 ], [ -1, %4 ], [ -1, %29 ], [ %31, %33 ], [ -1, %17 ], !dbg !379
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-411-  ret i32 %39, !dbg !419
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-412-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-413-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-414-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-415-declare !dbg !420 i32 @strncasecmp(i8* noundef, i8* noundef, i32 noundef signext) local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-416-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-417-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-418-define dso_local i32 @W_GetNumForName(i8* noundef %0) local_unnamed_addr #0 !dbg !421 {
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-419-  call void @llvm.dbg.value(metadata i8* %0, metadata !423, metadata !DIExpression()), !dbg !425
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-420-  %2 = tail call i32 @W_CheckNumForName(i8* noundef %0) #8, !dbg !426
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-421-  call void @llvm.dbg.value(metadata i32 %2, metadata !424, metadata !DIExpression()), !dbg !425
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-422-  %3 = icmp slt i32 %2, 0, !dbg !427
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-423-  br i1 %3, label %4, label %5, !dbg !429
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-424-
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:445:  %6 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !447, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:446:  %7 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %6, i32 %0, i32 3, !dbg !448
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-447-  %8 = load i32, i32* %7, align 4, !dbg !448, !tbaa !310
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-448-  ret i32 %8, !dbg !449
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-449-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-450-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-451-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-452-define dso_local void @W_ReadLump(i32 noundef signext %0, i8* noundef %1) local_unnamed_addr #0 !dbg !450 {
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-453-  call void @llvm.dbg.value(metadata i32 %0, metadata !454, metadata !DIExpression()), !dbg !458
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-454-  call void @llvm.dbg.value(metadata i8* %1, metadata !455, metadata !DIExpression()), !dbg !458
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-455-  %3 = load i32, i32* @numlumps, align 4, !dbg !459, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-456-  %4 = icmp ugt i32 %3, %0, !dbg !461
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-457-  br i1 %4, label %6, label %5, !dbg !462
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-458-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-459-5:                                                ; preds = %2
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-460-  tail call void (i8*, ...) @I_Error(i8* noundef getelementptr inbounds ([27 x i8], [27 x i8]* @.str.9, i32 0, i32 0), i32 noundef signext %0) #6, !dbg !463
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-461-  br label %6, !dbg !465
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-462-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-463-6:                                                ; preds = %5, %2
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:464:  %7 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !466, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:465:  call void @llvm.dbg.value(metadata !DIArgList(%struct.lumpinfo_s* %7, i32 %0), metadata !457, metadata !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 28, DW_OP_mul, DW_OP_plus, DW_OP_stack_value)), !dbg !458
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-466-  tail call void @I_BeginRead() #6, !dbg !467
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:467:  %8 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %7, i32 %0, i32 1, !dbg !468
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-468-  %9 = load %struct._wad_file_s*, %struct._wad_file_s** %8, align 4, !dbg !468, !tbaa !302
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:469:  %10 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %7, i32 %0, i32 2, !dbg !469
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-470-  %11 = load i32, i32* %10, align 4, !dbg !469, !tbaa !306
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:471:  %12 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %7, i32 %0, i32 3, !dbg !470
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-472-  %13 = load i32, i32* %12, align 4, !dbg !470, !tbaa !310
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-473-  %14 = tail call i32 @W_Read(%struct._wad_file_s* noundef %9, i32 noundef signext %11, i8* noundef %1, i32 noundef signext %13) #6, !dbg !471
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-474-  call void @llvm.dbg.value(metadata i32 %14, metadata !456, metadata !DIExpression()), !dbg !458
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-475-  %15 = load i32, i32* %12, align 4, !dbg !472, !tbaa !310
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-476-  %16 = icmp slt i32 %14, %15, !dbg !474
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-477-  br i1 %16, label %17, label %18, !dbg !475
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-478-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-479-17:                                               ; preds = %6
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-480-  tail call void (i8*, ...) @I_Error(i8* noundef getelementptr inbounds ([42 x i8], [42 x i8]* @.str.10, i32 0, i32 0), i32 noundef signext %14, i32 noundef signext %15, i32 noundef signext %0) #6, !dbg !476
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-481-  br label %18, !dbg !478
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-482-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-483-18:                                               ; preds = %17, %6
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-484-  tail call void @I_EndRead() #6, !dbg !479
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-485-  ret void, !dbg !480
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-486-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-487-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-488-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-489-declare !dbg !481 void @I_BeginRead() local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-490-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-491-; Function Attrs: optsize
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:507:  %7 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !502, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:508:  call void @llvm.dbg.value(metadata !DIArgList(%struct.lumpinfo_s* %7, i32 %0), metadata !493, metadata !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 28, DW_OP_mul, DW_OP_plus, DW_OP_stack_value)), !dbg !494
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:509:  %8 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %7, i32 %0, i32 1, !dbg !503
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-510-  %9 = load %struct._wad_file_s*, %struct._wad_file_s** %8, align 4, !dbg !503, !tbaa !302
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-511-  %10 = getelementptr inbounds %struct._wad_file_s, %struct._wad_file_s* %9, i32 0, i32 1, !dbg !505
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-512-  %11 = load i8*, i8** %10, align 4, !dbg !505, !tbaa !506
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-513-  %12 = icmp eq i8* %11, null, !dbg !507
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-514-  br i1 %12, label %17, label %13, !dbg !508
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-515-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-516-13:                                               ; preds = %6
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:517:  call void @llvm.dbg.value(metadata !DIArgList(%struct.lumpinfo_s* %7, i32 %0), metadata !493, metadata !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 28, DW_OP_mul, DW_OP_plus, DW_OP_stack_value)), !dbg !494
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:518:  %14 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %7, i32 %0, i32 2, !dbg !509
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-519-  %15 = load i32, i32* %14, align 4, !dbg !509, !tbaa !306
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-520-  %16 = getelementptr inbounds i8, i8* %11, i32 %15, !dbg !511
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-521-  call void @llvm.dbg.value(metadata i8* %16, metadata !492, metadata !DIExpression()), !dbg !494
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-522-  br label %34, !dbg !512
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-523-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-524-17:                                               ; preds = %6
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:525:  %18 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %7, i32 %0, i32 4, !dbg !513
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-526-  %19 = load i8*, i8** %18, align 4, !dbg !513, !tbaa !269
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-527-  %20 = icmp eq i8* %19, null, !dbg !515
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-528-  br i1 %20, label %22, label %21, !dbg !516
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-529-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-530-21:                                               ; preds = %17
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-531-  call void @llvm.dbg.value(metadata i8* %19, metadata !492, metadata !DIExpression()), !dbg !494
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-532-  tail call void @Z_ChangeTag2(i8* noundef nonnull %19, i32 noundef signext %1, i8* noundef getelementptr inbounds ([8 x i8], [8 x i8]* @.str.12, i32 0, i32 0), i32 noundef signext 412) #6, !dbg !517
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-533-  br label %34, !dbg !519
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-534-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-535-22:                                               ; preds = %17
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-536-  call void @llvm.dbg.value(metadata i32 %0, metadata !438, metadata !DIExpression()) #7, !dbg !520
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-537-  %23 = load i32, i32* @numlumps, align 4, !dbg !523, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-538-  %24 = icmp ugt i32 %23, %0, !dbg !524
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-539-  br i1 %24, label %27, label %25, !dbg !525
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-540-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-541-25:                                               ; preds = %22
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-542-  tail call void (i8*, ...) @I_Error(i8* noundef getelementptr inbounds ([29 x i8], [29 x i8]* @.str.8, i32 0, i32 0), i32 noundef signext %0) #6, !dbg !526
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:543:  %26 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !527, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-544-  br label %27, !dbg !528
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-545-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-546-27:                                               ; preds = %22, %25
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:547:  %28 = phi %struct.lumpinfo_s* [ %7, %22 ], [ %26, %25 ], !dbg !527
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:548:  %29 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %28, i32 %0, i32 3, !dbg !529
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-549-  %30 = load i32, i32* %29, align 4, !dbg !529, !tbaa !310
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-550-  %31 = bitcast i8** %18 to i8*, !dbg !530
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-551-  %32 = tail call i8* @Z_Malloc(i32 noundef signext %30, i32 noundef signext %1, i8* noundef nonnull %31) #6, !dbg !531
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-552-  store i8* %32, i8** %18, align 4, !dbg !532, !tbaa !269
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-553-  tail call void @W_ReadLump(i32 noundef signext %0, i8* noundef %32) #8, !dbg !533
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-554-  %33 = load i8*, i8** %18, align 4, !dbg !534, !tbaa !269
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-555-  call void @llvm.dbg.value(metadata i8* %33, metadata !492, metadata !DIExpression()), !dbg !494
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-556-  br label %34
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-557-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-558-34:                                               ; preds = %21, %27, %13
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-559-  %35 = phi i8* [ %16, %13 ], [ %19, %21 ], [ %33, %27 ], !dbg !535
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-560-  call void @llvm.dbg.value(metadata i8* %35, metadata !492, metadata !DIExpression()), !dbg !494
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-561-  ret i8* %35, !dbg !536
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-562-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-563-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-564-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-565-declare !dbg !537 void @Z_ChangeTag2(i8* noundef, i32 noundef signext, i8* noundef, i32 noundef signext) local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-566-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-567-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-568-define dso_local i8* @W_CacheLumpName(i8* noundef %0, i32 noundef signext %1) local_unnamed_addr #0 !dbg !540 {
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:588:  %6 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !562, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:589:  call void @llvm.dbg.value(metadata !DIArgList(%struct.lumpinfo_s* %6, i32 %0), metadata !553, metadata !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 28, DW_OP_mul, DW_OP_plus, DW_OP_stack_value)), !dbg !554
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:590:  %7 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %6, i32 %0, i32 1, !dbg !563
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-591-  %8 = load %struct._wad_file_s*, %struct._wad_file_s** %7, align 4, !dbg !563, !tbaa !302
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-592-  %9 = getelementptr inbounds %struct._wad_file_s, %struct._wad_file_s* %8, i32 0, i32 1, !dbg !565
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-593-  %10 = load i8*, i8** %9, align 4, !dbg !565, !tbaa !506
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-594-  %11 = icmp eq i8* %10, null, !dbg !566
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-595-  br i1 %11, label %12, label %15, !dbg !567
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-596-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-597-12:                                               ; preds = %5
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:598:  call void @llvm.dbg.value(metadata !DIArgList(%struct.lumpinfo_s* %6, i32 %0), metadata !553, metadata !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 28, DW_OP_mul, DW_OP_plus, DW_OP_stack_value)), !dbg !554
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:599:  %13 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %6, i32 %0, i32 4, !dbg !568
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-600-  %14 = load i8*, i8** %13, align 4, !dbg !568, !tbaa !269
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-601-  tail call void @Z_ChangeTag2(i8* noundef %14, i32 noundef signext 8, i8* noundef getelementptr inbounds ([8 x i8], [8 x i8]* @.str.12, i32 0, i32 0), i32 noundef signext 463) #6, !dbg !568
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-602-  br label %15
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-603-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-604-15:                                               ; preds = %5, %12
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-605-  ret void, !dbg !570
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-606-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-607-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-608-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-609-define dso_local void @W_ReleaseLumpName(i8* noundef %0) local_unnamed_addr #0 !dbg !571 {
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-610-  call void @llvm.dbg.value(metadata i8* %0, metadata !575, metadata !DIExpression()), !dbg !576
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-611-  %2 = tail call i32 @W_GetNumForName(i8* noundef %0) #8, !dbg !577
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-612-  tail call void @W_ReleaseLumpNum(i32 noundef signext %2) #8, !dbg !578
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-613-  ret void, !dbg !579
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-614-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-615-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-616-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-617-define dso_local void @W_GenerateHashTable() local_unnamed_addr #0 !dbg !580 {
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:618:  %1 = load %struct.lumpinfo_s**, %struct.lumpinfo_s*** @lumphash, align 4, !dbg !589, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:619:  %2 = icmp eq %struct.lumpinfo_s** %1, null, !dbg !591
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-620-  br i1 %2, label %5, label %3, !dbg !592
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-621-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-622-3:                                                ; preds = %0
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:623:  %4 = bitcast %struct.lumpinfo_s** %1 to i8*, !dbg !593
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-624-  tail call void @Z_Free(i8* noundef nonnull %4) #6, !dbg !595
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-625-  br label %5, !dbg !596
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-626-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-627-5:                                                ; preds = %3, %0
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-628-  %6 = load i32, i32* @numlumps, align 4, !dbg !597, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-629-  %7 = icmp eq i32 %6, 0, !dbg !598
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-630-  br i1 %7, label %32, label %8, !dbg !599
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-631-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-632-8:                                                ; preds = %5
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-633-  %9 = shl i32 %6, 2, !dbg !600
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-634-  %10 = tail call i8* @Z_Malloc(i32 noundef signext %9, i32 noundef signext 1, i8* noundef null) #6, !dbg !601
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:635:  store i8* %10, i8** bitcast (%struct.lumpinfo_s*** @lumphash to i8**), align 4, !dbg !602, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-636-  %11 = load i32, i32* @numlumps, align 4, !dbg !603, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-637-  %12 = shl i32 %11, 2, !dbg !604
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-638-  %13 = tail call i8* @memset(i8* noundef %10, i32 noundef signext 0, i32 noundef signext %12) #6, !dbg !605
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-639-  call void @llvm.dbg.value(metadata i32 0, metadata !582, metadata !DIExpression()), !dbg !606
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-640-  %14 = load i32, i32* @numlumps, align 4, !dbg !607, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-641-  %15 = icmp eq i32 %14, 0, !dbg !608
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-642-  br i1 %15, label %32, label %16, !dbg !609
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-643-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-644-16:                                               ; preds = %8, %16
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-645-  %17 = phi i32 [ %30, %16 ], [ 0, %8 ]
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-646-  call void @llvm.dbg.value(metadata i32 %17, metadata !582, metadata !DIExpression()), !dbg !606
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:647:  %18 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !610, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:648:  %19 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %18, i32 %17, i32 0, i32 0, !dbg !610
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-649-  %20 = tail call i32 @W_LumpNameHash(i8* noundef %19) #8, !dbg !611
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-650-  %21 = load i32, i32* @numlumps, align 4, !dbg !612, !tbaa !183
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-651-  %22 = urem i32 %20, %21, !dbg !613
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-652-  call void @llvm.dbg.value(metadata i32 %22, metadata !583, metadata !DIExpression()), !dbg !614
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:653:  %23 = load %struct.lumpinfo_s**, %struct.lumpinfo_s*** @lumphash, align 4, !dbg !615, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:654:  %24 = getelementptr inbounds %struct.lumpinfo_s*, %struct.lumpinfo_s** %23, i32 %22, !dbg !615
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:655:  %25 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** %24, align 4, !dbg !615, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:656:  %26 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !616, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:657:  %27 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %26, i32 %17, i32 5, !dbg !617
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:658:  store %struct.lumpinfo_s* %25, %struct.lumpinfo_s** %27, align 4, !dbg !618, !tbaa !278
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:659:  %28 = load %struct.lumpinfo_s*, %struct.lumpinfo_s** @lumpinfo, align 4, !dbg !619, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:660:  %29 = getelementptr inbounds %struct.lumpinfo_s, %struct.lumpinfo_s* %28, i32 %17, !dbg !619
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:661:  store %struct.lumpinfo_s* %29, %struct.lumpinfo_s** %24, align 4, !dbg !620, !tbaa !262
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-662-  %30 = add nuw i32 %17, 1, !dbg !621
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-663-  call void @llvm.dbg.value(metadata i32 %30, metadata !582, metadata !DIExpression()), !dbg !606
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-664-  %31 = icmp ult i32 %30, %21, !dbg !608
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-665-  br i1 %31, label %16, label %32, !dbg !609, !llvm.loop !622
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-666-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-667-32:                                               ; preds = %16, %8, %5
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-668-  ret void, !dbg !624
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-669-}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-670-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-671-; Function Attrs: optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-672-declare !dbg !625 i8* @memset(i8* noundef, i32 noundef signext, i32 noundef signext) local_unnamed_addr #3
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-673-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-674-; Function Attrs: nounwind optsize
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-675-define dso_local void @W_CheckCorrectIWAD(i32 noundef signext %0) local_unnamed_addr #0 !dbg !628 {
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-676-  call void @llvm.dbg.value(metadata i32 %0, metadata !632, metadata !DIExpression()), !dbg !635
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-677-  call void @llvm.dbg.value(metadata i32 0, metadata !633, metadata !DIExpression()), !dbg !635
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-678-  br label %2, !dbg !636
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-679-
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-680-2:                                                ; preds = %1, %16
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-681-  %3 = phi i32 [ 0, %1 ], [ %17, %16 ]
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:795:!47 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "lumpinfo_s", file: !46, line: 42, size: 224, elements: !48)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-796-!48 = !{!49, !54, !88, !89, !90, !91}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-797-!49 = !DIDerivedType(tag: DW_TAG_member, name: "name", scope: !47, file: !46, line: 44, baseType: !50, size: 64)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-798-!50 = !DICompositeType(tag: DW_TAG_array_type, baseType: !51, size: 64, elements: !52)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-799-!51 = !DIBasicType(name: "char", size: 8, encoding: DW_ATE_signed_char)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-800-!52 = !{!53}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-801-!53 = !DISubrange(count: 8)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-802-!54 = !DIDerivedType(tag: DW_TAG_member, name: "wad_file", scope: !47, file: !46, line: 45, baseType: !55, size: 32, offset: 64)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-803-!55 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !56, size: 32)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-804-!56 = !DIDerivedType(tag: DW_TAG_typedef, name: "wad_file_t", file: !57, line: 27, baseType: !58)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-805-!57 = !DIFile(filename: "./w_file.h", directory: "/app/doomgeneric/doomgeneric", checksumkind: CSK_MD5, checksum: "69515ac6997db1ddb26240936fec3266")
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-806-!58 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_wad_file_s", file: !57, line: 47, size: 96, elements: !59)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-807-!59 = !{!60, !81, !87}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-808-!60 = !DIDerivedType(tag: DW_TAG_member, name: "file_class", scope: !58, file: !57, line: 51, baseType: !61, size: 32)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-809-!61 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !62, size: 32)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-810-!62 = !DIDerivedType(tag: DW_TAG_typedef, name: "wad_file_class_t", file: !57, line: 45, baseType: !63)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-811-!63 = distinct !DICompositeType(tag: DW_TAG_structure_type, file: !57, line: 29, size: 96, elements: !64)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-812-!64 = !{!65, !70, !74}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-813-!65 = !DIDerivedType(tag: DW_TAG_member, name: "OpenFile", scope: !63, file: !57, line: 33, baseType: !66, size: 32)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-814-!66 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !67, size: 32)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-815-!67 = !DISubroutineType(types: !68)
+--
+doomgeneric/doomgeneric/build/llvm/w_wad.ll:1018:!270 = !{!"lumpinfo_s", !127, i64 0, !200, i64 8, !184, i64 12, !184, i64 16, !200, i64 20, !200, i64 24}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1019-!271 = !DILocation(line: 107, column: 34, scope: !268, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1020-!272 = !DILocation(line: 107, column: 13, scope: !245, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1021-!273 = !DILocation(line: 109, column: 13, scope: !274, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1022-!274 = distinct !DILexicalBlock(scope: !268, file: !3, line: 108, column: 9)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1023-!275 = !DILocation(line: 110, column: 9, scope: !274, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1024-!276 = !DILocation(line: 114, column: 13, scope: !244, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1025-!277 = !DILocation(line: 114, column: 25, scope: !244, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1026-!278 = !{!270, !200, i64 24}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1027-!279 = !DILocation(line: 114, column: 30, scope: !244, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1028-!280 = !DILocation(line: 114, column: 13, scope: !245, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1029-!281 = !DILocation(line: 116, column: 48, scope: !243, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1030-!282 = !DILocation(line: 0, scope: !243, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1031-!283 = !DILocation(line: 117, column: 36, scope: !243, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1032-!284 = !DILocation(line: 117, column: 28, scope: !243, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1033-!285 = !DILocation(line: 117, column: 33, scope: !243, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1034-!286 = !DILocation(line: 118, column: 9, scope: !243, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1035-!287 = !DILocation(line: 103, column: 50, scope: !246, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1036-!288 = distinct !{!288, !260, !289, !140}
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1037-!289 = !DILocation(line: 119, column: 5, scope: !247, inlinedAt: !249)
+doomgeneric/doomgeneric/build/llvm/w_wad.ll-1038-!290 = !DILocation(line: 0, scope: !245, inlinedAt: !249)

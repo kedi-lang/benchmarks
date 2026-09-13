@@ -1,0 +1,107 @@
+97:void Z_Init (void)
+98-{
+99-    memblock_t*	block;
+100-    int		size;
+101-
+102-    mainzone = (memzone_t *)I_ZoneBase (&size);
+103-    mainzone->size = size;
+104-
+105-    // set the entire zone to one free block
+106-    mainzone->blocklist.next =
+107-	mainzone->blocklist.prev =
+108-	block = (memblock_t *)( (byte *)mainzone + sizeof(memzone_t) );
+109-
+110-    mainzone->blocklist.user = (void *)mainzone;
+111-    mainzone->blocklist.tag = PU_STATIC;
+112-    mainzone->rover = block;
+113-	
+114-    block->prev = block->next = &mainzone->blocklist;
+115-
+116-    // free block
+117-    block->tag = PU_FREE;
+118-    
+119-    block->size = mainzone->size - sizeof(memzone_t);
+120-}
+121-
+122-
+123-//
+124-// Z_Free
+125-//
+126-void Z_Free (void* ptr)
+127-{
+128-    memblock_t*		block;
+129-    memblock_t*		other;
+130-	
+131-    block = (memblock_t *) ( (byte *)ptr - sizeof(memblock_t));
+132-
+133-    if (block->id != ZONEID)
+134-	I_Error ("Z_Free: freed a pointer without ZONEID");
+135-		
+136-    if (block->tag != PU_FREE && block->user != NULL)
+137-    {
+138-    	// clear the user's mark
+139-	    *block->user = 0;
+140-    }
+141-
+142-    // mark as free
+143-    block->tag = PU_FREE;
+144-    block->user = NULL;
+145-    block->id = 0;
+146-	
+147-    other = block->prev;
+148-
+149-    if (other->tag == PU_FREE)
+150-    {
+151-        // merge with previous free block
+152-        other->size += block->size;
+153-        other->next = block->next;
+154-        other->next->prev = other;
+155-
+156-        if (block == mainzone->rover)
+157-            mainzone->rover = other;
+158-
+159-        block = other;
+160-    }
+161-	
+162-    other = block->next;
+163-    if (other->tag == PU_FREE)
+164-    {
+165-        // merge the next free block onto the end
+166-        block->size += other->size;
+167-        block->next = other->next;
+168-        block->next->prev = block;
+169-
+170-        if (other == mainzone->rover)
+171-            mainzone->rover = block;
+172-    }
+133:byte *I_ZoneBase (int *size)
+134-{
+135-    byte *zonemem;
+136-    int min_ram, default_ram;
+137-    int p;
+138-
+139-    //!
+140-    // @arg <mb>
+141-    //
+142-    // Specify the heap size, in MiB (default 16).
+143-    //
+144-
+145-    p = M_CheckParmWithArgs("-mb", 1);
+146-
+147-    if (p > 0)
+148-    {
+149-        default_ram = atoi(myargv[p+1]);
+150-        min_ram = default_ram;
+151-    }
+152-    else
+153-    {
+154-        default_ram = DEFAULT_RAM;
+155-        min_ram = MIN_RAM;
+156-    }
+157-
+158-    zonemem = AutoAllocMemory(size, default_ram, min_ram);
+159-
+160-    printf("zone memory: %p, %x allocated for zone\n", 
+161-           zonemem, *size);
+162-
+163-    return zonemem;

@@ -1,0 +1,121 @@
+176-	INCLUDE_DIRS += $(CUDA_INCLUDE_DIR)
+177-	LIBRARY_DIRS += $(CUDA_LIB_DIR)
+178-	LIBRARIES := cudart cublas curand
+179-endif
+180-
+181-LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_hl hdf5
+182-
+183-# handle IO dependencies
+184-USE_LEVELDB ?= 1
+185-USE_LMDB ?= 1
+186:USE_OPENCV ?= 1
+187-
+188-ifeq ($(USE_LEVELDB), 1)
+189-	LIBRARIES += leveldb snappy
+190-endif
+191-ifeq ($(USE_LMDB), 1)
+192-	LIBRARIES += lmdb
+193-endif
+194:ifeq ($(USE_OPENCV), 1)
+195-	LIBRARIES += opencv_core opencv_highgui opencv_imgproc
+196-
+197:	ifeq ($(OPENCV_VERSION), 3)
+198-		LIBRARIES += opencv_imgcodecs
+199-	endif
+200-
+201-endif
+202-PYTHON_LIBRARIES ?= boost_python python2.7
+203-WARNINGS := -Wall -Wno-sign-compare
+204-
+205-##############################
+206-# Set build directories
+207-##############################
+208-
+209-DISTRIBUTE_DIR ?= distribute
+210-DISTRIBUTE_SUBDIRS := $(DISTRIBUTE_DIR)/bin $(DISTRIBUTE_DIR)/lib
+211-DIST_ALIASES := dist
+212-ifneq ($(strip $(DISTRIBUTE_DIR)),distribute)
+213-		DIST_ALIASES += distribute
+214-endif
+215-
+216-ALL_BUILD_DIRS := $(sort $(BUILD_DIR) $(addprefix $(BUILD_DIR)/, $(SRC_DIRS)) \
+217-	$(addprefix $(BUILD_DIR)/cuda/, $(SRC_DIRS)) \
+218-	$(LIB_BUILD_DIR) $(TEST_BIN_DIR) $(PY_PROTO_BUILD_DIR) $(LINT_OUTPUT_DIR) \
+219-	$(DISTRIBUTE_SUBDIRS) $(PROTO_BUILD_INCLUDE_DIR))
+220-
+221-##############################
+222-# Set directory for Doxygen-generated documentation
+223-##############################
+224-DOXYGEN_CONFIG_FILE ?= ./.Doxyfile
+225-# should be the same as OUTPUT_DIRECTORY in the .Doxyfile
+226-DOXYGEN_OUTPUT_DIR ?= ./doxygen
+227-DOXYGEN_COMMAND ?= doxygen
+228-# All the files that might have Doxygen documentation.
+229-DOXYGEN_SOURCES := $(shell find \
+230-	src/$(PROJECT) \
+231-	include/$(PROJECT) \
+232-	python/ \
+233-	matlab/ \
+234-	examples \
+235-	tools \
+236-	-name "*.cpp" -or -name "*.hpp" -or -name "*.cu" -or -name "*.cuh" -or \
+237-        -name "*.py" -or -name "*.m")
+238-DOXYGEN_SOURCES += $(DOXYGEN_CONFIG_FILE)
+239-
+240-
+241-##############################
+242-# Configure build
+--
+328-	COMMON_FLAGS += -DUSE_CUDNN
+329-endif
+330-
+331-# NCCL acceleration configuration
+332-ifeq ($(USE_NCCL), 1)
+333-	LIBRARIES += nccl
+334-	COMMON_FLAGS += -DUSE_NCCL
+335-endif
+336-
+337-# configure IO libraries
+338:ifeq ($(USE_OPENCV), 1)
+339:	COMMON_FLAGS += -DUSE_OPENCV
+340-endif
+341-ifeq ($(USE_LEVELDB), 1)
+342-	COMMON_FLAGS += -DUSE_LEVELDB
+343-endif
+344-ifeq ($(USE_LMDB), 1)
+345-	COMMON_FLAGS += -DUSE_LMDB
+346-ifeq ($(ALLOW_LMDB_NOLOCK), 1)
+347-	COMMON_FLAGS += -DALLOW_LMDB_NOLOCK
+348-endif
+349-endif
+350-
+351-# CPU-only configuration
+352-ifeq ($(CPU_ONLY), 1)
+353-	OBJS := $(PROTO_OBJS) $(CXX_OBJS)
+354-	TEST_OBJS := $(TEST_CXX_OBJS)
+355-	TEST_BINS := $(TEST_CXX_BINS)
+356-	ALL_WARNS := $(ALL_CXX_WARNS)
+357-	TEST_FILTER := --gtest_filter="-*GPU*"
+358-	COMMON_FLAGS += -DCPU_ONLY
+359-endif
+360-
+361-# Python layer support
+362-ifeq ($(WITH_PYTHON_LAYER), 1)
+363-	COMMON_FLAGS += -DWITH_PYTHON_LAYER
+364-	LIBRARIES += $(PYTHON_LIBRARIES)
+365-endif
+366-
+367-# BLAS configuration (default = ATLAS)
+368-BLAS ?= atlas
+369-ifeq ($(BLAS), mkl)
+370-	# MKL
+371-	LIBRARIES += mkl_rt
+372-	COMMON_FLAGS += -DUSE_MKL
+373-	MKLROOT ?= /opt/intel/mkl
+374-	BLAS_INCLUDE ?= $(MKLROOT)/include
+375-	BLAS_LIB ?= $(MKLROOT)/lib $(MKLROOT)/lib/intel64
+376-else ifeq ($(BLAS), open)
+377-	# OpenBLAS
+378-	LIBRARIES += openblas
+379-else
+-I/usr/include/opencv4 -lopencv_stitching -lopencv_alphamat -lopencv_aruco -lopencv_barcode -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_cvv -lopencv_dnn_objdetect -lopencv_dnn_superres -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_hfs -lopencv_img_hash -lopencv_intensity_transform -lopencv_line_descriptor -lopencv_mcc -lopencv_quality -lopencv_rapid -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_shape -lopencv_stereo -lopencv_structure

@@ -1,0 +1,19 @@
+    if (sprtemp[frame].rotate == false)
+	I_Error ("R_InitSprites: Sprite %s frame %c has rotations "
+		 "and a rot=0 lump", spritename, 'A'+frame);
+		
+    sprtemp[frame].rotate = true;
+
+    // make 0 based
+    rotation--;		
+    /* vm.js keeps sign-extended loads signed but materializes -1 as
+     * unsigned; compare the halfword in its zero-extended form. */
+    if ((unsigned short) sprtemp[frame].lump[rotation] != 0xffffU)
+	I_Error ("R_InitSprites: Sprite %s : %c : %c "
+		 "has two lumps mapped to it",
+		 spritename, 'A'+frame, '1'+rotation);
+		
+    sprtemp[frame].lump[rotation] = lump - firstspritelump;
+146:    if ((unsigned short) sprtemp[frame].lump[rotation] != 0xffffU)
+151:    sprtemp[frame].lump[rotation] = lump - firstspritelump;
+260:		    if ((unsigned short) sprtemp[frame].lump[rotation] == 0xffffU)

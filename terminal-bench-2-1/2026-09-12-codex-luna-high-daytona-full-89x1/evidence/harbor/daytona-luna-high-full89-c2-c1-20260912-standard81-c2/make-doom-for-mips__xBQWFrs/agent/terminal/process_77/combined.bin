@@ -1,0 +1,130 @@
+00433838 <W_AddFile>:
+  433838:	27bdffa8 	addiu	sp,sp,-88
+  43383c:	afbf0054 	sw	ra,84(sp)
+  433840:	afbe0050 	sw	s8,80(sp)
+  433844:	afb7004c 	sw	s7,76(sp)
+  433848:	afb60048 	sw	s6,72(sp)
+  43384c:	afb50044 	sw	s5,68(sp)
+  433850:	afb40040 	sw	s4,64(sp)
+  433854:	afb3003c 	sw	s3,60(sp)
+  433858:	afb20038 	sw	s2,56(sp)
+  43385c:	afb10034 	sw	s1,52(sp)
+  433860:	afb00030 	sw	s0,48(sp)
+  433864:	0c10cd58 	jal	433560 <W_OpenFile>
+  433868:	00808025 	move	s0,a0
+  43386c:	1040002f 	beqz	v0,43392c <W_AddFile+0xf4>
+  433870:	0040a825 	move	s5,v0
+  433874:	3c021405 	lui	v0,0x1405
+  433878:	8c51a250 	lw	s1,-23984(v0)
+  43387c:	0c104909 	jal	412424 <strlen>
+  433880:	02002025 	move	a0,s0
+  433884:	2444fffd 	addiu	a0,v0,-3
+  433888:	3c050044 	lui	a1,0x44
+  43388c:	24a58b78 	addiu	a1,a1,-29832
+  433890:	0c104ae4 	jal	412b90 <strcasecmp>
+  433894:	02042021 	addu	a0,s0,a0
+  433898:	1040002a 	beqz	v0,433944 <W_AddFile+0x10c>
+  43389c:	2407000c 	li	a3,12
+  4338a0:	00003025 	move	a2,zero
+  4338a4:	24050001 	li	a1,1
+  4338a8:	0c10dd12 	jal	437448 <Z_Malloc>
+  4338ac:	24040010 	li	a0,16
+  4338b0:	00401825 	move	v1,v0
+  4338b4:	afa20028 	sw	v0,40(sp)
+  4338b8:	a8400003 	swl	zero,3(v0)
+  4338bc:	b8400000 	swr	zero,0(v0)
+  4338c0:	8ea20008 	lw	v0,8(s5)
+  4338c4:	a8620007 	swl	v0,7(v1)
+  4338c8:	b8620004 	swr	v0,4(v1)
+  4338cc:	24650008 	addiu	a1,v1,8
+  4338d0:	0c1045ea 	jal	4117a8 <M_ExtractFileBase>
+  4338d4:	02002025 	move	a0,s0
+  4338d8:	26240001 	addiu	a0,s1,1
+  4338dc:	3c021405 	lui	v0,0x1405
+  4338e0:	8c53a250 	lw	s3,-23984(v0)
+  4338e4:	0080b025 	move	s6,a0
+  4338e8:	0c1048a5 	jal	412294 <calloc>
+  4338ec:	2405001c 	li	a1,28
+  4338f0:	1040003a 	beqz	v0,4339dc <W_AddFile+0x1a4>
+  4338f4:	0040b825 	move	s7,v0
+  4338f8:	3c021405 	lui	v0,0x1405
+  4338fc:	8c42a250 	lw	v0,-23984(v0)
+  433900:	1040005a 	beqz	v0,433a6c <W_AddFile+0x234>
+  433904:	3c101405 	lui	s0,0x1405
+  433908:	12c0008e 	beqz	s6,433b44 <W_AddFile+0x30c>
+  43390c:	26f00014 	addiu	s0,s7,20
+  433910:	00009025 	move	s2,zero
+  433914:	241effec 	li	s8,-20
+  433918:	03d7f023 	subu	s8,s8,s7
+  43391c:	3c141405 	lui	s4,0x1405
+  433920:	3c021405 	lui	v0,0x1405
+  433924:	10000042 	b	433a30 <W_AddFile+0x1f8>
+  433928:	afa20024 	sw	v0,36(sp)
+  43392c:	02002825 	move	a1,s0
+  433930:	3c040045 	lui	a0,0x45
+  433934:	0c104bff 	jal	412ffc <printf>
+  433938:	24841078 	addiu	a0,a0,4216
+  43393c:	10000075 	b	433b14 <W_AddFile+0x2dc>
+  433940:	02a01025 	move	v0,s5
+  433944:	27a60010 	addiu	a2,sp,16
+  433948:	00002825 	move	a1,zero
+  43394c:	0c10cd76 	jal	4335d8 <W_Read>
+  433950:	02a02025 	move	a0,s5
+  433954:	24060004 	li	a2,4
+  433958:	3c050045 	lui	a1,0x45
+  43395c:	24a5108c 	addiu	a1,a1,4236
+  433960:	0c104a81 	jal	412a04 <strncmp>
+  433964:	27a40010 	addiu	a0,sp,16
+  433968:	14400010 	bnez	v0,4339ac <W_AddFile+0x174>
+  43396c:	24060004 	li	a2,4
+  433970:	8fb00014 	lw	s0,20(sp)
+  433974:	00108100 	sll	s0,s0,0x4
+  433978:	00003025 	move	a2,zero
+  43397c:	24050001 	li	a1,1
+  433980:	0c10dd12 	jal	437448 <Z_Malloc>
+  433984:	02002025 	move	a0,s0
+  433988:	afa20028 	sw	v0,40(sp)
+  43398c:	02003825 	move	a3,s0
+  433990:	00403025 	move	a2,v0
+  433994:	8fa50018 	lw	a1,24(sp)
+  433998:	0c10cd76 	jal	4335d8 <W_Read>
+  43399c:	02a02025 	move	a0,s5
+  4339a0:	8fa20014 	lw	v0,20(sp)
+  4339a4:	1000ffcd 	b	4338dc <W_AddFile+0xa4>
+  4339a8:	02222021 	addu	a0,s1,v0
+  4339ac:	3c050045 	lui	a1,0x45
+  4339b0:	24a51094 	addiu	a1,a1,4244
+  4339b4:	0c104a81 	jal	412a04 <strncmp>
+  4339b8:	27a40010 	addiu	a0,sp,16
+  4339bc:	1040ffec 	beqz	v0,433970 <W_AddFile+0x138>
+  4339c0:	00000000 	nop
+  4339c4:	02002825 	move	a1,s0
+  4339c8:	3c040045 	lui	a0,0x45
+  4339cc:	0c1032d9 	jal	40cb64 <I_Error>
+  4339d0:	2484109c 	addiu	a0,a0,4252
+  4339d4:	1000ffe7 	b	433974 <W_AddFile+0x13c>
+  4339d8:	8fb00014 	lw	s0,20(sp)
+  4339dc:	3c040045 	lui	a0,0x45
+  4339e0:	0c1032d9 	jal	40cb64 <I_Error>
+  4339e4:	248410c8 	addiu	a0,a0,4296
+  4339e8:	1000ffc4 	b	4338fc <W_AddFile+0xc4>
+  4339ec:	3c021405 	lui	v0,0x1405
+  4339f0:	8e83a254 	lw	v1,-23980(s4)
+  4339f4:	00718821 	addu	s1,v1,s1
+--
+  4339fc:	10400004 	beqz	v0,433a10 <W_AddFile+0x1d8>
+  433a00:	00431023 	subu	v0,v0,v1
+  433a04:	02e21021 	addu	v0,s7,v0
+  433a08:	8fa30020 	lw	v1,32(sp)
+  433a0c:	ac620004 	sw	v0,4(v1)
+  433a10:	26520001 	addiu	s2,s2,1
+  433a14:	8fa20024 	lw	v0,36(sp)
+  433a18:	8c42a250 	lw	v0,-23984(v0)
+  433a1c:	0242102b 	sltu	v0,s2,v0
+  433a20:	10400011 	beqz	v0,433a68 <W_AddFile+0x230>
+  433a24:	00000000 	nop
+  433a28:	12d2000f 	beq	s6,s2,433a68 <W_AddFile+0x230>
+  433a2c:	2610001c 	addiu	s0,s0,28
+  433a30:	03d08821 	addu	s1,s8,s0
+  433a34:	8e85a254 	lw	a1,-23980(s4)
+  433a38:	2406001c 	li	a2,28

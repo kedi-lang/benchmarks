@@ -1,0 +1,21 @@
+--- config file ownership and selected settings ---
+640 root:list /etc/mailman3/mailman.cfg
+644 root:root /etc/postfix/main.cf
+site_owner: root@local.edu
+layout: debian
+var_dir: /var/lib/mailman3
+incoming: mailman.mta.postfix.LMTP
+outgoing: mailman.mta.deliver.deliver
+lmtp_host: 127.0.0.1
+lmtp_port: 8024
+configuration: python:mailman.config.postfix
+--- list settings ---
+>>> reading-group@local.edu
+>>> SubscriptionPolicy.open SubscriptionPolicy.confirm
+>>> Action.accept Action.accept
+>>> --- services/maps ---
+GNU Mailman is running (master pid: 3060)
+lmtp:[127.0.0.1]:8024
+lmtp:[127.0.0.1]:8024
+tcp/25: ready
+tcp/8024: ready

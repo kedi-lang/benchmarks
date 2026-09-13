@@ -1,0 +1,42 @@
+pairs 2461 bytes 486997
+
+Testing positions from: Morphy's Opera Game
+PGN string length: 362
+Testing initial position
+Position: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1, Our moves: 20, Python-chess moves: 20
+Found 33 moves in the game
+Testing position after move 1: e2e4
+Position: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1, Our moves: 20, Python-chess moves: 20
+Testing position after move 3: g1f3
+Position: rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2, Our moves: 29, Python-chess moves: 29
+Testing position after move 5: d2d4
+Position: rnbqkbnr/ppp2ppp/3p4/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3, Our moves: 27, Python-chess moves: 27
+Testing position after move 7: d4e5
+Position: rn1qkbnr/ppp2ppp/3p4/4p3/3PP1b1/5N2/PPP2PPP/RNBQKB1R w KQkq - 1 4, Our moves: 35, Python-chess moves: 35
+Testing position after move 9: d1f3
+Position: rn1qkbnr/ppp2ppp/3p4/4P3/4P3/5b2/PPP2PPP/RNBQKB1R w KQkq - 0 5, Our moves: 35, Python-chess moves: 35
+Testing position after move 11: f1c4
+Position: rn1qkbnr/ppp2ppp/8/4p3/4P3/5Q2/PPP2PPP/RNB1KB1R w KQkq - 0 6, Our moves: 40, Python-chess moves: 40
+Testing position after move 13: f3b3
+Position: rn1qkb1r/ppp2ppp/5n2/4p3/2B1P3/5Q2/PPP2PPP/RNB1K2R w KQkq - 2 7, Our moves: 45, Python-chess moves: 45
+Testing position after move 15: b1c3
+Position: rn2kb1r/ppp1qppp/5n2/4p3/2B1P3/1Q6/PPP2PPP/RNB1K2R w KQkq - 4 8, Our moves: 44, Python-chess moves: 44
+Testing position after move 17: c1g5
+Position: rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B1K2R w KQkq - 0 9, Our moves: 41, Python-chess moves: 41
+
+
+First failing test: test_morphy_opera_game (__main__.ChessGameTests.test_morphy_opera_game)
+
+Error details:
+Traceback (most recent call last):
+  File "/app/check.py", line 108, in test_morphy_opera_game
+    self.tester.test_game(pgn, "Morphy's Opera Game")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/check.py", line 86, in test_game
+    self.verify_legal_moves(fen)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/app/check.py", line 39, in verify_legal_moves
+    self.test_case.assertTrue(x in python_chess_moves or x.rpartition(" ")[0]+" -" in python_chess_moves, f"Position: {fen}, Our move: {x} not found in Python-chess moves:" + str(python_chess_moves))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Position: rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B1K2R w KQkq - 0 9, Our move: rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/1RB1K2R b KQkq - not found in Python-chess moves:{'rn2kb1r/pp2qppp/1Qp2n2/4p3/2B1P3/2N5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1PP2/1QN5/PPP3PP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP1KPPP/R1B4R b kq -', 'rn2kb1r/pp2qppp/2p2n2/4p1B1/2B1P3/1QN5/PPP2PPP/R3K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1Q6/PPP2PPP/RNB1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPPB1PPP/R3K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B1KR2 b Qkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1Q6/PPP1NPPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/Q1N5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN4P/PPP2PP1/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P2P/1QN5/PPP2PP1/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1Q6/PPP2PPP/R1BNK2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B2RK1 b kq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B2K1R b kq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPPK1PPP/R1B4R b kq -', 'rn2kb1r/pp2qppp/2p2n1B/4p3/2B1P3/1QN5/PPP2PPP/R3K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/3Bp3/4P3/1QN5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/PQN5/1PP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P1P1/1QN5/PPP2P1P/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/P1B1P3/1QN5/1PP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B1K1R1 b Qkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/N1B1P3/1Q6/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/1RB1K2R b Kkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/4P3/1QN5/PPP1BPPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/1B2p3/4P3/1QN5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/4P3/1QNB4/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/B1p2n2/4p3/4P3/1QN5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/4P3/1QN5/PPP2PPP/R1B1KB1R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/1QB1P3/2N5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/Q1B1P3/2N5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN2P2/PPP3PP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/1Q2p3/2B1P3/2N5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN1B3/PPP2PPP/R3K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN3P1/PPP2P1P/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p1Bn2/4p3/4P3/1QN5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/1N2p3/2B1P3/1Q6/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/3Np3/2B1P3/1Q6/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pQ2qppp/2p2n2/4p3/2B1P3/2N5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1BK3R b kq -', 'rn2kb1r/pp2qBpp/2p2n2/4p3/4P3/1QN5/PPP2PPP/R1B1K2R b KQkq -', 'rn2kb1r/pp2qppp/2p2n2/4p3/2B1PB2/1QN5/PPP2PPP/R3K2R b KQkq -'}
+

@@ -1,0 +1,287 @@
+char DisplayFormat, OutputFormat, VerboseFormat, PaletteOption, Color_Bits;
+
+struct Constant_Struct Constants[MAX_CONSTANTS];
+
+#ifdef NOCMDLINE	/* a main() by any other name... */
+#ifdef ALTMAIN
+  MAIN_RETURN_TYPE alt_main()
+#else
+  MAIN_RETURN_TYPE main()
+#endif
+#else
+#ifdef ALTMAIN
+  MAIN_RETURN_TYPE alt_main(argc, argv)
+#else
+  MAIN_RETURN_TYPE main(argc, argv)
+#endif
+    int argc;
+char **argv;
+#endif			/* ...would be a lot less hassle!! :-) AAC */
+  {
+  register int i;
+  FILE *stat_file;
+
+  STARTUP_POVRAY
+
+  PRINT_CREDITS
+
+  PRINT_OTHER_CREDITS
+
+  /* Parse the command line parameters */
+#ifndef NOCMDLINE
+  if (argc == 1)
+    usage();
+#endif
+
+  init_vars();
+
+  Output_File_Name[0]='\0';
+
+  Library_Paths[0] = NULL;
+  Library_Path_Index = 0;
+
+  /* Read the default parameters from povray.def */
+  get_defaults();
+
+#ifndef NOCMDLINE
+  for (i = 1 ; i < argc ; i++ )
+    if ((*argv[i] == '+') || (*argv[i] == '-'))
+      parse_option(argv[i]);
+    else
+      parse_file_name(argv[i]);
+
+#endif
+
+  if (Last_Line == -1)
+    Last_Line = Frame.Screen_Height;
+
+  if (Last_Column == -1)
+    Last_Column = Frame.Screen_Width;
+
+  if (Options & DISKWRITE) 
+    {
+    switch (OutputFormat) 
+    {
+    case '\0':
+    case 'd':
+    case 'D':
+      if ((Output_File_Handle = Get_Dump_File_Handle()) == NULL) 
+        {
+        close_all();
+        exit(1);
+        }
+      break;
+      /*
+         case 'i':
+         case 'I':
+                   if ((Output_File_Handle = Get_Iff_File_Handle()) == NULL) {
+                      close_all();
+                      exit(1);
+                      }
+                   break;
+
+*/
+    case 'r':
+    case 'R':
+      if ((Output_File_Handle = Get_Raw_File_Handle()) == NULL) 
+        {
+        close_all();
+        exit(1);
+        }
+      break;
+
+    case 't':
+    case 'T':
+      if ((Output_File_Handle = Get_Targa_File_Handle()) == NULL) 
+        {
+        close_all();
+        exit(1);
+        }
+      break;
+
+    default:
+      fprintf (stderr, "Unrecognized output file format %c\n", OutputFormat);
+      close_all(); 
+      exit(1);
+    }
+    if (Output_File_Name[0] == '\0')
+      strcpy (Output_File_Name, Default_File_Name (Output_File_Handle));
+    }
+
+  Print_Options();
+
+  Initialize_Tokenizer(Input_File_Name);
+  fprintf (stderr,"Parsing...");
+
+
+  if (Options & VERBOSE_FILE)
+    {
+    stat_file = fopen(Stat_File_Name,"w+t");
+    fprintf (stat_file, "Parsing...\n");
+    fclose(stat_file);
+    }
+
+  Parse ();
+  Terminate_Tokenizer();
+
+  if (Use_Slabs) 
+    {
+    fprintf (stderr, "Preprocessing...\n");  /* Added */
+    BuildBoundingSlabs(&Root_Object);        /* Added */
+    }
+
+  if (Options & DISPLAY)
+    {
+    printf ("Displaying...\n");
+    display_init(Frame.Screen_Width, Frame.Screen_Height);
+    Display_Started = TRUE;
+    }
+
+  /* Get things ready for ray tracing */
+  if (Options & DISKWRITE)
+    if (Options & CONTINUE_TRACE) 
+    {
+    if (Open_File (Output_File_Handle, Output_File_Name,
+      &Frame.Screen_Width, &Frame.Screen_Height, File_Buffer_Size,
+      READ_MODE) != 1) 
+      {
+      fprintf (stderr, "Error opening continue trace output file\n");
+      fprintf (stderr, "Opening new output file %s.\n",Output_File_Name);
+      Options &= ~CONTINUE_TRACE; /* Turn off continue trace */
+
+      if (Open_File (Output_File_Handle, Output_File_Name,
+        &Frame.Screen_Width, &Frame.Screen_Height, File_Buffer_Size,
+        WRITE_MODE) != 1) 
+        {
+        fprintf (stderr, "Error opening output file\n");
+        close_all();
+        exit(1);
+        }
+      }
+
+    Initialize_Renderer();
+    if (Options & CONTINUE_TRACE) 
+      Read_Rendered_Part();
+    }
+    else 
+    {
+    if (Open_File (Output_File_Handle, Output_File_Name,
+      &Frame.Screen_Width, &Frame.Screen_Height, File_Buffer_Size,
+      WRITE_MODE) != 1) 
+      {
+      fprintf (stderr, "Error opening output file\n");
+      close_all();
+      exit(1);
+      }
+
+    Initialize_Renderer();
+    }
+  else
+    Initialize_Renderer();
+
+  Initialize_Noise();
+
+  START_TIME  /* Store start time for trace. Timer macro in CONFIG.H */
+
+
+  /* Ok, go for it - trace the picture */
+  if ((Options & VERBOSE) && (VerboseFormat !='1'))
+    printf ("Rendering...\n");
+  else if ((Options & VERBOSE) && (VerboseFormat=='1'))
+    fprintf (stderr,"POV-Ray rendering %s to %s :\n",Input_File_Name,Output_File_Name);
+  if (Options & VERBOSE_FILE)
+    {
+    stat_file = fopen(Stat_File_Name,"w+t");
+    fprintf (stat_file,"Parsed ok. Now rendering %s to %s :\n",Input_File_Name,Output_File_Name);
+    fclose(stat_file);
+    }
+  CONFIG_MATH               /* Macro for setting up any special FP options */
+  Start_Tracing ();
+
+  if (Options & VERBOSE && VerboseFormat=='1')
+    fprintf (stderr,"\n");
+
+  /* Record the time so well spent... */
+  STOP_TIME                  /* Get trace done time. */
+  tused = TIME_ELAPSED       /* Calc. elapsed time. Define TIME_ELAPSED as */
+  /* 0 in your specific CONFIG.H if unsupported */
+
+  /* Clean up and leave */
+  display_finished();
+
+  close_all ();
+
+  PRINT_STATS
+
+  if (Options & VERBOSE_FILE)
+    {
+    stat_file = fopen(Stat_File_Name,"a+t");
+    fprintf (stat_file,"Done Tracing\n");
+    fclose(stat_file);
+    }
+
+    /* What objects does this ray intersect? */
+  if (!Use_Slabs)
+    for (Object = Frame.Objects ; 
+         Object != NULL ;
+         Object = Object -> Sibling) 
+    {
+    if (Intersection (&New_Intersection, Object, Ray))
+      if (New_Intersection.Depth < Best_Intersection.Depth) 
+        {
+        Best_Intersection = New_Intersection;
+        Intersection_Found = TRUE;
+        }
+    }
+  else
+    Intersection_Found = Bounds_Intersect(Root_Object, Ray,
+      &Best_Intersection,&Object);
+
+  if (Intersection_Found)
+    Determine_Apparent_Colour (&Best_Intersection, Colour, Ray);
+  else
+    if (Frame.Fog_Distance > 0.0)
+      *Colour = Frame.Fog_Colour;
+    else
+      *Colour = Frame.Background_Colour;
+  }
+
+/* exit with error if image not completed/user abort*/
+void Check_User_Abort (Do_Stats)
+int Do_Stats;
+  {
+  TEST_ABORT
+  if (Stop_Flag) 
+    {
+    close_all();
+    if (Do_Stats)
+      {
+      PRINT_STATS
+      }
+    exit(2);
+    }
+  }
+
+/*---------------  Standard sampling in loop  -----------------------*/
+
+unsigned short JRanges[] = {1,1,1,1,3,2,5,3,7,4}; /* LSK */
+
+void Supersample (result, x, y, Width, Height)
+COLOUR *result;
+int x, y, Width, Height;
+  {
+  COLOUR colour;
+  register DBL dx, dy, Jitter_X, Jitter_Y;
+  register int Jitt_Offset;
+  unsigned char Red, Green, Blue;
+  int JRange;                               /* LSK */
+  int JSteps;                               /* LSK */
+  DBL JScale;                               /* LSK */
+  DBL JSize,JOffset;                        /* LSK */
+  int i,j;                                  /* LSK */
+
+  dx = (DBL) x;                             /* LSK */
+  dy = (DBL) y;                             /* LSK */
+  Jitt_Offset = 10;
+
+  Number_Of_Pixels_Supersampled++;
