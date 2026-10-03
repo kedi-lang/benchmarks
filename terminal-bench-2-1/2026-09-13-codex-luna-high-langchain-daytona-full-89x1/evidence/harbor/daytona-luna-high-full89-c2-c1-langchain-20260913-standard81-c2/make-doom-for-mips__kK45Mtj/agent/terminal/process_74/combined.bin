@@ -1,0 +1,81 @@
+144:void I_InitSound(boolean use_sfx_prefix)
+145-{  
+146-    boolean nosound, nosfx, nomusic;
+147-
+148-    //!
+149-    // @vanilla
+150-    //
+151-    // Disable all sound output.
+152-    //
+153-
+154-    nosound = M_CheckParm("-nosound") > 0;
+155-
+156-    //!
+157-    // @vanilla
+158-    //
+159-    // Disable sound effects. 
+160-    //
+161-
+162-    nosfx = M_CheckParm("-nosfx") > 0;
+163-
+164-    //!
+165-    // @vanilla
+166-    //
+167-    // Disable music.
+168-    //
+169-
+170-    nomusic = M_CheckParm("-nomusic") > 0;
+171-
+172-    // Initialize the sound and music subsystems.
+173-
+174-    if (!nosound && !screensaver_mode)
+175-    {
+176-        // This is kind of a hack. If native MIDI is enabled, set up
+177-        // the TIMIDITY_CFG environment variable here before SDL_mixer
+178-        // is opened.
+179-
+180-        if (!nomusic
+181-         && (snd_musicdevice == SNDDEVICE_GENMIDI
+182-          || snd_musicdevice == SNDDEVICE_GUS))
+183-        {
+184-            //I_InitTimidityConfig();
+185-        }
+186-
+187-        if (!nosfx)
+188-        {
+189-            InitSfxModule(use_sfx_prefix);
+190-        }
+191-
+192-        if (!nomusic)
+193-        {
+194-            InitMusicModule();
+195-        }
+196-    }
+197-
+198-}
+199-
+200-void I_ShutdownSound(void)
+201-{
+202-    if (sound_module != NULL)
+203-    {
+204-        sound_module->Shutdown();
+205-    }
+206-
+207-    if (music_module != NULL)
+208-    {
+209-        music_module->Shutdown();
+210-    }
+211-}
+212-
+213-int I_GetSfxLumpNum(sfxinfo_t *sfxinfo)
+214-{
+215-    if (sound_module != NULL) 
+216-    {
+217-        return sound_module->GetSfxLumpNum(sfxinfo);
+218-    }
+219-    else
+220-    {
+221-        return 0;
+222-    }
+223-}
+224-

@@ -1,0 +1,25 @@
+MATCH
+QUERY PLAN
+|--MATERIALIZE stats
+|  |--MATERIALIZE sc
+|  |  |--SCAN senses
+|  |  `--USE TEMP B-TREE FOR GROUP BY
+|  |--SCAN sc
+|  |--BLOOM FILTER ON w (wordid=?)
+|  |--SEARCH w USING AUTOMATIC COVERING INDEX (wordid=?)
+|  |--BLOOM FILTER ON syn (synsetid=?)
+|  |--SEARCH syn USING AUTOMATIC COVERING INDEX (synsetid=?)
+|  |--USE TEMP B-TREE FOR GROUP BY
+|  |--USE TEMP B-TREE FOR count(DISTINCT)
+|  `--USE TEMP B-TREE FOR count(DISTINCT)
+|--MATERIALIZE ranked
+|  |--CO-ROUTINE (subquery-5)
+|  |  |--SCAN sc
+|  |  |--BLOOM FILTER ON stats (wordid=?)
+|  |  |--SEARCH stats USING AUTOMATIC COVERING INDEX (wordid=?)
+|  |  `--USE TEMP B-TREE FOR ORDER BY
+|  `--SCAN (subquery-5)
+|--SCAN stats
+|--BLOOM FILTER ON ranked (wordid=? AND rn=?)
+|--SEARCH ranked USING AUTOMATIC PARTIAL COVERING INDEX (wordid=? AND rn=?)
+`--USE TEMP B-TREE FOR ORDER BY

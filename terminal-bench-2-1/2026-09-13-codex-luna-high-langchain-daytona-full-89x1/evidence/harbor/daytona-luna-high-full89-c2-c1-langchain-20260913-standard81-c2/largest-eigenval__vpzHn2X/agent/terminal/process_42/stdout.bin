@@ -1,0 +1,123 @@
+        int col=pc[r]; double complex sum=0.0;
+        for (int j=0;j<n;++j) if (j!=col) sum+=m[r*n+j]*x[j];
+        x[col]=-sum/m[r*n+col];
+    }
+    double norm=0.0;
+    for (int i=0;i<n;++i) norm+=cabs(x[i])*cabs(x[i]);
+    if (!(norm>0.0) || !isfinite(norm)) return 0;
+    norm=sqrt(norm);
+    for (int i=0;i<n;++i) { vr[i]=creal(x[i])/norm; vi[i]=cimag(x[i])/norm; }
+    return 1;
+}
+
+/* Fast exact 2-by-2 path, avoiding even the values-only LAPACK call. */
+int dominant_2x2(const double *a, double *er, double *ei,
+                 double *vr, double *vi) {
+    double complex disc=csqrt((a[0]-a[3])*(a[0]-a[3])+4.0*a[1]*a[2]);
+    double complex l0=0.5*(a[0]+a[3]+disc);
+    double complex l1=0.5*(a[0]+a[3]-disc);
+    double complex lam=cabs(l0)>=cabs(l1)?l0:l1;
+    double complex x0,x1;
+    if (cabs(a[1])+cabs(lam-a[0]) >= cabs(lam-a[3])+cabs(a[2])) {
+        x0=a[1]; x1=lam-a[0];
+    } else { x0=lam-a[3]; x1=a[2]; }
+    double norm=sqrt(cabs(x0)*cabs(x0)+cabs(x1)*cabs(x1));
+    if (!(norm>0.0)) return 0;
+    *er=creal(lam); *ei=cimag(lam);
+    vr[0]=creal(x0)/norm; vi[0]=cimag(x0)/norm;
+    vr[1]=creal(x1)/norm; vi[1]=cimag(x1)/norm;
+    return 1;
+}
+
+int dominant_1x1(const double *a, double *er, double *ei,
+                 double *vr, double *vi) {
+    *er=a[0]; *ei=0.0; vr[0]=1.0; vi[0]=0.0; return 1;
+}
+
+int dominant_block(const double *a, int n, double *er, double *ei,
+                   double *vr, double *vi);
+/* Keep the old symbol's implementation available for compatibility. */
+int dominant_block_unused_linker_anchor(void) { return 0; }
+
+/* A faster null-vector path for ordinary simple eigenvalues.  Replace one
+   equation by x[0]=1 and solve the resulting nonsingular system. */
+int row_solve_vector(const double *a, int n, double lr, double li,
+                     double *vr, double *vi) {
+    if (n<1 || n>10) return 0;
+    double complex m[100], x[10], rhs[10]={0};
+    for (int i=0;i<n;++i) for (int j=0;j<n;++j)
+        m[i*n+j]=a[i*n+j]-(i==j ? lr+I*li : 0.0);
+    int constraint=n-1;
+    for (int j=0;j<n;++j) m[constraint*n+j]=0.0;
+    m[constraint*n]=1.0;
+    rhs[constraint]=1.0;
+    for (int col=0;col<n;++col) {
+        int p=col; double best=0.0;
+        for (int i=col;i<n;++i) {
+            double z=creal(m[i*n+col])*creal(m[i*n+col])+
+                     cimag(m[i*n+col])*cimag(m[i*n+col]);
+            if (z>best) {best=z;p=i;}
+        }
+        if (best<1e-28) return 0;
+        if (p!=col) {
+            for (int j=col;j<n;++j) {
+                double complex z=m[col*n+j];m[col*n+j]=m[p*n+j];m[p*n+j]=z;
+            }
+            double complex z=rhs[col];rhs[col]=rhs[p];rhs[p]=z;
+        }
+        for (int i=col+1;i<n;++i) {
+            double complex f=m[i*n+col]/m[col*n+col];
+            for (int j=col+1;j<n;++j) m[i*n+j]-=f*m[col*n+j];
+            rhs[i]-=f*rhs[col];
+        }
+    }
+    for (int i=n-1;i>=0;--i) {
+        double complex z=rhs[i];
+        for (int j=i+1;j<n;++j) z-=m[i*n+j]*x[j];
+        x[i]=z/m[i*n+i];
+    }
+    double norm=0.0;
+    for (int i=0;i<n;++i) norm+=creal(x[i])*creal(x[i])+cimag(x[i])*cimag(x[i]);
+    if (!(norm>0.0) || !isfinite(norm)) return 0;
+    norm=sqrt(norm);
+    for (int i=0;i<n;++i) {vr[i]=creal(x[i])/norm;vi[i]=cimag(x[i])/norm;}
+    return 1;
+}
+
+int row_solve_vector_z(const double *a, int n, double lr, double li,
+                       double *out) {
+    double vr[10],vi[10];
+    int ok=row_solve_vector(a,n,lr,li,vr,vi);
+    if (!ok) return 0;
+    for (int i=0;i<n;++i) {out[2*i]=vr[i];out[2*i+1]=vi[i];}
+    return 1;
+}
+int dominant_2x2_z(const double *a, double *out, double *er, double *ei) {
+    double vr[2],vi[2];
+    int ok=dominant_2x2(a,er,ei,vr,vi);
+    if (!ok) return 0;
+    for (int i=0;i<2;++i) {out[2*i]=vr[i];out[2*i+1]=vi[i];}
+    return 1;
+}
+
+int row_solve_vector_real_z(const double *a, int n, double lr, double *out) {
+    if (n<1 || n>10) return 0;
+    double m[100], rhs[10]={0}, x[10];
+    for (int i=0;i<n;++i) for(int j=0;j<n;++j)
+        m[i*n+j]=a[i*n+j]-(i==j?lr:0.0);
+    int c=n-1;
+    for(int j=0;j<n;++j)m[c*n+j]=0.0;
+    m[c*n]=1.0; rhs[c]=1.0;
+    for(int col=0;col<n;++col){
+        int p=col;double best=fabs(m[col*n+col]);
+        for(int i=col+1;i<n;++i)if(fabs(m[i*n+col])>best){best=fabs(m[i*n+col]);p=i;}
+        if(best<1e-14)return 0;
+        if(p!=col){for(int j=col;j<n;++j){double z=m[col*n+j];m[col*n+j]=m[p*n+j];m[p*n+j]=z;}double z=rhs[col];rhs[col]=rhs[p];rhs[p]=z;}
+        for(int i=col+1;i<n;++i){double f=m[i*n+col]/m[col*n+col];for(int j=col+1;j<n;++j)m[i*n+j]-=f*m[col*n+j];rhs[i]-=f*rhs[col];}
+    }
+    for(int i=n-1;i>=0;--i){double z=rhs[i];for(int j=i+1;j<n;++j)z-=m[i*n+j]*x[j];x[i]=z/m[i*n+i];}
+    double norm=0;for(int i=0;i<n;++i)norm+=x[i]*x[i];
+    if(!(norm>0)||!isfinite(norm))return 0; norm=sqrt(norm);
+    for(int i=0;i<n;++i){out[2*i]=x[i]/norm;out[2*i+1]=0.0;}
+    return 1;
+}

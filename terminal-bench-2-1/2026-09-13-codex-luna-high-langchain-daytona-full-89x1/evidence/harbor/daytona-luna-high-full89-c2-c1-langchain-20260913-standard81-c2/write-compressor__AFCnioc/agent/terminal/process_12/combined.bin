@@ -1,0 +1,25 @@
+    35	  else:
+    36	   e.append((1,0)); e.append((8,0 if t[1]<128 else 1));gi(t[1] if t[1]<128 else 256-t[1],4,9)
+    37	 return e
+    38	
+    39	def encode(events):
+    40	 f=0;r=1; counts=[0]*2000000;out=[]
+    41	 for ei,(ctx,want) in enumerate(events):
+    42	  if r<255:
+    43	   vals=[];c0=counts[ctx*2];c1=counts[ctx*2+1]
+    44	   for d in range(255):
+    45	    ff=f*255+d;rr=r*255;sp=rr*(c0+1)//(c0+c1+2);bit=ff>=sp
+    46	    if bit==want:
+    47	     nf=ff-sp if bit else ff;nr=rr-sp if bit else sp
+    48	     vals.append((min(nf,nr-nf),d,ff,rr))
+    49	   if not vals:return None,('fail',ei,ctx,want,f,r)
+    50	   _,d,f,r=max(vals);out.append(d+1)
+    51	  c0=counts[ctx*2];c1=counts[ctx*2+1];sp=r*(c0+1)//(c0+c1+2);bit=f>=sp
+    52	  if bit!=want:return None,('wrong',ei,ctx,want,bit,f,r)
+    53	  if bit:f-=sp;r-=sp
+    54	  counts[ctx*2+bit]+=1
+    55	 return bytes(out),None
+    56	
+    57	t=make_tokens(); print('tokens',len(t), 'events',len(events_for(t)))
+    58	out,err=encode(events_for(t));print('enc',len(out) if out else None,err)
+    59	if out:Path('data.comp').write_bytes(out)

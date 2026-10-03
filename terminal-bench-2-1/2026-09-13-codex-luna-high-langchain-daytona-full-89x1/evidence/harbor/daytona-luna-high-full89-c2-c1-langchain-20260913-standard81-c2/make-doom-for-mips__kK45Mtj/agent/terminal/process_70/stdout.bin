@@ -1,0 +1,23 @@
+00405ac0 T main
+0040c6fc T I_Error
+00410d70 T M_vsnprintf
+00410f78 T malloc
+004116d4 T vsnprintf
+00411a64 T printf
+00411ce8 T system
+00411ce8 <system>:
+  411ce8:	03e00008 	jr	ra
+  411cec:	00001025 	move	v0,zero
+
+00411cf0 <P_AddActiveCeiling>:
+  411cf0:	3c030447 	lui	v1,0x447
+  411cf4:	24634af8 	addiu	v1,v1,19192
+  411cf8:	00001025 	move	v0,zero
+  411cfc:	2406001e 	li	a2,30
+  411d00:	8c650000 	lw	a1,0(v1)
+  411d04:	10a00006 	beqz	a1,411d20 <P_AddActiveCeiling+0x30>
+  411d08:	00000000 	nop
+  411d0c:	24420001 	addiu	v0,v0,1
+  411d10:	1446fffb 	bne	v0,a2,411d00 <P_AddActiveCeiling+0x10>
+  411d14:	24630004 	addiu	v1,v1,4
+  411d18:	03e00008 	jr	ra

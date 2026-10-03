@@ -1,0 +1,42 @@
+174:INCLUDE_DIRS += $(BUILD_INCLUDE_DIR) ./src ./include
+176:	INCLUDE_DIRS += $(CUDA_INCLUDE_DIR)
+178:	LIBRARIES := cudart cublas curand
+181:LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_hl hdf5
+186:USE_OPENCV ?= 1
+189:	LIBRARIES += leveldb snappy
+192:	LIBRARIES += lmdb
+194:ifeq ($(USE_OPENCV), 1)
+195:	LIBRARIES += opencv_core opencv_highgui opencv_imgproc
+197:	ifeq ($(OPENCV_VERSION), 3)
+198:		LIBRARIES += opencv_imgcodecs
+202:PYTHON_LIBRARIES ?= boost_python python2.7
+265:	LIBRARIES += boost_thread stdc++
+294:	LIBRARIES += boost_thread-mt
+327:	LIBRARIES += cudnn
+333:	LIBRARIES += nccl
+338:ifeq ($(USE_OPENCV), 1)
+339:	COMMON_FLAGS += -DUSE_OPENCV
+362:ifeq ($(WITH_PYTHON_LAYER), 1)
+363:	COMMON_FLAGS += -DWITH_PYTHON_LAYER
+364:	LIBRARIES += $(PYTHON_LIBRARIES)
+367:# BLAS configuration (default = ATLAS)
+368:BLAS ?= atlas
+369:ifeq ($(BLAS), mkl)
+371:	LIBRARIES += mkl_rt
+374:	BLAS_INCLUDE ?= $(MKLROOT)/include
+375:	BLAS_LIB ?= $(MKLROOT)/lib $(MKLROOT)/lib/intel64
+376:else ifeq ($(BLAS), open)
+377:	# OpenBLAS
+378:	LIBRARIES += openblas
+382:		ifeq ($(BLAS), atlas)
+384:			LIBRARIES += cblas atlas
+388:		LIBRARIES += cblas
+394:			BLAS_INCLUDE ?= /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/$(shell ls /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/ | sort | tail -1)/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/Headers
+396:			BLAS_INCLUDE ?= /System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Headers/
+399:			BLAS_INCLUDE ?= /System/Library/Frameworks/vecLib.framework/Versions/Current/Headers/
+404:INCLUDE_DIRS += $(BLAS_INCLUDE)
+405:LIBRARY_DIRS += $(BLAS_LIB)
+413:COMMON_FLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
+427:		$(foreach library,$(LIBRARIES),-l$(library))
+428:PYTHON_LDFLAGS := $(LDFLAGS) $(foreach library,$(PYTHON_LIBRARIES),-l$(library))
+509:		-o $@ $(LINKFLAGS) -l$(LIBRARY_NAME) $(PYTHON_LDFLAGS) \

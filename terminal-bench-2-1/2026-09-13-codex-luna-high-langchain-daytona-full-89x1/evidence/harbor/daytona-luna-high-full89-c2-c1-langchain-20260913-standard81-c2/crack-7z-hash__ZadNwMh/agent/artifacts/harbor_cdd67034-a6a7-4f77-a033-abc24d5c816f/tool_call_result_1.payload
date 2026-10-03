@@ -1,0 +1,623 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Compress::Raw::Lzma qw (LZMA_STREAM_END LZMA_DICT_SIZE_MIN);
+use File::Basename;
+
+# author:
+# philsmd
+# magnum (added proper handling of BCJ et. al. and adapt to JtR use)
+
+# version:
+# 1.9
+
+# date released:
+# April 2015
+
+# date last updated:
+# July 13 2022
+
+# dependencies:
+# Compress::Raw::Lzma
+# File::Basename
+
+# supported file types:
+# - is able to identify and parse .7z files
+# - is able to identify and parse splitted .7z files (.7z.001, .7z.002, ...)
+# - is able to identify and parse regular (non-packed) .sfx files
+
+# install dependencies like this:
+#    sudo cpan Compress::Raw::Lzma
+# or sudo apt-get install libcompress-raw-lzma-perl
+# or sudo perl -MCPAN -e 'install Compress::Raw::Lzma'
+
+
+#
+# Explanation of the "hash" format:
+#
+
+# the fields of this format are separate by the dollar ("$") sign:
+# ("xyz" means that the string xyz is used literally, brackets indicate variables)
+#
+# "$"
+# "7z"
+# "$"
+# [data type indicator]           # see "Explanation of the data type indicator" below
+# "$"
+# [cost factor]                   # means: 2 ^ [cost factor] iterations
+# "$"
+# [length of salt]
+# "$"
+# [salt]
+# "$"
+# [length of iv]                  # the initialization vector length
+# "$"
+# [iv]                            # the initialization vector itself
+# "$"
+# [CRC32]                         # the actual "hash"
+# "$"
+# [length of encrypted data]      # the encrypted data length in bytes
+# "$"
+# [length of decrypted data]      # the decrypted data length in bytes
+# "$"
+# [encrypted data]                # the encrypted (and possibly also compressed) data
+
+# in case the data was not truncated and a decompression step is needed to verify the CRC32, these fields are appended:
+# "$"
+# [length of data for CRC32]      # the length of the first "file" needed to verify the CRC32 checksum
+# "$"
+# [coder attributes]              # most of the coders/decompressors need some attributes (e.g. encoded lc, pb, lp, dictSize values)
+
+# in case a preprocessor is used, this field is appended:
+# "$"
+# [preprocessor attributes]       # the preprocessor attributes are appended after the main coder attributes
+
+#
+# Explanation of the data type indicator
+#
+
+# This field is the first field after the hash signature (i.e. after "$7z$).
+# Whenever the data was longer than the value of PASSWORD_RECOVERY_TOOL_DATA_LIMIT and the data could be truncated due to the padding attack,
+# the value of this field will be set to 128.
+#
+# If no truncation is used:
+# - the value will be 0 if the data doesn't need to be decompressed to check the CRC32 checksum
+# - all values different from 128, but greater than 0, indicate that the data must be decompressed as follows:
+#
+# LOWER NIBBLE (4 bits, type & 0xf)
+#   - 1 means that the data must be decompressed using the LZMA1 decompressor
+#   - 2 means that the data must be decompressed using the LZMA2 decompressor
+#   - 3 means that the data must be decompressed using the PPMD decompressor
+#   - 4 reserved (future use)
+#   - 5 reserved (future use)
+#   - 6 means that the data must be decompressed using the BZIP2 decompressor
+#   - 7 means that the data must be decompressed using the DEFLATE decompressor
+#   - 8 .. 15 reserved (future use)
+#
+# UPPER NIBBLE (4 bits, (type >> 4) & 0xf)
+#   - 1 means that the data must be post-processed using BCJ (x86)
+#   - 2 means that the data must be post-processed using BCJ2 (four data streams needed)
+#   - 3 means that the data must be post-processed using PPC (big-endian)
+#   - 4 means that the data must be post-processed using IA64
+#   - 5 means that the data must be post-processed using ARM (little-endian)
+#   - 6 means that the data must be post-processed using ARMT (little-endian)
+#   - 7 means that the data must be post-processed using SPARC
+#   - 8 unavailable since this indicates TRUNCATION (128 == 0x80 == 8 << 4)
+#   - 9 means that the data must be post-processed using DELTA
+#   - 10 .. 15 reserved (future use)
+
+# Truncated data can only be verified using the padding attack and therefore combinations between truncation + a compressor are not allowed.
+# Therefore, whenever the value is 128 or 0, neither coder attributes nor the length of the data for the CRC32 check is within the output.
+# On the other hand, for all values above or equal 1 and smaller than 128, both coder attributes and the length for CRC32 check is in the output.
+
+# Whenever the data needs to be either (pre)processed by multiple (2+) filters or whenever the data needs to be decompressed by multiple (2+) decompression algorithms,
+# the attribute list (the fields "preprocessor attributes" and "coder attributes" accordingly) will be a comma-separated list of fields with type, order/position and attribute indicators.
+#
+# The rules for this Multiple Compressor(s)/Preprocessor(s) list are as follows:
+#   - all (additional) methods/coders need to be specified in the output hash format (the fields "coder attributes" and "preprocessor attributes" accordingly), even if they have no attributes
+#   - the format is a comma-separated list of type and order indicator (for both fields: compressor and preprocessor attributes), followed by an underscore (_), followed by the attribute itself
+#   - the first attribute/item/codec for both fields (compressor and preprocessor attributes) needs no type and order indicator, only attributes
+#   - the type and position/order of the first decompressor/filter are implied (it's always the first decompressor/filter and the type is in the "data type indicator" field)
+#   - this also means that the field "data type indicator" (see format above) only indicates the first decompressor (if used) and (also, if used) the first preprocessing filter (this is also due to compatibility reasons with older formats)
+#   - for the additional (2+) decompressors/filters, the first number after the comma is the type and order indicator, after which follows an underscore (_) and the attributes themself (could be empty/no attribute value for some codecs)
+#   - special case: the "coder attributes" field could start with a comma (and has also a type and order indicator) in the unlikely case where during archive generation a filter was applied after the final compression of the data. Otherwise it's always the case that the decompressor needs to be applied first
+#
+# Multiple Compressor(s)/Preprocessor(s) type and order indicator (it is one combined field/number):
+#   - upper nibble (4 bits, indicator >> 4) indicates the compressor/preprocessor method/type/codec (LZMA2, Delta, BCJ etc)
+#   - lower nibble (4 bits, indicator & 0xf) indicates the order/position (the step at which the (de)compressor/(pre)processor needs to be applied). The values are incrementing, the counter starts with 1
+
+#
+# Constants
+#
+
+# cracker specific stuff
+
+my $ANALYZE_ALL_STREAMS_TO_FIND_SHORTEST_DATA_BUF = 1;
+
+my $SHOW_LIST_OF_ALL_STREAMS = 0; # $ANALYZE_ALL_STREAMS_TO_FIND_SHORTEST_DATA_BUF must be set to 1 to list/debug all streams
+my $SHOW_UNSUPPORTED_CODER_WARNING = 1;
+
+my $SHORTEN_HASH_LENGTH_TO_CRC_LENGTH = 1; # only output the bytes needed for the checksum of the first file (plus a fixed length
+                                           # header at the very beginning of the stream; plus additional +5% to cover the exception
+                                           # that the compressed file is slightly longer than the raw file)
+
+my $SHORTEN_HASH_FIXED_HEADER  = 32.5;  # at the beginning of the compressed stream we have some header info
+                                        # (shortened hash can't really be shorter than the metadata needed for decompression)
+                                        # the extra +0.5 is used to round up (we use integer numbers)
+my $SHORTEN_HASH_EXTRA_PERCENT = 5;     # the compressed stream could be slightly longer than the underlying data (special cases)
+                                        # in percent: i.e. x % == (x / 100)
+
+my $DISPLAY_SENSITIVE_DATA_WARNING = 1; # 0 means skip or use --skip-sensitive-data-warning
+
+my $PASSWORD_RECOVERY_TOOL_NAME = "john";
+my $PASSWORD_RECOVERY_TOOL_DATA_LIMIT = 0x80000000;          # hexadecimal output value. This value should always be >= 64
+my $PASSWORD_RECOVERY_TOOL_SUPPORT_PADDING_ATTACK  = 1;      # does the cracker support the AES-CBC padding attack (0 means no, 1 means yes)
+my @PASSWORD_RECOVERY_TOOL_SUPPORTED_DECOMPRESSORS = (1, 2, 6, 7); # within this list we only need values ranging from 1 to 7
+                                                             # i.e. SEVEN_ZIP_LZMA1_COMPRESSED to SEVEN_ZIP_DEFLATE_COMPRESSED
+my @PASSWORD_RECOVERY_TOOL_SUPPORTED_PREPROCESSORS = (1, 2, 3, 4, 5, 6, 7, 8); # BCJ2 can be "supported" by ignoring CRC
+my $PASSWORD_RECOVERY_TOOL_SUPPORT_MULTIPLE_DECOMPRESSORS = 0; # does the cracker support more than one compressing algorithms for the same file (e.g. LZMA2 + LZMA1)
+my $PASSWORD_RECOVERY_TOOL_SUPPORT_MULTIPLE_PREPROCESSORS = 0; # does the cracker support more than one preprocessing filters for the same file (e.g. BCJ + Delta)
+
+# 7-zip specific stuff
+
+my $LZMA2_MIN_COMPRESSED_LEN = 16; # the raw data (decrypted) needs to be at least: 3 + 1 + 1, header (start + size) + at least one byte of data + end
+                                   # therefore we need to have at least one AES BLOCK (128 bits = 16 bytes)
+
+# header
+
+my $SEVEN_ZIP_MAGIC = "7z\xbc\xaf\x27\x1c";
+my $SEVEN_ZIP_MAGIC_LEN = 6;                # fixed length of $SEVEN_ZIP_MAGIC
+
+my $SEVEN_ZIP_END                = "\x00";
+my $SEVEN_ZIP_HEADER             = "\x01";
+my $SEVEN_ZIP_ARCHIVE_PROPERTIES = "\x02";
+my $SEVEN_ZIP_ADD_STREAMS_INFO   = "\x03";
+my $SEVEN_ZIP_MAIN_STREAMS_INFO  = "\x04";
+my $SEVEN_ZIP_FILES_INFO         = "\x05";
+my $SEVEN_ZIP_PACK_INFO          = "\x06";
+my $SEVEN_ZIP_UNPACK_INFO        = "\x07";
+my $SEVEN_ZIP_SUBSTREAMS_INFO    = "\x08";
+my $SEVEN_ZIP_SIZE               = "\x09";
+my $SEVEN_ZIP_CRC                = "\x0a";
+my $SEVEN_ZIP_FOLDER             = "\x0b";
+my $SEVEN_ZIP_UNPACK_SIZE        = "\x0c";
+my $SEVEN_ZIP_NUM_UNPACK_STREAM  = "\x0d";
+my $SEVEN_ZIP_EMPTY_STREAM       = "\x0e";
+my $SEVEN_ZIP_EMPTY_FILE         = "\x0f";
+my $SEVEN_ZIP_ANTI_FILE          = "\x10";
+my $SEVEN_ZIP_NAME               = "\x11";
+my $SEVEN_ZIP_CREATION_TIME      = "\x12";
+my $SEVEN_ZIP_ACCESS_TIME        = "\x13";
+my $SEVEN_ZIP_MODIFICATION_TIME  = "\x14";
+my $SEVEN_ZIP_WIN_ATTRIBUTE      = "\x15";
+my $SEVEN_ZIP_ENCODED_HEADER     = "\x17";
+my $SEVEN_ZIP_START_POS          = "\x18";
+my $SEVEN_ZIP_DUMMY              = "\x19";
+
+my $SEVEN_ZIP_MAX_PROPERTY_TYPE  = 2 ** 30; # 1073741824
+my $SEVEN_ZIP_NOT_EXTERNAL       = "\x00";
+my $SEVEN_ZIP_EXTERNAL           = "\x01";
+my $SEVEN_ZIP_ALL_DEFINED        = "\x01";
+my $SEVEN_ZIP_FILE_NAME_END      = "\x00\x00";
+
+# codec
+
+my $SEVEN_ZIP_AES               = "\x06\xf1\x07\x01"; # all the following codec values are from CPP/7zip/Archive/7z/7zHeader.h
+
+my $SEVEN_ZIP_LZMA1             = "\x03\x01\x01";
+my $SEVEN_ZIP_LZMA2             = "\x21";
+my $SEVEN_ZIP_PPMD              = "\x03\x04\x01";
+my $SEVEN_ZIP_BCJ               = "\x03\x03\x01\x03";
+my $SEVEN_ZIP_BCJ2              = "\x03\x03\x01\x1b";
+my $SEVEN_ZIP_PPC               = "\x03\x03\x02\x05";
+my $SEVEN_ZIP_ALPHA             = "\x03\x03\x03\x01";
+my $SEVEN_ZIP_IA64              = "\x03\x03\x04\x01";
+my $SEVEN_ZIP_ARM               = "\x03\x03\x05\x01";
+my $SEVEN_ZIP_ARMT              = "\x03\x03\x07\x01";
+my $SEVEN_ZIP_SPARC             = "\x03\x03\x08\x05";
+my $SEVEN_ZIP_BZIP2             = "\x04\x02\x02";
+my $SEVEN_ZIP_DEFLATE           = "\x04\x01\x08";
+my $SEVEN_ZIP_DELTA             = "\x03";
+my $SEVEN_ZIP_COPY              = "\x00";
+
+# hash format
+
+my $SEVEN_ZIP_HASH_SIGNATURE    = "\$7z\$";
+my $SEVEN_ZIP_DEFAULT_POWER     = 19;
+my $SEVEN_ZIP_DEFAULT_IV        = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+
+my $SEVEN_ZIP_UNCOMPRESSED       =   0;
+my $SEVEN_ZIP_LZMA1_COMPRESSED   =   1;
+my $SEVEN_ZIP_LZMA2_COMPRESSED   =   2;
+my $SEVEN_ZIP_PPMD_COMPRESSED    =   3;
+my $SEVEN_ZIP_BZIP2_COMPRESSED   =   6;
+my $SEVEN_ZIP_DEFLATE_COMPRESSED =   7;
+
+my $SEVEN_ZIP_BCJ_PREPROCESSED   =   1;
+my $SEVEN_ZIP_BCJ2_PREPROCESSED  =   2;
+my $SEVEN_ZIP_PPC_PREPROCESSED   =   3;
+my $SEVEN_ZIP_IA64_PREPROCESSED  =   4;
+my $SEVEN_ZIP_ARM_PREPROCESSED   =   5;
+my $SEVEN_ZIP_ARMT_PREPROCESSED  =   6;
+my $SEVEN_ZIP_SPARC_PREPROCESSED =   7;
+                                 #   8 conflicts with SEVEN_ZIP_TRUNCATED (128 == 0x80 == 8 << 4)
+my $SEVEN_ZIP_DELTA_PREPROCESSED =   9;
+
+my $SEVEN_ZIP_TRUNCATED          = 128; # (0x80 or 0b10000000)
+
+my %SEVEN_ZIP_COMPRESSOR_NAMES   = (1 => "LZMA1", 2 => "LZMA2", 3 => "PPMD", 6 => "BZIP2", 7 => "DEFLATE",
+                                    (1 << 4) => "BCJ", (2 << 4) => "BCJ2", (3 << 4) => "PPC", (4 << 4) => "IA64",
+                                    (5 << 4) => "ARM", (6 << 4) => "ARMT", (7 << 4) => "SPARC", (9 << 4) => "DELTA");
+
+#
+# Helper functions
+#
+
+sub usage
+{
+  my $prog_name = shift;
+
+  print STDERR "Usage: $prog_name <7-Zip file>...\n";
+}
+
+my $memory_buffer_read_offset = 0;
+
+sub my_read
+{
+  my $input  = shift;
+  my $length = shift;
+
+  my $type_of_input = ref ($input);
+
+  my $output_buffer = "";
+
+  if ($type_of_input eq "GLOB")
+  {
+    read $input, $output_buffer, $length;
+  }
+  elsif ($type_of_input eq "HASH")
+  {
+    my $cur_file_handle = $$input{0}{'fh'};
+    my $cur_file_number = $$input{0}{'num'};
+
+    my $bytes_read = 0;
+
+    while ($bytes_read != $length)
+    {
+      my $name  = $$input{$cur_file_number}{'name'};
+      my $start = $$input{$cur_file_number}{'start'};
+      my $size  = $$input{$cur_file_number}{'size'};
+
+      my $cur_file_bytes_avail = ($start + $size) - $memory_buffer_read_offset;
+
+      if ($cur_file_bytes_avail < 1)
+      {
+        print STDERR "ERROR: failed to get the correct file offsets of splitted archive file '$name'\n";
+
+        exit (1);
+      }
+
+      my $total_bytes_to_read  = $length - $bytes_read;
+      my $bytes_to_read = $total_bytes_to_read;
+
+      if ($bytes_to_read > $cur_file_bytes_avail)
+      {
+        $bytes_to_read = $cur_file_bytes_avail;
+      }
+
+      # append the current bytes read from the file to the overall output buffer
+
+      my $temp_output_buffer = "";
+
+      my $bytes = read ($cur_file_handle, $temp_output_buffer, $bytes_to_read);
+
+      $output_buffer .= $temp_output_buffer;
+
+      if ($bytes != $bytes_to_read)
+      {
+        print STDERR "ERROR: could not read from splitted 7z file '$name'\n";
+
+        exit (1);
+      }
+
+      $bytes_read += $bytes_to_read;
+      $memory_buffer_read_offset += $bytes_to_read;
+
+      # the following case only happens if we need to read across 2 or more files
+
+      if ($bytes_read != $length)
+      {
+        # we exhausted the current file, move to the next one!
+
+        close ($cur_file_handle);
+
+        $cur_file_number++;
+
+        if (! exists ($$input{$cur_file_number}))
+        {
+          my $name_prefix = get_splitted_archive_raw_name ($name);
+
+          print STDERR "ERROR: could not open part #$cur_file_number of the splitted archive file '$name_prefix'\n";
+
+          exit (1);
+        }
+
+        my $name = $$input{$cur_file_number}{'name'};
+
+        if (! open ($cur_file_handle, "<$name"))
+        {
+          print STDERR "ERROR: could not open the splitted archive file '$name' for reading\n";
+
+          exit (1);
+        }
+
+        $$input{0}{'fh'}  = $cur_file_handle;
+        $$input{0}{'num'} = $cur_file_number;
+      }
+    }
+  }
+  else
+  {
+    $output_buffer = substr ($$input, $memory_buffer_read_offset, $length);
+
+    $memory_buffer_read_offset += $length;
+  }
+
+  return $output_buffer;
+}
+
+sub my_tell
+{
+  my $input = shift;
+
+  my $res = 0;
+
+  my $type_of_input = ref ($input);
+
+  if ($type_of_input eq "HASH")
+  {
+    $res = $memory_buffer_read_offset;
+  }
+  else
+  {
+    $res = tell ($input);
+  }
+
+  return $res;
+}
+
+sub my_seek
+{
+  my $input  = shift;
+  my $offset = shift;
+  my $whence = shift;
+
+  my $res = 0;
+
+  my $type_of_input = ref ($input);
+
+  if ($type_of_input eq "HASH")
+  {
+    # get total number of files and total/accumulated file size
+
+    my $number_of_files= 1;
+
+    # we assume that $$input{1} exists (we did already check that beforehand)
+
+    my $end = 0;
+
+    while (exists ($$input{$number_of_files}))
+    {
+      $end = $$input{$number_of_files}{'start'} + $$input{$number_of_files}{'size'};
+
+      $number_of_files++;
+    }
+
+    my $new_offset = 0;
+
+    # absolute (from start)
+    if ($whence == 0)
+    {
+      $new_offset = $offset;
+    }
+    # relative (depending on current position)
+    elsif ($whence == 1)
+    {
+      $new_offset = $memory_buffer_read_offset + $offset;
+    }
+    # offset from the end of the file
+    else
+    {
+      $new_offset = $end + $offset;
+    }
+
+    # sanity check
+
+    if (($new_offset < 0) || ($new_offset > $end))
+    {
+      my $name = get_splitted_archive_raw_name ($$input{1}{'name'});
+
+      print STDERR "ERROR: could not seek within the splitted archive '$name'\n";
+
+      exit (1);
+    }
+
+    $memory_buffer_read_offset = $new_offset;
+
+    # check if the correct file is open
+    # 1. determine the correct file
+    # 2. if the "incorrect" file is open, close it and open the correct one
+
+    my $cur_file_number = 1;
+    my $file_was_found  = 0;
+
+    my $start = 0;
+    my $size  = 0;
+
+    while (exists ($$input{$cur_file_number}))
+    {
+      $start = $$input{$cur_file_number}{'start'};
+      $size  = $$input{$cur_file_number}{'size'};
+
+      my $end = $start + $size;
+
+      if ($memory_buffer_read_offset >= $start)
+      {
+        if ($memory_buffer_read_offset < $end)
+        {
+          $file_was_found = 1;
+
+          last;
+        }
+      }
+
+      $cur_file_number++;
+    }
+
+    if ($file_was_found == 0)
+    {
+      my $name = get_splitted_archive_raw_name ($$input{1}{'name'});
+
+      print STDERR "ERROR: could not read the splitted archive '$name' (maybe some parts are missing?)\n";
+
+      exit (1);
+    }
+
+    if ($$input{0}{'num'} != $cur_file_number)
+    {
+      # if we enter this block, we definitely need to "change" to another file
+
+      close ($$input{0}{'fh'});
+
+      my $name = $$input{$cur_file_number}{'name'};
+
+      my $seven_zip_file;
+
+      if (! open ($seven_zip_file, "<$name"))
+      {
+        print STDERR "ERROR: could not open the file '$name' for reading\n";
+
+        exit (1);
+      }
+
+      $$input{0}{'fh'}  = $seven_zip_file;
+      $$input{0}{'num'} = $cur_file_number;
+    }
+
+    # always seek w/ absolute positions within the splitted part!
+    $res = seek ($$input{0}{'fh'}, $memory_buffer_read_offset - $start, 0);
+  }
+  else
+  {
+    $res = seek ($input, $offset, $whence);
+  }
+
+  return $res;
+}
+
+sub get_uint32
+{
+  my $fp = shift;
+
+  my $bytes = my_read ($fp, 4);
+
+  return (0, 0) if (length ($bytes) != 4);
+
+  my $num = unpack ("L", $bytes);
+
+  return $num;
+}
+
+sub get_uint64
+{
+  my $fp = shift;
+
+  my $bytes = my_read ($fp, 8);
+
+  return (0, 0) if (length ($bytes) != 8);
+
+  my ($uint1, $uint2) = unpack ("LL<", $bytes);
+
+  my $num = $uint2 << 32 | $uint1;
+
+  return $bytes, $num;
+}
+
+sub read_number
+{
+  my $fp = shift;
+
+  my $b = ord (my_read ($fp, 1));
+
+  if (($b & 0x80) == 0)
+  {
+    return $b;
+  }
+
+  my $value = ord (my_read ($fp, 1));
+
+  for (my $i = 1; $i < 8; $i++)
+  {
+    my $mask = 0x80 >> $i;
+
+    if (($b & $mask) == 0)
+    {
+      my $high = $b & ($mask - 1);
+
+      $value |= ($high << ($i * 8));
+
+      return $value;
+    }
+
+    my $next = ord (my_read ($fp, 1));
+
+    $value |= ($next << ($i * 8));
+  }
+
+  return $value;
+}
+
+sub num_to_id
+{
+  my $num = shift;
+
+  # special case:
+
+  return "\x00" if ($num == 0);
+
+  # normal case:
+
+  my $id = "";
+
+  while ($num > 0)
+  {
+    my $value = $num & 0xff;
+
+    $id = chr ($value) . $id;
+
+    $num >>= 8;
+  }
+
+  return $id;
+}
+
+sub read_id
+{
+  my $fp = shift;
+
+  my $id;
+
+  my $num = read_number ($fp);
+
+  # convert number to their ASCII code correspondent byte
+
+  return num_to_id ($num);
+}
+
+sub get_boolean_vector
+{
+  my $fp = shift;
+
+  my $

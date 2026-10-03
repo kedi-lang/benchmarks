@@ -1,0 +1,254 @@
+52:  struct pool* next;
+53:  value* next_obj;
+70:  struct large_alloc* next;
+77:  pool* free;
+84:} pool_freelist = {
+103:  sizeclass next_to_sweep;
+111:  int free_blocks;
+115:/* You need to hold the [pool_freelist] lock to call these functions. */
+131:    heap->next_to_sweep = 0;
+146:    *src = p->next;
+148:    p->next = *dst;
+158:  caml_plat_lock_blocking(&pool_freelist.lock);
+162:                     &pool_freelist.global_avail_pools[i], NULL);
+166:                     &pool_freelist.global_full_pools[i], NULL);
+175:    heap->swept_large = a->next;
+176:    a->next = pool_freelist.global_large;
+177:    pool_freelist.global_large = a;
+181:  caml_plat_unlock(&pool_freelist.lock);
+188:  caml_plat_lock_blocking(&pool_freelist.lock);
+191:        (pool**)&pool_freelist.global_avail_pools[i],
+195:        (pool**)&pool_freelist.global_full_pools[i],
+199:  while (pool_freelist.global_large) {
+200:    large_alloc* a = pool_freelist.global_large;
+201:    pool_freelist.global_large = a->next;
+203:    a->next = local->unswept_large;
+210:  caml_plat_unlock(&pool_freelist.lock);
+214:  local->next_to_sweep = 0;
+228:void caml_free_shared_heap(struct caml_heap_state* heap) {
+230:  caml_stat_free(heap);
+234:/* Allocating and deallocating pools from the global freelist. */
+239:  caml_plat_lock_blocking(&pool_freelist.lock);
+240:  if (!pool_freelist.free) {
+244:      CAMLassert(pool_freelist.free == NULL);
+247:      r->next = pool_freelist.free;
+249:      pool_freelist.free = r;
+252:  r = pool_freelist.free;
+254:    pool_freelist.free = r->next;
+255:  caml_plat_unlock(&pool_freelist.lock);
+261:/* release [pool] to the current free list of pools */
+270:  caml_plat_lock_blocking(&pool_freelist.lock);
+271:  pool->next = pool_freelist.free;
+272:  pool_freelist.free = pool;
+273:  caml_plat_unlock(&pool_freelist.lock);
+276:/* free the memory of [pool], giving it back to the OS */
+277:static void pool_free(struct caml_heap_state* local,
+301:      p += wh * Wosize_hd(hd); /* skip contiguous free blocks */
+310:/* Initialize a pool and its object freelist */
+319:  r->next = 0;
+321:  r->next_obj = (value*)p;
+328:  for (p += 2; p < end; p++) *p = Debug_free_major;
+336:static intnat pool_sweep(struct caml_heap_state* local,
+342:/* Adopt pool from the pool_freelist avail and full pools
+350:  if( !atomic_load_relaxed(&pool_freelist.global_avail_pools[sz]) &&
+351:      !atomic_load_relaxed(&pool_freelist.global_full_pools[sz]) )
+355:  caml_plat_lock_blocking(&pool_freelist.lock);
+356:  if( atomic_load_relaxed(&pool_freelist.global_avail_pools[sz]) ) {
+357:    r = atomic_load_relaxed(&pool_freelist.global_avail_pools[sz]);
+360:      atomic_store_relaxed(&pool_freelist.global_avail_pools[sz], r->next);
+361:      r->next = 0;
+368:        value* next_obj = r->next_obj;
+369:        while( next_obj ) {
+370:          CAMLassert(POOL_BLOCK_FREE_HP(next_obj));
+371:          next_obj = (value*)next_obj[1];
+380:     try our luck sweeping it later on */
+382:    r = atomic_load_relaxed(&pool_freelist.global_full_pools[sz]);
+385:      atomic_store_relaxed(&pool_freelist.global_full_pools[sz], r->next);
+386:      r->next = local->full_pools[sz];
+396:  caml_plat_unlock(&pool_freelist.lock);
+400:      pool_sweep(local, &local->full_pools[sz], sz, 0);
+416:  /* Otherwise, try to sweep until we find one */
+419:      pool_sweep(local, &local->unswept_avail_pools[sz], sz, 0);
+447:  value* next;
+452:  p = r->next_obj;
+458:  /* in this case there are more free blocks immediately after */
+460:    next = (value*)(p + wsize_sizeclass[sz]);
+461:    /* we update the pool header of the next block */
+462:    *next = POOL_FREE_HEADER(Wosize_hp(p) - 1);
+463:    /* also copy the next_obj pointer from p */
+465:    next[1] = p[1];
+467:    next = (value*)p[1];
+470:  r->next_obj = next;
+471:  if (!next) {
+472:    local->avail_pools[sz] = r->next;
+473:    r->next = local->full_pools[sz];
+478:    /* either there's no more free space and we've moved the pool */
+479:    (r->next_obj == 0 && local->full_pools[sz] == r)
+480:    /* or there's still free space */
+481:    || POOL_BLOCK_FREE_HP(r->next_obj));
+494:  a->next = local->swept_large;
+535:      Field(Val_hp(p), i) = Debug_free_major;
+543:static intnat pool_sweep(struct caml_heap_state* local, pool** plist,
+548:  *plist = a->next;
+552:    header_t* last_free_block = NULL;
+560:    a->next_obj = 0;
+572:      /* The pools mark a block as being free by setting the tag to No_scan_tag
+574:        number of contiguous free blocks that follow. The first field is a
+575:        pointer to the next free block beyond the immediately following
+576:        contiguous free blocks (if any). */
+578:      /* Check if the current block is garbage, if it is turn it into a free
+587:        /* add to freelist. This could be optimised, we don't need
+588:        to write the free header if we're going to merge it with a prior
+589:        free block but it makes this codepath more complex. */
+595:          Field(Val_hp(p), i) = Debug_free_major;
+610:      /* If the current block was garbage (and is now a free block) or was
+611:      initially a free block, see if we can merge it with the last free block we
+612:      encountered or if we cannot then update the pointer in the last free block
+615:        /* if any block is free then this is no longer a full pool */
+618:        /* if there was a free block before us, check first if we can
+620:        if( last_free_block ) {
+621:          CAMLassert(POOL_BLOCK_FREE_HP(last_free_block));
+623:          /* check if we can merge with the last free block */
+624:          if( last_free_block + (1 + Wosize_hp(last_free_block)) * wh == p ) {
+625:            /* if we can then update the wosize of the last free block */
+626:            *last_free_block = POOL_FREE_HEADER(Wosize_hp(last_free_block)
+629:            /* in this case there's a non-free block between us so update
+630:                the next pointer */
+631:            last_free_block[1] = (value)p;
+633:            last_free_block = p;
+636:          /* if we're the first free block then set the next_obj pointer for
+637:            the pool (which indicates the start of the freelist) */
+638:          a->next_obj = (value*)p;
+640:          last_free_block = p;
+643:        /* add the free blocks following this block, skipping over them */
+647:            freelist */
+655:      /* the last free block should have 0 as its next pointer */
+656:      last_free_block[1] = 0;
+660:      /* if all spaces are used then next_obj should be 0 */
+661:      (all_used && !a->next_obj)
+662:      /* otherwise it should point to a free block */
+663:      || (!all_used && POOL_BLOCK_FREE_HP(a->next_obj))
+670:      a->next = *list;
+678:static intnat large_alloc_sweep(struct caml_heap_state* local) {
+683:  local->unswept_large = a->next;
+701:    free(a);
+703:    a->next = local->swept_large;
+716:    local->unswept_large = a->next;
+724:    free(a);
+730:intnat caml_sweep(struct caml_heap_state* local, intnat work) {
+732:  while (work > 0 && local->next_to_sweep < NUM_SIZECLASSES) {
+733:    sizeclass sz = local->next_to_sweep;
+734:    intnat full_sweep_work = 0;
+735:    intnat avail_sweep_work =
+736:      pool_sweep(local, &local->unswept_avail_pools[sz], sz, 1);
+737:    work -= avail_sweep_work;
+740:      full_sweep_work = pool_sweep(local,
+744:      work -= full_sweep_work;
+747:    if(full_sweep_work+avail_sweep_work == 0) {
+748:      local->next_to_sweep++;
+754:    work -= large_alloc_sweep(local);
+758:    /* sweeping is complete, check everything worked */
+770:    *plist = a->next;
+806:  /* Finalise and free large unswept objects. */
+841:/* Heap and freelist stats */
+844:   You need to hold the [pool_freelist] lock. */
+846:  caml_accum_heap_stats(&pool_freelist.stats, &heap->stats);
+850:/* The stats for an adopted pool are moved from the free pool stats to
+852:   You need to hold the [pool_freelist] lock. */
+860:    caml_remove_heap_stats(&pool_freelist.stats, &pool_stats);
+864:   You need to hold the [pool_freelist] lock. */
+866:  caml_accum_heap_stats(&adopter->stats, &pool_freelist.stats);
+867:  memset(&pool_freelist.stats, 0, sizeof(pool_freelist.stats));
+880:  caml_plat_lock_blocking(&pool_freelist.lock);
+881:  caml_accum_heap_stats(acc, &pool_freelist.stats);
+882:  caml_plat_unlock(&pool_freelist.lock);
+1015:  caml_stat_free(st->stack);
+1016:  caml_stat_free(st);
+1076:  /* We should never be called with a block that is free (this would indicate a
+1123:        /* Skip over free blocks */
+1128:    cur_pool = cur_pool->next;
+1180:    3. Go through pools evacuated and release them. Finally free all but
+1181:        one pool in the freelist.
+1182:    4. One domain needs to release the pools in the freelist back to the OS.
+1202:    /* No sweeping has happened yet */
+1209:          atomic_load_relaxed(&pool_freelist.global_avail_pools[sz_class]) ==
+1212:          atomic_load_relaxed(&pool_freelist.global_full_pools[sz_class]) ==
+1240:      cur_pool = cur_pool->next;
+1249:      memory being freed up. */
+1258:    /* Count the number of free and live blocks in each pool. Note that a live
+1265:       exact amount of space needed or even sweep all pools in this counting
+1271:    int total_free_blocks = 0;
+1278:      pool_stats[k].free_blocks = 0;
+1288:          pool_stats[k].free_blocks += wosize + 1;
+1290:          total_free_blocks += wosize + 1;
+1292:          /* skip to the next block */
+1301:      cur_pool = cur_pool->next;
+1305:    /* Note that partially filled pools must have at least some free space*/
+1307:    CAMLassert(total_free_blocks > 0);
+1317:       want to walk through the pools and check whether we have enough free
+1320:    int free_blocks = 0;
+1325:    /* [last_pool_p] will be a pointer to the next field of the last
+1331:      if (free_blocks >= remaining_live_blocks) {
+1335:      free_blocks += pool_stats[j].free_blocks;
+1337:      last_pool_p = &cur_pool->next;
+1338:      cur_pool = cur_pool->next;
+1343:    caml_stat_free(pool_stats);
+1371:            value* new_p = to_pool->next_obj;
+1373:            /* if there are free blocks after this, use those */
+1376:              /* copy the header and free pointer over */
+1377:              value* next = (value*)(new_p + wh);
+1380:                POOL_FIRST_BLOCK(to_pool, sz_class) <= (header_t*)next
+1383:              CAMLassert((header_t*)next <= POOL_END(to_pool));
+1385:              *next = POOL_FREE_HEADER(wosize - 1);
+1386:              next[1] = new_p[1];
+1387:              to_pool->next_obj = next;
+1389:              value *next = (value*)new_p[1];
+1390:              to_pool->next_obj = next;
+1392:              if (!next) {
+1394:                heap->unswept_avail_pools[sz_class] = to_pool->next;
+1395:                to_pool->next = heap->unswept_full_pools[sz_class];
+1411:            /* We are implicitly sweeping pools in the evacuation set and thus
+1428:              Field(p, w) = Debug_free_major;
+1440:      /* move pool to evacuated pools list, continue to next pool */
+1441:      pool *next = cur_pool->next;
+1442:      cur_pool->next = evacuated_pools;
+1444:      cur_pool = next;
+1480:  for (large_alloc *la = heap->unswept_large; la != NULL; la = la->next) {
+1496:  /* Third phase: free all evacuated pools and release the mappings back to
+1504:    pool* next_pool = cur_pool->next;
+1509:      *p = Debug_free_major;
+1513:    pool_free(heap, cur_pool, cur_pool->sz);
+1514:    cur_pool = next_pool;
+1520:  /* Fourth phase: one domain also needs to release the free list */
+1523:    pool* next_pool;
+1525:    caml_plat_lock_blocking(&pool_freelist.lock);
+1526:    cur_pool = pool_freelist.free;
+1529:      next_pool = cur_pool->next;
+1532:      cur_pool = next_pool;
+1535:    pool_freelist.free = NULL;
+1537:    caml_plat_unlock(&pool_freelist.lock);
+1553:  uintnat free;
+1560:  for (value *v = a->next_obj; v; v = (value*)v[1]) {
+1585:        /* count the free block and any that follow it (stored in the
+1587:        s->free += wh * (1 + Wosize_hd(hd));
+1598:  for (; a; a = a->next) {
+1610:  /* sweeping should be done by this point */
+1611:  CAMLassert(local->next_to_sweep == NUM_SIZECLASSES);
+1615:    for (pool *p = local->avail_pools[i]; p; p = p->next)
+1617:    for (pool *p = local->full_pools[i]; p; p = p->next) {
+1618:      CAMLassert(p->next_obj == NULL);
+1623:              "%" CAML_PRIuNAT " free, %" CAML_PRIuNAT " fragmentation",
+1624:              pool_stats.allocated, pool_stats.free, pool_stats.overhead);
+1629:              "%" CAML_PRIuNAT " free, %" CAML_PRIuNAT " fragmentation",
+1630:              large_stats.allocated, large_stats.free, large_stats.overhead);
+1639:         == pool_stats.free);
+1671:void caml_finalise_freelist(void) {
+1672:  int freed_large = 0;
+1674:  caml_plat_lock_blocking(&pool_freelist.lock);
+1675:  while (pool_freelist.global_large) {
+1676:    large_alloc* a = pool_freelist.global_large;
+1677:    pool_freelist.global_large = a->next;
+1678:    free(a);
+1679:    freed_large++;
+1681:  caml_plat_unlock(&pool_freelist.lock);
+1682:  caml_gc_log("Finalise freelist. Freed %d large", freed_large);

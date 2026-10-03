@@ -1,0 +1,111 @@
+634-    exit 2
+635-  fi
+636-fi
+637-
+638-#
+639-# Generate Makefile.config
+640-#
+641-
+642-rm -f Makefile.config
+643-cat > Makefile.config <<EOF
+644:PREFIX=$prefix
+645-BINDIR=$bindir
+646-LIBDIR=$libdir
+647-MANDIR=$mandir
+648-SHAREDIR=$sharedir
+649-COQDEVDIR=$coqdevdir
+650-OCAML_NATIVE_COMP=$ocaml_native_comp
+651-OCAML_OPT_COMP=$ocaml_opt_comp
+652-MENHIR_DIR=$menhir_dir
+653-COMPFLAGS=-bin-annot
+654-EOF
+655-
+656-if test "$target" != "manual"; then
+657-cat >> Makefile.config <<EOF
+658-ABI=$abi
+659-ARCH=$arch
+660-ASM_SUPPORTS_CFI=$asm_supports_cfi
+661-BITSIZE=$bitsize
+662-CASM=$casm
+663-CASM_OPTIONS=$casm_options
+664-CASMRUNTIME=$casmruntime
+665-CC=$cc $cc_options
+666-CLIGHTGEN=$clightgen
+667-CLINKER=$clinker
+668-CLINKER_OPTIONS=$clinker_options
+669-CPREPRO=$cprepro
+670-CPREPRO_OPTIONS=$cprepro_options
+671-ARCHIVER=$archiver
+672-ENDIANNESS=$endianness
+673-HAS_RUNTIME_LIB=$has_runtime_lib
+674-HAS_STANDARD_HEADERS=$has_standard_headers
+675-INSTALL_COQDEV=$install_coqdev
+676-LIBMATH=$libmath
+677-MODEL=$model
+678-SYSTEM=$system
+679-RESPONSEFILE=$responsefile
+680-LIBRARY_FLOCQ=$library_Flocq
+681-LIBRARY_MENHIRLIB=$library_MenhirLib
+682-EOF
+683-else
+684-cat >> Makefile.config <<'EOF'
+685-
+686-# Target architecture
+687-# ARCH=powerpc
+688-# ARCH=arm
+689-# ARCH=x86
+690-# ARCH=riscV
+691-# ARCH=aarch6
+692-ARCH=
+693-
+694-# Hardware variant
+695-# MODEL=ppc32       # for plain PowerPC
+696-# MODEL=ppc64       # for PowerPC with 64-bit instructions
+697-# MODEL=e5500       # for Freescale e5500 PowerPC variant
+698-# MODEL=armv6       # for ARM
+699-# MODEL=armv6t2     # for ARM
+700-# MODEL=armv7a      # for ARM
+701-# MODEL=armv7r      # for ARM
+702-# MODEL=armv7m      # for ARM
+703-# MODEL=32sse2      # for x86 in 32-bit mode
+704-# MODEL=64          # for x86 in 64-bit mode
+705-# MODEL=default     # for others
+706-MODEL=
+707-
+708-# Target ABI
+709-# ABI=eabi          # for PowerPC / Linux and other SVR4 or EABI platforms
+710-# ABI=eabi          # for ARM
+711-# ABI=hardfloat     # for ARM
+712-# ABI=standard      # for others
+713-ABI=
+714-
+715-# Target bit width
+716-# BITSIZE=64        # for x86 in 64-bit mode, RiscV in 64-bit mode, AArch64
+717-# BITSIZE=32        # otherwise
+718-BITSIZE=
+719-
+720-# Target endianness
+721-# ENDIANNESS=big     # for ARM or PowerPC
+722-# ENDIANNESS=little  # for ARM or x86 or RiscV or AArch64
+723-ENDIANNESS=
+724-
+725-# Target operating system and development environment
+726-#
+727-# Possible choices for PowerPC:
+728-# SYSTEM=linux
+729-# SYSTEM=diab
+730-#
+731-# Possible choices for ARM, AArch64, RiscV:
+732-# SYSTEM=linux
+733-#
+734-# Possible choices for x86:
+735-# SYSTEM=linux
+736-# SYSTEM=bsd
+737-# SYSTEM=macos
+738-# SYSTEM=cygwin
+739-SYSTEM=
+740-
+741-# C compiler (for testing only)
+742-CC=cc
+743-
+744-# Assembler for assembling compiled files

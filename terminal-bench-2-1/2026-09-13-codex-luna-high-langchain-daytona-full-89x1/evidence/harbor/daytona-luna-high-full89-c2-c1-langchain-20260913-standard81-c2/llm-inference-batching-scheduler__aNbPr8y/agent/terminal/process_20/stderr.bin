@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/tmp/greedy.py", line 57, in <module>
+    arr=run(rs,tar,padlim);evalit(rs,arr)
+  File "/tmp/greedy.py", line 25, in run
+    curseq,curpad,_=total()
+                    ~~~~~^^
+  File "/tmp/greedy.py", line 22, in total
+    return sum(exec(c) for c in arr),sum(pad(c) for c in arr),arr
+                                     ~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/greedy.py", line 22, in <genexpr>
+    return sum(exec(c) for c in arr),sum(pad(c) for c in arr),arr
+                                         ~~~^^^
+  File "/tmp/greedy.py", line 19, in pad
+    def pad(c):return sum(max(r['gen_len'] for r in c)-r['gen_len'] for r in c['rs'])
+                      ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/greedy.py", line 19, in <genexpr>
+    def pad(c):return sum(max(r['gen_len'] for r in c)-r['gen_len'] for r in c['rs'])
+                          ~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/greedy.py", line 19, in <genexpr>
+    def pad(c):return sum(max(r['gen_len'] for r in c)-r['gen_len'] for r in c['rs'])
+                              ~^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'

@@ -1,0 +1,132 @@
+   to an evacuated block and if so update it using the forwarding
+   pointer created by the compactor. */
+static void compact_update_block(header_t* p)
+{
+  header_t hd = Hd_hp(p);
+
+  /* We should never be called with a block that is free (this would indicate a
+     bug in traversing the shared pools). */
+  CAMLassert(!POOL_BLOCK_FREE_HP(p));
+
+  tag_t tag = Tag_hd(hd);
+
+  /* We should never encounter an Infix tag iterating over the shared pools or
+    large allocations. We could find it in roots but those use
+    [compact_update_value]. */
+  CAMLassert(tag != Infix_tag);
+
+  if (tag == Cont_tag) {
+    value stk = Field(Val_hp(p), 0);
+    if (Ptr_val(stk)) {
+      caml_scan_stack(&compact_update_value, 0, NULL, Ptr_val(stk), 0);
+    }
+  } else {
+    uintnat offset = 0;
+
+    if (tag == Closure_tag) {
+      offset = Start_env_closinfo(Closinfo_val(Val_hp(p)));
+    }
+
+    if (tag < No_scan_tag) {
+      mlsize_t wosz = Wosize_hd(hd);
+      for (mlsize_t i = offset; i < wosz; i++) {
+        compact_update_value_at(&Field(Val_hp(p), i));
+      }
+    }
+  }
+}
+
+/* Update all the live blocks in a list of pools. */
+
+static void compact_update_pools(pool *cur_pool)
+{
+  while (cur_pool) {
+    header_t* p = POOL_FIRST_BLOCK(cur_pool, cur_pool->sz);
+    header_t* end = POOL_END(cur_pool);
+    mlsize_t wh = wsize_sizeclass[cur_pool->sz];
+
+    while (p + wh <= end) {
+      if (!POOL_BLOCK_FREE_HP(p)) {
+        if (Has_status_val(Val_hp(p), caml_global_heap_state.UNMARKED)) {
+          compact_update_block(p);
+        }
+      } else {
+        /* Skip over free blocks */
+        p += wh * Wosize_hp(p);
+      }
+      p += wh;
+    }
+    cur_pool = cur_pool->next;
+  }
+}
+
+/* Update all the fields in the list of ephemerons found at `*ephe_p` */
+
+static void compact_update_ephe_list(volatile value *ephe_p)
+{
+  /* Direct access to ephemeron fields instead of using Ephe_key/Ephe_data
+     is OK here, since the barrier at the start of compaction means no
+     domain can be doing minor GC at this time. */
+  while (*ephe_p) {
+    compact_update_value_at(ephe_p);
+}
+
+/* Compaction end */
+
+struct mem_stats {
+  /* unit is words */
+  uintnat allocated;
+  uintnat live;
+  uintnat free;
+  uintnat overhead;
+
+  uintnat live_blocks;
+};
+
+static void verify_pool(pool* a, sizeclass sz, struct mem_stats* s) {
+  for (value *v = a->next_obj; v; v = (value*)v[1]) {
+    CAMLassert(POOL_BLOCK_FREE_HP(v));
+  }
+
+  {
+    header_t* p = POOL_FIRST_BLOCK(a, sz);
+    header_t* end = POOL_END(a);
+    mlsize_t wh = wsize_sizeclass[sz];
+    s->overhead += POOL_SLAB_WOFFSET(sz);
+
+    while (p + wh <= end) {
+      /* This header can be read here and concurrently marked by the GC, but
+         this is fine: marking can only turn UNMARKED objects into MARKED or
+         NOT_MARKABLE, which is of no consequence for this verification
+         (namely, that there is no garbage left). */
+      header_t hd = Hd_hp(p);
+      CAMLassert(
+        POOL_BLOCK_FREE_HD(hd) ||
+          !Has_status_hd(hd, caml_global_heap_state.GARBAGE)
+      );
+      if (!POOL_BLOCK_FREE_HD(hd)) {
+        s->live += Whsize_hd(hd);
+        s->overhead += wh - Whsize_hd(hd);
+        s->live_blocks++;
+      } else {
+        /* count the free block and any that follow it (stored in the
+           size bits in the header)*/
+        s->free += wh * (1 + Wosize_hd(hd));
+        p += Wosize_hd(hd) * wh;
+      }
+      p += wh;
+    }
+    CAMLassert(end == p);
+    s->allocated += POOL_WSIZE;
+  }
+}
+
+static void verify_large(large_alloc* a, struct mem_stats* s) {
+  for (; a; a = a->next) {
+    header_t hd = *(header_t*)((char*)a + LARGE_ALLOC_HEADER_SZ);
+    CAMLassert (!Has_status_hd(hd, caml_global_heap_state.GARBAGE));
+    s->allocated += Wsize_bsize(LARGE_ALLOC_HEADER_SZ) + Whsize_hd(hd);
+    s->overhead += Wsize_bsize(LARGE_ALLOC_HEADER_SZ);
+    s->live_blocks++;
+  }
+}

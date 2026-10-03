@@ -1,0 +1,46 @@
+    individual = 1
+    # All of the 'individual' personalization plus recipient header
+    # modification.
+    full = 2
+
+
+@public
+class ReplyToMunging(Enum):
+    # The Reply-To header is passed through untouched
+    no_munging = 0
+    # The mailing list's posting address is appended to the Reply-To header
+    point_to_list = 1
+    # An explicit Reply-To header is added
+    explicit_header = 2
+    # An explicit Reply-To header is added and
+    # the list address is removed from CC
+    explicit_header_only = 3
+
+
+@public
+class SubscriptionPolicy(Enum):
+    """All subscription/unsubscription policies for a mailing list."""
+    # Neither confirmation, nor moderator approval is required.
+    open = 0
+    # The user must confirm the subscription.
+    confirm = 1
+    # The moderator must approve the subscription.
+    moderate = 2
+    # The user must first confirm their subscription, and then if that is
+    # successful, the moderator must also approve it.
+    confirm_then_moderate = 3
+
+
+@public
+class ArchiveRenderingMode(Enum):
+    """Email rendering mode in Archiver."""
+    # Default text.
+    text = 1
+    # Render emails as markdown text.
+    markdown = 2
+
+
+@public
+class IMailingList(Interface):
+    """A mailing list."""
+

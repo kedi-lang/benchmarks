@@ -1,0 +1,24 @@
+1749:  // Load sections into memory
+1750-  const sectionsToLoad = [textSection, dataSection, rodataSection].filter(s => s !== null);
+1751-  
+1752-  for (const section of sectionsToLoad) {
+1753-    const vaddr = section.addr;
+1754-    const size = section.size;
+1755-    const data = getSectionData(fileBuffer, section);
+1756-    
+1757-    // Load the section data into memory (assuming 4-byte words)
+1758-    for (let i = 0; i < data.length; i += 4) {
+1759-      if (i + 4 <= data.length) {
+1760-        // For MIPS, we use little-endian byte order
+1761-        const word = data.readUInt32LE(i);
+1762-        memory[vaddr + i] = word;
+1763-      }
+1764-    }
+1765-  }
+1766-  
+1767-  let entryPoint = 0; // Default entry point
+-rwxr-xr-x 1 root root 456704 Sep 13 13:32 doomgeneric_mips
+ELF32 little-endian, machine 8 entry 0x4062bc
+BMP b'BM' (1024054, 0, 54, 40, 0)
+ doomgeneric/r_things.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)

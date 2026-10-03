@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    def hmc_nuts_diag_e_adapt(self, *, num_chains=4, **kwargs) -> stan.fit.Fit:
+        """Draw samples from the model using ``stan::services::sample::hmc_nuts_diag_e_adapt``.
+
+        Parameters in ``kwargs`` will be passed to the (Python wrapper of)
+        ``stan::services::sample::hmc_nuts_diag_e_adapt``. Parameter names are
+        identical to those used in CmdStan.  See the CmdStan documentation for
+        parameter descriptions and default values.
+
+        There is one exception:  `num_chains`. `num_chains` is a
+        PyStan-specific keyword argument. It indicates the number of
+        independent processes to use when drawing samples.
+
+        Returns:
+            Fit: instance of Fit allowing access to draws.
+
+        """
+        function = "stan::services::sample::hmc_nuts_diag_e_adapt"
+        return self._create_fit(function=function, num_chains=num_chains, **kwargs)
+
+AttributeError: module 'stan.common' has no attribute 'build'

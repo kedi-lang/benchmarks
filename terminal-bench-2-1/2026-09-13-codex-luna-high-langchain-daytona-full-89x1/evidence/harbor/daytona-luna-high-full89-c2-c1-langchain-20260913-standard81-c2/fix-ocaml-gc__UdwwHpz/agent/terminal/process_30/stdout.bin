@@ -1,0 +1,17 @@
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+do_some_marking (stk=0x5555555cb960, budget=14388, budget@entry=16384) at runtime/major_gc.c:1274
+1274	      header_t hd = Hd_val(block);
+#0  do_some_marking (stk=0x5555555cb960, budget=14388, budget@entry=16384) at runtime/major_gc.c:1274
+#1  0x000055555558bed5 in mark (budget=budget@entry=16384) at runtime/major_gc.c:1383
+#2  0x000055555558c407 in major_collection_slice (howmuch=<optimized out>, participant_count=participant_count@entry=0, barrier_participants=barrier_participants@entry=0x0, mode=mode@entry=Slice_interruptible, force_compaction=0) at runtime/major_gc.c:1865
+#3  0x000055555558ce56 in caml_major_collection_slice (howmuch=howmuch@entry=-1) at runtime/major_gc.c:2044
+#4  0x00005555555789f9 in caml_poll_gc_work () at runtime/domain.c:2010
+#5  0x000055555559996a in caml_do_pending_actions_res () at runtime/signals.c:338
+#6  0x0000555555593545 in caml_alloc_small_dispatch (dom_st=dom_st@entry=0x5555555ca930, wosize=wosize@entry=4, flags=flags@entry=3, nallocs=nallocs@entry=1, encoded_alloc_lens=encoded_alloc_lens@entry=0x0) at runtime/minor_gc.c:980
+#7  0x00005555555a3468 in caml_bytecode_interpreter (prog=prog@entry=0x7fffe791e010, prog_size=prog_size@entry=3020496, initial_env=<optimized out>, initial_extra_args=initial_extra_args@entry=0) at runtime/interp.c:766
+#8  0x00005555555a3e54 in caml_interprete (prog_size=3020496, prog=0x7fffe791e010) at runtime/caml/interp.h:34
+#9  caml_main (argv=<optimized out>) at runtime/startup_byt.c:579
+#10 0x000055555556e342 in main (argc=<optimized out>, argv=<optimized out>) at runtime/main.c:37

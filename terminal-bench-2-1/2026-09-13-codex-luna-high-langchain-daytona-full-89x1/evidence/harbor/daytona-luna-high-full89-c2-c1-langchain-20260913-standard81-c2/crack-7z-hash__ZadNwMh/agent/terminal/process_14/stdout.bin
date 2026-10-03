@@ -1,0 +1,182 @@
+26:# supported file types:
+47:# [data type indicator]           # see "Explanation of the data type indicator" below
+51:# [length of salt]
+53:# [salt]
+78:# Explanation of the data type indicator
+81:# This field is the first field after the hash signature (i.e. after "$7z$).
+89:# LOWER NIBBLE (4 bits, type & 0xf)
+99:# UPPER NIBBLE (4 bits, (type >> 4) & 0xf)
+116:# the attribute list (the fields "preprocessor attributes" and "coder attributes" accordingly) will be a comma-separated list of fields with type, order/position and attribute indicators.
+120:#   - the format is a comma-separated list of type and order indicator (for both fields: compressor and preprocessor attributes), followed by an underscore (_), followed by the attribute itself
+121:#   - the first attribute/item/codec for both fields (compressor and preprocessor attributes) needs no type and order indicator, only attributes
+122:#   - the type and position/order of the first decompressor/filter are implied (it's always the first decompressor/filter and the type is in the "data type indicator" field)
+123:#   - this also means that the field "data type indicator" (see format above) only indicates the first decompressor (if used) and (also, if used) the first preprocessing filter (this is also due to compatibility reasons with older formats)
+124:#   - for the additional (2+) decompressors/filters, the first number after the comma is the type and order indicator, after which follows an underscore (_) and the attributes themself (could be empty/no attribute value for some codecs)
+125:#   - special case: the "coder attributes" field could start with a comma (and has also a type and order indicator) in the unlikely case where during archive generation a filter was applied after the final compression of the data. Otherwise it's always the case that the decompressor needs to be applied first
+127:# Multiple Compressor(s)/Preprocessor(s) type and order indicator (it is one combined field/number):
+128:#   - upper nibble (4 bits, indicator >> 4) indicates the compressor/preprocessor method/type/codec (LZMA2, Delta, BCJ etc)
+227:my $SEVEN_ZIP_HASH_SIGNATURE    = "\$7z\$";
+262:  print STDERR "Usage: $prog_name <7-Zip file>...\n";
+272:  my $type_of_input = ref ($input);
+276:  if ($type_of_input eq "GLOB")
+280:  elsif ($type_of_input eq "HASH")
+297:        print STDERR "ERROR: failed to get the correct file offsets of splitted archive file '$name'\n";
+320:        print STDERR "ERROR: could not read from splitted 7z file '$name'\n";
+342:          print STDERR "ERROR: could not open part #$cur_file_number of the splitted archive file '$name_prefix'\n";
+351:          print STDERR "ERROR: could not open the splitted archive file '$name' for reading\n";
+377:  my $type_of_input = ref ($input);
+379:  if ($type_of_input eq "HASH")
+399:  my $type_of_input = ref ($input);
+401:  if ($type_of_input eq "HASH")
+442:      print STDERR "ERROR: could not seek within the splitted archive '$name'\n";
+483:      print STDERR "ERROR: could not read the splitted archive '$name' (maybe some parts are missing?)\n";
+500:        print STDERR "ERROR: could not open the file '$name' for reading\n";
+691:  my $salt_len;
+692:  my $salt_buf;
+699:  $salt_len = 0;
+700:  $salt_buf = "";
+706:  # i.e. the salt/iv length, number cycle power
+719:    return ($salt_len, $salt_buf, $iv_len, $iv_buf, $number_cycles_power);
+722:  $salt_len = ($first_byte >> 7) & 1;
+732:  $salt_len += ($second_byte >> 4);
+735:  $salt_buf = substr ($attributes, $offset, $salt_len);
+737:  $offset += $salt_len;
+748:  return ($salt_len, $salt_buf, $iv_len, $iv_buf, $number_cycles_power);
+882:  my $big_endian_val = pack ("H*", sprintf ("%0${length_doubled}x", $num));
+900:  print STDERR "WARNING: the file '" . $file_path . "' does not contain any meaningful data (the so-called streams info), it might only contain a list of empty files.\n";
+913:  my $type = $SEVEN_ZIP_UNCOMPRESSED;
+919:    $type = $SEVEN_ZIP_LZMA1_COMPRESSED;
+923:    $type = $SEVEN_ZIP_LZMA2_COMPRESSED;
+927:    $type = $SEVEN_ZIP_PPMD_COMPRESSED;
+931:    $type = $SEVEN_ZIP_BZIP2_COMPRESSED;
+935:    $type = $SEVEN_ZIP_DEFLATE_COMPRESSED;
+943:    $type = $SEVEN_ZIP_BCJ_PREPROCESSED;
+949:    $type = $SEVEN_ZIP_BCJ2_PREPROCESSED;
+955:    $type = $SEVEN_ZIP_PPC_PREPROCESSED;
+961:    $type = $SEVEN_ZIP_IA64_PREPROCESSED;
+967:    $type = $SEVEN_ZIP_ARM_PREPROCESSED;
+973:    $type = $SEVEN_ZIP_ARMT_PREPROCESSED;
+979:    $type = $SEVEN_ZIP_SPARC_PREPROCESSED;
+985:    $type = $SEVEN_ZIP_DELTA_PREPROCESSED;
+991:    print STDERR "WARNING: unsupported coder with codec id '0x" . unpack ("H*", $codec_id) . "' in file '" . $file_path . "' found.\n";
+1000:  if ($type != $SEVEN_ZIP_UNCOMPRESSED)
+1008:  my %item = ('type'            => $type,
+1031:  my $type_of_compression  = $SEVEN_ZIP_UNCOMPRESSED;
+1032:  my $type_of_preprocessor = $SEVEN_ZIP_UNCOMPRESSED;
+1049:    my $cur_type = $attribute->{'type'};
+1060:      if (grep (/^$cur_type$/, @PASSWORD_RECOVERY_TOOL_SUPPORTED_DECOMPRESSORS) == 0)
+1069:        $type_of_compression = $cur_type;
+1077:          $compression_attributes = "," . (($cur_type << 4) + $codec_count) . "_" . $attr;
+1082:        $compression_attributes .= "," . (($cur_type << 4) + $codec_count) . "_" . $attr;
+1092:      $steps_involved .= "decompressed using " . $SEVEN_ZIP_COMPRESSOR_NAMES{$cur_type};
+1096:      if (grep (/^$cur_type$/, @PASSWORD_RECOVERY_TOOL_SUPPORTED_PREPROCESSORS) == 0)
+1105:        $type_of_preprocessor = $cur_type;
+1111:        $preprocessor_attributes .= "," . (($cur_type << 4) + $codec_count) . "_" . $attr;
+1121:      $steps_involved .= "processed using " . $SEVEN_ZIP_COMPRESSOR_NAMES{$cur_type << 4};
+1128:      print STDERR "WARNING: unsupported amount of compression algorithms/preprocessing filters for the file '". $file_path . "',\n";
+1157:    print STDERR "WARNING: to correctly verify the CRC checksum of the data contained within the file '". $file_path . "',\n";
+1158:    print STDERR "the data must be " . $steps_involved . ".\n";
+1159:    print STDERR "\n";
+1160:    print STDERR "$PASSWORD_RECOVERY_TOOL_NAME currently does not support this particular decompression algorithm(s) or preprocessing filter(s).\n";
+1161:    print STDERR "\n";
+1165:      print STDERR "INFO: However there is also some good news in this particular case.\n";
+1166:      print STDERR "Since AES-CBC is used by the 7z algorithm and the data length of this file allows a padding attack,\n";
+1167:      print STDERR "the password recovery tool might be able to use that to verify the correctness of password candidates.\n";
+1168:      print STDERR "By using this attack there might of course be a higher probability of false positives.\n";
+1169:      print STDERR "\n";
+1173:        print STDERR "$PASSWORD_RECOVERY_TOOL_NAME currently does not support padding attacks.\n";
+1174:        print STDERR "\n";
+1177:    elsif ($type_of_compression == $SEVEN_ZIP_LZMA2_COMPRESSED) # this special case should only work for LZMA2
+1181:        print STDERR "INFO: it might still be possible to crack the password of this archive since the data part seems\n";
+1182:        print STDERR "to be very short and therefore it might use the LZMA2 uncompressed chunk feature\n";
+1183:        print STDERR "\n";
+1197:        print STDERR "WARNING: $PASSWORD_RECOVERY_TOOL_NAME does not currently support combining/cascading multiple decompression algorithms\n";
+1198:        print STDERR "\n";
+1212:        print STDERR "WARNING: $PASSWORD_RECOVERY_TOOL_NAME does not currently support combining/cascading multiple preprocessing filters\n";
+1213:        print STDERR "\n";
+1227:  my $type_of_data = $SEVEN_ZIP_UNCOMPRESSED; # this variable will hold the "number" after the "$7z$" hash signature
+1231:    $type_of_data = $SEVEN_ZIP_TRUNCATED; # note: this means that we neither need the crc_len, nor the coder attributes
+1235:    $type_of_data = ($type_of_preprocessor << 4) | $type_of_compression;
+1238:  return ($type_of_data, $additional_attributes, $show_warning, $error);
+1392:            print STDERR "WARNING: the LZMA header decompression for the file '" . $file_path . "' failed with status: '" . $status . "'\n";
+1396:              print STDERR "\n";
+1397:              print STDERR "INFO: for some reasons, for large LZMA buffers, we sometimes get a 'Data is corrupt' error.\n";
+1398:              print STDERR "      This is a known issue of this tool and needs to be investigated.\n";
+1400:              print STDERR "\n";
+1401:              print STDERR "      The problem might have to do with this small paragraph hidden in the 7z documentation (quote):\n";
+1402:              print STDERR "      'The reference LZMA Decoder ignores the value of the \"Corrupted\" variable.\n";
+1403:              print STDERR "       So it continues to decode the stream, even if the corruption can be detected\n";
+1404:              print STDERR "       in the Range Decoder. To provide the full compatibility with output of the\n";
+1405:              print STDERR "       reference LZMA Decoder, another LZMA Decoder implementation must also\n";
+1406:              print STDERR "       ignore the value of the \"Corrupted\" variable.'\n";
+1407:              print STDERR "\n";
+1408:              print STDERR "      (taken from the DOC/lzma-specification.txt file of the 7z-SDK: see for instance:\n";
+1409:              print STDERR "       https://github.com/jljusten/LZMA-SDK/blob/master/DOC/lzma-specification.txt#L343-L347)\n";
+1499:        # to print several hash buffers, but this is a very special case)
+1524:      print STDERR "WARNING: no AES data found in the 7z file '" . $file_path . "'\n";
+1531:    print STDERR "WARNING: lzma2 compression found within '" . $file_path . "' is currently not supported, ";
+1532:    print STDERR "but could be probably added easily\n";
+1538:    print STDERR "WARNING: unsupported coder with codec id '0x" . unpack ("H*", $codec_id) . "' in file '" . $file_path . "' found.\n";
+1539:    print STDERR "If you think this codec method from DOC/Methods.txt of the 7-Zip source code ";
+1540:    print STDERR "should be supported, please file a problem report/feature request\n";
+1569:  my ($salt_len, $salt_buf, $iv_len, $iv_buf, $number_cycles_power) = get_decoder_properties ($attributes);
+1608:  my @coder_attributes = (); # type, is_preprocessor, attributes
+1620:  my ($type_of_data,
+1641:  if (($type_of_data != $SEVEN_ZIP_UNCOMPRESSED) && ($type_of_data != $SEVEN_ZIP_TRUNCATED))
+1651:    if (($type_of_data != $SEVEN_ZIP_UNCOMPRESSED) && ($type_of_data != $SEVEN_ZIP_TRUNCATED))
+1690:            print STDERR sprintf ("DEBUG: new stream found with first file consisting of %9d bytes of %10d bytes total stream length\n", $length_first_file, $length_compressed);
+1699:            # get new AES settings (salt, iv, costs):
+1741:            my ($tmp_type_of_data,
+1759:              print STDERR "INFO: However the archive '$file_path' contains another file/stream which is supported by $PASSWORD_RECOVERY_TOOL_NAME (this will be used)\n\n";
+1777:            $type_of_data          = $tmp_type_of_data;
+1791:            ($salt_len, $salt_buf, $iv_len, $iv_buf, $number_cycles_power) = get_decoder_properties ($attributes);
+1803:            # we assume that $type_of_data and $type_of_compression didn't change between the streams
+1819:          print STDERR sprintf ("DEBUG: shortest file at the beginning of a stream consists of %d bytes (offset: %d bytes)\n", $crc_len, $data_offset);
+1847:                                      # improvement: read the data in chunks of several MBs and keep printing it
+1856:    print STDERR "WARNING: the file '". $file_path . "' unfortunately can't be used with $PASSWORD_RECOVERY_TOOL_NAME since the data length\n";
+1857:    print STDERR "in this particular case is too long ($data_len of the maximum allowed " .($PASSWORD_RECOVERY_TOOL_DATA_LIMIT / 2). " bytes).\n";
+1861:      print STDERR "Furthermore, it could not be truncated. This should only happen in very rare cases.\n";
+1869:  $hash_buf .= sprintf ("%s%u\$%u\$%u\$%s\$%u\$%s\$%u\$%u\$%u\$%s",
+1871:    $type_of_data,
+1873:    $salt_len,
+1874:    unpack ("H*", $salt_buf),
+1883:  return $hash_buf if ($type_of_data == $SEVEN_ZIP_UNCOMPRESSED);
+1884:  return $hash_buf if ($type_of_data == $SEVEN_ZIP_TRUNCATED);
+1886:  $hash_buf .= sprintf ("\$%u\$%s",
+2630:  # get the type of streams info (id)
+2802:    my $property_type_val = read_number ($fp);
+2804:    my $property_type = num_to_id ($property_type_val);
+2806:    if ($property_type eq $SEVEN_ZIP_END)
+2815:    # check and act according to the type of property found
+2817:    my $is_known_type = 1;
+2819:    if ($property_type_val > $SEVEN_ZIP_MAX_PROPERTY_TYPE)
+2827:      if ($property_type eq $SEVEN_ZIP_NAME)
+2861:      elsif ($property_type eq $SEVEN_ZIP_WIN_ATTRIBUTE)
+2890:      elsif ($property_type eq $SEVEN_ZIP_EMPTY_STREAM)
+2918:      elsif ($property_type eq $SEVEN_ZIP_EMPTY_FILE)
+2922:      elsif ($property_type eq $SEVEN_ZIP_ANTI_FILE)
+2926:      elsif ($property_type eq $SEVEN_ZIP_START_POS)
+2937:      elsif ($property_type eq $SEVEN_ZIP_CREATION_TIME)
+2948:      elsif ($property_type eq $SEVEN_ZIP_ACCESS_TIME)
+2959:      elsif ($property_type eq $SEVEN_ZIP_MODIFICATION_TIME)
+2970:      elsif ($property_type eq $SEVEN_ZIP_DUMMY)
+3105:  # get the type of header
+3152:    "type" => "raw"
+3178:  # get the type of the header (id)
+3189:      # print STDERR "WARNING: only encoded headers are allowed if no raw header is present\n";
+3202:      "type" => "encoded"
+3274:    print STDERR "WARNING: could not open the file '$file_path' for reading\n";
+3454:# (this type of search should only be performed if no other variant worked)
+3582:    print STDERR "WARNING: searching for the 7z signature in a $file_size bytes long file ('";
+3583:    print STDERR $file_path . "') might take some time\n";
+3635:    print STDERR "WARNING: the file '$file_path' is neither a supported 7-Zip file nor a supported SFX file\n";
+3760:      print STDERR "WARNING: it seems that some files could be part of a splitted 7z archive named '$file_prefix'\n";
+3761:      print STDERR "ATTENTION: make sure to only specify the files belonging to the splitted archive (do not combine them with other archives)\n";
+3778:    my $current_extension = sprintf ("%0${extension_length}i", $count + 1); # the splits start with .001, .002, ...
+3802:      print STDERR "ERROR: could not get the file size of the file '$file'\n";
+3844:    print STDERR "ERROR: could not open the the splitted archive file '$first_splitted_file' for reading\n";
+3858:    print STDERR "ERROR: the splitted archive file '$first_splitted_file' is not a valid 7z file\n";
+3875:      print $hash_buf . "\n";
+3930:    print STDERR "WARNING: could not open file '$file_name'\n";
+3944:      print STDERR "ATTENTION: the hashes might contain sensitive encrypted data. Be careful when sharing or posting these hashes\n";
+3950:  print $hash_buf . "\n";

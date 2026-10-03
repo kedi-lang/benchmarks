@@ -1,0 +1,90 @@
+main.mk:129:# package installation rules and for generating sqlite3.pc (pkg-config
+main.mk:151:### end of autotools-compatible install dir vars
+main.mk:188:# Tool for installing files and directories. It must be compatible
+main.mk:189:# with conventional Unix /usr/bin/install. Note that libtool's
+main.mk:190:# install-sh is _not_ compatible with this because it _moves_ targets
+main.mk:191:# during installation, which may break the build of targets which are
+main.mk:192:# built after others are installed.
+main.mk:197:INSTALL ?= install
+main.mk:459:# $(install-dir.XYZ) = dirs for installation.
+main.mk:466:# moral of this story is that spaces in installation paths will break
+main.mk:467:# the install process.
+main.mk:469:install-dir.bin = $(DESTDIR)$(bindir)
+main.mk:470:install-dir.lib = $(DESTDIR)$(libdir)
+main.mk:471:install-dir.include = $(DESTDIR)$(includedir)
+main.mk:472:install-dir.pkgconfig = $(DESTDIR)$(libdir)/pkgconfig
+main.mk:473:install-dir.man1 = $(DESTDIR)$(mandir)/man1
+main.mk:474:install-dir.all = $(install-dir.bin) $(install-dir.include) \
+main.mk:475:  $(install-dir.lib) $(install-dir.man1) \
+main.mk:476:  $(install-dir.pkgconfig)
+main.mk:477:$(install-dir.all):
+main.mk:479:# ^^^^ on some platforms, install -d fails if the target already exists.
+main.mk:1122:# libsqlite3.DLL.install-rules => the suffix of the symoblic name of
+main.mk:1123:# the makefile rules for installing the DLL.
+main.mk:1124:libsqlite3.DLL.install-rules ?= unix-generic
+main.mk:1512:# DLL installation...
+main.mk:1514:# On most Unix-like platforms, install the $(libsqlite3.DLL) as
+main.mk:1528:# and may eventually be removed from this installation process.
+main.mk:1530:# Historically libtool installed the library like so:
+main.mk:1539:# compatibility for systems which have libraries installed using those
+main.mk:1542:# 1) If libsqlite3.so.0.8.6 is found in the target installation
+main.mk:1544:#    names. We cannot retain both the old and new installation because
+main.mk:1552:#    remove sqlite3-3.47.0 && apt install sqlite3-3.48.0). In such
+main.mk:1560:install-dll-out-implib: $(install-dir.lib) $(libsqlite3.DLL)
+main.mk:1562:		$(INSTALL) $(libsqlite3.out.implib) "$(install-dir.lib)"; \
+main.mk:1565:install-dll-unix-generic: install-dll-out-implib
+main.mk:1566:	$(INSTALL) $(libsqlite3.DLL) "$(install-dir.lib)"
+main.mk:1568:	cd "$(install-dir.lib)" || exit $$?; \
+main.mk:1575:		echo "ACHTUNG: legacy libtool-compatible install found. Re-linking it..."; \
+main.mk:1580:		echo "ACHTUNG: installing legacy libtool-style links because INSTALL_SO_086_LINK=1"; \
+main.mk:1586:install-dll-msys: install-dll-out-implib $(install-dir.bin)
+main.mk:1587:	$(INSTALL) $(libsqlite3.DLL) "$(install-dir.bin)"
+main.mk:1591:install-dll-mingw:  install-dll-msys
+main.mk:1592:install-dll-cygwin: install-dll-msys
+main.mk:1594:install-dll-darwin: $(install-dir.lib) $(libsqlite3.DLL)
+main.mk:1595:	$(INSTALL) $(libsqlite3.DLL) "$(install-dir.lib)"
+main.mk:1597:	cd "$(install-dir.lib)" || exit $$?; \
+main.mk:1605:install-dll-1: install-dll-$(libsqlite3.DLL.install-rules)
+main.mk:1606:install-dll-0 install-dll-:
+main.mk:1607:install-dll: install-dll-$(ENABLE_LIB_SHARED)
+main.mk:1608:install: install-dll
+main.mk:1613:install-lib-1: $(install-dir.lib) $(libsqlite3.LIB)
+main.mk:1614:	$(INSTALL.noexec) $(libsqlite3.LIB) "$(install-dir.lib)"
+main.mk:1615:install-lib-0 install-lib-:
+main.mk:1616:install-lib: install-lib-$(ENABLE_LIB_STATIC)
+main.mk:1617:install: install-lib
+main.mk:1622:install-headers: sqlite3.h $(install-dir.include)
+main.mk:1623:	$(INSTALL.noexec) sqlite3.h "$(TOP)/src/sqlite3ext.h" "$(install-dir.include)"
+main.mk:1624:install: install-headers
+main.mk:1649:install-tcl-1: $(libtclsqlite3.DLL) pkgIndex.tcl
+main.mk:1654:install-tcl-0 install-tcl-:
+main.mk:1655:	@echo "TCL support disabled, so not installing $(libtclsqlite3.DLL)"
+main.mk:1656:install-tcl: install-tcl-$(HAVE_TCL)
+main.mk:1657:install: install-tcl
+main.mk:1681:tclextension-install: tclsqlite3.c
+main.mk:1685:# Uninstall the SQLite TCL extension that is used by $TCLSH_CMD.
+main.mk:1687:tclextension-uninstall:
+main.mk:1688:	$(TCLSH_CMD) $(TOP)/tool/buildtclext.tcl --uninstall
+main.mk:1691:# List all installed the SQLite TCL extensions that is are accessible
+main.mk:2158:install-shell-0: sqlite3$(T.exe) $(install-dir.bin)
+main.mk:2159:	$(INSTALL) sqlite3$(T.exe) "$(install-dir.bin)"
+main.mk:2160:install-shell-1:
+main.mk:2161:install: install-shell-$(HAVE_WASI_SDK)
+main.mk:2172:install-diff: sqldiff$(T.exe) $(install-dir.bin)
+main.mk:2173:	$(INSTALL) sqldiff$(T.exe) "$(install-dir.bin)"
+main.mk:2174:#install: install-diff
+main.mk:2195:install-rsync: sqlite3_rsync$(T.exe) $(install-dir.bin)
+main.mk:2196:	$(INSTALL) sqlite3_rsync$(T.exe) "$(install-dir.bin)"
+main.mk:2197:#install: install-rsync
+main.mk:2199:install-man1: $(install-dir.man1)
+main.mk:2200:	$(INSTALL.noexec) "$(TOP)/sqlite3.1" "$(install-dir.man1)"
+main.mk:2201:install: install-man1
+main.mk:2206:install-pc: sqlite3.pc $(install-dir.pkgconfig)
+main.mk:2207:	$(INSTALL.noexec) sqlite3.pc "$(install-dir.pkgconfig)"
+main.mk:2422:	echo " - install       = installs activated components"; \
+Makefile:46:# Autotools-conventional vars which are used by package installation
+Makefile:53:# are relevant to our installation rules are:
+Makefile:80:INSTALL = /usr/bin/install
+Makefile:139:libsqlite3.DLL.install-rules = unix-generic
+Makefile:217:# $(TCLLIBDIR) = where to install the tcl plugin. If this is empty, it
+Makefile:280:install: install-pc # defined in main.mk

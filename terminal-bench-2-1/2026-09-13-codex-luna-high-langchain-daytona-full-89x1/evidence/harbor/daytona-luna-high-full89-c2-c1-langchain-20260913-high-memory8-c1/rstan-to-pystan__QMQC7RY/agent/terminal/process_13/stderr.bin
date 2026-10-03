@@ -1,0 +1,28 @@
+
+Building: 29.3s, done.Sampling:   0%Traceback (most recent call last):
+  File "/app/pystan_analysis.py", line 188, in <module>
+    main()
+  File "/app/pystan_analysis.py", line 151, in main
+    fit = posterior.sample(
+          ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/stan/model.py", line 89, in sample
+    return self.hmc_nuts_diag_e_adapt(num_chains=num_chains, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/stan/model.py", line 108, in hmc_nuts_diag_e_adapt
+    return self._create_fit(function=function, num_chains=num_chains, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/stan/model.py", line 313, in _create_fit
+    return asyncio.run(go())
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/stan/model.py", line 191, in go
+    raise ValueError(str(resp.json()))
+ValueError: {'json': {'adapt_delta': ['Unknown field.'], 'adapt_gamma': ['Unknown field.'], 'adapt_term_buffer': ['Unknown field.'], 'adapt_t0': ['Unknown field.'], 'adapt_init_buffer': ['Unknown field.'], 'init_r': ['Unknown field.'], 'adapt_window': ['Unknown field.'], 'max_treedepth': ['Unknown field.'], 'adapt_kappa': ['Unknown field.']}}

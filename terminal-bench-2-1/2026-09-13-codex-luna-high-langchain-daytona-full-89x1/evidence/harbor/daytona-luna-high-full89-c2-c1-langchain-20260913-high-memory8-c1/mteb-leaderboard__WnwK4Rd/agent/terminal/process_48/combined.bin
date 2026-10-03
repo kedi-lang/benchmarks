@@ -1,0 +1,71 @@
+278:def get_tasks(
+279-    languages: list[str] | None = None,
+280-    script: list[str] | None = None,
+281-    domains: list[TASK_DOMAIN] | None = None,
+282-    task_types: list[TASK_TYPE] | None = None,
+283-    categories: list[TASK_CATEGORY] | None = None,
+284-    tasks: list[str] | None = None,
+285-    exclude_superseded: bool = True,
+286-    eval_splits: list[str] | None = None,
+287-    exclusive_language_filter: bool = False,
+288-    modalities: list[MODALITIES] | None = None,
+289-    exclusive_modality_filter: bool = False,
+290-    exclude_aggregate: bool = False,
+291-) -> MTEBTasks:
+292-    """Get a list of tasks based on the specified filters.
+293-
+294-    Args:
+295-        languages: A list of languages either specified as 3 letter languages codes (ISO 639-3, e.g. "eng") or as script languages codes e.g.
+296-            "eng-Latn". For multilingual tasks this will also remove languages that are not in the specified list.
+297-        script: A list of script codes (ISO 15924 codes). If None, all scripts are included. For multilingual tasks this will also remove scripts
+298-            that are not in the specified list.
+299-        domains: A list of task domains.
+300-        task_types: A string specifying the type of task. If None, all tasks are included.
+301-        categories: A list of task categories these include "s2s" (sentence to sentence), "s2p" (sentence to paragraph) and "p2p" (paragraph to
+302-            paragraph).
+303-        tasks: A list of task names to include. If None, all tasks which pass the filters are included.
+304-        exclude_superseded: A boolean flag to exclude datasets which are superseded by another.
+305-        eval_splits: A list of evaluation splits to include. If None, all splits are included.
+306-        exclusive_language_filter: Some datasets contains more than one language e.g. for STS22 the subset "de-en" contain eng and deu. If
+307-            exclusive_language_filter is set to False both of these will be kept, but if set to True only those that contains all the languages
+308-            specified will be kept.
+309-        modalities: A list of modalities to include. If None, all modalities are included.
+310-        exclusive_modality_filter: If True, only keep tasks where _all_ filter modalities are included in the
+311-            task's modalities and ALL task modalities are in filter modalities (exact match).
+312-            If False, keep tasks if _any_ of the task's modalities match the filter modalities.
+313-        exclude_aggregate: If True, exclude aggregate tasks. If False, both aggregate and non-aggregate tasks are returned.
+314-
+315-    Returns:
+316-        A list of all initialized tasks objects which pass all of the filters (AND operation).
+317-
+318-    Examples:
+319-        >>> get_tasks(languages=["eng", "deu"], script=["Latn"], domains=["Legal"])
+320-        >>> get_tasks(languages=["eng"], script=["Latn"], task_types=["Classification"])
+321-        >>> get_tasks(languages=["eng"], script=["Latn"], task_types=["Clustering"], exclude_superseded=False)
+322-        >>> get_tasks(languages=["eng"], tasks=["WikipediaRetrievalMultilingual"], eval_splits=["test"])
+323-        >>> get_tasks(tasks=["STS22"], languages=["eng"], exclusive_language_filter=True) # don't include multilingual subsets containing English
+324-    """
+325-    if tasks:
+326-        _tasks = [
+327-            get_task(
+328-                task,
+329-                languages,
+330-                script,
+331-                eval_splits=eval_splits,
+332-                exclusive_language_filter=exclusive_language_filter,
+333-                modalities=modalities,
+334-                exclusive_modality_filter=exclusive_modality_filter,
+335-            )
+336-            for task in tasks
+337-        ]
+338-        return MTEBTasks(_tasks)
+339-
+340-    _tasks = [
+341-        cls().filter_languages(languages, script).filter_eval_splits(eval_splits)
+342-        for cls in create_task_list()
+343-    ]
+344-
+345-    if languages:
+346-        _tasks = filter_tasks_by_languages(_tasks, languages)
+347-    if script:
+348-        _tasks = filter_tasks_by_script(_tasks, script)

@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "2e01ad83154630531576d24de3e496c2254001f13275e74c3e1b5bd5af7a46d5",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 23779,
+    "created_at": "2026-09-13T13:15:15.589972Z",
+    "expires_at": "2026-09-13T14:15:15.589972Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"duration_seconds\":0.005,\"exit_code\":0,\"process_id\":\"process_7\",\"stderr\":\"\",\"stdout\":\"  }\\n  \\n  syscall(code) {\\n    // SYSCALL - System Call\\n    return this.handleSyscall();\\n  }\\n  \\n  // ---- Memory Access Operations ----\\n  \\n  lb(rt, offset, base) {\\n    // LB rt,offset(base) - Load Byte (signed)\\n    const addr = (this.registers[base] + offset) >>> 0; // Force 32-bit unsigned\\n    const wordAddr = addr & ~0x3; // Align to word boundary\\n    const byteOffset = addr & 0x3; // Byte position within word (0-3)\\n    \\n    // Get the word from memory\\n    const word = this.memory[wordAddr] || 0;\\n    \\n    // Extract byte using little-endian byte order\\n    let byteValue = (word >> (byteOffset * 8)) & 0xFF;\\n    \\n    // Sign-extend the byte to 32 bits\\n    if (byteValue & 0x80) {\\n      byteValue |= 0xFFFFFF00;\\n    }\\n    \\n    this.registers[rt] = byteValue;\\n  }\\n  \\n  lbu(rt, offset, base) {\\n    // LBU rt,offset(base) - Load Byte Unsigned\\n    const addr = (this.registers[base] + offset) >>> 0; // Force 32-bit unsigned\\n    const wordAddr = addr & ~0x3; // Align to word boundary\\n    const byteOffset = addr & 0x3; // Byte position within word (0-3)\\n    \\n    // Get the wo…",
+    "ref_id": "tool_call_result_2",
+    "sensitive": false,
+    "size_bytes": 23779,
+    "summary": "builtins.dict value with 23779 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_168838f0-a9ae-445a-b30a-1893dbaa32a0",
+  "source": "tool:run_shell",
+  "status": "active"
+}

@@ -1,0 +1,126 @@
+/* This function shrinks the mark stack back to the MARK_STACK_INIT_SIZE size
+   and is called at domain termination via caml_finish_marking. */
+void caml_shrink_mark_stack (void)
+{
+  struct mark_stack* stk = Caml_state->mark_stack;
+  intnat init_stack_bsize = MARK_STACK_INIT_SIZE * sizeof(mark_entry);
+  mark_entry* shrunk_stack;
+
+  caml_gc_log ("Shrinking mark stack to %" CAML_PRIuNAT "k bytes\n",
+               init_stack_bsize / 1024);
+
+  shrunk_stack = (mark_entry*) caml_stat_resize_noexc ((char*) stk->stack,
+                                              init_stack_bsize);
+  if (shrunk_stack != NULL) {
+    stk->stack = shrunk_stack;
+    stk->size = MARK_STACK_INIT_SIZE;
+  }else{
+    caml_gc_log ("Mark stack shrinking failed");
+  }
+}
+
+void caml_darken_cont(value cont);
+
+static void mark_slice_darken(struct mark_stack* stk, value child,
+                              intnat* work)
+{
+  header_t chd;
+
+  if (Is_markable(child)){
+
+  /* This part of the code is duplicated in do_some_marking for performance
+   * reasons.
+   * Changes here should probably be reflected in do_some_marking. */
+  /* Annotating an acquire barrier on the header because TSan does not see the
+   * happens-before relationship established by address dependencies with
+   * initializing writes in shared_heap.c allocation (#12894) */
+    CAML_TSAN_ANNOTATE_HAPPENS_AFTER(Hp_val(child));
+    chd = Hd_val(child);
+    if (Tag_hd(chd) == Infix_tag) {
+      child -= Infix_offset_hd(chd);
+      chd = Hd_val(child);
+    }
+    CAMLassert(!Has_status_hd(chd, caml_global_heap_state.GARBAGE));
+    if (Has_status_hd(chd, caml_global_heap_state.UNMARKED)){
+      Caml_state->stat_blocks_marked++;
+      if (Tag_hd(chd) == Cont_tag){
+        caml_darken_cont(child);
+        *work -= Wosize_hd(chd);
+      } else {
+    again:
+        if (Tag_hd(chd) == Lazy_tag || Tag_hd(chd) == Forcing_tag){
+          if(!atomic_compare_exchange_strong(Hp_atomic_val(child), &chd,
+                With_status_hd(chd, caml_global_heap_state.MARKED))){
+                  chd = Hd_val(child);
+                  goto again;
+          }
+        } else {
+          atomic_store_relaxed(
+            Hp_atomic_val(child),
+            With_status_hd(chd, caml_global_heap_state.MARKED));
+        }
+        if(Tag_hd(chd) < No_scan_tag){
+          *work -= mark_stack_push_block(stk, child);
+        } else {
+          *work -= Wosize_hd(chd);
+        }
+      }
+    }
+  }
+}
+
+Caml_noinline static intnat do_some_marking(struct mark_stack* stk,
+                                            intnat budget) {
+  prefetch_buffer_t pb = { .enqueued = 0, .dequeued = 0,
+                           .waterline = PREFETCH_BUFFER_MIN };
+  mark_entry me;
+  /* These global values are cached in locals,
+     so that they can be stored in registers */
+  struct global_heap_state heap_state = caml_global_heap_state;
+  uintnat blocks_marked = 0;
+
+  while (1) {
+    if (pb_above_waterline(&pb)) {
+      /* Dequeue from prefetch buffer */
+      value block = pb_pop(&pb);
+      CAMLassert(Is_markable(block));
+
+      /* This part of the code is a duplicate of mark_slice_darken for
+       * performance reasons.
+       * Changes here should probably be reflected here in mark_slice_darken.*/
+      /* Annotating an acquire barrier on the header because TSan does not see
+       * the happens-before relationship established by address dependencies
+       * with initializing writes in shared_heap.c allocation (#12894) */
+      CAML_TSAN_ANNOTATE_HAPPENS_AFTER(Hp_val(block));
+      header_t hd = Hd_val(block);
+
+      if (Tag_hd(hd) == Infix_tag) {
+        block -= Infix_offset_hd(hd);
+        hd = Hd_val(block);
+      }
+
+      CAMLassert(!Has_status_hd(hd, heap_state.GARBAGE));
+      if (!Has_status_hd(hd, heap_state.UNMARKED)) {
+        /* Already black, nothing to do */
+        continue;
+      }
+      blocks_marked++;
+
+      if (Tag_hd(hd) == Cont_tag) {
+        caml_darken_cont(block);
+        budget -= Wosize_hd(hd);
+        continue;
+      }
+
+again:
+      if (Tag_hd(hd) == Lazy_tag || Tag_hd(hd) == Forcing_tag) {
+        if (!atomic_compare_exchange_strong(Hp_atomic_val(block), &hd,
+              With_status_hd(hd, caml_global_heap_state.MARKED))) {
+          hd = Hd_val(block);
+          goto again;
+        }
+      } else {
+        atomic_store_relaxed(
+            Hp_atomic_val(block),
+            With_status_hd(hd, caml_global_heap_state.MARKED));
+      }

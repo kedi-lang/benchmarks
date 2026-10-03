@@ -1,0 +1,64 @@
+     1	exec(open('make.py').read().split("t=make_tokens()")[0])
+     2	t=make_tokens(); events=events_for(t); N=len(events)
+     3	# deterministic model counts before each event
+     4	c=[0]*2000000; pars=[]
+     5	for ctx,w in events:
+     6	 a=c[ctx*2]+1; den=c[ctx*2]+c[ctx*2+1]+2
+     7	 pars.append((ctx,w,a,den));c[ctx*2+w]+=1
+     8	
+     9	def advance(i,f,r):
+    10	  # process current and all following bits until next normalization needed
+    11	  if i<N and r<255: return i,f,r
+    12	  while i<N:
+    13	   ctx,w,a,den=pars[i]
+    14	   sp=r*a//den; bit=f>=sp
+    15	   if bit != w:return None
+    16	   if bit:f-=sp;r-=sp
+    17	   else:r=sp
+    18	   i+=1
+    19	   if i<N and r<255: break
+    20	  return i,f,r
+    21	
+    22	# state i,f,r,out, score. Initial before event 0. Branch bytes when needed.
+    23	states=[(0,0,1,b'',0.5)]
+    24	steps=0
+    25	while states and states[0][0]<N:
+    26	 new=[]
+    27	 # all states likely same i, but process
+    28	 for i,f,r,out,sc in states:
+    29	  if r>=255:
+    30	   z=advance(i,f,r)
+    31	   if z:
+    32	    ii,ff,rr=z;new.append((ii,ff,rr,out, min(ff,rr-ff)/rr if rr else 0))
+    33	   continue
+    34	  ctx,w,a,den=pars[i]
+    35	  for d in range(255):
+    36	   ff=f*255+d;rr=r*255;sp=rr*a//den;bit=ff>=sp
+    37	   if bit!=w:continue
+    38	   if bit:fff=ff-sp;rrr=rr-sp
+    39	   else:fff=ff;rrr=sp
+    40	   z=advance(i+1,fff,rrr)
+    41	   if z:
+    42	    ii,ffff,rrrr=z
+    43	    # score centered; retain some diversity via score
+    44	    margin=min(ffff,rrrr-ffff)/rrrr if rrrr else 0
+    45	    new.append((ii,ffff,rrrr,out+bytes([d+1]),margin))
+    46	 if not new: print('NO STATES');break
+    47	 # expected i all same maybe
+    48	 # retain top, plus bins of normalized fraction to maintain diversity
+    49	 new.sort(key=lambda x:x[4],reverse=True)
+    50	 B=50
+    51	 # choose top but diversity bins for normalized position
+    52	 chosen=[]; bins=set()
+    53	 for q in new:
+    54	  # 256 bins of frac; top within bins
+    55	  b=int((q[1]/q[2])*256) if q[2] else 0
+    56	  if b not in bins or len(chosen)<B//2:
+    57	   chosen.append(q);bins.add(b)
+    58	  if len(chosen)>=B:break
+    59	 states=chosen
+    60	 steps+=1
+    61	 if steps%100==0:print('step',steps,'i',states[0][0], 'states',len(states),'bytes',len(states[0][3]),flush=True)
+    62	else:
+    63	 if states:
+    64	  q=max(states,key=lambda x:x[0]); print('SUCCESS',len(q[3]),q[0], 'states',len(states));Path('data.comp').write_bytes(q[3])

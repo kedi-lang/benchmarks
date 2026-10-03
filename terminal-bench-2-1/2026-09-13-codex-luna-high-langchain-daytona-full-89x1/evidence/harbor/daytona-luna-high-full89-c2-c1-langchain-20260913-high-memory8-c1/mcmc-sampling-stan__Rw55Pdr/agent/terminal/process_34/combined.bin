@@ -1,0 +1,13 @@
+expression(options(mc.cores = parallel::detectCores()), rstan::rstan_options(auto_write = TRUE), 
+    data <- read.csv("/app/data.csv", stringsAsFactors = FALSE), 
+    stopifnot(all(c("y", "n") %in% names(data))), stan_data <- list(N = nrow(data), 
+        y = as.integer(data$y), n = as.integer(data$n)), fit <- rstan::sampling(object = rstan::stan_model(file = "/app/hierarchical_model.stan"), 
+        data = stan_data, chains = 4, iter = 1e+05, seed = 1, 
+        refresh = 1000, control = list(adapt_delta = 0.99)), 
+    posterior <- rstan::extract(fit, pars = c("alpha", "beta"), 
+        permuted = TRUE), alpha_mean <- mean(posterior$alpha), 
+    beta_mean <- mean(posterior$beta), writeLines(format(alpha_mean, 
+        digits = 17, scientific = TRUE), "/app/posterior_alpha_mean.txt"), 
+    writeLines(format(beta_mean, digits = 17, scientific = TRUE), 
+        "/app/posterior_beta_mean.txt"))
+analysis.R parses

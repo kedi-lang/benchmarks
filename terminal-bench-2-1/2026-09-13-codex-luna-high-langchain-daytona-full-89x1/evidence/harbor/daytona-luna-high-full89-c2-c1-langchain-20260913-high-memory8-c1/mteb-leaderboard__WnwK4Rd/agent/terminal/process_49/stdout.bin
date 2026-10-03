@@ -1,0 +1,61 @@
+373:def get_task(
+374-    task_name: str,
+375-    languages: list[str] | None = None,
+376-    script: list[str] | None = None,
+377-    eval_splits: list[str] | None = None,
+378-    hf_subsets: list[str] | None = None,
+379-    exclusive_language_filter: bool = False,
+380-    modalities: list[MODALITIES] | None = None,
+381-    exclusive_modality_filter: bool = False,
+382-) -> AbsTask:
+383-    """Get a task by name.
+384-
+385-    Args:
+386-        task_name: The name of the task to fetch.
+387-        languages: A list of languages either specified as 3 letter languages codes (ISO 639-3, e.g. "eng") or as script languages codes e.g.
+388-            "eng-Latn". For multilingual tasks this will also remove languages that are not in the specified list.
+389-        script: A list of script codes (ISO 15924 codes). If None, all scripts are included. For multilingual tasks this will also remove scripts
+390-        eval_splits: A list of evaluation splits to include. If None, all splits are included.
+391-        hf_subsets: A list of Huggingface subsets to evaluate on.
+392-        exclusive_language_filter: Some datasets contains more than one language e.g. for STS22 the subset "de-en" contain eng and deu. If
+393-            exclusive_language_filter is set to False both of these will be kept, but if set to True only those that contains all the languages
+394-            specified will be kept.
+395-        modalities: A list of modalities to include. If None, all modalities are included.
+396-        exclusive_modality_filter: If True, only keep tasks where _all_ filter modalities are included in the
+397-            task's modalities and ALL task modalities are in filter modalities (exact match).
+398-            If False, keep tasks if _any_ of the task's modalities match the filter modalities.
+399-
+400-    Returns:
+401-        An initialized task object.
+402-
+403-    Examples:
+404-        >>> get_task("BornholmBitextMining")
+405-    """
+406-    if task_name in _TASK_RENAMES:
+407-        _task_name = _TASK_RENAMES[task_name]
+408-        logger.warning(
+409-            f"The task with the given name '{task_name}' has been renamed to '{_task_name}'. To prevent this warning use the new name."
+410-        )
+411-
+412-    if task_name not in TASKS_REGISTRY:
+413-        close_matches = difflib.get_close_matches(task_name, TASKS_REGISTRY.keys())
+414-        if close_matches:
+415-            suggestion = (
+416-                f"KeyError: '{task_name}' not found. Did you mean: {close_matches[0]}?"
+417-            )
+418-        else:
+419-            suggestion = (
+420-                f"KeyError: '{task_name}' not found and no similar keys were found."
+421-            )
+422-        raise KeyError(suggestion)
+423-    task = TASKS_REGISTRY[task_name]()
+424-    if eval_splits:
+425-        task.filter_eval_splits(eval_splits=eval_splits)
+426-    if modalities:
+427-        task.filter_modalities(modalities, exclusive_modality_filter)
+428-    return task.filter_languages(
+429-        languages,
+430-        script,
+431-        hf_subsets=hf_subsets,
+432-        exclusive_language_filter=exclusive_language_filter,
+433-    )

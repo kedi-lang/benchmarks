@@ -1,0 +1,15 @@
+    m[c*n]=1.0; rhs[c]=1.0;
+    for(int col=0;col<n;++col){
+        int p=col;double best=fabs(m[col*n+col]);
+        for(int i=col+1;i<n;++i)if(fabs(m[i*n+col])>best){best=fabs(m[i*n+col]);p=i;}
+        if(best<1e-14)return 0;
+        if(p!=col){for(int j=col;j<n;++j){double z=m[col*n+j];m[col*n+j]=m[p*n+j];m[p*n+j]=z;}double z=rhs[col];rhs[col]=rhs[p];rhs[p]=z;}
+        for(int i=col+1;i<n;++i){double f=m[i*n+col]/m[col*n+col];for(int j=col+1;j<n;++j)m[i*n+j]-=f*m[col*n+j];rhs[i]-=f*rhs[col];}
+    }
+    for(int i=n-1;i>=0;--i){double z=rhs[i];for(int j=i+1;j<n;++j)z-=m[i*n+j]*x[j];x[i]=z/m[i*n+i];}
+    double norm=0;for(int i=0;i<n;++i)norm+=x[i]*x[i];
+    if(!(norm>0)||!isfinite(norm))return 0; norm=sqrt(norm);
+    for(int i=0;i<n;++i){out[2*i]=x[i]/norm;out[2*i+1]=0.0;}
+    return 1;
+}
+

@@ -1,0 +1,91 @@
+    description = Column(SAUnicode4Byte)
+    digests_enabled = Column(Boolean)
+    digest_is_default = Column(Boolean)
+    digest_send_periodic = Column(Boolean)
+    digest_size_threshold = Column(Float)
+    digest_volume_frequency = Column(Enum(DigestFrequency))
+    discard_these_nonmembers = Column(MutableList.as_mutable(PickleType))
+    emergency = Column(Boolean)
+    encode_ascii_prefixes = Column(Boolean)
+    first_strip_reply_to = Column(Boolean)
+    forward_auto_discards = Column(Boolean)
+    gateway_to_mail = Column(Boolean)
+    gateway_to_news = Column(Boolean)
+    hold_these_nonmembers = Column(MutableList.as_mutable(PickleType))
+    info = Column(SAText)
+    linked_newsgroup = Column(SAUnicode)
+    max_days_to_hold = Column(Integer)
+    max_message_size = Column(Integer)
+    max_num_recipients = Column(Integer)
+    member_moderation_notice = Column(SAUnicode4Byte)
+    # FIXME: There should be no moderator_password
+    moderator_password = Column(LargeBinary)             # TODO : was RawStr()
+    newsgroup_moderation = Column(Enum(NewsgroupModeration))
+    nntp_prefix_subject_too = Column(Boolean)
+    nonmember_rejection_notice = Column(SAUnicode4Byte)
+    obscure_addresses = Column(Boolean)
+    owner_chain = Column(SAUnicode)
+    owner_pipeline = Column(SAUnicode)
+    personalize = Column(Enum(Personalization))
+    post_id = Column(Integer)
+    posting_chain = Column(SAUnicode)
+    posting_pipeline = Column(SAUnicode)
+    _preferred_language = Column('preferred_language', SAUnicode)
+    display_name = Column(SAUnicode4Byte)
+    reject_these_nonmembers = Column(MutableList.as_mutable(PickleType))
+    reply_goes_to_list = Column(Enum(ReplyToMunging))
+    reply_to_address = Column(SAUnicode)
+    require_explicit_destination = Column(Boolean)
+    respond_to_post_requests = Column(Boolean)
+    member_roster_visibility = Column(Enum(roster.RosterVisibility))
+    scrub_nondigest = Column(Boolean)
+    send_goodbye_message = Column(Boolean)
+    send_welcome_message = Column(Boolean)
+    subject_prefix = Column(SAUnicode4Byte)
+    subscription_policy = Column(Enum(SubscriptionPolicy))
+    topics = Column(PickleType)
+    topics_bodylines_limit = Column(Integer)
+    topics_enabled = Column(Boolean)
+    unsubscription_policy = Column(Enum(SubscriptionPolicy))
+    usenet_watermark = Column(Integer)
+    archive_rendering_mode = Column(Enum(ArchiveRenderingMode))
+    # ORM relationships.
+    header_matches = relationship(
+        'HeaderMatch', backref='mailing_list',
+        cascade="all, delete-orphan",
+        order_by="HeaderMatch._position")
+
+    def __init__(self, fqdn_listname):
+        super().__init__()
+        listname, at, hostname = fqdn_listname.partition('@')
+        assert hostname, 'Bad list name: {0}'.format(fqdn_listname)
+        self.list_name = listname
+        self.mail_host = hostname
+        self._list_id = '{0}.{1}'.format(listname, hostname)
+        # For the pending database
+        self.next_request_id = 1
+        # We need to set up the rosters.  Normally, this method will get called
+        # when the MailingList object is loaded from the database, but when the
+        # constructor is called, SQLAlchemy's `load` event isn't triggered.
+        # Thus we need to set up the rosters explicitly.
+        self._post_load()
+        makedirs(self.data_path)
+
+    def _post_load(self, *args):
+        # This hooks up to SQLAlchemy's `load` event.
+        self.owners = roster.OwnerRoster(self)
+        self.moderators = roster.ModeratorRoster(self)
+        self.administrators = roster.AdministratorRoster(self)
+        self.members = roster.MemberRoster(self)
+        self.regular_members = roster.RegularMemberRoster(self)
+        self.digest_members = roster.DigestMemberRoster(self)
+        self.subscribers = roster.Subscribers(self)
+        self.nonmembers = roster.NonmemberRoster(self)
+
+    @classmethod
+    def __declare_last__(cls):
+        # SQLAlchemy special directive hook called after mappings are assumed
+        # to be complete.  Use this to connect the roster instance creation
+        # method with the SA `load` event.
+        listen(cls, 'load', cls._post_load)
+

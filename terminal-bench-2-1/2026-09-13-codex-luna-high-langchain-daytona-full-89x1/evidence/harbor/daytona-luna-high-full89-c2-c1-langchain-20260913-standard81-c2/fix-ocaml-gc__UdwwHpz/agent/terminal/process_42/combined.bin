@@ -1,0 +1,30 @@
+runtime/caml/sizeclasses.h:2:#define POOL_WSIZE 4096
+runtime/caml/sizeclasses.h:5:#define NUM_SIZECLASSES 32
+runtime/caml/sizeclasses.h:9:static const unsigned int wsize_sizeclass[NUM_SIZECLASSES] =
+runtime/caml/sizeclasses.h:19:   of this sizeclass, to reach exactly POOL_WSIZE words. */
+runtime/caml/sizeclasses.h:20:static const unsigned char wastage_sizeclass[NUM_SIZECLASSES] =
+runtime/caml/sizeclasses.h:2:#define POOL_WSIZE 4096
+runtime/caml/sizeclasses.h:5:#define NUM_SIZECLASSES 32
+runtime/caml/sizeclasses.h:9:static const unsigned int wsize_sizeclass[NUM_SIZECLASSES] =
+runtime/caml/sizeclasses.h:19:   of this sizeclass, to reach exactly POOL_WSIZE words. */
+runtime/caml/sizeclasses.h:20:static const unsigned char wastage_sizeclass[NUM_SIZECLASSES] =
+runtime/major_gc.c:933:   that can be in a pool, see POOL_WSIZE */
+runtime/shared_heap.c:60:#define POOL_END(p) ((header_t*)(p) + POOL_WSIZE)
+runtime/shared_heap.c:81:  _Atomic(pool*) global_avail_pools[NUM_SIZECLASSES];
+runtime/shared_heap.c:82:  _Atomic(pool*) global_full_pools[NUM_SIZECLASSES];
+runtime/shared_heap.c:95:  pool* avail_pools[NUM_SIZECLASSES];
+runtime/shared_heap.c:96:  pool* full_pools[NUM_SIZECLASSES];
+runtime/shared_heap.c:97:  pool* unswept_avail_pools[NUM_SIZECLASSES];
+runtime/shared_heap.c:98:  pool* unswept_full_pools[NUM_SIZECLASSES];
+runtime/shared_heap.c:127:    for (int i = 0; i<NUM_SIZECLASSES; i++) {
+runtime/shared_heap.c:159:  for (int i = 0; i < NUM_SIZECLASSES; i++) {
+runtime/shared_heap.c:189:  for (int i = 0; i < NUM_SIZECLASSES; i++) {
+runtime/shared_heap.c:218:  for (int i = 0; i < NUM_SIZECLASSES; i++) {
+runtime/shared_heap.c:241:    void* mem = caml_mem_map(Bsize_wsize(POOL_WSIZE), 0);
+runtime/shared_heap.c:268:  local->stats.pool_words -= POOL_WSIZE;
+runtime/shared_heap.c:282:    local->stats.pool_words -= POOL_WSIZE;
+runtime/shared_heap.c:284:    caml_mem_unmap(pool, Bsize_wsize(POOL_WSIZE));
+runtime/shared_heap.c:291:  mlsize_t wh = wsize_sizeclass[sz];
+runtime/shared_heap.c:307:  s->pool_words += POOL_WSIZE;
+runtime/shared_heap.c:317:  uintnat pool_blocks = (end - p) / wsize_sizeclass[sz];
+runtime/shared_heap.c:433:  local->stats.pool_words += POOL_WSIZE;

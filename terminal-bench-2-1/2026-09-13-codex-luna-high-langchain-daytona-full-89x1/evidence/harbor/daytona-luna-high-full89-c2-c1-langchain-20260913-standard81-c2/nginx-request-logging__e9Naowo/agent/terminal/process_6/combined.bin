@@ -1,0 +1,24 @@
+--- localhost:8080/ ---
+Welcome to the benchmark webserver
+
+--- localhost:8080/missing ---
+HTTP status: 404
+Page not found - Please check your URL
+--- listening ---
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      511          0.0.0.0:8080      0.0.0.0:*          
+LISTEN 0      511             [::]:8080         [::]:*          
+--- configured directives ---
+/etc/nginx/nginx.conf:13:	log_format benchmark '$time_local "$request_method" $status "$http_user_agent"';
+/etc/nginx/nginx.conf:14:	limit_req_zone $binary_remote_addr zone=benchmark_limit:10m rate=10r/s;
+/etc/nginx/conf.d/benchmark-site.conf:2:    listen 8080 default_server;
+/etc/nginx/conf.d/benchmark-site.conf:3:    listen [::]:8080 default_server;
+/etc/nginx/conf.d/benchmark-site.conf:9:    access_log /var/log/nginx/benchmark-access.log benchmark;
+/etc/nginx/conf.d/benchmark-site.conf:10:    error_log /var/log/nginx/benchmark-error.log;
+/etc/nginx/conf.d/benchmark-site.conf:12:    limit_req zone=benchmark_limit burst=10;
+/etc/nginx/conf.d/benchmark-site.conf:13:    error_page 404 /404.html;
+--- access log ---
+13/Sep/2026:14:02:38 +0000 "GET" 200 "benchmark-verifier"
+13/Sep/2026:14:02:38 +0000 "GET" 404 "benchmark-verifier"
+--- error log path ---
+-rw-r--r-- 1 root root 0 Sep 13 14:02 /var/log/nginx/benchmark-error.log

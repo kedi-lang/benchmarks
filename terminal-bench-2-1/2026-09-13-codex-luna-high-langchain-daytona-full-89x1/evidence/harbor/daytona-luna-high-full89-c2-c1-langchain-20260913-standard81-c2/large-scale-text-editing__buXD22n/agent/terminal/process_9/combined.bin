@@ -1,0 +1,7 @@
+call setreg('a', ":s/ //g\<CR>")
+call setreg('b', "0gU$")
+call setreg('c', ":s/^\([^,]*\),\([^,]*\),\([^,]*\)$/\3;\2;\1;OK\<CR>")
+:%normal! @a
+:%normal! @b
+:%normal! @c
+:wq

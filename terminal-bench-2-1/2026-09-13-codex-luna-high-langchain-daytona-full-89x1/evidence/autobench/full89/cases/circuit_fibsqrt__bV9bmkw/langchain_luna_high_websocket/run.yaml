@@ -1,0 +1,2020 @@
+# yaml-language-server: $schema=.autobench-schema-cache/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+  experiment: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+  benchmark: kedi-tb21-langchain-full89-daytona-publication
+  case: circuit-fibsqrt__bV9bmkw
+  variant: langchain-luna-high-websocket
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: circuit-fibsqrt__bV9bmkw
+  input:
+    job_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2
+    trial_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2/circuit-fibsqrt__bV9bmkw
+    trial_name: circuit-fibsqrt__bV9bmkw
+    task_name: circuit-fibsqrt
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+    batch: standard81-c2
+    qemu_fixed: false
+variant:
+  id: langchain-luna-high-websocket
+  factors:
+    capture_only: true
+    adapter: langchain
+    model: codex/gpt-5.6-luna
+    effort: high
+    transport: websocket-http-fallback
+    evidence_payload: sanitized-harbor-sibling
+metrics:
+  factors:
+    capture_only:
+      sequence: 1
+      id: obs_1
+      name: capture_only
+      kind: factor
+      value: true
+      source: variant
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: langchain
+      source: variant
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    model:
+      sequence: 3
+      id: obs_3
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    effort:
+      sequence: 4
+      id: obs_4
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    transport:
+      sequence: 5
+      id: obs_5
+      name: transport
+      kind: factor
+      value: websocket-http-fallback
+      source: variant
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    evidence_payload:
+      sequence: 6
+      id: obs_6
+      name: evidence_payload
+      kind: factor
+      value: sanitized-harbor-sibling
+      source: variant
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.cost_usd:
+      sequence: 18
+      id: obs_18
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.11401988
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 848.00123
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.input_tokens:
+      sequence: 11
+      id: obs_11
+      name: kedi.input_tokens
+      kind: metric
+      value: 2705527
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.cache_read_tokens:
+      sequence: 12
+      id: obs_12
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 2604544
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.cache_write_tokens:
+      sequence: 13
+      id: obs_13
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.output_tokens:
+      sequence: 14
+      id: obs_14
+      name: kedi.output_tokens
+      kind: metric
+      value: 34777
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.total_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.total_tokens
+      kind: metric
+      value: 2740304
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.requests:
+      sequence: 16
+      id: obs_16
+      name: kedi.requests
+      kind: metric
+      value: 67
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.tool_calls:
+      sequence: 17
+      id: obs_17
+      name: kedi.tool_calls
+      kind: metric
+      value: 94
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+    kedi.cache_read_ratio:
+      sequence: 19
+      id: obs_19
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.9626752939445808
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+  events:
+    terminal_bench.public_evidence_reference:
+      sequence: 20
+      id: obs_20
+      name: terminal_bench.public_evidence_reference
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      case: circuit-fibsqrt__bV9bmkw
+      variant: langchain-luna-high-websocket
+trace:
+  protocol: abp
+  protocol_version: 1
+  trace_id: 29084a4ba7a1678aad1c9e56d6685855
+  execution:
+    benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+    experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+    run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+    case_id: circuit-fibsqrt__bV9bmkw
+    variant_id: langchain-luna-high-websocket
+  root_span_ids:
+    - f7481ea65bb2e7bf
+  spans:
+    - trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      span_id: f7481ea65bb2e7bf
+      operation: benchmark.run
+      kind: task
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-10-03T17:23:55.101593Z'
+      ended_at: '2026-10-03T17:23:55.217976Z'
+      start_monotonic_ns: 922712841306583
+      end_monotonic_ns: 922712957691708
+      duration_ns: 116385125
+      start_sequence: 1
+      end_sequence: 26
+      attributes:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: ee671f80-3670-4a6a-a8c2-261716611f57
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.101688Z'
+          monotonic_ns: 922712841401750
+          sequence: 2
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: f7481ea65bb2e7bf
+          name: capture_only
+          semantic_type: factor.value
+          body: true
+          attributes:
+            observation_id: obs_1
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 50d76fc3-02a1-4c35-aac7-f88da4782a4c
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.101748Z'
+          monotonic_ns: 922712841461125
+          sequence: 3
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: f7481ea65bb2e7bf
+          name: adapter
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 9
+          attributes:
+            observation_id: obs_2
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 741b86e3-b7ce-4748-b3fa-79759fdc3d22
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.101787Z'
+          monotonic_ns: 922712841500416
+          sequence: 4
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: f7481ea65bb2e7bf
+          name: model
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 18
+          attributes:
+            observation_id: obs_3
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9460173e-f919-4a29-8bc6-9713f323de2d
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.101864Z'
+          monotonic_ns: 922712841578125
+          sequence: 5
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: f7481ea65bb2e7bf
+          name: effort
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 4
+          attributes:
+            observation_id: obs_4
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8667ef8d-0c9f-49af-810b-37bd1654ccc0
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.101923Z'
+          monotonic_ns: 922712841636166
+          sequence: 6
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: f7481ea65bb2e7bf
+          name: transport
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 23
+          attributes:
+            observation_id: obs_5
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d630f7e8-2345-489b-ae8d-1c117eb47022
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.101961Z'
+          monotonic_ns: 922712841673666
+          sequence: 7
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: f7481ea65bb2e7bf
+          name: evidence_payload
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 24
+          attributes:
+            observation_id: obs_6
+            kind: factor
+            source: variant
+      partial: false
+    - trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      span_id: c251fa6e78235047
+      parent_span_id: f7481ea65bb2e7bf
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-10-03T17:23:55.183597Z'
+      ended_at: '2026-10-03T17:23:55.217723Z'
+      start_monotonic_ns: 922712923316000
+      end_monotonic_ns: 922712957438791
+      duration_ns: 34122791
+      start_sequence: 8
+      end_sequence: 25
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 944b9a90-7048-4226-a3eb-9ade5082d1a9
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.183717Z'
+          monotonic_ns: 922712923432291
+          sequence: 9
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c251fa6e78235047
+          name: input
+          semantic_type: operation.input
+          body:
+            type: dict
+            length: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: e1b5f461-0d4a-465a-b88c-70f9a457c822
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.217635Z'
+          monotonic_ns: 922712957350375
+          sequence: 24
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c251fa6e78235047
+          name: terminal_bench.public_evidence_reference
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_20
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+      measurements:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 2f9a4c0b-aacc-4bc5-aa75-a034dac980a2
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.183786Z'
+          monotonic_ns: 922712923500958
+          sequence: 10
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: terminal_bench.reward.reward
+          semantic_type: quality.correctness
+          value: 1.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_7
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 56e6bd1d-bd2f-4c1f-bc5c-15dc2cae6d34
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.183848Z'
+          monotonic_ns: 922712923563250
+          sequence: 11
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: terminal_bench.grader_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_8
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 41
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 848b82d4-153e-4711-88aa-1c57929f2e08
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.183899Z'
+          monotonic_ns: 922712923614125
+          sequence: 12
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.trial_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_9
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 21
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 233a93eb-2200-485e-b77f-1ee3ec4a0f03
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.183933Z'
+          monotonic_ns: 922712923648000
+          sequence: 13
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: terminal_bench.duration
+          semantic_type: time.latency
+          value: 848.00123
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_10
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f11d9206-e036-4243-98bb-efb468e5aaaa
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.183959Z'
+          monotonic_ns: 922712923673583
+          sequence: 14
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.input_tokens
+          semantic_type: llm.tokens.input
+          value: 2705527
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_11
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: cbb166d8-dc98-45e7-b168-921eda141087
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.183985Z'
+          monotonic_ns: 922712923699583
+          sequence: 15
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.cache_read_tokens
+          semantic_type: llm.tokens.cached_input
+          value: 2604544
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_12
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 66af700b-250d-43d5-80ba-2cc4e6dd77ce
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.184006Z'
+          monotonic_ns: 922712923720916
+          sequence: 16
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.cache_write_tokens
+          semantic_type: llm.tokens.cache_write
+          value: 0
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_13
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 30971016-8395-4e6b-9896-a22e200b7a46
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.184030Z'
+          monotonic_ns: 922712923744791
+          sequence: 17
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.output_tokens
+          semantic_type: llm.tokens.output
+          value: 34777
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_14
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 553ff8fd-c59f-4f34-890a-05de124e731e
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.184050Z'
+          monotonic_ns: 922712923764875
+          sequence: 18
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.total_tokens
+          semantic_type: llm.tokens.total
+          value: 2740304
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_15
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 18236985-268f-4ad6-9a49-7df0af8d3810
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.184069Z'
+          monotonic_ns: 922712923783666
+          sequence: 19
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.requests
+          semantic_type: llm.request.count
+          value: 67
+          unit: request
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_16
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 98693cd1-a4ee-46ef-a1d7-db3ee3f9344e
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.184094Z'
+          monotonic_ns: 922712923809083
+          sequence: 20
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.tool_calls
+          semantic_type: tool.call.count
+          value: 94
+          unit: call
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_17
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c7fbabbb-c31b-45b9-bb02-42f501b6d832
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.184117Z'
+          monotonic_ns: 922712923831875
+          sequence: 21
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.cost_usd
+          semantic_type: money.cost
+          value: 0.11401988
+          unit: USD
+          direction: minimize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_18
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: e5cd0907-34ce-4a65-a907-ac624e78156d
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.184138Z'
+          monotonic_ns: 922712923853041
+          sequence: 22
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c251fa6e78235047
+          name: kedi.cache_read_ratio
+          semantic_type: coverage.ratio
+          value: 0.9626752939445808
+          unit: ratio
+          direction: maximize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_19
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+      references:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: fab492ba-eca0-46b7-8445-838872c424fa
+          trace_id: 29084a4ba7a1678aad1c9e56d6685855
+          emitted_at: '2026-10-03T17:23:55.217552Z'
+          monotonic_ns: 922712957270333
+          sequence: 23
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+            case_id: circuit-fibsqrt__bV9bmkw
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: c251fa6e78235047
+          semantic_type: artifact.content
+          name: terminal_bench.public_evidence_reference
+          reference:
+            kind: artifact
+            id: artifact_48055289e7958a8abdfb57cd
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_1
+      partial: false
+  signals:
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 6e847607-6f21-4562-9a5f-1b1cacdba92c
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.101593Z'
+      monotonic_ns: 922712841306583
+      sequence: 1
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: f7481ea65bb2e7bf
+      operation: benchmark.run
+      kind: task
+      attributes:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: ee671f80-3670-4a6a-a8c2-261716611f57
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.101688Z'
+      monotonic_ns: 922712841401750
+      sequence: 2
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: f7481ea65bb2e7bf
+      name: capture_only
+      semantic_type: factor.value
+      body: true
+      attributes:
+        observation_id: obs_1
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 50d76fc3-02a1-4c35-aac7-f88da4782a4c
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.101748Z'
+      monotonic_ns: 922712841461125
+      sequence: 3
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: f7481ea65bb2e7bf
+      name: adapter
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 9
+      attributes:
+        observation_id: obs_2
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 741b86e3-b7ce-4748-b3fa-79759fdc3d22
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.101787Z'
+      monotonic_ns: 922712841500416
+      sequence: 4
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: f7481ea65bb2e7bf
+      name: model
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 18
+      attributes:
+        observation_id: obs_3
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9460173e-f919-4a29-8bc6-9713f323de2d
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.101864Z'
+      monotonic_ns: 922712841578125
+      sequence: 5
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: f7481ea65bb2e7bf
+      name: effort
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 4
+      attributes:
+        observation_id: obs_4
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8667ef8d-0c9f-49af-810b-37bd1654ccc0
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.101923Z'
+      monotonic_ns: 922712841636166
+      sequence: 6
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: f7481ea65bb2e7bf
+      name: transport
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 23
+      attributes:
+        observation_id: obs_5
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d630f7e8-2345-489b-ae8d-1c117eb47022
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.101961Z'
+      monotonic_ns: 922712841673666
+      sequence: 7
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: f7481ea65bb2e7bf
+      name: evidence_payload
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 24
+      attributes:
+        observation_id: obs_6
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 81e4bc7d-5514-48d6-9697-81bddcf5ce18
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183597Z'
+      monotonic_ns: 922712923316000
+      sequence: 8
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: c251fa6e78235047
+      parent_span_id: f7481ea65bb2e7bf
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 944b9a90-7048-4226-a3eb-9ade5082d1a9
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183717Z'
+      monotonic_ns: 922712923432291
+      sequence: 9
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c251fa6e78235047
+      name: input
+      semantic_type: operation.input
+      body:
+        type: dict
+        length: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 2f9a4c0b-aacc-4bc5-aa75-a034dac980a2
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183786Z'
+      monotonic_ns: 922712923500958
+      sequence: 10
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: terminal_bench.reward.reward
+      semantic_type: quality.correctness
+      value: 1.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_7
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 56e6bd1d-bd2f-4c1f-bc5c-15dc2cae6d34
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183848Z'
+      monotonic_ns: 922712923563250
+      sequence: 11
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: terminal_bench.grader_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_8
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 41
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 848b82d4-153e-4711-88aa-1c57929f2e08
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183899Z'
+      monotonic_ns: 922712923614125
+      sequence: 12
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.trial_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_9
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 21
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 233a93eb-2200-485e-b77f-1ee3ec4a0f03
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183933Z'
+      monotonic_ns: 922712923648000
+      sequence: 13
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: terminal_bench.duration
+      semantic_type: time.latency
+      value: 848.00123
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_10
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f11d9206-e036-4243-98bb-efb468e5aaaa
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183959Z'
+      monotonic_ns: 922712923673583
+      sequence: 14
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.input_tokens
+      semantic_type: llm.tokens.input
+      value: 2705527
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_11
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: cbb166d8-dc98-45e7-b168-921eda141087
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.183985Z'
+      monotonic_ns: 922712923699583
+      sequence: 15
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.cache_read_tokens
+      semantic_type: llm.tokens.cached_input
+      value: 2604544
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_12
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 66af700b-250d-43d5-80ba-2cc4e6dd77ce
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.184006Z'
+      monotonic_ns: 922712923720916
+      sequence: 16
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.cache_write_tokens
+      semantic_type: llm.tokens.cache_write
+      value: 0
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_13
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 30971016-8395-4e6b-9896-a22e200b7a46
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.184030Z'
+      monotonic_ns: 922712923744791
+      sequence: 17
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.output_tokens
+      semantic_type: llm.tokens.output
+      value: 34777
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_14
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 553ff8fd-c59f-4f34-890a-05de124e731e
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.184050Z'
+      monotonic_ns: 922712923764875
+      sequence: 18
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.total_tokens
+      semantic_type: llm.tokens.total
+      value: 2740304
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_15
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 18236985-268f-4ad6-9a49-7df0af8d3810
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.184069Z'
+      monotonic_ns: 922712923783666
+      sequence: 19
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.requests
+      semantic_type: llm.request.count
+      value: 67
+      unit: request
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_16
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 98693cd1-a4ee-46ef-a1d7-db3ee3f9344e
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.184094Z'
+      monotonic_ns: 922712923809083
+      sequence: 20
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.tool_calls
+      semantic_type: tool.call.count
+      value: 94
+      unit: call
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_17
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c7fbabbb-c31b-45b9-bb02-42f501b6d832
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.184117Z'
+      monotonic_ns: 922712923831875
+      sequence: 21
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.cost_usd
+      semantic_type: money.cost
+      value: 0.11401988
+      unit: USD
+      direction: minimize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_18
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e5cd0907-34ce-4a65-a907-ac624e78156d
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.184138Z'
+      monotonic_ns: 922712923853041
+      sequence: 22
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c251fa6e78235047
+      name: kedi.cache_read_ratio
+      semantic_type: coverage.ratio
+      value: 0.9626752939445808
+      unit: ratio
+      direction: maximize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_19
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: fab492ba-eca0-46b7-8445-838872c424fa
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.217552Z'
+      monotonic_ns: 922712957270333
+      sequence: 23
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: c251fa6e78235047
+      semantic_type: artifact.content
+      name: terminal_bench.public_evidence_reference
+      reference:
+        kind: artifact
+        id: artifact_48055289e7958a8abdfb57cd
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e1b5f461-0d4a-465a-b88c-70f9a457c822
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.217635Z'
+      monotonic_ns: 922712957350375
+      sequence: 24
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c251fa6e78235047
+      name: terminal_bench.public_evidence_reference
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_20
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 108855a6-91f4-47f6-aebd-2cfbbf10212e
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.217723Z'
+      monotonic_ns: 922712957438791
+      sequence: 25
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: c251fa6e78235047
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 096bb951-fa1c-4b0a-80f1-8875727f6463
+      trace_id: 29084a4ba7a1678aad1c9e56d6685855
+      emitted_at: '2026-10-03T17:23:55.217976Z'
+      monotonic_ns: 922712957691708
+      sequence: 26
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket
+        case_id: circuit-fibsqrt__bV9bmkw
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: f7481ea65bb2e7bf
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+  started_at: '2026-10-03T17:23:55.101593Z'
+  ended_at: '2026-10-03T17:23:55.217976Z'
+  partial: false
+spans:
+  span_1:
+    name: capture terminal-bench publication metrics
+    kind: workflow
+    started_at: '2026-10-03T17:23:55.183597+00:00'
+    ended_at: '2026-10-03T17:23:55.217723+00:00'
+    duration: 0.034122791
+    input:
+      task_name: terminal-bench/circuit-fibsqrt
+      trial_name: circuit-fibsqrt__bV9bmkw
+    output:
+      task_name: circuit-fibsqrt
+      trial_name: circuit-fibsqrt__bV9bmkw
+      rewards:
+        reward: 1.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 2604544
+        cache_write_tokens: 0
+        cost_usd: 0.11401988
+        input_tokens: 2705527
+        output_tokens: 34777
+        requests: 67
+        tool_calls: 94
+        total_tokens: 2740304
+        uncached_input_tokens: 100983
+      evidence_reference:
+        trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2/circuit-fibsqrt__bV9bmkw
+        result_sha256: 9800a61d9d7216e0396a33bcc68d6f9de9d9acf86c22fb22f7e341196754c689
+        kedi_result_sha256: 9570aefe81f682319f345febf4db9725e432c0f785172d243b734699fef3846f
+        sanitization_manifest: evidence/sanitization-report.json
+        pricing_manifest: evidence/pricing.json
+        usage_cost_origin: offline genai-prices estimate, not a provider invoice
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+    artifacts:
+      - artifact_1
+artifacts:
+  terminal_bench.public_evidence_reference:
+    id: artifact_1
+    name: terminal_bench.public_evidence_reference
+    media: application/json
+    path: artifacts/run_0009_0001_circuit_fibsqrt_bv9bmkw__langchain_luna_high_websocket/artifact_1.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 37c9a7e5a526aebe7e0e23ffc2b9430843dfdd069918ebc502047a2b587b1d03
+    byte_count: 725
+output:
+  task_name: circuit-fibsqrt
+  trial_name: circuit-fibsqrt__bV9bmkw
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 2604544
+    cache_write_tokens: 0
+    cost_usd: 0.11401988
+    input_tokens: 2705527
+    output_tokens: 34777
+    requests: 67
+    tool_calls: 94
+    total_tokens: 2740304
+    uncached_input_tokens: 100983
+  evidence_reference:
+    trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2/circuit-fibsqrt__bV9bmkw
+    result_sha256: 9800a61d9d7216e0396a33bcc68d6f9de9d9acf86c22fb22f7e341196754c689
+    kedi_result_sha256: 9570aefe81f682319f345febf4db9725e432c0f785172d243b734699fef3846f
+    sanitization_manifest: evidence/sanitization-report.json
+    pricing_manifest: evidence/pricing.json
+    usage_cost_origin: offline genai-prices estimate, not a provider invoice

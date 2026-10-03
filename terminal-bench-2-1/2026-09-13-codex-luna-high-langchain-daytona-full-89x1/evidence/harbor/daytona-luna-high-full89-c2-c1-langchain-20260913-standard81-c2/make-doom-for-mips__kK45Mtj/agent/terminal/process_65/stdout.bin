@@ -1,0 +1,437 @@
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//
+
+
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <stdarg.h>
+
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
+#ifdef ORIGCODE
+#include "SDL.h"
+#endif
+
+#include "config.h"
+
+#include "deh_str.h"
+#include "doomtype.h"
+#include "m_argv.h"
+#include "m_config.h"
+#include "m_misc.h"
+#include "i_joystick.h"
+#include "i_sound.h"
+#include "i_timer.h"
+#include "i_video.h"
+
+#include "i_system.h"
+
+#include "w_wad.h"
+#include "z_zone.h"
+
+#ifdef __MACOSX__
+#include <CoreFoundation/CFUserNotification.h>
+#endif
+
+#define DEFAULT_RAM 6 /* MiB */
+#define MIN_RAM     6  /* MiB */
+
+
+typedef struct atexit_listentry_s atexit_listentry_t;
+
+struct atexit_listentry_s
+{
+    atexit_func_t func;
+    boolean run_on_error;
+    atexit_listentry_t *next;
+};
+
+static atexit_listentry_t *exit_funcs = NULL;
+
+void I_AtExit(atexit_func_t func, boolean run_on_error)
+{
+    atexit_listentry_t *entry;
+
+    entry = malloc(sizeof(*entry));
+
+    entry->func = func;
+    entry->run_on_error = run_on_error;
+    entry->next = exit_funcs;
+    exit_funcs = entry;
+}
+
+// Tactile feedback function, probably used for the Logitech Cyberman
+
+void I_Tactile(int on, int off, int total)
+{
+}
+
+// Zone memory auto-allocation function that allocates the zone size
+// by trying progressively smaller zone sizes until one is found that
+// works.
+
+static byte *AutoAllocMemory(int *size, int default_ram, int min_ram)
+{
+    byte *zonemem;
+
+    // Allocate the zone memory.  This loop tries progressively smaller
+    // zone sizes until a size is found that can be allocated.
+    // If we used the -mb command line parameter, only the parameter
+    // provided is accepted.
+
+    zonemem = NULL;
+
+    while (zonemem == NULL)
+    {
+        // We need a reasonable minimum amount of RAM to start.
+
+        if (default_ram < min_ram)
+        {
+            I_Error("Unable to allocate %i MiB of RAM for zone", default_ram);
+        }
+
+        // Try to allocate the zone memory.
+
+        *size = default_ram * 1024 * 1024;
+
+        zonemem = malloc(*size);
+
+        // Failed to allocate?  Reduce zone size until we reach a size
+        // that is acceptable.
+
+        if (zonemem == NULL)
+        {
+            default_ram -= 1;
+        }
+    }
+
+    return zonemem;
+}
+
+byte *I_ZoneBase (int *size)
+{
+    byte *zonemem;
+    int min_ram, default_ram;
+    int p;
+
+    //!
+    // @arg <mb>
+    //
+    // Specify the heap size, in MiB (default 16).
+    //
+
+    p = M_CheckParmWithArgs("-mb", 1);
+
+    if (p > 0)
+    {
+        default_ram = atoi(myargv[p+1]);
+        min_ram = default_ram;
+    }
+    else
+    {
+        default_ram = DEFAULT_RAM;
+        min_ram = MIN_RAM;
+    }
+
+    zonemem = AutoAllocMemory(size, default_ram, min_ram);
+
+    printf("zone memory: %p, %x allocated for zone\n", 
+           zonemem, *size);
+
+    return zonemem;
+}
+
+void I_PrintBanner(char *msg)
+{
+    int i;
+    int spaces = 35 - (strlen(msg) / 2);
+
+    for (i=0; i<spaces; ++i)
+        putchar(' ');
+
+    puts(msg);
+}
+
+void I_PrintDivider(void)
+{
+    int i;
+
+112:            I_Error("Unable to allocate %i MiB of RAM for zone", default_ram);
+113-        }
+114-
+115-        // Try to allocate the zone memory.
+116-
+117-        *size = default_ram * 1024 * 1024;
+118-
+119-        zonemem = malloc(*size);
+120-
+121-        // Failed to allocate?  Reduce zone size until we reach a size
+122-        // that is acceptable.
+123-
+124-        if (zonemem == NULL)
+125-        {
+126-            default_ram -= 1;
+127-        }
+128-    }
+129-
+130-    return zonemem;
+131-}
+132-
+133-byte *I_ZoneBase (int *size)
+134-{
+135-    byte *zonemem;
+136-    int min_ram, default_ram;
+137-    int p;
+138-
+139-    //!
+140-    // @arg <mb>
+141-    //
+142-    // Specify the heap size, in MiB (default 16).
+143-    //
+144-
+145-    p = M_CheckParmWithArgs("-mb", 1);
+146-
+147-    if (p > 0)
+148-    {
+149-        default_ram = atoi(myargv[p+1]);
+150-        min_ram = default_ram;
+151-    }
+152-    else
+153-    {
+154-        default_ram = DEFAULT_RAM;
+155-        min_ram = MIN_RAM;
+156-    }
+157-
+158-    zonemem = AutoAllocMemory(size, default_ram, min_ram);
+159-
+160-    printf("zone memory: %p, %x allocated for zone\n", 
+161-           zonemem, *size);
+162-
+163-    return zonemem;
+164-}
+165-
+166-void I_PrintBanner(char *msg)
+167-{
+168-    int i;
+169-    int spaces = 35 - (strlen(msg) / 2);
+170-
+171-    for (i=0; i<spaces; ++i)
+172-        putchar(' ');
+173-
+174-    puts(msg);
+175-}
+176-
+177-void I_PrintDivider(void)
+178-{
+179-    int i;
+180-
+181-    for (i=0; i<75; ++i)
+182-    {
+183-        putchar('=');
+184-    }
+185-
+186-    putchar('\n');
+187-}
+188-
+189-void I_PrintStartupBanner(char *gamedescription)
+190-{
+191-    I_PrintDivider();
+192-    I_PrintBanner(gamedescription);
+193-    I_PrintDivider();
+194-    
+195-    printf(
+196-    " " PACKAGE_NAME " is free software, covered by the GNU General Public\n"
+197-    " License.  There is NO warranty; not even for MERCHANTABILITY or FITNESS\n"
+198-    " FOR A PARTICULAR PURPOSE. You are welcome to change and distribute\n"
+199-    " copies under certain conditions. See the source for more information.\n");
+200-
+201-    I_PrintDivider();
+202-}
+203-
+204-// 
+205-// I_ConsoleStdout
+206-//
+207-// Returns true if stdout is a real console, false if it is a file
+208-//
+209-
+210-boolean I_ConsoleStdout(void)
+211-{
+212-#ifdef _WIN32
+213-    // SDL "helpfully" always redirects stdout to a file.
+214-    return 0;
+215-#else
+216-#if ORIGCODE
+217-    return isatty(fileno(stdout));
+218-#else
+219-	return 0;
+220-#endif
+221-#endif
+222-}
+223-
+224-//
+225-// I_Init
+226-//
+227-/*
+228-void I_Init (void)
+229-{
+230-    I_CheckIsScreensaver();
+231-    I_InitTimer();
+232-    I_InitJoystick();
+--
+354:// I_Error
+355-//
+356-
+357-static boolean already_quitting = false;
+358-
+359:void I_Error (char *error, ...)
+360-{
+361-    char msgbuf[512];
+362-    va_list argptr;
+363-    atexit_listentry_t *entry;
+364-    boolean exit_gui_popup;
+365-
+366-    if (already_quitting)
+367-    {
+368:        fprintf(stderr, "Warning: recursive call to I_Error detected.\n");
+369-#if ORIGCODE
+370-        exit(-1);
+371-#endif
+372-    }
+373-    else
+374-    {
+375-        already_quitting = true;
+376-    }
+377-
+378-    // Message first.
+379-    va_start(argptr, error);
+380-    //fprintf(stderr, "\nError: ");
+381-    vfprintf(stderr, error, argptr);
+382-    fprintf(stderr, "\n\n");
+383-    va_end(argptr);
+384-    fflush(stderr);
+385-
+386-    // Write a copy of the message into buffer.
+387-    va_start(argptr, error);
+388-    memset(msgbuf, 0, sizeof(msgbuf));
+389-    M_vsnprintf(msgbuf, sizeof(msgbuf), error, argptr);
+390-    va_end(argptr);
+391-
+392-    // Shutdown. Here might be other errors.
+393-
+394-    entry = exit_funcs;
+395-
+396-    while (entry != NULL)
+397-    {
+398-        if (entry->run_on_error)
+399-        {
+400-            entry->func();
+401-        }
+402-
+403-        entry = entry->next;
+404-    }
+405-
+406-    exit_gui_popup = !M_ParmExists("-nogui");
+407-
+408-    // Pop up a GUI dialog box to show the error message, if the
+409-    // game was not run from the console (and the user will
+410-    // therefore be unable to otherwise see the message).
+411-    if (exit_gui_popup && !I_ConsoleStdout())
+412-#ifdef _WIN32
+413-    {
+414-        wchar_t wmsgbuf[512];
+415-
+416-        MultiByteToWideChar(CP_ACP, 0,
+417-                            msgbuf, strlen(msgbuf) + 1,
+418-                            wmsgbuf, sizeof(wmsgbuf));
+419-
+420-        MessageBoxW(NULL, wmsgbuf, L"", MB_OK);
+421-    }
+422-#elif defined(__MACOSX__)
+423-    {
+424-        CFStringRef message;
+425-	int i;
+426-
+427-	// The CoreFoundation message box wraps text lines, so replace
+428-	// newline characters with spaces so that multiline messages
+429-	// are continuous.
+430-
+431-	for (i = 0; msgbuf[i] != '\0'; ++i)
+432-        {
+433-            if (msgbuf[i] == '\n')
+434-            {
+435-                msgbuf[i] = ' ';
+436-            }
+437-        }
+438-
+439-        message = CFStringCreateWithCString(NULL, msgbuf,
+440-                                            kCFStringEncodingUTF8);
+441-
+442-        CFUserNotificationDisplayNotice(0,
+443-                                        kCFUserNotificationCautionAlertLevel,
+444-                                        NULL,
+445-                                        NULL,
+446-                                        NULL,
+447-                                        CFSTR(PACKAGE_STRING),
+448-                                        message,
+449-                                        NULL);
+450-    }
+451-#elif defined(__DJGPP__)
+452-    {
+453-        printf("%s\n", msgbuf);
+454-        exit(-1);
+455-    }
+456-
+457-#else
+458-    {
+459-        ZenityErrorBox(msgbuf);
+460-    }
+461-#endif
+462-
+463-    // abort();
+464-#if ORIGCODE
+465-    SDL_Quit();
+466-
+467-    exit(-1);
+468-#else
+469-    while (true)
+470-    {
+471-    }
+472-#endif
+473-}
+474-
+475-//
+476-// Read Access Violation emulation.
+477-//
+478-// From PrBoom+, by entryway.
+479-//
+480-
+481-// C:\>debug
+482-// -d 0:0
+483-//
+484-// DOS 6.22:
+485-// 0000:0000  (57 92 19 00) F4 06 70 00-(16 00)
+486-// DOS 7.1:
+487-// 0000:0000  (9E 0F C9 00) 65 04 70 00-(16 00)
+488-// Win98:

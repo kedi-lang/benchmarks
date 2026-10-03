@@ -1,0 +1,7 @@
+80:        const h=fs.openSync(name,hostFlags,a[2]||0o666), fd=this.next++; this.fds.set(fd,h); this.pos.set(fd,0); this.names.set(fd,name); if(name.endsWith('/frame.bmp'))this.frameFd=fd; return this.result(fd); }
+103:    this.pc=this.entry; this.branch=null; this.steps=0; this.sc=new Syscalls(this); this.fbits=new Uint32Array(32); this.fvals=new Float32Array(this.fbits.buffer); this.fcc=false; this.fview=new DataView(new ArrayBuffer(8));
+110:  fdouble(i) { this.fview.setUint32(0,this.fbits[i],true); this.fview.setUint32(4,this.fbits[i+1],true); return this.fview.getFloat64(0,true); }
+111:  setDouble(i,v) { this.fview.setFloat64(0,v,true); this.fbits[i]=this.fview.getUint32(0,true); this.fbits[i+1]=this.fview.getUint32(4,true); }
+179:      case 0x11: { const c=this.cop1(ins,pc); if(c)target=c.target,likely=c.likely; break; }
+198:        if(++this.steps>800000000)throw new Halt('instruction limit');
+208:      if(e instanceof Halt) { if(this.sc.frameSaved) { console.log('Saved first rendered frame to /tmp/frame.bmp'); return; } throw e; }

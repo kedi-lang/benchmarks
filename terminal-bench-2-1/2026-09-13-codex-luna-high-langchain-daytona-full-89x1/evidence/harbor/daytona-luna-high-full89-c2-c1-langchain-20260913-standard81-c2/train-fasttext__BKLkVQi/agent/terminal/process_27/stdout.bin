@@ -1,0 +1,60 @@
+(*kargs, **kwargs)
+def train_supervised(*kargs, **kwargs):
+    """
+    Train a supervised model and return a model object.
+
+    input must be a filepath. The input text does not need to be tokenized
+    as per the tokenize function, but it must be preprocessed and encoded
+    as UTF-8. You might want to consult standard preprocessing scripts such
+    as tokenizer.perl mentioned here: http://www.statmt.org/wmt07/baseline.html
+
+    The input file must must contain at least one label per line. For an
+    example consult the example datasets which are part of the fastText
+    repository such as the dataset pulled by classification-example.sh.
+    """
+    supervised_default = unsupervised_default.copy()
+    supervised_default.update(
+        {
+            "lr": 0.1,
+            "minCount": 1,
+            "minn": 0,
+            "maxn": 0,
+            "loss": "softmax",
+            "model": "supervised",
+        }
+    )
+
+    arg_names = [
+        "input",
+        "lr",
+        "dim",
+        "ws",
+        "epoch",
+        "minCount",
+        "minCountLabel",
+        "minn",
+        "maxn",
+        "neg",
+        "wordNgrams",
+        "loss",
+        "bucket",
+        "thread",
+        "lrUpdateRate",
+        "t",
+        "label",
+        "verbose",
+        "pretrainedVectors",
+        "seed",
+        "autotuneValidationFile",
+        "autotuneMetric",
+        "autotunePredictions",
+        "autotuneDuration",
+        "autotuneModelSize",
+    ]
+    args, manually_set_args = read_args(kargs, kwargs, arg_names, supervised_default)
+    a = _build_args(args, manually_set_args)
+    ft = _FastText(args=a)
+    fasttext.train(ft.f, a)
+    ft.set_args(ft.f.getArgs())
+    return ft
+

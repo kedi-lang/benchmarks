@@ -1,0 +1,15 @@
+#include <math.h>
+#include <complex.h>
+
+/* Fast exact 2-by-2 path, avoiding even the values-only LAPACK call. */
+int dominant_2x2(const double *a, double *er, double *ei,
+                 double *vr, double *vi) {
+    double complex disc=csqrt((a[0]-a[3])*(a[0]-a[3])+4.0*a[1]*a[2]);
+    double complex l0=0.5*(a[0]+a[3]+disc);
+    double complex l1=0.5*(a[0]+a[3]-disc);
+    double complex lam=cabs(l0)>=cabs(l1)?l0:l1;
+    double complex x0,x1;
+    if (cabs(a[1])+cabs(lam-a[0]) >= cabs(lam-a[3])+cabs(a[2])) {
+        x0=a[1]; x1=lam-a[0];
+    } else { x0=lam-a[3]; x1=a[2]; }
+    double norm=sqrt(cabs(x0)*cabs(x0)+cabs(x1)*cabs(x1));

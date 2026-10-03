@@ -1,0 +1,100 @@
+I20260913 21:39:13.514405 10788 layer_factory.hpp:77] Creating layer pool3
+I20260913 21:39:13.514408 10788 net.cpp:84] Creating Layer pool3
+I20260913 21:39:13.514413 10788 net.cpp:406] pool3 <- conv3
+I20260913 21:39:13.514418 10788 net.cpp:380] pool3 -> pool3
+I20260913 21:39:13.514424 10788 net.cpp:122] Setting up pool3
+I20260913 21:39:13.514442 10788 net.cpp:129] Top shape: 100 64 4 4 (102400)
+I20260913 21:39:13.514464 10788 net.cpp:137] Memory required for data: 31950000
+I20260913 21:39:13.514467 10788 layer_factory.hpp:77] Creating layer ip1
+I20260913 21:39:13.514473 10788 net.cpp:84] Creating Layer ip1
+I20260913 21:39:13.514477 10788 net.cpp:406] ip1 <- pool3
+I20260913 21:39:13.514483 10788 net.cpp:380] ip1 -> ip1
+I20260913 21:39:13.514905 10788 net.cpp:122] Setting up ip1
+I20260913 21:39:13.514912 10788 net.cpp:129] Top shape: 100 64 (6400)
+I20260913 21:39:13.514916 10788 net.cpp:137] Memory required for data: 31975600
+I20260913 21:39:13.514920 10788 layer_factory.hpp:77] Creating layer ip2
+I20260913 21:39:13.514925 10788 net.cpp:84] Creating Layer ip2
+I20260913 21:39:13.514928 10788 net.cpp:406] ip2 <- ip1
+I20260913 21:39:13.514935 10788 net.cpp:380] ip2 -> ip2
+I20260913 21:39:13.514950 10788 net.cpp:122] Setting up ip2
+I20260913 21:39:13.514952 10788 net.cpp:129] Top shape: 100 10 (1000)
+I20260913 21:39:13.514956 10788 net.cpp:137] Memory required for data: 31979600
+I20260913 21:39:13.514961 10788 layer_factory.hpp:77] Creating layer ip2_ip2_0_split
+I20260913 21:39:13.514964 10788 net.cpp:84] Creating Layer ip2_ip2_0_split
+I20260913 21:39:13.514969 10788 net.cpp:406] ip2_ip2_0_split <- ip2
+I20260913 21:39:13.514974 10788 net.cpp:380] ip2_ip2_0_split -> ip2_ip2_0_split_0
+I20260913 21:39:13.514979 10788 net.cpp:380] ip2_ip2_0_split -> ip2_ip2_0_split_1
+I20260913 21:39:13.514984 10788 net.cpp:122] Setting up ip2_ip2_0_split
+I20260913 21:39:13.514988 10788 net.cpp:129] Top shape: 100 10 (1000)
+I20260913 21:39:13.514992 10788 net.cpp:129] Top shape: 100 10 (1000)
+I20260913 21:39:13.514995 10788 net.cpp:137] Memory required for data: 31987600
+I20260913 21:39:13.514998 10788 layer_factory.hpp:77] Creating layer accuracy
+I20260913 21:39:13.515004 10788 net.cpp:84] Creating Layer accuracy
+I20260913 21:39:13.515007 10788 net.cpp:406] accuracy <- ip2_ip2_0_split_0
+I20260913 21:39:13.515012 10788 net.cpp:406] accuracy <- label_cifar_1_split_0
+I20260913 21:39:13.515017 10788 net.cpp:380] accuracy -> accuracy
+I20260913 21:39:13.515022 10788 net.cpp:122] Setting up accuracy
+I20260913 21:39:13.515026 10788 net.cpp:129] Top shape: (1)
+I20260913 21:39:13.515030 10788 net.cpp:137] Memory required for data: 31987604
+I20260913 21:39:13.515034 10788 layer_factory.hpp:77] Creating layer loss
+I20260913 21:39:13.515038 10788 net.cpp:84] Creating Layer loss
+I20260913 21:39:13.515043 10788 net.cpp:406] loss <- ip2_ip2_0_split_1
+I20260913 21:39:13.515046 10788 net.cpp:406] loss <- label_cifar_1_split_1
+I20260913 21:39:13.515049 10788 net.cpp:380] loss -> loss
+I20260913 21:39:13.515053 10788 layer_factory.hpp:77] Creating layer loss
+I20260913 21:39:13.515067 10788 net.cpp:122] Setting up loss
+I20260913 21:39:13.515071 10788 net.cpp:129] Top shape: (1)
+I20260913 21:39:13.515076 10788 net.cpp:132]     with loss weight 1
+I20260913 21:39:13.515084 10788 net.cpp:137] Memory required for data: 31987608
+I20260913 21:39:13.515089 10788 net.cpp:198] loss needs backward computation.
+I20260913 21:39:13.515092 10788 net.cpp:200] accuracy does not need backward computation.
+I20260913 21:39:13.515096 10788 net.cpp:198] ip2_ip2_0_split needs backward computation.
+I20260913 21:39:13.515100 10788 net.cpp:198] ip2 needs backward computation.
+I20260913 21:39:13.515105 10788 net.cpp:198] ip1 needs backward computation.
+I20260913 21:39:13.515108 10788 net.cpp:198] pool3 needs backward computation.
+I20260913 21:39:13.515112 10788 net.cpp:198] relu3 needs backward computation.
+I20260913 21:39:13.515115 10788 net.cpp:198] conv3 needs backward computation.
+I20260913 21:39:13.515118 10788 net.cpp:198] pool2 needs backward computation.
+I20260913 21:39:13.515123 10788 net.cpp:198] relu2 needs backward computation.
+I20260913 21:39:13.515127 10788 net.cpp:198] conv2 needs backward computation.
+I20260913 21:39:13.515131 10788 net.cpp:198] relu1 needs backward computation.
+I20260913 21:39:13.515136 10788 net.cpp:198] pool1 needs backward computation.
+I20260913 21:39:13.515141 10788 net.cpp:198] conv1 needs backward computation.
+I20260913 21:39:13.515149 10788 net.cpp:200] label_cifar_1_split does not need backward computation.
+I20260913 21:39:13.515153 10788 net.cpp:200] cifar does not need backward computation.
+I20260913 21:39:13.515156 10788 net.cpp:242] This network produces output accuracy
+I20260913 21:39:13.515161 10788 net.cpp:242] This network produces output loss
+I20260913 21:39:13.515168 10788 net.cpp:255] Network initialization done.
+I20260913 21:39:13.515192 10788 solver.cpp:56] Solver scaffolding done.
+I20260913 21:39:13.515209 10788 caffe.cpp:248] Starting Optimization
+I20260913 21:39:13.515213 10788 solver.cpp:272] Solving CIFAR10_quick
+I20260913 21:39:13.515218 10788 solver.cpp:273] Learning Rate Policy: fixed
+I20260913 21:39:13.515403 10788 solver.cpp:330] Iteration 0, Testing net (#0)
+I20260913 21:39:25.794281 10793 data_layer.cpp:73] Restarting data prefetching from start.
+I20260913 21:39:26.307011 10788 solver.cpp:397]     Test net output #0: accuracy = 0.0989
+I20260913 21:39:26.307088 10788 solver.cpp:397]     Test net output #1: loss = 2.30247 (* 1 = 2.30247 loss)
+I20260913 21:39:26.617134 10788 solver.cpp:218] Iteration 0 (-3.7077e+13 iter/s, 13.101s/100 iters), loss = 2.30178
+I20260913 21:39:26.617203 10788 solver.cpp:237]     Train net output #0: loss = 2.30178 (* 1 = 2.30178 loss)
+I20260913 21:39:26.617211 10788 sgd_solver.cpp:105] Iteration 0, lr = 0.001
+I20260913 21:39:55.976729 10788 solver.cpp:218] Iteration 100 (3.40611 iter/s, 29.359s/100 iters), loss = 1.75011
+I20260913 21:39:55.976809 10788 solver.cpp:237]     Train net output #0: loss = 1.75011 (* 1 = 1.75011 loss)
+I20260913 21:39:55.976816 10788 sgd_solver.cpp:105] Iteration 100, lr = 0.001
+I20260913 21:40:25.920984 10788 solver.cpp:218] Iteration 200 (3.33957 iter/s, 29.944s/100 iters), loss = 1.59354
+I20260913 21:40:25.921083 10788 solver.cpp:237]     Train net output #0: loss = 1.59354 (* 1 = 1.59354 loss)
+I20260913 21:40:25.921090 10788 sgd_solver.cpp:105] Iteration 200, lr = 0.001
+I20260913 21:40:55.448871 10788 solver.cpp:218] Iteration 300 (3.38673 iter/s, 29.527s/100 iters), loss = 1.33631
+I20260913 21:40:55.448963 10788 solver.cpp:237]     Train net output #0: loss = 1.33631 (* 1 = 1.33631 loss)
+I20260913 21:40:55.448969 10788 sgd_solver.cpp:105] Iteration 300, lr = 0.001
+I20260913 21:41:25.145116 10788 solver.cpp:218] Iteration 400 (3.36746 iter/s, 29.696s/100 iters), loss = 1.271
+I20260913 21:41:25.145193 10788 solver.cpp:237]     Train net output #0: loss = 1.271 (* 1 = 1.271 loss)
+I20260913 21:41:25.145201 10788 sgd_solver.cpp:105] Iteration 400, lr = 0.001
+I20260913 21:41:53.241044 10792 data_layer.cpp:73] Restarting data prefetching from start.
+I20260913 21:41:54.417899 10788 solver.cpp:447] Snapshotting to binary proto file examples/cifar10/cifar10_quick_iter_500.caffemodel
+I20260913 21:41:54.419000 10788 sgd_solver.cpp:273] Snapshotting solver state to binary proto file examples/cifar10/cifar10_quick_iter_500.solverstate
+I20260913 21:41:54.540443 10788 solver.cpp:310] Iteration 500, loss = 1.22356
+I20260913 21:41:54.540512 10788 solver.cpp:330] Iteration 500, Testing net (#0)
+I20260913 21:42:06.619968 10793 data_layer.cpp:73] Restarting data prefetching from start.
+I20260913 21:42:07.124682 10788 solver.cpp:397]     Test net output #0: accuracy = 0.5425
+I20260913 21:42:07.124749 10788 solver.cpp:397]     Test net output #1: loss = 1.27877 (* 1 = 1.27877 loss)
+I20260913 21:42:07.124755 10788 solver.cpp:315] Optimization Done.
+I20260913 21:42:07.124758 10788 caffe.cpp:259] Optimization Done.

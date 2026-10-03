@@ -1,0 +1,4 @@
+root        2207       1  0 13:37 ?        00:00:00 nginx: master process nginx
+root        2208    2207  0 13:37 ?        00:00:00 nginx: worker process
+root        2220    2219  0 13:37 ?        00:00:13 qemu-system-i386 -M pc -m 32M -cpu 486 -vga cirrus -drive file=/app/isos/win311.img,format=raw,if=ide -snapshot -vnc :1 -monitor unix:/tmp/qemu-monitor.sock,server,nowait -display none -no-reboot
+root        2234    1192  0 13:37 ?        00:00:00 bash -lc python3 - <<'PY' import socket s=socket.socket(socket.AF_UNIX) s.connect('/tmp/qemu-monitor.sock') s.settimeout(2) print(s.recv(4096).decode(errors='replace')) s.sendall(b'info status\n') print(s.recv(4096).decode(errors='replace')) s.sendall(b'info block\n') print(s.recv(4096).decode(errors='replace')) PY

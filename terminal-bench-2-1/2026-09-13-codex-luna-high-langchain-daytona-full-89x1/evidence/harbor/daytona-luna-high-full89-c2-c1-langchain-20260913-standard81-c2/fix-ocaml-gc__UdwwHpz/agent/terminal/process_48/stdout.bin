@@ -1,0 +1,16 @@
+runtime/caml/gc.h:24:#define Make_header_with_reserved(wosize, tag, color, reserved)      \
+runtime/caml/gc.h:27:                    + ((header_t) (wosize) << HEADER_WOSIZE_SHIFT)   \
+runtime/caml/gc.h:32:#define Make_header(wosize, tag, color) \
+runtime/caml/mlvalues.h:154:#define HEADER_WOSIZE_BITS (HEADER_BITS - HEADER_TAG_BITS \
+runtime/caml/mlvalues.h:156:#define HEADER_WOSIZE_SHIFT (HEADER_COLOR_SHIFT  + HEADER_COLOR_BITS)
+runtime/caml/mlvalues.h:157:#define HEADER_WOSIZE_MASK (((1ull << HEADER_WOSIZE_BITS) - 1ull) \
+runtime/caml/mlvalues.h:158:                             << HEADER_WOSIZE_SHIFT)
+runtime/caml/mlvalues.h:162:#define Wosize_hd(hd) ((mlsize_t) (((hd) & HEADER_WOSIZE_MASK) \
+runtime/caml/mlvalues.h:163:                                     >> HEADER_WOSIZE_SHIFT))
+runtime/caml/mlvalues.h:167:                        (HEADER_TAG_MASK | HEADER_WOSIZE_MASK))
+runtime/caml/mlvalues.h:205:#define Max_wosize ((1ull << HEADER_WOSIZE_BITS) - 1ull)
+runtime/caml/mlvalues.h:207:#define Wosize_val(val) (Wosize_hd (Hd_val (val)))
+runtime/caml/mlvalues.h:210:#define Wosize_hp(hp) (Wosize_hd (Hd_hp (hp)))
+runtime/caml/mlvalues.h:221:#define Bosize_hd(hd) (Bsize_wsize (Wosize_hd (hd)))
+runtime/caml/mlvalues.h:225:#define Whsize_hd(hd) (Whsize_wosize (Wosize_hd (hd)))
+runtime/caml/mlvalues.h:497:                    + ((header_t) (wosize) << HEADER_WOSIZE_SHIFT)     \

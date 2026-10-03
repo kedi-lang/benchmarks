@@ -1,0 +1,131 @@
+                self.delivery_status]
+        assert self.token is None and self.token_owner is TokenOwner.no_one, (
+            'Unexpected active token at end of subscription workflow')
+
+    def _step_send_confirmation(self):
+        self._set_token(TokenOwner.subscriber)
+        self.push('do_confirm_verify')
+        self.save()
+        # Triggering this event causes the confirmation message to be sent.
+        notify(SubscriptionConfirmationNeededEvent(
+            self.mlist, self.token, self.address.email))
+        # Now we wait for the confirmation.
+        raise StopIteration
+
+    def _step_send_invitation(self):
+        self._set_token(TokenOwner.subscriber)
+        self.push('do_confirm_verify')
+        self.save()
+        # Triggering this event causes the confirmation message to be sent.
+        notify(SubscriptionInvitationNeededEvent(
+            self.mlist, self.token, self.address.email))
+        # Now we wait for the confirmation.
+        raise StopIteration
+
+    def _step_do_confirm_verify(self):
+        # Restore a little extra state that can't be stored in the database
+        # (because the order of setattr() on restore is indeterminate), then
+        # continue with the confirmation/verification step.
+        if self.which is WhichSubscriber.address:
+            self.subscriber = self.address
+        else:
+            assert self.which is WhichSubscriber.user
+            self.subscriber = self.user
+        # Reset the token so it can't be used in a replay attack.
+        self._set_token(TokenOwner.no_one)
+        # The user has confirmed their subscription request, and also verified
+        # their email address if necessary.  This latter needs to be set on the
+        # IAddress, but there's nothing more to do about the confirmation step.
+        # We just continue along with the workflow.
+        if self.address.verified_on is None:
+            self.address.verified_on = now()
+        # The next step depends on the mailing list's subscription policy.
+        next_step = ('moderation_checks'
+                     if self.mlist.subscription_policy in (
+                         SubscriptionPolicy.moderate,
+                         SubscriptionPolicy.confirm_then_moderate,
+                         ) and not self.invitation
+                     else 'do_subscription')
+        self.push(next_step)
+
+
+@public
+class UnSubscriptionWorkflow(_SubscriptionWorkflowCommon):
+    """Workflow of a unsubscription request."""
+
+    PENDABLE_CLASS = PendableUnsubscription
+    INITIAL_STATE = 'subscription_checks'
+    SAVE_ATTRIBUTES = (
+        'pre_approved',
+        'pre_confirmed',
+        'address_key',
+        'user_key',
+        'subscriber_key',
+        'token_owner_key',
+        )
+
+    def __init__(self, mlist, subscriber=None, *,
+                 pre_approved=False, pre_confirmed=False):
+        super().__init__(mlist, subscriber)
+        if IAddress.providedBy(subscriber) or IUser.providedBy(subscriber):
+            self.member = self.mlist.regular_members.get_member(
+                self.address.email)
+        self.pre_confirmed = pre_confirmed
+        self.pre_approved = pre_approved
+
+    def _step_subscription_checks(self):
+        # XXX assert self.member is not None is sufficient, but ...
+        assert (self.member is not None and
+                self.mlist.is_subscribed(self.member.subscriber))
+        self.push('confirmation_checks')
+
+    def _step_confirmation_checks(self):
+        # If list's unsubscription policy is open, the user can unsubscribe
+        # right now.
+        if self.mlist.unsubscription_policy is SubscriptionPolicy.open:
+            self.push('do_unsubscription')
+            return
+        # If we don't need the user's confirmation, then skip to the moderation
+        # checks.
+        if self.mlist.unsubscription_policy is SubscriptionPolicy.moderate:
+            self.push('moderation_checks')
+            return
+        # If the request is pre-confirmed, then the user can unsubscribe right
+        # now.
+        if self.pre_confirmed:
+            self.push('do_unsubscription')
+            return
+        # The user must confirm their un-subsbcription.
+        self.push('send_confirmation')
+
+    def _step_send_confirmation(self):
+        self._set_token(TokenOwner.subscriber)
+        self.push('do_confirm_verify')
+        self.save()
+        notify(UnsubscriptionConfirmationNeededEvent(
+            self.mlist, self.token, self.address.email))
+        raise StopIteration
+
+    def _step_moderation_checks(self):
+        # Does the moderator need to approve the unsubscription request?
+        assert self.mlist.unsubscription_policy in (
+            SubscriptionPolicy.moderate,
+            SubscriptionPolicy.confirm_then_moderate,
+            ), self.mlist.unsubscription_policy
+        if self.pre_approved:
+            self.push('do_unsubscription')
+        else:
+            self.push('get_moderator_approval')
+
+    def _step_get_moderator_approval(self):
+        self._set_token(TokenOwner.moderator)
+        self.push('unsubscribe_from_restored')
+        self.save()
+        log.info('{}: held unsubscription request from {}'.format(
+            self.mlist.fqdn_listname, self.address.email))
+        if self.mlist.admin_immed_notify:
+            subject = _(
+                'New unsubscription request to ${self.mlist.display_name} '
+                'from ${self.address.email}')
+            username =\
+                f'{self.subscriber.display_name} <{self.address.email}>'\

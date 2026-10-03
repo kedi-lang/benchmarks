@@ -1,0 +1,236 @@
+        max_length = max(max(column_word_lengths), max(value_lengths))
+        n_pixels = 25 + (max_length * 10)
+        widths.append(f"{n_pixels}px")
+    return widths
+
+
+def get_means_per_types(per_task: pd.DataFrame):
+    task_names_per_type = defaultdict(list)
+    for task_name in per_task.columns:
+        task_type = get_task(task_name).metadata.type
+        task_names_per_type[task_type].append(task_name)
+    records = []
+    for task_type, tasks in task_names_per_type.items():
+        for model_name, scores in per_task.iterrows():
+            records.append(
+                dict(
+                    model_name=model_name,
+                    task_type=task_type,
+                    score=scores[tasks].mean(skipna=False),
+                )
+            )
+    return pd.DataFrame.from_records(records)
+
+
+def failsafe_get_model_meta(model_name):
+    try:
+        return get_model_meta(model_name)
+    except Exception:
+        return None
+
+
+def format_max_tokens(max_tokens: float | None) -> str:
+    if max_tokens is None:
+        return "Unknown"
+    if max_tokens == np.inf:
+        return "Infinite"
+    return str(int(max_tokens))
+
+
+def format_zero_shot(zero_shot_percentage: int):
+    if zero_shot_percentage == -1:
+        return "⚠️ NA"
+    return f"{zero_shot_percentage:.0f}%"
+
+
+def create_light_green_cmap():
+    cmap = plt.cm.get_cmap("Greens")
+    num_colors = 256
+    half_colors = np.linspace(0, 0.5, num_colors)
+    half_cmap = [cmap(val) for val in half_colors]
+    light_green_cmap = LinearSegmentedColormap.from_list(
+        "LightGreens", half_cmap, N=256
+    )
+    return light_green_cmap
+
+
+def scores_to_tables(scores_long: list[dict], search_query: str | None = None):
+    if not scores_long:
+        no_results_frame = pd.DataFrame(
+            {"No results": ["You can try relaxing your criteria"]}
+        )
+        return gr.DataFrame(no_results_frame), gr.DataFrame(no_results_frame)
+    data = pd.DataFrame.from_records(scores_long)
+    per_task = data.pivot(index="model_name", columns="task_name", values="score")
+    mean_per_type = get_means_per_types(per_task)
+    mean_per_type = mean_per_type.pivot(
+        index="model_name", columns="task_type", values="score"
+    )
+    mean_per_type.columns = [
+        split_on_capital(column) for column in mean_per_type.columns
+    ]
+    to_remove = per_task.isna().all(axis="columns")
+    if search_query:
+        names = per_task.index.get_level_values("model_name")
+        names = pd.Series(names, index=per_task.index)
+        to_remove |= ~names.str.contains(search_query, regex=True)
+    if to_remove.all():
+        no_results_frame = pd.DataFrame(
+            {"No results": ["You can try relaxing your criteria"]}
+        )
+        return gr.DataFrame(no_results_frame), gr.DataFrame(no_results_frame)
+    models_to_remove = list(per_task[to_remove].index)
+    typed_mean = mean_per_type.mean(skipna=False, axis=1)
+    overall_mean = per_task.mean(skipna=False, axis=1)
+    joint_table = mean_per_type.copy()
+    per_task = per_task.drop(models_to_remove, axis=0)
+    joint_table = joint_table.drop(models_to_remove, axis=0)
+    joint_table.insert(0, "mean", overall_mean)
+    joint_table.insert(1, "mean_by_task_type", typed_mean)
+    joint_table["borda_rank"] = get_borda_rank(per_task)
+    joint_table = joint_table.sort_values("borda_rank", ascending=True)
+    per_task["borda_rank"] = joint_table["borda_rank"]
+    per_task = per_task.sort_values("borda_rank", ascending=True)
+    per_task = per_task.drop(columns=["borda_rank"])
+    joint_table = joint_table.reset_index()
+    model_metas = joint_table["model_name"].map(failsafe_get_model_meta)
+    joint_table = joint_table[model_metas.notna()]
+    joint_table["model_link"] = model_metas.map(lambda m: m.reference)
+    joint_table.insert(
+        1,
+        "Max Tokens",
+        model_metas.map(lambda m: format_max_tokens(m.max_tokens)),
+    )
+    joint_table.insert(
+        1,
+        "Embedding Dimensions",
+421:    def get_score(
+422-        self,
+423-        splits: list[Split] | None = None,
+424-        languages: list[ISO_LANGUAGE | ISO_LANGUAGE_SCRIPT] | None = None,
+425-        scripts: list[ISO_LANGUAGE_SCRIPT] | None = None,
+426-        getter: Callable[[ScoresDict], Score] = lambda scores: scores["main_score"],
+427-        aggregation: Callable[[list[Score]], Any] = np.mean,
+428-    ) -> Any:
+429-        """Get a score for the specified splits, languages, scripts and aggregation function.
+430-
+431-        Args:
+432-            splits: The splits to consider.
+433-            languages: The languages to consider. Can be ISO language codes or ISO language script codes.
+434-            scripts: The scripts to consider.
+435-            getter: A function that takes a scores dictionary and returns a score e.g. "main_score" or "evaluation_time".
+436-            aggregation: The aggregation function to use.
+437-
+438-        Returns:
+439-            The result of the aggregation function on the scores.
+440-        """
+441-        if splits is None:
+442-            splits = list(self.scores.keys())
+443-
+444-        lang_scripts = LanguageScripts.from_languages_and_scripts(languages, scripts)
+445-
+446-        values = []
+447-        for split in splits:
+448-            if split not in self.scores:
+449-                raise ValueError(f"Split {split} not found in scores")
+450-
+451-            for scores in self.scores[split]:
+452-                eval_langs = scores["languages"]
+453-                for lang in eval_langs:
+454-                    if lang_scripts.contains_language(lang):
+455-                        values.append(getter(scores))
+456-                        break
+457-
+458-        return aggregation(values)
+459-
+460:    def get_score_fast(
+461-        self,
+462-        splits: Iterable[str] | None = None,
+463-        languages: str | None = None,
+464-        subsets: Iterable[str] | None = None,
+465-    ) -> float:
+466-        """Sped up version of get_score that will be used if no aggregation, script or getter needs to be specified."""
+467-        # TODO: v2: We should make this private
+468-        if splits is None:
+469-            splits = self.scores.keys()
+470-        val_sum = 0
+471-        n_val = 0
+472-        for split in splits:
+473-            if split not in self.scores:
+474-                raise ValueError(f"Split missing from scores: {split}")
+475-
+476-            for scores in self.scores[split]:
+477-                langs = scores["languages"]
+478-                hf_subset = scores["hf_subset"]
+479-                main_score = scores.get("main_score", None)
+480-                if main_score is None:
+481-                    raise ValueError(f"Missing main score for subset: {hf_subset}")
+482-                if subsets and hf_subset not in subsets:
+483-                    continue
+484-                elif subsets:
+485-                    val_sum += main_score
+486-                    n_val += 1
+487-                    continue
+488-
+489-                if languages is None:
+490-                    val_sum += main_score
+491-                    n_val += 1
+492-                    continue
+493-                for lang in langs:
+494-                    if lang.split("-")[0] in languages:
+495-                        val_sum += main_score
+496-                        n_val += 1
+497-                        logger.info(f"{val_sum=}, {n_val=}")
+498-                        break
+499-        if n_val == 0:
+500-            raise ValueError("No splits had scores for the specified languages.")
+501-        return val_sum / n_val
+502-
+503-    @classmethod
+504-    def from_validated(cls, **data) -> TaskResult:
+505-        return cls.model_construct(**data)
+506-
+507-    def __repr__(self) -> str:
+508-        return f"TaskResult(task_name={self.task_name}, scores=...)"
+509-
+510-    def only_main_score(self) -> TaskResult:
+511-        new_scores = {}
+512-        for split in self.scores:
+513-            new_scores[split] = []
+514-            for subset_scores in self.scores[split]:
+515-                new_scores[split].append(
+516-                    {
+517-                        "hf_subset": subset_scores.get("hf_subset", "default"),
+518-                        "main_score": subset_scores.get("main_score", np.nan),
+519-                        "languages": subset_scores.get("languages", []),
+520-                    }
+521-                )
+522-        new_res = {**self.to_dict(), "scores": new_scores}
+523-        new_res = TaskResult.from_validated(**new_res)
+524-        return new_res
+525-
+526-    def validate_and_filter_scores(self, task: AbsTask | None = None) -> TaskResult:
+527-        """This ensures that the scores are correct for the given task, by removing any splits besides those specified in the task metadata.
+528-        Additionally it also ensure that all of the splits required as well as the languages are present in the scores.
+529-        Returns new TaskResult object.
+530-
+531-        Args:
+532-            task: The task to validate the scores against. E.g. if the task supplied is limited to certain splits and languages,
+533-                the scores will be filtered to only include those splits and languages. If None it will attempt to get the task from the task_name.
+534-        """
+535-        from mteb.overview import get_task
+536-
+537-        if task is None:
+538-            task = get_task(self.task_name)
+539-
+540-        splits = task.eval_splits
+541-        hf_subsets = task.hf_subsets
+542-        hf_subsets = set(hf_subsets)
+543-
+544-        new_scores = {}
+545-        seen_splits = set()
+546-        for split in self.scores:
+547-            if split not in splits:
+548-                continue
+549-            new_scores[split] = []
+550-            seen_subsets = set()

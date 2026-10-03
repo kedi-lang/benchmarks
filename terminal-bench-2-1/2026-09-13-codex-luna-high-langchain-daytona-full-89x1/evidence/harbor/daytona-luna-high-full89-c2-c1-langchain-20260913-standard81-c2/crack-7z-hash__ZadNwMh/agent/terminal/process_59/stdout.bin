@@ -1,0 +1,111 @@
+  my $digests_unpack_info = $unpack_info->{'digests'};
+  my $digests_substreams_info = $substreams_info->{'digests'};
+
+  my $use_unpack_info = 0;
+  my $use_substreams_info = 0;
+
+  if (defined ($digests_unpack_info))
+  {
+    my $digests_unpack_info_size = 0;
+
+    if (@$digests_unpack_info)
+    {
+      $digests_unpack_info_size = scalar (@$digests_unpack_info);
+    }
+
+    if ($index < $digests_unpack_info_size)
+    {
+      if (ref (@$digests_unpack_info[$index]) eq "HASH")
+      {
+        $use_unpack_info = 1;
+      }
+    }
+  }
+
+  if (defined ($digests_substreams_info))
+  {
+    my $digests_substreams_info_size = 0;
+
+    if (@$digests_substreams_info)
+    {
+      $digests_substreams_info_size = scalar (@$digests_substreams_info);
+    }
+
+    if ($index < $digests_substreams_info_size)
+    {
+      if (ref (@$digests_substreams_info[$index]) eq "HASH")
+      {
+        $use_substreams_info = 1;
+      }
+    }
+  }
+
+  if ($use_unpack_info == 1)
+  {
+    $digest = @$digests_unpack_info[$index];
+  }
+  elsif ($use_substreams_info == 1)
+  {
+    $digest = @$digests_substreams_info[$index];
+  }
+
+  return $digest;
+}
+
+sub has_encrypted_header
+{
+  my $folder = shift;
+
+  my $encrypted;
+
+  # get first coder
+
+  my $coders = $folder->{'coders'};
+
+  # get attributes of the first coder
+
+  my $attributes = @$coders[0]->{'codec_id'};
+
+  if ($attributes eq $SEVEN_ZIP_AES)
+  {
+    $encrypted = 1;
+  }
+  else
+  {
+    $encrypted = 0;
+  }
+
+  return $encrypted;
+}
+
+sub lzma_properties_decode
+{
+  my $attributes = shift;
+
+  my $lclppb;
+
+  $lclppb = substr ($attributes, 0, 1);
+
+  my @data;
+
+  #data[0] is the lclppb value
+
+  $data[1] = ord (substr ($attributes, 1, 1));
+  $data[2] = ord (substr ($attributes, 2, 1));
+  $data[3] = ord (substr ($attributes, 3, 1));
+  $data[4] = ord (substr ($attributes, 4, 1));
+
+  my $dict_size = $data[1] | $data[2] << 8 | $data[3] << 16 | $data[4] << 24;
+
+  if ($dict_size < LZMA_DICT_SIZE_MIN)
+  {
+    $dict_size = LZMA_DICT_SIZE_MIN;
+  }
+
+  my $d = ord ($lclppb);
+
+  my $lc = int ($d % 9);
+     $d  = int ($d / 9);
+  my $pb = int ($d / 5);
+  my $lp = int ($d % 5);
+

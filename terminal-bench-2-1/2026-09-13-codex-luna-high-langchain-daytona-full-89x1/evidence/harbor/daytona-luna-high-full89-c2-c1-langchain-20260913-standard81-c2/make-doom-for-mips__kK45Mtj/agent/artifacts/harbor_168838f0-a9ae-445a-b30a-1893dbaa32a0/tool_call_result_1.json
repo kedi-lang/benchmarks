@@ -1,0 +1,22 @@
+{
+  "codec": "json",
+  "digest": "9c45b01784f358fb4f4ae3313dc4871425f9206f6bd20bab606f7881b797b3a3",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 58754,
+    "created_at": "2026-09-13T13:15:12.982835Z",
+    "expires_at": "2026-09-13T14:15:12.982835Z",
+    "logical_type": "builtins.dict",
+    "media_type": "application/json",
+    "preview": "{\"duration_seconds\":0.006,\"exit_code\":0,\"process_id\":\"process_6\",\"stderr\":\"\",\"stdout\":\"      this.hi = 0;\\n      return;\\n    }\\n    \\n    const unsignedRs = this.registers[rs] >>> 0;\\n    const unsignedRt = this.registers[rt] >>> 0;\\n    \\n    this.lo = Math.floor(unsignedRs / unsignedRt) >>> 0; // Quotient\\n    this.hi = (unsignedRs % unsignedRt) >>> 0; // Remainder\\n  }\\n  \\n  mfhi(rd) {\\n    // MFHI rd - Move From HI\\n    this.registers[rd] = this.hi;\\n  }\\n  \\n  mflo(rd) {\\n    // MFLO rd - Move From LO\\n    this.registers[rd] = this.lo;\\n  }\\n  \\n  mthi(rs) {\\n    // MTHI rs - Move To HI\\n    this.hi = this.registers[rs];\\n  }\\n  \\n  mtlo(rs) {\\n    // MTLO rs - Move To LO\\n    this.lo = this.registers[rs];\\n  }\\n  \\n  mult(rs, rt) {\\n    // MULT rs,rt - Multiply (signed)\\n    // JavaScript handles signed multiplication natively\\n    const result = BigInt(this.registers[rs] | 0) * BigInt(this.registers[rt] | 0);\\n    \\n    // Store 64-bit result in HI/LO\\n    this.lo = Number(result & BigInt(0xFFFFFFFF));\\n    this.hi = Number((result >> BigInt(32)) & BigInt(0xFFFFFFFF));\\n  }\\n  \\n  multu(rs, rt) {\\n    // MULTU rs,rt - Multiply Unsigned\\n    const result = BigInt(this.regi…",
+    "ref_id": "tool_call_result_1",
+    "sensitive": false,
+    "size_bytes": 58754,
+    "summary": "builtins.dict value with 58754 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_168838f0-a9ae-445a-b30a-1893dbaa32a0",
+  "source": "tool:run_shell",
+  "status": "active"
+}

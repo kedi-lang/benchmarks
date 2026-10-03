@@ -1,0 +1,412 @@
+expression(sample_count <- 1000L, ars_validate_inputs <- function(domain, 
+    n) {
+    if (!is.numeric(domain) || length(domain) != 2L || any(is.na(domain))) {
+        stop("domain must be a numeric vector of length two")
+    }
+    if (domain[1L] >= domain[2L]) {
+        stop("domain must have a strictly smaller lower endpoint")
+    }
+    if (all(is.infinite(domain))) {
+        if (!(is.infinite(domain[1L]) && is.infinite(domain[2L]))) {
+            stop("invalid infinite domain")
+        }
+    }
+    if (length(n) != 1L || !is.numeric(n) || is.na(n) || !is.finite(n) || 
+        n < 0 || n != floor(n)) {
+        stop("n must be one non-negative, finite integer")
+    }
+    invisible(TRUE)
+}, ars_make_density_evaluator <- function(density_expression, 
+    caller) {
+    if (is.function(density_expression)) {
+        density_fun <- density_expression
+    }
+    else if (is.name(density_expression)) {
+        if (!exists(as.character(density_expression), envir = caller, 
+            inherits = TRUE)) {
+            stop("density_function name was not found")
+        }
+        density_fun <- get(as.character(density_expression), 
+            envir = caller, inherits = TRUE)
+        if (!is.function(density_fun)) {
+            stop("density_function must be a function or an expression involving x")
+        }
+    }
+    else if (is.language(density_expression) || is.expression(density_expression)) {
+        expr <- if (is.expression(density_expression)) 
+            density_expression[[1L]]
+        else density_expression
+        if (is.call(expr) && identical(expr[[1L]], as.name("function"))) {
+            density_fun <- eval(expr, envir = caller)
+        }
+        else {
+            density_fun <- function(x) eval(expr, envir = list(x = x), 
+                enclos = caller)
+        }
+    }
+    else {
+        stop("density_function must be a function or an expression involving x")
+    }
+    function(x) {
+        if (!is.numeric(x)) 
+            stop("density evaluation requires numeric x")
+        value <- tryCatch(density_fun(x), error = function(e) {
+            stop("density_function could not be evaluated: ", 
+                conditionMessage(e))
+        })
+        if (!is.numeric(value) || length(value) != length(x) || 
+            is.complex(value)) {
+            stop("density_function must be vectorized and return one numeric value per x")
+        }
+        if (anyNA(value) || any(is.nan(value)) || any(value < 
+            0, na.rm = TRUE) || any(is.infinite(value) & value < 
+            0, na.rm = TRUE)) {
+            stop("density_function must return non-negative, non-NaN values")
+        }
+        if (any(is.infinite(value) & value > 0)) {
+            stop("density_function returned a positive infinite value")
+        }
+        value
+    }
+}, ars_log_density <- function(density_evaluator, x) {
+    value <- density_evaluator(x)
+    ans <- rep(-Inf, length(value))
+    positive <- value > 0
+    ans[positive] <- log(value[positive])
+    ans
+}, ars_initial_points <- function(domain) {
+    lo <- domain[1L]
+    hi <- domain[2L]
+    if (is.finite(lo) && is.finite(hi)) {
+        width <- hi - lo
+        if (!is.finite(width) || width <= 0) 
+            stop("domain is too wide or invalid")
+        lo + width * c(0.2, 0.5, 0.8)
+    }
+    else if (is.finite(lo)) {
+        lo + c(0.5, 1.5, 3.5)
+    }
+    else if (is.finite(hi)) {
+        hi - c(3.5, 1.5, 0.5)
+    }
+    else {
+        c(-4, -1, 1, 4)
+    }
+}, ars_log_derivative <- function(x, log_density, domain) {
+    if (!is.finite(x)) 
+        stop("ARS support points must be finite")
+    scale <- max(1, abs(x))
+    step <- 1e-05 * scale
+    if (is.finite(domain[1L])) 
+        step <- min(step, (x - domain[1L])/4)
+    if (is.finite(domain[2L])) 
+        step <- min(step, (domain[2L] - x)/4)
+    if (!is.finite(step) || step <= 0) 
+        stop("could not choose a derivative step")
+    left <- x - step
+    right <- x + step
+    hl <- log_density(left)
+    hr <- log_density(right)
+    if (!is.finite(hl) || !is.finite(hr)) {
+        h0 <- log_density(x)
+        if (!is.finite(h0)) 
+            stop("initial points must have positive finite density")
+        if (is.finite(hr)) 
+            return((hr - h0)/step)
+        if (is.finite(hl)) 
+            return((h0 - hl)/step)
+        stop("could not estimate a finite log-density derivative")
+    }
+    (hr - hl)/(2 * step)
+}, ars_check_concavity <- function(x, h, slope, tolerance = 2e-05) {
+    if (length(x) < 2L || any(!is.finite(h)) || any(!is.finite(slope))) {
+        stop("initial/support points must have positive finite density and finite slopes")
+    }
+    ord <- order(x)
+    x <- x[ord]
+    h <- h[ord]
+    slope <- slope[ord]
+    scale <- 1 + max(abs(slope))
+    if (any(diff(slope) > tolerance * scale)) {
+        stop("density is not log-concave: estimated log-density slope increases")
+    }
+    invisible(TRUE)
+}, ars_grid_concavity_check <- function(log_density, domain) {
+    lo <- domain[1L]
+    hi <- domain[2L]
+    if (is.finite(lo) && is.finite(hi)) {
+        width <- hi - lo
+        eps <- min(width/1000, 1e-08 * max(1, width))
+        if (eps <= 0) 
+            eps <- width/1000
+        grid <- seq(lo + eps, hi - eps, length.out = 25L)
+    }
+    else if (is.finite(lo)) {
+        grid <- lo + seq(0.05, 12, length.out = 25L)
+    }
+    else if (is.finite(hi)) {
+        grid <- hi - seq(12, 0.05, length.out = 25L)
+    }
+    else {
+        grid <- seq(-10, 10, length.out = 41L)
+    }
+    hg <- log_density(grid)
+    if (any(!is.finite(hg))) {
+        stop("density must be positive and finite throughout the sampled interior")
+    }
+    curvature <- hg[-c(1L, length(hg))] - (hg[-c(length(hg) - 
+        1L, length(hg))] + hg[-c(1L, 2L)])/2
+    tol <- 1e-06 * (1 + max(abs(hg)))
+    if (any(curvature < -tol)) {
+        stop("density failed the log-concavity check")
+    }
+    invisible(TRUE)
+}, ars_build_hull <- function(x, h, slope, domain) {
+    ord <- order(x)
+    x <- x[ord]
+    h <- h[ord]
+    slope <- slope[ord]
+    if (anyDuplicated(x)) 
+        stop("duplicate ARS support point")
+    ars_check_concavity(x, h, slope)
+    k <- length(x)
+    z <- c(domain[1L], rep(NA_real_, k - 1L), domain[2L])
+    for (j in seq_len(k - 1L)) {
+        difference <- slope[j] - slope[j + 1L]
+        if (difference < -2e-05 * (1 + max(abs(slope)))) {
+            stop("density is not log-concave: tangent slopes are out of order")
+        }
+        if (abs(difference) <= 2e-05 * (1 + max(abs(slope)))) {
+            z[j + 1L] <- (x[j] + x[j + 1L])/2
+        }
+        else {
+            intercept1 <- h[j] - slope[j] * x[j]
+            intercept2 <- h[j + 1L] - slope[j + 1L] * x[j + 1L]
+            z[j + 1L] <- (intercept2 - intercept1)/difference
+        }
+    }
+    if (anyNA(z) || any(is.nan(z))) 
+        stop("could not construct ARS tangent intersections")
+    if (any(diff(z) <= 0, na.rm = TRUE)) {
+        stop("density is not log-concave: tangent intersections are out of order")
+    }
+    list(x = x, h = h, slope = slope, z = z)
+}, ars_log1mexp <- function(a) {
+    if (a >= 0) 
+        return(-Inf)
+    if (a > -log(2)) 
+        log(-expm1(a))
+    else log1p(-exp(a))
+}, ars_log_integral <- function(left, right, intercept, slope) {
+    if (is.infinite(left) && left > 0) 
+        stop("invalid hull interval")
+    if (is.infinite(right) && right < 0) 
+        stop("invalid hull interval")
+    if (slope == 0) {
+        if (!is.finite(left) || !is.finite(right)) 
+            stop("flat tangent on an infinite tail")
+        return(intercept + log(right - left))
+    }
+    if (is.infinite(left) && slope <= 0) 
+        stop("left infinite tail is not integrable")
+    if (is.infinite(right) && slope >= 0) 
+        stop("right infinite tail is not integrable")
+    if (is.infinite(left)) 
+        return(intercept + slope * right - log(slope))
+    if (is.infinite(right)) 
+        return(intercept + slope * left - log(-slope))
+    if (slope > 0) {
+        intercept + slope * right + ars_log1mexp(slope * (left - 
+            right)) - log(slope)
+    }
+    else {
+        intercept + slope * left + ars_log1mexp(slope * (right - 
+            left)) - log(-slope)
+    }
+}, ars_sample_from_hull <- function(hull) {
+    k <- length(hull$x)
+    log_mass <- vapply(seq_len(k), function(j) {
+        intercept <- hull$h[j] - hull$slope[j] * hull$x[j]
+        ars_log_integral(hull$z[j], hull$z[j + 1L], intercept, 
+            hull$slope[j])
+    }, numeric(1L))
+    if (any(!is.finite(log_mass)) && all(!is.finite(log_mass))) {
+        stop("the ARS envelope has no finite mass")
+    }
+    log_mass[!is.finite(log_mass)] <- -Inf
+    max_mass <- max(log_mass)
+    probabilities <- exp(log_mass - max_mass)
+    probabilities <- probabilities/sum(probabilities)
+    j <- sample.int(k, size = 1L, prob = probabilities)
+    left <- hull$z[j]
+    right <- hull$z[j + 1L]
+    m <- hull$slope[j]
+    u <- runif(1L)
+    if (abs(m) < 1e-12) {
+        if (!is.finite(left) || !is.finite(right)) 
+            stop("flat tangent on an infinite interval")
+        candidate <- left + u * (right - left)
+    }
+    else if (m > 0) {
+        a <- if (is.finite(left)) 
+            exp(m * (left - right))
+        else 0
+        candidate <- right + log(u + (1 - u) * a)/m
+    }
+    else {
+        a <- if (is.finite(right)) 
+            exp(m * (right - left))
+        else 0
+        candidate <- left + log((1 - u) + u * a)/m
+    }
+    if (!is.finite(candidate)) 
+        stop("failed to sample from the ARS envelope")
+    candidate
+}, ars_upper_at <- function(x, hull) {
+    j <- findInterval(x, hull$z, rightmost.closed = TRUE)
+    j <- max(1L, min(length(hull$x), j))
+    hull$h[j] + hull$slope[j] * (x - hull$x[j])
+}, ars <- function(density_function, domain, n = sample_count) {
+    ars_validate_inputs(domain, n)
+    density_expression <- substitute(density_function)
+    evaluator <- ars_make_density_evaluator(density_expression, 
+        parent.frame())
+    log_density <- function(x) ars_log_density(evaluator, x)
+    if (n == 0) 
+        return(numeric(0L))
+    initial <- ars_initial_points(domain)
+    initial_h <- log_density(initial)
+    if (any(!is.finite(initial_h))) {
+        stop("initial points must have positive finite density")
+    }
+    ars_grid_concavity_check(log_density, domain)
+    initial_slope <- vapply(initial, ars_log_derivative, numeric(1L), 
+        log_density = log_density, domain = domain)
+    ars_check_concavity(initial, initial_h, initial_slope)
+    hull <- ars_build_hull(initial, initial_h, initial_slope, 
+        domain)
+    result <- numeric(n)
+    accepted <- 0L
+    attempts <- 0L
+    max_attempts <- max(10000, 100 * as.numeric(n))
+    while (accepted < n) {
+        attempts <- attempts + 1L
+        if (attempts > max_attempts) {
+            stop("ARS exceeded its rejection limit; check the density and domain")
+        }
+        candidate <- ars_sample_from_hull(hull)
+        upper <- ars_upper_at(candidate, hull)
+        candidate_h <- log_density(candidate)
+        if (is.finite(candidate_h) && candidate_h > upper + 1e-07 * 
+            (1 + abs(upper))) {
+            stop("density is not log-concave: target exceeded its tangent envelope")
+        }
+        accept <- is.finite(candidate_h) && log(runif(1L)) <= 
+            min(0, candidate_h - upper)
+        if (is.finite(candidate_h) && !accept && length(hull$x) < 
+            80L) {
+            candidate_slope <- ars_log_derivative(candidate, 
+                log_density, domain)
+            x_new <- c(hull$x, candidate)
+            h_new <- c(hull$h, candidate_h)
+            slope_new <- c(hull$slope, candidate_slope)
+            ord <- order(x_new)
+            x_new <- x_new[ord]
+            h_new <- h_new[ord]
+            slope_new <- slope_new[ord]
+            if (min(abs(x_new[-length(x_new)] - x_new[-1L])) > 
+                1e-12 * (1 + max(abs(x_new)))) {
+                ars_check_concavity(x_new, h_new, slope_new)
+                hull <- ars_build_hull(x_new, h_new, slope_new, 
+                  domain)
+            }
+        }
+        if (accept) {
+            accepted <- accepted + 1L
+            result[accepted] <- candidate
+        }
+    }
+    result
+}, test <- function() {
+    set.seed(202503)
+    pass <- TRUE
+    normal <- tryCatch(ars(function(x) dnorm(x), c(-Inf, Inf), 
+        n = 4000L), error = function(e) {
+        message("normal error: ", e$message)
+        NULL
+    })
+    if (is.null(normal)) {
+        cat("NORMAL_DISTRIBUTION: FAIL (mean=NA, sd=NA)\n")
+        pass <- FALSE
+    }
+    else {
+        nm <- mean(normal)
+        ns <- sd(normal)
+        ok <- abs(nm) < 0.1 && abs(ns - 1) < 0.1
+        cat(sprintf("NORMAL_DISTRIBUTION: %s (mean=%.4f, sd=%.4f)\n", 
+            if (ok) 
+                "PASS"
+            else "FAIL", nm, ns))
+        if (!ok) 
+            pass <- FALSE
+        write.table(normal, "/app/normal_samples.txt", row.names = FALSE, 
+            col.names = FALSE)
+    }
+    exponential <- tryCatch(ars(function(x) dexp(x), c(0, Inf), 
+        n = 4000L), error = function(e) {
+        message("exponential error: ", e$message)
+        NULL
+    })
+    if (is.null(exponential)) {
+        cat("EXPONENTIAL_DISTRIBUTION: FAIL (mean=NA, sd=NA)\n")
+        pass <- FALSE
+    }
+    else {
+        em <- mean(exponential)
+        es <- sd(exponential)
+        ok <- abs(em - 1) < 0.1 && abs(es - 1) < 0.1 && all(exponential >= 
+            0)
+        cat(sprintf("EXPONENTIAL_DISTRIBUTION: %s (mean=%.4f, sd=%.4f)\n", 
+            if (ok) 
+                "PASS"
+            else "FAIL", em, es))
+        if (!ok) 
+            pass <- FALSE
+        write.table(exponential, "/app/exponential_samples.txt", 
+            row.names = FALSE, col.names = FALSE)
+    }
+    bad_input <- tryCatch({
+        ars(dnorm, c(1, 0), n = 2)
+        FALSE
+    }, error = function(e) TRUE)
+    cat(sprintf("INVALID_INPUT_REJECTED: %s (mean=NA, sd=NA)\n", 
+        if (bad_input) 
+            "PASS"
+        else "FAIL"))
+    if (!bad_input) 
+        pass <- FALSE
+    nonconcave <- tryCatch({
+        ars(function(x) 0.5 * dnorm(x, -3, 0.7) + 0.5 * dnorm(x, 
+            3, 0.7), c(-10, 10), n = 2)
+        FALSE
+    }, error = function(e) TRUE)
+    cat(sprintf("NON_LOG_CONCAVE_REJECTED: %s (mean=NA, sd=NA)\n", 
+        if (nonconcave) 
+            "PASS"
+        else "FAIL"))
+    if (!nonconcave) 
+        pass <- FALSE
+    mass <- tryCatch(exp(ars_log_integral(0, Inf, 0, -1)), error = function(e) NA_real_)
+    flat_mass <- tryCatch(exp(ars_log_integral(0, 2, 0, 0)), 
+        error = function(e) NA_real_)
+    hull_ok <- is.finite(mass) && is.finite(flat_mass) && abs(mass - 
+        1) < 1e-10 && abs(flat_mass - 2) < 1e-10
+    cat(sprintf("HULL_INTEGRATION: %s (mean=%.4f, sd=%.4f)\n", 
+        if (hull_ok) 
+            "PASS"
+        else "FAIL", mass, flat_mass))
+    if (!hull_ok) 
+        pass <- FALSE
+    invisible(pass)
+})
+parse: PASS

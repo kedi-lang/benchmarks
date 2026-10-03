@@ -1,0 +1,304 @@
+d_iwad.c:729:            I_Error("IWAD file '%s' not found!", iwadfile);
+d_loop.c:258:        I_Error("Disconnected from server in drone mode.");
+d_loop.c:325:            I_Error("Lost connection to server");
+d_loop.c:331:            I_Error("Netgame startup aborted.");
+d_loop.c:502:                I_Error("No server found on local LAN");
+d_loop.c:523:                I_Error("Unable to resolve '%s'\n", myargv[i+1]);
+d_loop.c:537:            I_Error("D_InitNetGame: Failed to connect to %s\n",
+d_main.c:715:    I_Error("Unknown mission pack name: %s", pack_name);
+d_main.c:752:            I_Error("Unknown or invalid IWAD file.");
+d_main.c:984:            I_Error("Unknown game version '%s'", myargv[p+1]);
+d_main.c:1106:            I_Error("DEHACKED lump not found.  Please check that this is the "
+d_main.c:1145:            I_Error("Unable to find Chex Quest dehacked file (chex.deh).\n"
+d_main.c:1154:            I_Error("Failed to load chex.deh needed for emulating chex.exe.");
+d_main.c:1372:        I_Error("Game mode indeterminate.  No IWAD file was found.  Try\n"
+doomgeneric_allegro.c:57:		I_Error("Allegro init failed: %d %s\n", result, allegro_error);
+doomgeneric_allegro.c:76:		I_Error("Unable to install timer: %d %s\n", result, allegro_error);
+doomgeneric_allegro.c:107:			I_Error("Failed to set video mode: %s\n", allegro_error);
+doomgeneric_allegro.c:116:			I_Error("screen is null\n");
+doomgeneric_allegro.c:121:			I_Error("Failed to create temp bitmap\n");
+g_game.c:1203:                I_Error("G_CheckSpot: unexpected angle %d\n", an);
+g_game.c:1629:        // to be nice, save to somewhere else before we call I_Error().
+g_game.c:1634:            I_Error("Failed to open either '%s' or '%s' to write savegame.",
+g_game.c:1667:        I_Error("Failed to open savegame file '%s' for writing.\n"
+g_game.c:2045:            I_Error("Doom 1.2 does not have a version code!");
+i_sdlmusic.c:737:        I_Error("Failed to open %s for writing", filename);
+i_sdlsound.c:275:        I_Error("Sound effect released more times than it was locked...");
+i_sdlsound.c:1002:            I_Error("I_SDL_InitSound: Invalid value for use_libsamplerate: %i",
+i_system.c:112:            I_Error("Unable to allocate %i MiB of RAM for zone", default_ram);
+m_argv.c:119:            I_Error("Failed to read full contents of '%s'", response_filename);
+m_argv.c:178:                I_Error("Quotes unclosed in response file '%s'",
+m_config.c:1954:        I_Error("Unknown configuration variable: '%s'", name);
+m_menu.c:803:            I_Error("Unhandled game version");
+m_misc.c:300:        I_Error("Failed to duplicate string (length %i)\n",
+m_misc.c:341:        I_Error("M_StringReplace: Failed to allocate new string");
+m_misc.c:452:        I_Error("M_StringJoin: Failed to allocate new string.");
+p_doors.c:768:	    I_Error("EV_SlidingDoor: Can't use texture for sliding door!");
+p_spec.c:360:                I_Error("Sector with more than 22 adjoining sectors. "
+p_spec.c:1466:                I_Error("Too many scrolling wall linedefs! "
+p_switch.c:131:		I_Error("Can't find switch texture '%s'!",
+p_switch.c:183:    I_Error("P_StartButton: no button slots left!");
+r_draw.c:604:	I_Error( "R_DrawSpan: %i to %i at %i",
+r_draw.c:733:	I_Error( "R_DrawSpan: %i to %i at %i",
+r_things.c:109:	I_Error("R_InstallSpriteLump: "
+s_sound.c:406:        I_Error("Bad sfx #: %d", sfx_id);
+s_sound.c:575:        I_Error("Attempt to set music volume at %d",
+s_sound.c:586:        I_Error("Attempt to set sfx volume at %d", volume);
+s_sound.c:618:        I_Error("Bad music number %d", musicnum);
+st_lib.c:116:	I_Error("drawNum: n->y - ST_Y < 0");
+st_lib.c:224:		I_Error("updateMultIcon: y - ST_Y < 0");
+st_lib.c:273:	    I_Error("updateBinIcon: y - ST_Y < 0");
+v_video.c:165:        I_Error("Bad V_DrawPatch x=%i y=%i patch.width=%i patch.height=%i topoffset=%i leftoffset=%i", x, y, patch->width, patch->height, patch->topoffset, patch->leftoffset);
+v_video.c:229:        I_Error("Bad V_DrawPatchFlipped");
+v_video.c:294:        I_Error("Bad V_DrawTLPatch");
+v_video.c:393:        I_Error("Bad V_DrawAltTLPatch");
+v_video.c:444:        I_Error("Bad V_DrawShadowedPatch");
+w_wad.c:599:                I_Error("\nYou are trying to use a %s IWAD file with "
+z_zone.c:436:        I_Error("%s:%i: Z_ChangeTag: block without a ZONEID!",
+z_zone.c:440:        I_Error("%s:%i: Z_ChangeTag: an owner is required "
+z_zone.c:454:        I_Error("Z_ChangeUser: Tried to change user for invalid block!");
+114:void S_Init(int sfxVolume, int musicVolume)
+115-{  
+116-    int i;
+117-
+118-    I_PrecacheSounds(S_sfx, NUMSFX);
+119-
+120-    S_SetSfxVolume(sfxVolume);
+121-    S_SetMusicVolume(musicVolume);
+122-
+123-    // Allocating the internal channels for mixing
+124-    // (the maximum numer of sounds rendered
+125-    // simultaneously) within zone memory.
+126-    channels = Z_Malloc(snd_channels*sizeof(channel_t), PU_STATIC, 0);
+127-
+128-    // Free all channels for use
+129-    for (i=0 ; i<snd_channels ; i++)
+130-    {
+131-        channels[i].sfxinfo = 0;
+132-    }
+133-
+134-    // no sounds are playing, and they are not mus_paused
+135-    mus_paused = 0;
+136-
+137-    // Note that sounds have not been cached (yet).
+138-    for (i=1 ; i<NUMSFX ; i++)
+139-    {
+140-        S_sfx[i].lumpnum = S_sfx[i].usefulness = -1;
+141-    }
+142-
+143-    I_AtExit(S_Shutdown, true);
+144-}
+145-
+146-void S_Shutdown(void)
+147-{
+148-    I_ShutdownSound();
+149-    I_ShutdownMusic();
+150-}
+151-
+152-static void S_StopChannel(int cnum)
+153-{
+154-    int i;
+155-    channel_t *c;
+156-
+157-    c = &channels[cnum];
+158-
+159-    if (c->sfxinfo)
+160-    {
+161-        // stop the sound playing
+162-
+163-        if (I_SoundIsPlaying(c->handle))
+164-        {
+165-            I_StopSound(c->handle);
+166-        }
+167-
+168-        // check to see if other channels are playing the sound
+169-
+170-        for (i=0; i<snd_channels; i++)
+171-        {
+172-            if (cnum != i && c->sfxinfo == channels[i].sfxinfo)
+173-            {
+174-                break;
+175-            }
+176-        }
+177-        
+178-        // degrade usefulness of sound data
+179-
+180-        c->sfxinfo->usefulness--;
+181-        c->sfxinfo = NULL;
+182-    }
+183-}
+184-
+185-//
+186-// Per level startup code.
+187-// Kills playing sounds at start of level,
+188-//  determines music if any, changes music.
+189-//
+190-
+191-void S_Start(void)
+192-{
+193-    int cnum;
+194-    int mnum;
+195-
+196-    // kill all playing sounds at start of level
+197-    //  (trust me - a good idea)
+198-    for (cnum=0 ; cnum<snd_channels ; cnum++)
+199-    {
+200-        if (channels[cnum].sfxinfo)
+201-        {
+202-            S_StopChannel(cnum);
+203-        }
+204-    }
+205-
+206-    // start new music for the level
+207-    mus_paused = 0;
+208-
+209-    if (gamemode == commercial)
+210-    {
+211-        mnum = mus_runnin + gamemap - 1;
+212-    }
+213-    else
+214-    {
+d_net.c:240:void D_CheckNetGame (void)
+d_net.c-241-{
+d_net.c-242-    net_gamesettings_t settings;
+d_net.c-243-
+d_net.c-244-    if (netgame)
+d_net.c-245-    {
+d_net.c-246-        autostart = true;
+d_net.c-247-    }
+d_net.c-248-
+d_net.c-249-    D_RegisterLoopCallbacks(&doom_loop_interface);
+d_net.c-250-
+d_net.c-251-    SaveGameSettings(&settings);
+d_net.c-252-    D_StartNetGame(&settings, NULL);
+d_net.c-253-    LoadGameSettings(&settings);
+d_net.c-254-
+d_net.c-255-    DEH_printf("startskill %i  deathmatch: %i  startmap: %i  startepisode: %i\n",
+d_net.c-256-               startskill, deathmatch, startmap, startepisode);
+d_net.c-257-
+d_net.c-258-    DEH_printf("player %i of %i (%i nodes)\n",
+d_net.c-259-               consoleplayer+1, settings.num_players, settings.num_players);
+d_net.c-260-
+d_net.c-261-    // Show players here; the server might have specified a time limit
+d_net.c-262-
+d_net.c-263-    if (timelimit > 0 && deathmatch)
+d_net.c-264-    {
+d_net.c-265-        // Gross hack to work like Vanilla:
+d_net.c-266-
+d_net.c-267-        if (timelimit == 20 && M_CheckParm("-avg"))
+d_net.c-268-        {
+d_net.c-269-            DEH_printf("Austin Virtual Gaming: Levels will end "
+d_net.c-270-                           "after 20 minutes\n");
+d_net.c-271-        }
+d_net.c-272-        else
+d_net.c-273-        {
+d_net.c-274-            DEH_printf("Levels will end after %d minute", timelimit);
+d_net.c-275-            if (timelimit > 1)
+d_net.c-276-                printf("s");
+d_net.c-277-            printf(".\n");
+d_net.c-278-        }
+d_net.c-279-    }
+d_net.c-280-}
+d_net.c-281-
+--
+d_main.c:132:void D_CheckNetGame(void);
+d_main.c-133-
+d_main.c-134-
+d_main.c-135-//
+d_main.c-136-// D_ProcessEvents
+d_main.c-137-// Send all the events of the given timestamp down the responder chain
+d_main.c-138-//
+d_main.c-139-void D_ProcessEvents (void)
+d_main.c-140-{
+d_main.c-141-    event_t*	ev;
+d_main.c-142-	
+d_main.c-143-    // IF STORE DEMO, DO NOT ACCEPT INPUT
+d_main.c-144-    if (storedemo)
+d_main.c-145-        return;
+d_main.c-146-	
+d_main.c-147-    while ((ev = D_PopEvent()) != NULL)
+d_main.c-148-    {
+d_main.c-149-	if (M_Responder (ev))
+d_main.c-150-	    continue;               // menu ate the event
+d_main.c-151-	G_Responder (ev);
+d_main.c-152-    }
+d_main.c-153-}
+d_main.c-154-
+d_main.c-155-
+d_main.c-156-
+d_main.c-157-
+d_main.c-158-//
+d_main.c-159-// D_Display
+d_main.c-160-//  draw current display, possibly wiping it from the previous
+d_main.c-161-//
+d_main.c-162-
+d_main.c-163-// wipegamestate can be set to -1 to force a wipe on the next draw
+d_main.c-164-gamestate_t     wipegamestate = GS_DEMOSCREEN;
+d_main.c-165-extern  boolean setsizeneeded;
+d_main.c-166-extern  int             showMessages;
+d_main.c-167-void R_ExecuteSetViewSize (void);
+d_main.c-168-
+d_main.c-169-void D_Display (void)
+d_main.c-170-{
+d_main.c-171-    static  boolean		viewactivestate = false;
+d_main.c-172-    static  boolean		menuactivestate = false;
+d_main.c-173-    static  boolean		inhelpscreensstate = false;
+d_main.c-174-    static  boolean		fullscreen = false;
+d_main.c-175-    static  gamestate_t		oldgamestate = -1;
+d_main.c-176-    static  int			borderdrawcount;
+d_main.c-177-    int				nowtime;
+d_main.c-178-    int				tics;
+d_main.c-179-    int				wipestart;
+d_main.c-180-    int				y;
+d_main.c-181-    boolean			done;
+d_main.c-182-    boolean			wipe;
+d_main.c-183-    boolean			redrawsbar;
+d_main.c-184-
+d_main.c-185-    if (nodrawers)
+d_main.c-186-    	return;                    // for comparative timing / profiling
+d_main.c-187-		
+d_main.c-188-    redrawsbar = false;
+d_main.c-189-    
+d_main.c-190-    // change the view size if needed
+d_main.c-191-    if (setsizeneeded)
+d_main.c-192-    {
+d_main.c-193-		R_ExecuteSetViewSize ();
+d_main.c-194-		oldgamestate = -1;                      // force background redraw
+d_main.c-195-		borderdrawcount = 3;
+d_main.c-196-    }
+d_main.c-197-
+d_main.c-198-    // save the current screen if about to wipe
+d_main.c-199-    if (gamestate != wipegamestate)
+d_main.c-200-		{
+d_main.c-201-		wipe = true;
+d_main.c-202-		wipe_StartScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
+d_main.c-203-    }
+d_main.c-204-    else
+d_main.c-205-    	wipe = false;
+d_main.c-206-
+d_main.c-207-    if (gamestate == GS_LEVEL && gametic)
+d_main.c-208-    	HU_Erase();
+d_main.c-209-    
+d_main.c-210-    // do buffered drawing
+d_main.c-211-    switch (gamestate)
+d_main.c-212-    {
+d_main.c-213-      case GS_LEVEL:
+d_main.c-214-		if (!gametic)
+d_main.c-215-			break;
+d_main.c-216-		if (automapactive)
+d_main.c-217-			AM_Drawer ();
+d_main.c-218-		if (wipe || (viewheight != 200 && fullscreen) )
+d_main.c-219-			redrawsbar = true;
+d_main.c-220-		if (inhelpscreensstate && !inhelpscreens)
+d_main.c-221-			redrawsbar = true;              // just put away the help screen
+d_main.c-222-		ST_Drawer (viewheight == 200, redrawsbar );
+d_main.c-223-		fullscreen = viewheight == 200;
+d_main.c-224-		break;
+d_main.c-225-
+d_main.c-226-      case GS_INTERMISSION:
+d_main.c-227-		WI_Drawer ();
+d_main.c-228-		break;
+d_main.c-229-
+d_main.c-230-      case GS_FINALE:
+d_main.c-231-		F_Drawer ();
+d_main.c-232-		break;

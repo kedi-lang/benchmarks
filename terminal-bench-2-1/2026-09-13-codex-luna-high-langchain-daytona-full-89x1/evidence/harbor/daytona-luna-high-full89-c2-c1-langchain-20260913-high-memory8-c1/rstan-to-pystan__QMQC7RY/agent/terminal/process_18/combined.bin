@@ -1,0 +1,71 @@
+transformed parameters {
+  vector[N] mu = H * beta;
+  matrix[N, N] K = cov_ard_sqexp(X, rho, alpha, jitter)
+                   + diag_matrix(rep_vector(square(sigma), N));
+  matrix[N, N] L_K = cholesky_decompose(K);
+}
+
+model {
+  beta  ~ normal(0, 1);
+  alpha ~ normal(0, 1.5);
+  rho   ~ lognormal(0, 1);
+  sigma ~ normal(0, 0.5);
+  y ~ multi_normal_cholesky(mu, L_K);
+}
+
+generated quantities {
+  vector[N_new] y_new;
+  if (N_new > 0) {
+    matrix[N, N_new] K_x_xnew = cross_cov_ard(X, X_new, rho, alpha);
+    matrix[N_new, N_new] K_new = cov_ard_sqexp(X_new, rho, alpha, jitter);
+    vector[N] resid = y - (H * beta);
+
+    vector[N] alpha_vec = mdivide_left_tri_low(L_K, resid);
+    alpha_vec = mdivide_left_tri_low(L_K', alpha_vec);
+
+    vector[N_new] f_mean = (K_x_xnew' * alpha_vec);
+    matrix[N, N_new] v = mdivide_left_tri_low(L_K, K_x_xnew);
+    vector[N_new] f_var = to_vector(diagonal(K_new)) - to_vector(columns_dot_self(v));
+    for (m in 1:N_new) {
+      real m_mean = (H_new[m] * beta) + f_mean[m];
+      real m_sd   = sqrt(f_var[m] + square(sigma));
+      y_new[m] = normal_rng(m_mean, m_sd);
+    }
+  }
+}
+'''
+
+
+def read_numeric_csv(path: Path) -> np.ndarray:
+    """Read a headered numeric CSV in the same way as readr::read_csv here."""
+    with path.open(newline="") as handle:
+        rows = list(csv.reader(handle))
+    return np.asarray([[float(value) for value in row] for row in rows[1:]], dtype=float)
+
+
+def main() -> None:
+    with (BASE / "meta_public.json").open() as handle:
+        meta = json.load(handle)
+
+    train_X = read_numeric_csv(BASE / "train_X.csv")
+    test_X = read_numeric_csv(BASE / "test_X.csv")
+    train_y = read_numeric_csv(BASE / "train_y.csv").reshape(-1)
+
+    P = int(meta["P"])
+    jitter = float(meta["jitter"])
+    N, D = train_X.shape
+    N_new = test_X.shape[0]
+    H = np.column_stack((np.ones(N), train_X[:, 0], train_X[:, 1]))
+    H_new = np.column_stack((np.ones(N_new), test_X[:, 0], test_X[:, 1]))
+
+    data = {
+        "N": N,
+        "D": D,
+        "X": train_X,
+        "P": P,
+        "H": H,
+        "y": train_y,
+        "jitter": jitter,
+        "N_new": N_new,
+        "X_new": test_X,
+        "H_new": H_new,

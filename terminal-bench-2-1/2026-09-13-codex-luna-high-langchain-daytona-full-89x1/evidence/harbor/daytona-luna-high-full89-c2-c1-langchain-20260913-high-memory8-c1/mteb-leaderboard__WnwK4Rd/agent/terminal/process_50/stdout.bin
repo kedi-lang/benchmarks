@@ -1,0 +1,75 @@
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py:308:    def filter_languages(
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-309-        self,
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-310-        languages: list[str] | None,
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-311-        script: list[str] | None = None,
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-312-        hf_subsets: list[HFSubset] | None = None,
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-313-        exclusive_language_filter: bool = False,
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-314-    ) -> AbsTask:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-315-        """Filter the languages of the task.
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-316-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-317-        Args:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-318-            languages: list of languages to filter the task by can be either a 3-letter langauge code (e.g. "eng") or also include the script
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-319-                (e.g. "eng-Latn")
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-320-            script: A list of scripts to filter the task by. Will be ignored if language code specified the script. If None, all scripts are included.
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-321-                If the language code does not specify the script the intersection of the language and script will be used.
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-322-            hf_subsets: A list of huggingface subsets to filter on. This is useful if a dataset have multiple subsets containing the desired language,
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-323-                but you only want to test on one. An example is STS22 which e.g. have both "en" and "de-en" which both contains English.
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-324-            exclusive_language_filter: Some datasets contains more than one language e.g. for STS22 the subset "de-en" contain eng and deu. If
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-325-                exclusive_language_filter is set to False both of these will be kept, but if set to True only those that contains all the languages
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-326-                specified will be kept.
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-327-        """
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-328-        lang_scripts = LanguageScripts.from_languages_and_scripts(languages, script)
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-329-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-330-        subsets_to_keep = []
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-331-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-332-        for hf_subset, langs in self.metadata.hf_subsets_to_langscripts.items():
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-333-            if (hf_subsets is not None) and (hf_subset not in hf_subsets):
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-334-                continue
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-335-            if exclusive_language_filter is False:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-336-                for langscript in langs:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-337-                    if lang_scripts.contains_language(
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-338-                        langscript
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-339-                    ) or lang_scripts.contains_script(langscript):
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-340-                        subsets_to_keep.append(hf_subset)
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-341-                        break
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-342-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-343-            if exclusive_language_filter is True and languages:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-344-                if lang_scripts.contains_languages(langs):
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-345-                    subsets_to_keep.append(hf_subset)
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-346-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-347-        self.hf_subsets = subsets_to_keep
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-348-        return self
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-349-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-350-    @property
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-351-    def is_aggregate(
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-352-        self,
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-353-    ) -> bool:  # Overrided by subclasses (AbsTaskAggregate) that are aggregate
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-354-        """Whether the task is aggregate. Subclasses that are aggregate should override this with `True`."""
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-355-        return False
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-356-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-357-    @property
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-358-    def eval_splits(self) -> list[str]:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-359-        if self._eval_splits:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-360-            return self._eval_splits
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-361-        return self.metadata.eval_splits
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-362-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-363-    @property
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-364-    def modalities(self) -> list[str]:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-365-        """Returns the modalities of the task"""
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-366-        return self.metadata.modalities
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-367-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-368-    def __repr__(self) -> str:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-369-        """Format the representation of the task such that it appears as:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-370-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-371-        TaskObjectName(name='{name}', languages={lang1, lang2, ...})
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-372-        """
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-373-        langs = self.languages
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-374-        if len(langs) > 3:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-375-            langs = langs[:3]
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-376-            langs.append("...")
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-377-        return (
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-378-            f"{self.__class__.__name__}(name='{self.metadata.name}', languages={langs})"
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-379-        )
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-380-
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-381-    def __hash__(self) -> int:
+27be67143393fc6eebe86bf247184d6a37e47bab:mteb/abstasks/AbsTask.py-382-        return hash(self.metadata)

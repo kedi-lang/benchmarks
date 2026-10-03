@@ -1,0 +1,64 @@
+00400260 <.pic.malloc>:
+  400260:	3c190046 	lui	t9,0x46
+  400264:	08116743 	j	459d0c <__malloc>
+  400268:	27399d0c 	addiu	t9,t9,-25332
+  40026c:	00000000 	nop
+
+00400270 <.pic.vsnprintf>:
+  400270:	3c190045 	lui	t9,0x45
+  400274:	08113715 	j	44dc54 <___vsnprintf>
+  400278:	2739dc54 	addiu	t9,t9,-9132
+  40027c:	00000000 	nop
+00449388 <.pic.puts>:
+  449388:	3c190045 	lui	t9,0x45
+  44938c:	27399390 	addiu	t9,t9,-27760
+
+00449390 <_IO_puts>:
+  449390:	3c1c000c 	lui	gp,0xc
+  449394:	279c69f0 	addiu	gp,gp,27120
+  449398:	0399e021 	addu	gp,gp,t9
+  44939c:	27bdffc8 	addiu	sp,sp,-56
+  4493a0:	8f998078 	lw	t9,-32648(gp)
+  4493a4:	afb3002c 	sw	s3,44(sp)
+  4493a8:	afbc0010 	sw	gp,16(sp)
+  4493ac:	afb20028 	sw	s2,40(sp)
+  4493b0:	00809025 	move	s2,a0
+  4493b4:	afb10024 	sw	s1,36(sp)
+  4493b8:	afb00020 	sw	s0,32(sp)
+  4493bc:	afbf0034 	sw	ra,52(sp)
+00459d0c <__malloc>:
+  459d0c:	3c1c000b 	lui	gp,0xb
+  459d10:	279c6074 	addiu	gp,gp,24692
+  459d14:	0399e021 	addu	gp,gp,t9
+  459d18:	8f82801c 	lw	v0,-32740(gp)
+  459d1c:	27bdffd0 	addiu	sp,sp,-48
+  459d20:	afbc0010 	sw	gp,16(sp)
+  459d24:	afb10024 	sw	s1,36(sp)
+  459d28:	afbf002c 	sw	ra,44(sp)
+  459d2c:	afb20028 	sw	s2,40(sp)
+  459d30:	afb00020 	sw	s0,32(sp)
+  459d34:	904232b0 	lbu	v0,12976(v0)
+  459d38:	1040009d 	beqz	v0,459fb0 <__malloc+0x2a4>
+  459d3c:	00808825 	move	s1,a0
+  459d40:	062000a2 	bltz	s1,459fcc <__malloc+0x2c0>
+  459d44:	8f828a64 	lw	v0,-30108(gp)
+  459d48:	2622000b 	addiu	v0,s1,11
+  459d4c:	2c430010 	sltiu	v1,v0,16
+  459d50:	146000a9 	bnez	v1,459ff8 <__malloc+0x2ec>
+  459d54:	2403fff8 	li	v1,-8
+  459d58:	00438024 	and	s0,v0,v1
+  459d5c:	2610fff7 	addiu	s0,s0,-9
+  459d60:	001080c2 	srl	s0,s0,0x3
+  459d64:	3c120000 	lui	s2,0x0
+  459d68:	7c03e83b 	rdhwr	v1,$29
+  459d6c:	02439021 	addu	s2,s2,v1
+  459d70:	00601025 	move	v0,v1
+  459d74:	8e439018 	lw	v1,-28648(s2)
+  459d78:	10600043 	beqz	v1,459e88 <__malloc+0x17c>
+  459d7c:	00000000 	nop
+  459d80:	8f8281a8 	lw	v0,-32344(gp)
+  459d84:	8c426f14 	lw	v0,28436(v0)
+  459d88:	0202102b 	sltu	v0,s0,v0
+  459d8c:	1440004f 	bnez	v0,459ecc <__malloc+0x1c0>
+  459d90:	00000000 	nop
+  459d94:	7c03e83b 	rdhwr	v1,$29

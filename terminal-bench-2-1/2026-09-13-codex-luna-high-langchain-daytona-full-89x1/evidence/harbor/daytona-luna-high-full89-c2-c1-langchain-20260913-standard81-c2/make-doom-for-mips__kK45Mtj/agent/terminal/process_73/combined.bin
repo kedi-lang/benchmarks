@@ -1,0 +1,208 @@
+}
+
+//
+// D_GrabMouseCallback
+//
+// Called to determine whether to grab the mouse pointer
+//
+
+boolean D_GrabMouseCallback(void)
+{
+    // Drone players don't need mouse focus
+
+    if (drone)
+        return false;
+
+    // when menu is active or game is paused, release the mouse 
+ 
+    if (menuactive || paused)
+        return false;
+
+    // only grab mouse when playing levels (but not demos)
+
+    return (gamestate == GS_LEVEL) && !demoplayback && !advancedemo;
+}
+
+void doomgeneric_Tick()
+{
+    // frame syncronous IO operations
+    I_StartFrame ();
+
+    TryRunTics (); // will run at least one tic
+
+    S_UpdateSounds (players[consoleplayer].mo);// move positional sounds
+
+    // Update display, next frame, with current state.
+    if (screenvisible)
+    {
+        D_Display ();
+    }
+}
+
+//
+//  D_DoomLoop
+//
+void D_DoomLoop (void)
+{
+    if (bfgedition &&
+        (demorecording || (gameaction == ga_playdemo) || netgame))
+    {
+        printf(" WARNING: You are playing using one of the Doom Classic\n"
+               " IWAD files shipped with the Doom 3: BFG Edition. These are\n"
+               " known to be incompatible with the regular IWAD files and\n"
+               " may cause demos and network games to get out of sync.\n");
+    }
+
+    if (demorecording)
+    	G_BeginRecording ();
+
+    main_loop_started = true;
+
+    TryRunTics();
+
+    I_SetWindowTitle(gamedescription);
+    I_GraphicsCheckCommandLine();
+    I_SetGrabMouseCallback(D_GrabMouseCallback);
+    I_InitGraphics();
+    I_EnableLoadingDisk();
+
+    V_RestoreBuffer();
+    R_ExecuteSetViewSize();
+
+    D_StartGameLoop();
+
+    if (testcontrols)
+    {
+        wipegamestate = gamestate;
+    }
+
+    doomgeneric_Tick();
+}
+
+
+
+//
+//  DEMO LOOP
+//
+int             demosequence;
+int             pagetic;
+char                    *pagename;
+
+
+	if (gamemode == registered)
+	    for (i = 0;i < 23; i++)
+		if (W_CheckNumForName(name[i])<0)
+		    I_Error(DEH_String("\nThis is not the registered version."));
+    }
+
+    if (W_CheckNumForName("SS_START") >= 0
+     || W_CheckNumForName("FF_END") >= 0)
+    {
+        I_PrintDivider();
+        printf(" WARNING: The loaded WAD file contains modified sprites or\n"
+               " floor textures.  You may want to use the '-merge' command\n"
+               " line option instead of '-file'.\n");
+    }
+
+    I_PrintStartupBanner(gamedescription);
+    PrintDehackedBanners();
+
+    // Freedoom's IWADs are Boom-compatible, which means they usually
+    // don't work in Vanilla (though FreeDM is okay). Show a warning
+    // message and give a link to the website.
+    if (W_CheckNumForName("FREEDOOM") >= 0 && W_CheckNumForName("FREEDM") < 0)
+    {
+        printf(" WARNING: You are playing using one of the Freedoom IWAD\n"
+               " files, which might not work in this port. See this page\n"
+               " for more information on how to play using Freedoom:\n"
+               "   http://www.chocolate-doom.org/wiki/index.php/Freedoom\n");
+        I_PrintDivider();
+    }
+
+    DEH_printf("I_Init: Setting up machine state.\n");
+    I_CheckIsScreensaver();
+    I_InitTimer();
+    I_InitJoystick();
+    I_InitSound(true);
+    I_InitMusic();
+
+#ifdef FEATURE_MULTIPLAYER
+    printf ("NET_Init: Init network subsystem.\n");
+    NET_Init ();
+#endif
+
+    // Initial netgame startup. Connect to server etc.
+    D_ConnectNetGame();
+
+    // get skill / episode / map from parms
+    startskill = sk_medium;
+    startepisode = 1;
+    startmap = 1;
+    autostart = false;
+
+    //!
+    // @arg <skill>
+    // @vanilla
+    //
+    // Set the game skill, 1-5 (1: easiest, 5: hardest).  A skill of
+    // 0 disables all monsters.
+    //
+
+    p = M_CheckParmWithArgs("-skill", 1);
+
+
+    //!
+    // @arg <s>
+    // @vanilla
+    //
+    // Load the game in slot s.
+    //
+
+    p = M_CheckParmWithArgs("-loadgame", 1);
+    
+    if (p)
+    {
+        startloadgame = atoi(myargv[p+1]);
+    }
+    else
+    {
+        // Not loading a game
+        startloadgame = -1;
+    }
+
+    DEH_printf("M_Init: Init miscellaneous info.\n");
+    M_Init ();
+
+    DEH_printf("R_Init: Init DOOM refresh daemon - ");
+    R_Init ();
+
+    DEH_printf("\nP_Init: Init Playloop state.\n");
+    P_Init ();
+
+    DEH_printf("S_Init: Setting up sound.\n");
+    S_Init (sfxVolume * 8, musicVolume * 8);
+
+    DEH_printf("D_CheckNetGame: Checking network game status.\n");
+    D_CheckNetGame ();
+
+    PrintGameVersion();
+
+    DEH_printf("HU_Init: Setting up heads up display.\n");
+    HU_Init ();
+
+    DEH_printf("ST_Init: Init status bar.\n");
+    ST_Init ();
+
+    // If Doom II without a MAP01 lump, this is a store demo.
+    // Moved this here so that MAP01 isn't constantly looked up
+    // in the main loop.
+
+    if (gamemode == commercial && W_CheckNumForName("map01") < 0)
+        storedemo = true;
+
+    if (M_CheckParmWithArgs("-statdump", 1))
+    {
+        I_AtExit(StatDump, true);
+        DEH_printf("External statistics registered.\n");
+    }
+

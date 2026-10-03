@@ -1,0 +1,20 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    print(k,sum(len(tok.encode(r[k], add_special_tokens=False)) for r in rows))
+            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 3, in <genexpr>
+    print(k,sum(len(tok.encode(r[k], add_special_tokens=False)) for r in rows))
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/transformers/tokenization_utils_base.py", line 2278, in encode
+    encoded_inputs = self._encode_plus(
+        text,
+    ...<8 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/site-packages/transformers/tokenization_utils_tokenizers.py", line 1017, in _encode_plus
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: text input must be of type `str` (single example), `list[str]` (batch or single pretokenized example) or `list[list[str]]` (batch of pretokenized examples) or `list[tuple[list[str], list[str]]]` (batch of pretokenized sequence pairs).

@@ -1,0 +1,417 @@
+src/sim.c-88-#ifdef XWINGRAPHX
+src/sim.c-89-#include "xwindisp.c"
+src/sim.c-90-#else
+src/sim.c-91-#include "uidisp.c"
+src/sim.c-92-#endif
+src/sim.c-93-#endif
+src/sim.c-94-
+src/sim.c-95-#else                                /* !GRAPHX */
+src/sim.c:96:#define display_init()
+src/sim.c-97-#define display_clear()
+src/sim.c-98-#define display_read(addr)
+src/sim.c-99-#define display_write(addr)
+src/sim.c-100-#define display_dec(addr)
+src/sim.c-101-#define display_inc(addr)
+src/sim.c-102-#define display_exec(addr)
+src/sim.c-103-#define display_spl(warrior,tasks)
+src/sim.c-104-#define display_dat(address,warrior,tasks)
+src/sim.c-105-#define display_die(warnum)
+src/sim.c:106:#define display_close()
+src/sim.c:107:#define display_cycle()
+src/sim.c-108-#define display_push(val)
+src/sim.c-109-#endif
+src/sim.c-110-#endif
+src/sim.c-111-#endif
+src/sim.c-112-
+src/sim.c-113-#ifdef DOS16
+src/sim.c-114-#define push(val) *W->taskTail++=(val)
+src/sim.c-115-#else
+src/sim.c-116-#define push(val) \
+src/sim.c-117-do { \
+src/sim.c-118- *W->taskTail=(val); \
+src/sim.c-119-  if (++W->taskTail==endQueue) W->taskTail=taskQueue;\
+src/sim.c-120-  display_push(val);\
+src/sim.c-121-  } while (0)
+src/sim.c-122-#endif
+src/sim.c-123-
+src/sim.c-124-#ifdef PSPACE
+src/sim.c-125-#define get_pspace(idx) (((idx) % pSpaceSize) ?\
+--
+src/sim.c-322-    (SWITCH_Fnum - separation) :        /* seed from argument */
+src/sim.c-323-  /* seed from either checksum or time */
+src/sim.c-324-    rng(SWITCH_f ? checksum_warriors() : time(0));
+src/sim.c-325-#ifdef PERMUTATE
+src/sim.c-326-  if (SWITCH_Fnum && SWITCH_P)
+src/sim.c-327-    seed *= warriors; /* get table index from position */
+src/sim.c-328-#endif
+src/sim.c-329-
+src/sim.c:330:  display_init();
+src/sim.c-331-  round = 1;
+src/sim.c-332-  do {                                /* each round */
+src/sim.c-333-#if defined(DOS16) && !defined(SERVER) && !defined(DOSTXTGRAPHX) && !defined(DOSGRXGRAPHX) && !defined(DJGPP)
+src/sim.c-334-    fputc('\r', stdout);        /* enable interruption by Ctrl-C */
+src/sim.c-335-#else
+src/sim.c-336-#if defined(DJGPP) && !defined(SERVER) && !defined(DOSTXTGRAPHX) && !defined(DOSGRXGRAPHX) && !defined(CURSESGRAPHX)
+src/sim.c-337-    if (kbhit())
+src/sim.c-338-      sighandler(0);
+src/sim.c-339-#endif
+src/sim.c-340-#endif
+src/sim.c-341-    warriorsLeft = warriors;
+src/sim.c-342-    cycle = cycles2;
+src/sim.c-343-    if (warriors > 1) {
+src/sim.c-344-      if (warriors == 2) {
+src/sim.c-345-#ifdef PERMUTATE
+src/sim.c-346-        if (SWITCH_P) {
+src/sim.c-347-          if (permidx == 0) { /* initialize buffer */
+src/sim.c-348-            for (;permidx < warriors*positions; permidx++)
+--
+src/sim.c-393-      }
+src/sim.c-394-      display_spl(temp, 1);
+src/sim.c-395-      W = W->nextWarrior;
+src/sim.c-396-    } while (++temp < warriors);
+src/sim.c-397-
+src/sim.c-398-    display_clear();
+src/sim.c-399-    /* the inner loop of execution */
+src/sim.c-400-    do {                        /* each cycle */
+src/sim.c:401:      display_cycle();
+src/sim.c-402-     // progCnt = *(W->taskHead++);
+src/sim.c-403-     // IR = memory[progCnt];        /* copy instruction into register */
+src/sim.c-404-	IR = memory[(progCnt= *(W->taskHead++))];        
+src/sim.c-405-#ifndef DOS16
+src/sim.c-406-      if (W->taskHead == endQueue)
+src/sim.c-407-	W->taskHead = taskQueue;
+src/sim.c-408-#endif
+src/sim.c-409-#ifndef SERVER
+src/sim.c-410-      if (debugState && ((debugState == STEP) || memory[progCnt].debuginfo))
+src/sim.c-411-	debugState = cdb("");
+src/sim.c-412-#endif
+src/sim.c-413-
+src/sim.c-414-      /*
+src/sim.c-415-       * evaluate A operand.  This is the hardest part of the entire
+src/sim.c-416-       * simulator code.  Obfuscated C code at it's finest
+src/sim.c-417-       */
+src/sim.c-418-if (IR.A_mode != (FIELD_T) IMMEDIATE)
+src/sim.c-419-{
+--
+src/sim.c-1424-	sprintf(outs, warriorTerminatedEndOfRound, W - warrior, W->name, round);
+src/sim.c-1425-      else
+src/sim.c-1426-	sprintf(outs, endOfRound, round);
+src/sim.c-1427-      debugState = cdb(outs);
+src/sim.c-1428-    }
+src/sim.c-1429-#endif
+src/sim.c-1430-  } while (++round <= rounds);
+src/sim.c-1431-
+src/sim.c:1432:  display_close();
+src/sim.c-1433-#ifdef PERMUTATE
+src/sim.c-1434-  if(permbuf) {
+src/sim.c-1435-    free(permbuf);
+src/sim.c-1436-    permbuf = NULL;
+src/sim.c-1437-  }
+src/sim.c-1438-#endif
+src/sim.c-1439-#ifndef DOS16
+src/sim.c-1440-  /* DOS taskQueue may not be free'd because of segment wrap-around */
+src/sim.c-1441-  free(memory);
+src/sim.c-1442-  free(taskQueue);
+src/sim.c-1443-  alloc_p = 0;
+src/sim.c-1444-#endif
+src/sim.c-1445-}
+--
+src/pmars.c-273-                                 * secondary thread */
+src/pmars.c-274-#else
+src/pmars.c-275-  _exit(errorcode);                /* jk - exit() overreacts... could be Borland
+src/pmars.c-276-                                 * bug */
+src/pmars.c-277-#endif
+src/pmars.c-278-#else
+src/pmars.c-279-#ifdef LINUXGRAPHX
+src/pmars.c-280-  if (vga_getcurrentmode() != TEXT)
+src/pmars.c:281:    svga_display_close(0);
+src/pmars.c-282-  fflush(stdout);
+src/pmars.c-283-#endif
+src/pmars.c-284-  exit(SWITCH_Q >= 0 ? returninfo() : errorcode);
+src/pmars.c-285-#endif
+src/pmars.c-286-}
+src/pmars.c-287-
+src/pmars.c-288-int
+src/pmars.c-289-main(argc, argv)
+src/pmars.c-290-  int     argc;
+src/pmars.c-291-  char  **argv;
+src/pmars.c-292-{
+src/pmars.c-293-#if defined(unix) && !defined(DJGPP)
+src/pmars.c-294-#ifdef SIGINT
+src/pmars.c-295-  signal(SIGINT, sighandler);
+src/pmars.c-296-#endif
+src/pmars.c-297-#if 0
+src/pmars.c-298-  signal(SIGTSTP, sighandler);
+src/pmars.c-299-#endif
+
+-- top sim.c --
+/* pMARS -- a portable Memory Array Redcode Simulator
+ * Copyright (C) 1993-1996 Albert Ma, Na'ndor Sieben, Stefan Strack and Mintardjo Wangsawidjaja
+ * Copyright (C) 2000 Ilmari Karonen
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+/*
+ * sim.c: simulator
+ * $Id: sim.c,v 1.3 2000/12/25 00:49:08 iltzu Exp $
+ *
+ * 10-23-98 Pentium optimized version 30% faster than the original
+ *          Ken Espiritu
+ */
+
+#include "global.h"
+#include "sim.h"
+#include <time.h>
+
+#ifdef unix
+#include <signal.h>
+#endif
+#ifdef DOS16
+#include <dos.h>
+#endif
+#ifdef DJGPP
+#include <pc.h>
+extern void sighandler(int dummy);
+#endif
+
+
+#if defined(MACGRAPHX)
+#include "macdisp.c"
+#else
+#if defined(OS2PMGRAPHX)
+#include "pmdisp.h"
+#else
+#if defined(GRAPHX)
+
+#ifdef CURSESGRAPHX
+#include "curdisp.c"
+#else
+
+#ifdef DOSTXTGRAPHX
+#ifdef DJGPP
+#include "gtdisp.c"
+#else
+#ifdef WATCOM
+#include "wtdisp.c"
+#else
+#include "tdisp.c"
+#endif
+#endif                                /* DJGPP */
+#endif                                /* DOSTXTGRAPHX */
+
+#ifdef DOSGRXGRAPHX
+#ifdef DJGPP
+#include "grxdisp.c"
+#else
+#ifdef WATCOM
+#include "wgdisp.c"
+#else
+#include "bgidisp.c"
+#endif
+#endif                                /* DJGPP */
+#endif                                /* DOSGRXGRAPHX */
+
+#ifdef DOSALLGRAPHX
+#include "alldisp.c"
+#endif
+
+#endif                                /* !CURSESGRAPHX */
+#ifdef LINUXGRAPHX
+#include "lnxdisp.c"
+#else
+#ifdef XWINGRAPHX
+#include "xwindisp.c"
+#else
+#include "uidisp.c"
+#endif
+#endif
+
+#else                                /* !GRAPHX */
+#define display_init()
+#define display_clear()
+#define display_read(addr)
+#define display_write(addr)
+#define display_dec(addr)
+#define display_inc(addr)
+#define display_exec(addr)
+#define display_spl(warrior,tasks)
+#define display_dat(address,warrior,tasks)
+#define display_die(warnum)
+#define display_close()
+#define display_cycle()
+#define display_push(val)
+#endif
+#endif
+#endif
+
+#ifdef DOS16
+#define push(val) *W->taskTail++=(val)
+#else
+#define push(val) \
+do { \
+ *W->taskTail=(val); \
+  if (++W->taskTail==endQueue) W->taskTail=taskQueue;\
+  display_push(val);\
+  } while (0)
+#endif
+
+#ifdef PSPACE
+#define get_pspace(idx) (((idx) % pSpaceSize) ?\
+	    *(pSpace[W->pSpaceIndex] + ((idx) % pSpaceSize)) : W->lastResult)
+#define set_pspace(idx,value) do {\
+	    if ((idx) % pSpaceSize) \
+		*(pSpace[W->pSpaceIndex] + ((idx) % pSpaceSize)) = value;\
+	    else W->lastResult = value;\
+	    } while(0)
+#endif
+
+#define OP(opcode,modifier) (opcode<<3)+modifier
+#define ADDMOD(A,B,C) do { if ((C=(int)(A+B))>=coreSize) C-=coreSize; } \
+while (0)
+#define SUBMOD(A,B,C) do { if ((C=(int)(A-B))<0) C+=coreSize; } \
+while (0)
+
+#ifdef NEW_STYLE
+extern int posit(void);
+extern void npos(void);
+extern S32_T rng(S32_T seed);
+#else
+extern int posit();
+extern void npos();
+extern S32_T rng();
+#endif
+
+/* strings */
+extern char *outOfMemory;
+extern char *warriorTerminated;
+extern char *fatalErrorInSimulator;
+extern char *warriorTerminatedEndOfRound;
+extern char *endOfRound;
+
+warrior_struct *W;                /* indicate which warrior is running */
+U32_T   totaltask;                /* size of the taskQueue */
+ADDR_T FAR *endQueue;
+ADDR_T FAR *taskQueue;
+
+-- global relevant --
+/* pMARS -- a portable Memory Array Redcode Simulator
+ * Copyright (C) 1993-1996 Albert Ma, Na'ndor Sieben, Stefan Strack and Mintardjo Wangsawidjaja
+ * Copyright (C) 2000 Ilmari Karonen
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+/*
+ * global.c: global data declarations
+ * $Id: global.c,v 1.3 2000/12/25 00:49:08 iltzu Exp $
+ */
+
+#ifndef _GLOBAL_INCLUDED
+#include "global.h"
+#endif
+
+/* We might need this var */
+int     errorcode = SUCCESS;
+int     errorlevel = WARNING;
+char    errmsg[MAXALLCHAR];
+
+/* Some parameters */
+int     warriors;
+ADDR_T  coreSize;
+int     taskNum;
+ADDR_T  instrLim;
+ADDR_T  separation;
+int     rounds;
+long    cycles;
+#ifdef RWLIMIT
+ADDR_T  readLimit, writeLimit;
+#endif
+
+int     cmdMod = 0;                /* cdb command flag: 0, RESET, SKIP */
+S32_T   seed;
+int     useExtRNG = 0;
+
+int     SWITCH_e;
+int     SWITCH_b;
+int     SWITCH_k;
+int     SWITCH_8;
+int     SWITCH_f;
+char   *SWITCH_F;
+ADDR_T  SWITCH_Fnum;
+int     SWITCH_V;
+int     SWITCH_o;
+int     SWITCH_Q = -1;                /* not set */
+char   *SWITCH_eq = DEFAULTSCORE;
+#ifdef VMS
+int     SWITCH_D;
+#endif
+#ifdef PERMUTATE
+int     SWITCH_P;
+#endif
+int	SWITCH_A;
+
+#if defined(DOSTXTGRAPHX) || defined(DOSGRXGRAPHX) || defined(LINUXGRAPHX) \
+    || defined(XWINGRAPHX)
+int     SWITCH_v;
+int     displayLevel;
+int     displayMode;
+int     displaySpeed;
+#if defined(CURSESGRAPHX)
+/* This variable determines how often the screen is refreshed (wrefresh()).
+   10 means the screen is refreshed every 20th cycle. Higher numbers mean
+   faster but jerkier display */
+int     refreshInterval;
+int     refIvalAr[SPEEDLEVELS] = {50, 20, 10, 3, 2, 1, 1, 1, 1};
+#else
+int     keyDelay;
+#if defined(XWINGRAPHX)
+int     keyDelayAr[SPEEDLEVELS] = {255, 20, 0, 0, 0, 0, 0, 0, 0};
+#else
+int     keyDelayAr[SPEEDLEVELS] = {25, 20, 0, 0, 0, 0, 0, 0, 0};
+#endif
+unsigned long loopDelay;
+unsigned long loopDelayAr[SPEEDLEVELS] = {1, 1, 1, 100, 500, 2500, 10000, 40000, 100000};
+#endif
+#endif
+
+int     inCdb = FALSE;
+int     debugState = NOBREAK;
+int     copyDebugInfo = TRUE;
+#if defined(DOSTXTGRAPHX) || defined(DOSGRXGRAPHX) || defined(LINUXGRAPHX) \
+    || defined(XWINGRAPHX)
+int     inputRedirection = FALSE;
+#endif
+mem_struct INITIALINST;                /* initialize to DAT.F $0,$0 */
+
+warrior_struct warrior[MAXWARRIOR];
+#ifdef DOS16
+ADDR_T far *pSpace[MAXWARRIOR];
+#else
+ADDR_T *pSpace[MAXWARRIOR];
+#endif
+ADDR_T  pSpaceSize;

@@ -1,0 +1,22 @@
+{
+  "codec": "text",
+  "digest": "c272a4211e9f4a0452ee3265304c227ee26c39c6c4cc7497f4c33bbef8cbf5be",
+  "idle_ttl_seconds": null,
+  "provenance": null,
+  "ref": {
+    "char_count": 20000,
+    "created_at": "2026-09-13T15:34:06.271232Z",
+    "expires_at": "2026-09-13T16:34:06.271232Z",
+    "logical_type": "str",
+    "media_type": "text/plain; charset=utf-8",
+    "preview": "#!/usr/bin/env perl\n\nuse strict;\nuse warnings;\n\nuse Compress::Raw::Lzma qw (LZMA_STREAM_END LZMA_DICT_SIZE_MIN);\nuse File::Basename;\n\n# author:\n# philsmd\n# magnum (added proper handling of BCJ et. al. and adapt to JtR use)\n\n# version:\n# 1.9\n\n# date released:\n# April 2015\n\n# date last updated:\n# July 13 2022\n\n# dependencies:\n# Compress::Raw::Lzma\n# File::Basename\n\n# supported file types:\n# - is able to identify and parse .7z files\n# - is able to identify and parse splitted .7z files (.7z.001, .7z.002, ...)\n# - is able to identify and parse regular (non-packed) .sfx files\n\n# install dependencies like this:\n#    sudo cpan Compress::Raw::Lzma\n# or sudo apt-get install libcompress-raw-lzma-perl\n# or sudo perl -MCPAN -e 'install Compress::Raw::Lzma'\n\n\n#\n# Explanation of the \"hash\" format:\n#\n\n# the fields of this format are separate by the dollar (\"$\") sign:\n# (\"xyz\" means that the string xyz is used literally, brackets indicate variables)\n#\n# \"$\"\n# \"7z\"\n# \"$\"\n# [data type indicator]           # see \"Explanation of the data type indicator\" below\n# \"$\"\n# [cost factor]                   # means: 2 ^ [cost factor] iterations\n# \"$\"\n# [length of salt]\n# \"$\"\n# [salt]\n# \"$\"\n# [length of iv]    …",
+    "ref_id": "tool_call_result_1",
+    "sensitive": false,
+    "size_bytes": 20000,
+    "summary": "str value with 20000 characters",
+    "usage_hint": "Copy this exact ref_id into artifact tools; never use a source or tool name as an ID. Use read_artifact for a known literal or bounded inspection; use run_artifact_code for filtering, aggregation, joins, or multi-artifact transformations. A read with complete=false is partial; follow its continuation only when more content is relevant. Release when done."
+  },
+  "session_id": "harbor_cdd67034-a6a7-4f77-a033-abc24d5c816f",
+  "source": "tool:read_text_file",
+  "status": "active"
+}

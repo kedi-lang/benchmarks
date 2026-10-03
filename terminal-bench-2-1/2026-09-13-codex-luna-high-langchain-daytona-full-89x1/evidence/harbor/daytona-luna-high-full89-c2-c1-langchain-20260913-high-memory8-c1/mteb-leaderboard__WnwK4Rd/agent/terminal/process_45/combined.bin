@@ -1,0 +1,76 @@
+                            [
+                                ("<100M", 100),
+                                ("<500M", 500),
+                                ("<1B", 1000),
+                                ("<5B", 5000),
+                                ("<10B", 10000),
+                                (">10B", MAX_MODEL_SIZE),
+                            ],
+                            value=MAX_MODEL_SIZE,
+                            label="Model Parameters",
+                            interactive=True,
+                        )
+
+        with gr.Tab("Summary"):
+            summary_table.render()
+            download_summary = gr.DownloadButton("Download Table")
+            download_summary.click(
+                download_table, inputs=[summary_table], outputs=[download_summary]
+            )
+
+            with gr.Accordion(
+                "Frequently Asked Questions",
+                open=False,
+            ):
+                gr.Markdown(FAQ)
+        with gr.Tab("Performance per task"):
+            per_task_table.render()
+            download_per_task = gr.DownloadButton("Download Table")
+            download_per_task.click(
+                download_table, inputs=[per_task_table], outputs=[download_per_task]
+            )
+        with gr.Tab("Task information"):
+            task_info_table = gr.DataFrame(update_task_info, inputs=[task_select])  # noqa: F841
+
+        # This sets the benchmark from the URL query parameters
+        demo.load(set_benchmark_on_load, inputs=[], outputs=[benchmark_select])
+
+        @cachetools.cached(
+            cache={},
+            key=lambda benchmark_name: hash(benchmark_name),
+        )
+        def on_benchmark_select(benchmark_name):
+            start_time = time.time()
+            benchmark = mteb.get_benchmark(benchmark_name)
+            languages = [task.languages for task in benchmark.tasks if task.languages]
+            languages = set(itertools.chain.from_iterable(languages))
+            languages = sorted(languages)
+            domains = [
+                task.metadata.domains
+                for task in benchmark.tasks
+                if task.metadata.domains
+            ]
+            domains = set(itertools.chain.from_iterable(domains))
+            types = {
+                task.metadata.type for task in benchmark.tasks if task.metadata.type
+            }
+            modalities = set()
+            for task in benchmark.tasks:
+                modalities.update(task.metadata.modalities)
+            languages, domains, types, modalities = (
+                sorted(languages),
+                sorted(domains),
+                sorted(types),
+                sorted(modalities),
+            )
+            elapsed = time.time() - start_time
+            benchmark_results = all_benchmark_results[benchmark_name]
+            scores = benchmark_results.get_scores(format="long")
+            logger.debug(f"on_benchmark_select callback: {elapsed}s")
+            return (
+                languages,
+                domains,
+                types,
+                modalities,
+                sorted([task.metadata.name for task in benchmark.tasks]),
+                scores,

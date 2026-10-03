@@ -1,0 +1,7 @@
+42:COMMON_FLAGS += -DCAFFE_VERSION=$(DYNAMIC_VERSION_MAJOR).$(DYNAMIC_VERSION_MINOR).$(DYNAMIC_VERSION_REVISION)
+202:PYTHON_LIBRARIES ?= boost_python python2.7
+410:CXXFLAGS += -MMD -MP
+413:COMMON_FLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
+414:CXXFLAGS += -pthread -fPIC $(COMMON_FLAGS) $(WARNINGS)
+426:LDFLAGS += $(foreach librarydir,$(LIBRARY_DIRS),-L$(librarydir)) $(PKG_CONFIG) \
+428:PYTHON_LDFLAGS := $(LDFLAGS) $(foreach library,$(PYTHON_LIBRARIES),-l$(library))

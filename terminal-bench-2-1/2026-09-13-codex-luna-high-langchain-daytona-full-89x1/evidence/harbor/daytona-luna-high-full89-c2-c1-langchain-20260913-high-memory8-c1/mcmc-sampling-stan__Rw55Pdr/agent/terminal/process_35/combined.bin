@@ -1,0 +1,12 @@
+/app/hierarchical_model.stan:9:  real<lower=0> beta;
+/app/hierarchical_model.stan:14:  // Improper prior proportional to (alpha + beta)^(-5/2).
+/app/hierarchical_model.stan:15:  target += -2.5 * log(alpha + beta);
+/app/hierarchical_model.stan:17:  theta ~ beta(alpha, beta);
+/app/hierarchical_model.stan:19:    y[i] ~ binomial(n[i], theta[i]);
+/app/analysis.R:15:fit <- rstan::sampling(
+/app/analysis.R:18:  chains = 4,
+/app/analysis.R:19:  iter = 100000,
+/app/analysis.R:20:  seed = 1,
+/app/analysis.R:25:posterior <- rstan::extract(fit, pars = c("alpha", "beta"), permuted = TRUE)
+/app/analysis.R:27:beta_mean <- mean(posterior$beta)
+/app/analysis.R:30:writeLines(format(beta_mean, digits = 17, scientific = TRUE), "/app/posterior_beta_mean.txt")

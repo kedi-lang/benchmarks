@@ -1,0 +1,447 @@
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:  none
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#if defined(FEATURE_SOUND) && !defined(__DJGPP__)
+#include <SDL_mixer.h>
+#endif
+
+#include "config.h"
+#include "doomfeatures.h"
+#include "doomtype.h"
+
+#ifdef ORIGCODE
+#include "gusconf.h"
+#endif
+#include "i_sound.h"
+#include "i_video.h"
+#include "m_argv.h"
+#include "m_config.h"
+
+// Sound sample rate to use for digital output (Hz)
+
+int snd_samplerate = 44100;
+
+// Maximum number of bytes to dedicate to allocated sound effects.
+// (Default: 64MB)
+
+int snd_cachesize = 64 * 1024 * 1024;
+
+// Config variable that controls the sound buffer size.
+// We default to 28ms (1000 / 35fps = 1 buffer per tic).
+
+int snd_maxslicetime_ms = 28;
+
+// External command to invoke to play back music.
+
+char *snd_musiccmd = "";
+
+// Low-level sound and music modules we are using
+
+static sound_module_t *sound_module = NULL;
+static music_module_t *music_module = NULL;
+
+int snd_musicdevice = SNDDEVICE_SB;
+int snd_sfxdevice = SNDDEVICE_SB;
+
+// DOS-specific options: These are unused but should be maintained
+// so that the config file can be shared between chocolate
+// doom and doom.exe
+
+static int snd_sbport = 0;
+static int snd_sbirq = 0;
+static int snd_sbdma = 0;
+static int snd_mport = 0;
+
+// Compiled-in sound modules:
+
+static sound_module_t *sound_modules[] = 
+{
+    #ifdef FEATURE_SOUND
+    &DG_sound_module,
+    #endif
+    NULL,
+};
+
+// Check if a sound device is in the given list of devices
+
+static boolean SndDeviceInList(snddevice_t device, snddevice_t *list,
+                               int len)
+{
+    int i;
+
+    for (i=0; i<len; ++i)
+    {
+        if (device == list[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// Find and initialize a sound_module_t appropriate for the setting
+// in snd_sfxdevice.
+
+static void InitSfxModule(boolean use_sfx_prefix)
+{
+    int i;
+
+    sound_module = NULL;
+
+    for (i=0; sound_modules[i] != NULL; ++i)
+    {
+        // Is the sfx device in the list of devices supported by
+        // this module?
+
+        if (SndDeviceInList(snd_sfxdevice, 
+                            sound_modules[i]->sound_devices,
+                            sound_modules[i]->num_sound_devices))
+        {
+            // Initialize the module
+
+            if (sound_modules[i]->Init(use_sfx_prefix))
+            {
+                sound_module = sound_modules[i];
+                return;
+            }
+        }
+    }
+}
+
+// Initialize music according to snd_musicdevice.
+
+static void InitMusicModule(void)
+{
+#ifdef FEATURE_SOUND
+    music_module = &DG_music_module;
+#endif /* FEATURE_SOUND */
+}
+
+//
+// Initializes sound stuff, including volume
+// Sets channels, SFX and music volume,
+//  allocates channel buffer, sets S_sfx lookup.
+//
+
+void I_InitSound(boolean use_sfx_prefix)
+{  
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 1993-2008 Raven Software
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+//
+// SDL implementation of the Hexen CD interface.
+//
+
+#include <stdio.h>
+
+#ifdef ORIGCODE
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_cdrom.h"
+#endif
+
+#include "doomtype.h"
+
+#include "i_cdmus.h"
+
+#ifdef ORIGCODE
+static SDL_CD *cd_handle = NULL;
+static char *startup_error = NULL;
+static const char *cd_name = NULL;
+#endif
+
+int cd_Error;
+
+int I_CDMusInit(void)
+{
+#ifdef ORIGCODE
+    int drive_num = 0;
+
+    // The initialize function is re-invoked when the CD track play cheat
+    // is used, so use the opportunity to call SDL_CDStatus() to update
+    // the status of the drive.
+
+    if (cd_handle == NULL)
+    {
+        if (SDL_Init(SDL_INIT_CDROM) < 0)
+        {
+            startup_error = "Failed to init CD subsystem.";
+            cd_Error = 1;
+            return -1;
+        }
+
+        // TODO: config variable to control CDROM to use.
+
+        cd_handle = SDL_CDOpen(drive_num);
+
+        if (cd_handle == NULL)
+        {
+            startup_error = "Failed to open CD-ROM drive.";
+            cd_Error = 1;
+            return -1;
+        }
+
+        cd_name = SDL_CDName(drive_num);
+    }
+
+    if (SDL_CDStatus(cd_handle) == CD_ERROR)
+    {
+        startup_error = "Failed to read CD status.";
+        cd_Error = 1;
+        return -1;
+    }
+
+    if (!CD_INDRIVE(cd_handle->status))
+    {
+        startup_error = "No CD in drive.";
+        cd_Error = 1;
+        return -1;
+    }
+
+    cd_Error = 0;
+#endif
+    return 0;
+}
+
+// We cannot print status messages inline during startup, they must
+// be deferred until after I_CDMusInit has returned.
+
+void I_CDMusPrintStartup(void)
+{
+#ifdef ORIGCODE
+    if (cd_name != NULL)
+    {
+        printf("I_CDMusInit: Using CD-ROM drive: %s\n", cd_name);
+    }
+
+    if (startup_error != NULL)
+    {
+        fprintf(stderr, "I_CDMusInit: %s\n", startup_error);
+    }
+#endif
+}
+
+int I_CDMusPlay(int track)
+{
+#ifdef ORIGCODE
+    int result;
+
+    if (cd_handle == NULL)
+    {
+        cd_Error = 1;
+        return -1;
+    }
+
+    // Play one track
+    // Track is indexed from 1.
+
+    result = SDL_CDPlayTracks(cd_handle, track - 1, 0, 1, 0);
+
+    cd_Error = 0;
+    return result;
+#else
+	return 0;
+#endif
+}
+
+int I_CDMusStop(void)
+{
+#ifdef ORIGCODE
+    int result;
+
+    result = SDL_CDStop(cd_handle);
+
+    cd_Error = 0;
+
+    return result;
+#else
+	return 0;
+#endif
+}
+
+int I_CDMusResume(void)
+{
+#ifdef ORIGCODE
+    int result;
+
+    result = SDL_CDResume(cd_handle);
+103:static void InitSfxModule(boolean use_sfx_prefix)
+104-{
+105-    int i;
+106-
+107-    sound_module = NULL;
+108-
+109-    for (i=0; sound_modules[i] != NULL; ++i)
+110-    {
+111-        // Is the sfx device in the list of devices supported by
+112-        // this module?
+113-
+114-        if (SndDeviceInList(snd_sfxdevice, 
+115-                            sound_modules[i]->sound_devices,
+116-                            sound_modules[i]->num_sound_devices))
+117-        {
+118-            // Initialize the module
+119-
+120-            if (sound_modules[i]->Init(use_sfx_prefix))
+121-            {
+122-                sound_module = sound_modules[i];
+123-                return;
+124-            }
+125-        }
+126-    }
+127-}
+128-
+129-// Initialize music according to snd_musicdevice.
+130-
+131:static void InitMusicModule(void)
+132-{
+133-#ifdef FEATURE_SOUND
+134-    music_module = &DG_music_module;
+135-#endif /* FEATURE_SOUND */
+136-}
+137-
+138-//
+139-// Initializes sound stuff, including volume
+140-// Sets channels, SFX and music volume,
+141-//  allocates channel buffer, sets S_sfx lookup.
+142-//
+143-
+144-void I_InitSound(boolean use_sfx_prefix)
+145-{  
+146-    boolean nosound, nosfx, nomusic;
+147-
+148-    //!
+149-    // @vanilla
+150-    //
+151-    // Disable all sound output.
+152-    //
+153-
+154-    nosound = M_CheckParm("-nosound") > 0;
+155-
+156-    //!
+157-    // @vanilla
+158-    //
+159-    // Disable sound effects. 
+160-    //
+161-
+162-    nosfx = M_CheckParm("-nosfx") > 0;
+163-
+164-    //!
+165-    // @vanilla
+166-    //
+167-    // Disable music.
+168-    //
+169-
+170-    nomusic = M_CheckParm("-nomusic") > 0;
+171-
+172-    // Initialize the sound and music subsystems.
+173-
+174-    if (!nosound && !screensaver_mode)
+175-    {
+176-        // This is kind of a hack. If native MIDI is enabled, set up
+177-        // the TIMIDITY_CFG environment variable here before SDL_mixer
+178-        // is opened.
+179-
+180-        if (!nomusic
+181-         && (snd_musicdevice == SNDDEVICE_GENMIDI
+182-          || snd_musicdevice == SNDDEVICE_GUS))
+183-        {
+184-            //I_InitTimidityConfig();
+185-        }
+186-
+187-        if (!nosfx)
+188-        {
+189:            InitSfxModule(use_sfx_prefix);
+190-        }
+191-
+192-        if (!nomusic)
+193-        {
+194:            InitMusicModule();
+195-        }
+196-    }
+197-
+198-}
+199-
+200-void I_ShutdownSound(void)
+201-{
+202-    if (sound_module != NULL)
+203-    {
+204-        sound_module->Shutdown();
+205-    }
+206-
+207-    if (music_module != NULL)
+208-    {
+209-        music_module->Shutdown();
+210-    }
+211-}
+212-
+213-int I_GetSfxLumpNum(sfxinfo_t *sfxinfo)
+214-{
+215-    if (sound_module != NULL) 
+216-    {
+217-        return sound_module->GetSfxLumpNum(sfxinfo);
+218-    }
+219-    else
+220-    {
+221-        return 0;
+222-    }
+223-}
+224-
+225-void I_UpdateSound(void)
+226-{
+227-    if (sound_module != NULL)
+228-    {
+229-        sound_module->Update();
+230-    }
+231-
+232-    if (music_module != NULL && music_module->Poll != NULL)
+233-    {
+234-        music_module->Poll();
+235-    }
+236-}
+237-
+238-static void CheckVolumeSeparation(int *vol, int *sep)
+239-{
+240-    if (*sep < 0)
+241-    {
+242-        *sep = 0;
+243-    }
+244-    else if (*sep > 254)
+245-    {
+246-        *sep = 254;
+247-    }
+248-
+249-    if (*vol < 0)
+250-    {
+251-        *vol = 0;
+252-    }
+253-    else if (*vol > 127)
+254-    {

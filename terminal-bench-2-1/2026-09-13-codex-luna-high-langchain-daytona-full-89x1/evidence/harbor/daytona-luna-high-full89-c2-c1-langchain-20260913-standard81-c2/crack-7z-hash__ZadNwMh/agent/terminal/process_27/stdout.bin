@@ -1,0 +1,211 @@
+  my @coder_unpack_sizes;
+
+  # check until we see the "folder" id
+
+  if (! wait_for_seven_zip_id ($fp, $SEVEN_ZIP_FOLDER))
+  {
+    return undef;
+  }
+
+  # NumFolders
+
+  $number_folders = read_number ($fp);
+
+  # External
+
+  my $external = my_read ($fp, 1);
+
+  # loop
+
+  my $sum_coders_output_streams = 0;
+  my $sum_folders = 0;
+
+  for (my $i = 0; $i < $number_folders; $i++)
+  {
+    if ($external eq $SEVEN_ZIP_NOT_EXTERNAL)
+    {
+      my $folder = read_seven_zip_folders ($fp);
+
+      $folders[$i] = $folder;
+
+      $main_unpack_size_index[$i] = $folder->{'index_main_stream'};
+      $coder_unpack_sizes[$i] = $sum_coders_output_streams;
+
+      $sum_coders_output_streams += $folder->{'sum_output_streams'};
+
+      $sum_folders++;
+    }
+    elsif ($external eq $SEVEN_ZIP_EXTERNAL)
+    {
+      $datastream_indices[$i] = read_number ($fp);
+    }
+    else
+    {
+      return undef;
+    }
+  }
+
+  if (!wait_for_seven_zip_id ($fp, $SEVEN_ZIP_UNPACK_SIZE))
+  {
+    return undef;
+  }
+
+  for (my $i = 0; $i < $sum_coders_output_streams; $i++)
+  {
+    $unpack_sizes[$i] = read_number ($fp);
+  }
+
+  # read remaining data
+
+  while (1)
+  {
+    my $id = read_id ($fp);
+
+    if ($id eq $SEVEN_ZIP_END)
+    {
+      $unpack_info = {
+        "number_folders" => $number_folders,
+        "folders" => \@folders,
+        "datastream_indices" => \@datastream_indices,
+        "digests" => \@digests,
+        "unpack_sizes" => \@unpack_sizes,
+        "main_unpack_size_index" => \@main_unpack_size_index,
+        "coder_unpack_sizes" => \@coder_unpack_sizes
+      };
+
+      return $unpack_info;
+    }
+    elsif ($id eq $SEVEN_ZIP_CRC)
+    {
+      my @new_digests = read_seven_zip_digests ($fp, $sum_folders);
+
+      for (my $i = 0; $i < $sum_folders; $i++)
+      {
+        $digests[$i]->{'defined'} = $new_digests[$i]->{'defined'};
+        $digests[$i]->{'crc'} = $new_digests[$i]->{'crc'};
+      }
+
+      next;
+    }
+
+    skip_seven_zip_data ($fp);
+  }
+
+  # something went wrong
+
+  return undef;
+}
+
+sub get_folder_unpack_size
+{
+  my $unpack_info  = shift;
+  my $folder_index = shift;
+
+  my $index = $unpack_info->{'coder_unpack_sizes'}[$folder_index] + $unpack_info->{'main_unpack_size_index'}[$folder_index];
+
+  return $unpack_info->{'unpack_sizes'}[$index];
+}
+
+sub has_valid_folder_crc
+{
+  my $digests = shift;
+  my $index   = shift;
+
+  if (! defined (@$digests[$index]))
+  {
+    return 0;
+  }
+
+  my $digest = @$digests[$index];
+
+  if ($digest->{'defined'} != 1)
+  {
+    return 0;
+  }
+
+  if (length ($digest->{'crc'}) < 1)
+  {
+    return 0;
+  }
+
+  return 1;
+}
+
+sub read_seven_zip_substreams_info
+{
+  my $fp = shift;
+
+  my $unpack_info = shift;
+
+  my $number_folders = $unpack_info->{'number_folders'};
+  my $folders = $unpack_info->{'folders'};
+
+  my $folders_digests = $unpack_info->{'digests'};
+
+  my $substreams_info;
+  my @number_unpack_streams = (1) x $number_folders;
+  my @unpack_sizes;
+  my @digests;
+
+  # get the numbers of unpack streams
+
+  my $id;
+
+  while (1)
+  {
+    $id = read_id ($fp);
+
+    if ($id eq $SEVEN_ZIP_NUM_UNPACK_STREAM)
+    {
+      for (my $i = 0; $i < $number_folders; $i++)
+      {
+        $number_unpack_streams[$i] = read_number ($fp);
+      }
+
+      next;
+    }
+    elsif ($id eq $SEVEN_ZIP_CRC)
+    {
+      last;
+    }
+    elsif ($id eq $SEVEN_ZIP_SIZE)
+    {
+      last;
+    }
+    elsif ($id eq $SEVEN_ZIP_END)
+    {
+      last;
+    }
+
+    skip_seven_zip_data ($fp);
+  }
+
+  if ($id eq $SEVEN_ZIP_SIZE)
+  {
+    for (my $i = 0; $i < $number_folders; $i++)
+    {
+      my $number_substreams = $number_unpack_streams[$i];
+
+      if ($number_substreams == 0)
+      {
+        next;
+      }
+
+      my $sum_unpack_sizes = 0;
+
+      for (my $j = 1; $j < $number_substreams; $j++)
+      {
+        my $size = read_number ($fp);
+
+        push (@unpack_sizes, $size);
+
+        $sum_unpack_sizes += $size;
+      }
+
+      # add the folder unpack size itself
+
+      my $folder_unpack_size = get_folder_unpack_size ($unpack_info, $i);
+
+      if ($folder_unpack_size < $sum_unpack_sizes)
+      {
+        return undef;

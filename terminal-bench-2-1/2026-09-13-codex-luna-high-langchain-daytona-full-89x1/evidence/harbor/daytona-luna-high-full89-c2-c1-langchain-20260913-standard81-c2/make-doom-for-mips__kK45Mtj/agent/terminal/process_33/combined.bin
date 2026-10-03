@@ -1,0 +1,134 @@
+/*
+ * dummy.c
+ *
+ *  Created on: 16.02.2015
+ *      Author: Florian
+ */
+
+
+/*---------------------------------------------------------------------*
+ *  include files                                                      *
+ *---------------------------------------------------------------------*/
+
+#include "doomtype.h"
+
+/*---------------------------------------------------------------------*
+ *  local definitions                                                  *
+ *---------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------*
+ *  external declarations                                              *
+ *---------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------*
+ *  public data                                                        *
+ *---------------------------------------------------------------------*/
+
+boolean net_client_connected = false;
+
+boolean drone = false;
+
+/*---------------------------------------------------------------------*
+ *  private data                                                       *
+ *---------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------*
+ *  private functions                                                  *
+ *---------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------*
+ *  public functions                                                   *
+ *---------------------------------------------------------------------*/
+
+#ifndef FEATURE_SOUND
+
+void I_InitTimidityConfig(void)
+{
+}
+
+#endif
+
+/*---------------------------------------------------------------------*
+ *  eof                                                                *
+ *---------------------------------------------------------------------*/
+I_AtExit
+I_BindJoystickVariables
+I_BindSoundVariables
+I_BindVideoVariables
+I_CheckIsScreensaver
+I_ConsoleStdout
+I_EnableLoadingDisk
+I_Error
+I_GetEvent
+I_GetTicks
+I_GetTime
+I_GetTimeMS
+I_GraphicsCheckCommandLine
+I_InitGraphics
+I_InitInput
+I_InitJoystick
+I_InitMusic
+I_InitTimer
+I_InitTimidityConfig
+I_InitWindowIcon
+I_InitWindowTitle
+I_MusicIsPlaying
+I_PauseSong
+I_PrintDivider
+I_Quit
+I_ResumeSong
+I_ShutdownMusic
+I_ShutdownSound
+I_Sleep
+I_StopSong
+I_UpdateSound
+./am_map.c:430:    fb = I_VideoBuffer;
+./d_main.c:1076:     || screensaver_mode || M_CheckParm("-testcontrols") > 0)
+./f_finale.c:241:    dest = I_VideoBuffer;
+./f_finale.c:584:    desttop = I_VideoBuffer + x;
+./f_wipe.c:276:	wipe_scr = I_VideoBuffer;
+./i_scale.c:35:// Should be I_VideoBuffer
+./i_sound.c:174:    if (!nosound && !screensaver_mode)
+./i_video.c:76:int usemouse = 0;
+./i_video.c:96:byte *I_VideoBuffer = NULL;
+./i_video.c:100:boolean screensaver_mode = false;
+./i_video.c:113:// the values exceed the value of mouse_threshold, they are multiplied
+./i_video.c:114:// by mouse_acceleration to increase the speed.
+./i_video.c:116:float mouse_acceleration = 2.0;
+./i_video.c:117:int mouse_threshold = 10;
+./i_video.c:121:int usegamma = 0;
+./i_video.c:235:	I_VideoBuffer = (byte*)Z_Malloc (SCREENWIDTH * SCREENHEIGHT, PU_STATIC, NULL);  // For DOOM to draw on
+./i_video.c:245:	Z_Free (I_VideoBuffer);
+./i_video.c:282:    line_in  = (unsigned char *) I_VideoBuffer;
+./i_video.c:322:    memcpy (scr, I_VideoBuffer, SCREENWIDTH * SCREENHEIGHT);
+./i_video.c:342:	//	rgb565_palette[i] = GFX_RGB565(gammatable[usegamma][c->r],
+./i_video.c:343:	//								   gammatable[usegamma][c->g],
+./i_video.c:344:	//								   gammatable[usegamma][c->b]);
+./i_video.c:355:        colors[i].r = gammatable[usegamma][*palette++];
+./i_video.c:356:        colors[i].g = gammatable[usegamma][*palette++];
+./i_video.c:357:        colors[i].b = gammatable[usegamma][*palette++];
+./m_config.c:571:    CONFIG_VARIABLE_INT(usegamma),
+./m_config.c:769:    // exceeds the threshold value (mouse_threshold), the speed is
+./m_config.c:773:    CONFIG_VARIABLE_FLOAT(mouse_acceleration),
+./m_config.c:778:    // acceleration factor (mouse_acceleration).
+./m_config.c:781:    CONFIG_VARIABLE_INT(mouse_threshold),
+./m_menu.c:1745:	    usegamma++;
+./m_menu.c:1746:	    if (usegamma > 4)
+./m_menu.c:1747:		usegamma = 0;
+./m_menu.c:1748:	    players[consoleplayer].message = DEH_String(gammamsg[usegamma]);
+./r_draw.c:800:	ylookup[i] = I_VideoBuffer + (i+viewwindowy)*SCREENWIDTH; 
+./r_draw.c:931:        memcpy(I_VideoBuffer + ofs, background_buffer + ofs, count); 
+./v_video.c:74:    if (dest_screen == I_VideoBuffer)
+./v_video.c:534:    buf = I_VideoBuffer + SCREENWIDTH * y + x;
+./v_video.c:554:    buf = I_VideoBuffer + SCREENWIDTH * y + x;
+./v_video.c:567:    buf = I_VideoBuffer + SCREENWIDTH * y + x;
+./v_video.c:615:    dest_screen = I_VideoBuffer;
+./v_video.c:829:    WritePNGfile(lbmname, I_VideoBuffer,
+./v_video.c:837:    WritePCXfile(lbmname, I_VideoBuffer,
+./v_video.c:848:    extern int usemouse;
+./v_video.c:868:    if (!usemouse || fabs(mouse_acceleration - 1) < 0.01)
+./v_video.c:890:    if (speed < mouse_threshold)
+./v_video.c:896:        original_speed = speed - mouse_threshold;
+./v_video.c:897:        original_speed = (int) (original_speed / mouse_acceleration);
+./v_video.c:898:        original_speed += mouse_threshold;
+./v_video.c:903:    linelen = (original_speed * redline_x) / mouse_threshold;

@@ -1,0 +1,101 @@
+#
+# Possible choices for ARM, AArch64, RiscV:
+# SYSTEM=linux
+#
+# Possible choices for x86:
+# SYSTEM=linux
+# SYSTEM=bsd
+# SYSTEM=macos
+# SYSTEM=cygwin
+SYSTEM=
+
+# C compiler (for testing only)
+CC=cc
+
+# Assembler for assembling compiled files
+CASM=cc
+CASM_OPTIONS=-c
+
+# Assembler for assembling runtime library files
+CASMRUNTIME=$(CASM) $(CASM_OPTIONS)
+
+# Linker
+CLINKER=cc
+CLINKER_OPTIONS=-no-pie
+
+# Preprocessor for .c files
+CPREPRO=cc
+CPREPRO_OPTIONS=-std c99 -U__GNUC__ -E
+
+# Archiver to build .a libraries
+ARCHIVER=ar rcs
+
+# Math library. Set to empty under macOS
+LIBMATH=-lm
+
+# Turn on/off the installation and use of the runtime support library
+HAS_RUNTIME_LIB=true
+
+# Turn on/off the installation and use of the standard header files
+HAS_STANDARD_HEADERS=true
+
+# Whether the assembler $(CASM) supports .cfi debug directives
+ASM_SUPPORTS_CFI=false
+#ASM_SUPPORTS_CFI=true
+
+# Turn on/off compilation of clightgen
+CLIGHTGEN=false
+
+# Whether the other tools support responsefiles in GNU syntax or Diab syntax
+RESPONSEFILE=gnu  # diab
+
+# Whether to use the local copies of Flocq and MenhirLib
+LIBRARY_FLOCQ=local      # external
+LIBRARY_MENHIRLIB=local  # external
+EOF
+fi
+
+#
+# Generate Merlin and CoqProject files to simplify development
+#
+cat > .merlin <<EOF
+S lib
+S common
+S $arch
+S backend
+S cfrontend
+S driver
+S debug
+S export
+S cparser
+S extraction
+
+B lib
+B common
+B $arch
+B backend
+B cfrontend
+B driver
+B debug
+B export
+B cparser
+B extraction
+EOF
+
+$make CoqProject
+
+#
+# Clean up target-dependent files to force their recompilation
+#
+rm -f .depend $arch/Archi.vo ${arch}_${bitsize}/Archi.vo runtime/*.o
+
+#
+# Summarize Configuration
+#
+if test "$target" = "manual"; then
+cat <<EOF
+
+Please finish the configuration by editing file ./Makefile.config.
+
+EOF
+else

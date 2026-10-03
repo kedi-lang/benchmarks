@@ -1,0 +1,24 @@
+Breakpoint 1 at 0x501b6: file runtime/shared_heap.c, line 657.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+### OCaml runtime: debug mode ###
+### set OCAMLRUNPARAM=v=0 to silence this message
+
+Breakpoint 1, pool_sweep (local=local@entry=0x5555555e16b0, plist=plist@entry=0x5555555e18b8, sz=sz@entry=1, release_to_global_pool=<optimized out>, release_to_global_pool@entry=1) at runtime/shared_heap.c:657
+657	    if( !all_used ) {
+rbx(p)=0x7fffe77ed000 r13(end)=0x7fffe77ed000 r12(hd)=20 r15(wh?)=5555555e16b0 rbp=358
+0x7fffe77ecfe0:	0xd701d7d7d701d6d8	0xd701d7d7d701d6d8
+0x7fffe77ecff0:	0xd701d7d7d701d6d8	0xd701d7d7d701d6d8
+0x7fffe77ed000:	0x00007fffe77f5000	0x0000000000000000
+0x7fffe77ed010:	0x00005555555e0af0	0x0000000000000002
+#0  pool_sweep (local=local@entry=0x5555555e16b0, plist=plist@entry=0x5555555e18b8, sz=sz@entry=1, release_to_global_pool=<optimized out>, release_to_global_pool@entry=1) at runtime/shared_heap.c:657
+#1  0x00005555555a5785 in caml_sweep (local=0x5555555e16b0, work=work@entry=16384) at runtime/shared_heap.c:739
+#2  0x00005555555952b8 in major_collection_slice (howmuch=<optimized out>, participant_count=participant_count@entry=0, barrier_participants=barrier_participants@entry=0x0, mode=mode@entry=Slice_interruptible, force_compaction=0) at runtime/major_gc.c:1844
+#3  0x0000555555595926 in caml_major_collection_slice (howmuch=howmuch@entry=-1) at runtime/major_gc.c:2044
+#4  0x000055555557ca59 in caml_poll_gc_work () at runtime/domain.c:2010
+#5  0x00005555555a7773 in caml_do_pending_actions_res () at runtime/signals.c:338
+#6  0x000055555559ec95 in caml_alloc_small_dispatch (dom_st=dom_st@entry=0x5555555e0af0, wosize=wosize@entry=12, flags=flags@entry=3, nallocs=nallocs@entry=1, encoded_alloc_lens=encoded_alloc_lens@entry=0x0) at runtime/minor_gc.c:980
+#7  0x00005555555b20a4 in caml_bytecode_interpreter (prog=prog@entry=0x7fffe791e010, prog_size=prog_size@entry=3020496, initial_env=<optimized out>, initial_extra_args=initial_extra_args@entry=0) at runtime/interp.c:766
+#8  0x00005555555b332d in caml_interprete (prog_size=3020496, prog=0x7fffe791e010) at runtime/caml/interp.h:34
+#9  caml_main (argv=<optimized out>) at runtime/startup_byt.c:579
+#10 0x000055555556f402 in main (argc=<optimized out>, argv=<optimized out>) at runtime/main.c:37

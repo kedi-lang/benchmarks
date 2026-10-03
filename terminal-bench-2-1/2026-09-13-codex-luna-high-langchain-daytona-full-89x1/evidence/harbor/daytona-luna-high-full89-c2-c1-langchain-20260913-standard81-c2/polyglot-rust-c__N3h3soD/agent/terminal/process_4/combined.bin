@@ -1,0 +1,44 @@
+     1	/* /* */
+     2	#if 0
+     3	// */
+     4	fn main() {
+     5	    let n: usize = std::env::args().nth(1).unwrap().parse().unwrap();
+     6	    let mut a = vec![1u8];
+     7	    let mut b = vec![1u8];
+     8	    for _ in 0..n {
+     9	        let mut c = Vec::with_capacity(a.len().max(b.len()) + 1);
+    10	        let mut carry = 0u8;
+    11	        for i in 0..a.len().max(b.len()) {
+    12	            let sum = a.get(i).copied().unwrap_or(0)
+    13	                + b.get(i).copied().unwrap_or(0) + carry;
+    14	            c.push(sum % 10);
+    15	            carry = sum / 10;
+    16	        }
+    17	        if carry != 0 {
+    18	            c.push(carry);
+    19	        }
+    20	        a = b;
+    21	        b = c;
+    22	    }
+    23	    let answer: String = a.iter().rev().map(|digit| char::from(b'0' + digit)).collect();
+    24	    println!("{}", answer);
+    25	}
+    26	/* /* */
+    27	#endif
+    28	// */
+    29	#include <iostream>
+    30	#include <string>
+    31	#include <boost/multiprecision/cpp_int.hpp>
+    32	
+    33	int main(int argc, char **argv) {
+    34	    using boost::multiprecision::cpp_int;
+    35	    unsigned long long n = std::stoull(argv[1]);
+    36	    cpp_int a = 1;
+    37	    cpp_int b = 1;
+    38	    for (unsigned long long i = 0; i < n; ++i) {
+    39	        cpp_int c = a + b;
+    40	        a = b;
+    41	        b = c;
+    42	    }
+    43	    std::cout << a << '\n';
+    44	}

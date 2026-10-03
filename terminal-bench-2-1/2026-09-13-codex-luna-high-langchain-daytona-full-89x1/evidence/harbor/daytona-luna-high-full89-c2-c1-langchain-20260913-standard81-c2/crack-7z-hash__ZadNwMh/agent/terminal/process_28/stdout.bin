@@ -1,0 +1,166 @@
+  for (my $i = 0; $i < $number_coders; $i++)
+  {
+    my $main_byte = my_read ($fp, 1);
+
+    $main_byte = ord ($main_byte);
+
+    if ($main_byte & 0xC0)
+    {
+      return undef;
+    }
+
+    my $codec_id_size = $main_byte & 0xf;
+
+    if ($codec_id_size > 8)
+    {
+      return undef;
+    }
+
+    # the codec id (very important info for us):
+    # codec_id: 06F10701 -> AES-256 + SHA-256
+    # codec_id: 030101   -> lzma  (we need to decompress - k_LZMA)
+    # codec_id: 21       -> lzma2 (we need to decompress - k_LZMA2)
+
+    my $codec_id = my_read ($fp, $codec_id_size);
+
+    # NumInStreams
+
+    my $number_input_streams = 1;
+
+    # NumOutStreams
+
+    my $number_output_streams = 1;
+
+    if (($main_byte & 0x10) != 0)
+    {
+      $number_input_streams  = read_number ($fp);
+      $number_output_streams = read_number ($fp);
+    }
+
+    $sum_input_streams  += $number_input_streams;
+    $sum_output_streams += $number_output_streams;
+
+    # attributes
+
+    my $attributes;
+
+    if (($main_byte & 0x020) != 0)
+    {
+      my $property_size = read_number ($fp);
+
+      $attributes = my_read ($fp, $property_size);
+    }
+
+    $coders[$i] = {
+      "codec_id" => $codec_id,
+      "number_input_streams" => $number_input_streams,
+      "number_output_streams" => $number_output_streams,
+      "attributes" => $attributes
+    };
+  }
+
+  if (($sum_input_streams != 1) || ($sum_output_streams != 1))
+  {
+    # InStreamUsed / OutStreamUsed
+
+    my @input_stream_used  = (0) x $sum_input_streams;
+    my @output_stream_used = (0) x $sum_output_streams;
+
+    # BindPairs
+
+    my $number_bindpairs = $sum_output_streams - 1;
+
+    for (my $i = 0; $i < $number_bindpairs; $i++)
+    {
+      # input
+
+      my $index_input = read_number ($fp);
+
+      if ($input_stream_used[$index_input] == 1)
+      {
+        return undef; # the stream is used already, shouldn't happen at all
+      }
+
+      $input_stream_used[$index_input] = 1;
+
+      # output
+
+      my $index_output = read_number ($fp);
+
+      if ($output_stream_used[$index_output] == 1)
+      {
+        return undef;
+      }
+
+      $output_stream_used[$index_output] = 1;
+
+      my @new_bindpair = ($index_input, $index_output);
+
+      push (@bindpairs, \@new_bindpair);
+    }
+
+    # PackedStreams
+
+    $sum_packed_streams = $sum_input_streams - $number_bindpairs;
+
+    if ($sum_packed_streams != 1)
+    {
+      for (my $i = 0; $i < $sum_packed_streams; $i++)
+      {
+        # we can ignore this
+
+        read_number ($fp); # my $index = read_number ($fp);
+      }
+    }
+
+    # determine the main stream
+
+    $index_main_stream = -1;
+
+    for (my $i = 0; $i < $sum_output_streams; $i++)
+    {
+      if ($output_stream_used[$i] == 0)
+      {
+        $index_main_stream = $i;
+
+        last;
+      }
+    }
+
+    if ($index_main_stream == -1)
+    {
+      return undef; # should not happen
+    }
+  }
+
+  $folder = {
+    "number_coders" => $number_coders,
+    "coders" => \@coders,
+    "bindpairs" => \@bindpairs,
+    "index_main_stream"  => $index_main_stream,
+    "sum_input_streams"  => $sum_input_streams,
+    "sum_output_streams" => $sum_output_streams,
+    "sum_packed_streams" => $sum_packed_streams,
+  };
+
+  return $folder;
+}
+
+sub read_seven_zip_unpack_info
+{
+  my $fp = shift;
+
+  my $unpack_info;
+
+  my $number_folders = 0;
+  my @folders = ();
+  my @datastream_indices = ();
+  my @unpack_sizes;
+  my @digests;
+  my @main_unpack_size_index;
+  my @coder_unpack_sizes;
+
+  # check until we see the "folder" id
+
+  if (! wait_for_seven_zip_id ($fp, $SEVEN_ZIP_FOLDER))
+  {

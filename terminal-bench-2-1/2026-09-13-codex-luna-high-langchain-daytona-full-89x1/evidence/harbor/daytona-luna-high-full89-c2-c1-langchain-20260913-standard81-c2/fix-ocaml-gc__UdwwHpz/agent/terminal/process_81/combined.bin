@@ -1,0 +1,29 @@
+
+            last_free_block = p;
+          }
+        } else {
+          /* if we're the first free block then set the next_obj pointer for
+            the pool (which indicates the start of the freelist) */
+          a->next_obj = (value*)p;
+
+          last_free_block = p;
+        }
+
+        /* add the free blocks following this block, skipping over them */
+        p += wh * Wosize_hd(hd);
+      } else {
+        /* there's still a live block, the pool can't be released to the global
+            freelist */
+        release_to_global_pool = 0;
+      }
+      /* Each block in a pool occupies [wh] words, even when the object in it
+         is smaller. */
+      p += wh;
+    } while (p + wh <= end);
+    CAMLassert(p == end);
+
+    if( !all_used ) {
+      /* the last free block should have 0 as its next pointer */
+      last_free_block[1] = 0;
+    }
+

@@ -1,0 +1,2020 @@
+# yaml-language-server: $schema=.autobench-schema-cache/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+  experiment: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+  benchmark: kedi-tb21-langchain-full89-daytona-publication
+  case: path-tracing-reverse__crYNDTZ
+  variant: langchain-luna-high-websocket
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: path-tracing-reverse__crYNDTZ
+  input:
+    job_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2
+    trial_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2/path-tracing-reverse__crYNDTZ
+    trial_name: path-tracing-reverse__crYNDTZ
+    task_name: path-tracing-reverse
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+    batch: standard81-c2
+    qemu_fixed: false
+variant:
+  id: langchain-luna-high-websocket
+  factors:
+    capture_only: true
+    adapter: langchain
+    model: codex/gpt-5.6-luna
+    effort: high
+    transport: websocket-http-fallback
+    evidence_payload: sanitized-harbor-sibling
+metrics:
+  factors:
+    capture_only:
+      sequence: 1
+      id: obs_1
+      name: capture_only
+      kind: factor
+      value: true
+      source: variant
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: langchain
+      source: variant
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    model:
+      sequence: 3
+      id: obs_3
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    effort:
+      sequence: 4
+      id: obs_4
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    transport:
+      sequence: 5
+      id: obs_5
+      name: transport
+      kind: factor
+      value: websocket-http-fallback
+      source: variant
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    evidence_payload:
+      sequence: 6
+      id: obs_6
+      name: evidence_payload
+      kind: factor
+      value: sanitized-harbor-sibling
+      source: variant
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 1.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.cost_usd:
+      sequence: 18
+      id: obs_18
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.13172984
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 744.627631
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.input_tokens:
+      sequence: 11
+      id: obs_11
+      name: kedi.input_tokens
+      kind: metric
+      value: 3462652
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.cache_read_tokens:
+      sequence: 12
+      id: obs_12
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 3323392
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.cache_write_tokens:
+      sequence: 13
+      id: obs_13
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.output_tokens:
+      sequence: 14
+      id: obs_14
+      name: kedi.output_tokens
+      kind: metric
+      value: 31175
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.total_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.total_tokens
+      kind: metric
+      value: 3493827
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.requests:
+      sequence: 16
+      id: obs_16
+      name: kedi.requests
+      kind: metric
+      value: 57
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.tool_calls:
+      sequence: 17
+      id: obs_17
+      name: kedi.tool_calls
+      kind: metric
+      value: 63
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+    kedi.cache_read_ratio:
+      sequence: 19
+      id: obs_19
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.9597822709299115
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+  events:
+    terminal_bench.public_evidence_reference:
+      sequence: 20
+      id: obs_20
+      name: terminal_bench.public_evidence_reference
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      case: path-tracing-reverse__crYNDTZ
+      variant: langchain-luna-high-websocket
+trace:
+  protocol: abp
+  protocol_version: 1
+  trace_id: f0089a2b05b98ca37d4594335837c417
+  execution:
+    benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+    experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+    run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+    case_id: path-tracing-reverse__crYNDTZ
+    variant_id: langchain-luna-high-websocket
+  root_span_ids:
+    - 052ec5eaeb9c9eaa
+  spans:
+    - trace_id: f0089a2b05b98ca37d4594335837c417
+      span_id: 052ec5eaeb9c9eaa
+      operation: benchmark.run
+      kind: task
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-10-03T17:24:04.050901Z'
+      ended_at: '2026-10-03T17:24:04.165912Z'
+      start_monotonic_ns: 922721790802250
+      end_monotonic_ns: 922721905815916
+      duration_ns: 115013666
+      start_sequence: 1
+      end_sequence: 26
+      attributes:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3533e044-7333-45b5-a6f4-443262bc1b29
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.050991Z'
+          monotonic_ns: 922721790891958
+          sequence: 2
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 052ec5eaeb9c9eaa
+          name: capture_only
+          semantic_type: factor.value
+          body: true
+          attributes:
+            observation_id: obs_1
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 1c23c278-12ca-4f38-8cfb-207fae4edab8
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.051047Z'
+          monotonic_ns: 922721790947500
+          sequence: 3
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 052ec5eaeb9c9eaa
+          name: adapter
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 9
+          attributes:
+            observation_id: obs_2
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 34a59c6b-10c0-4570-bfe9-241f3967f781
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.051084Z'
+          monotonic_ns: 922721790985208
+          sequence: 4
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 052ec5eaeb9c9eaa
+          name: model
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 18
+          attributes:
+            observation_id: obs_3
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 1906d8d2-0a96-4662-8f33-0142a18b3b30
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.051116Z'
+          monotonic_ns: 922721791016750
+          sequence: 5
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 052ec5eaeb9c9eaa
+          name: effort
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 4
+          attributes:
+            observation_id: obs_4
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9c9205c9-4b16-4103-b353-95d0f7332523
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.051147Z'
+          monotonic_ns: 922721791048041
+          sequence: 6
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 052ec5eaeb9c9eaa
+          name: transport
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 23
+          attributes:
+            observation_id: obs_5
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 4e95838f-e5d0-46f9-bdfc-9e8e52a33cf9
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.051176Z'
+          monotonic_ns: 922721791076541
+          sequence: 7
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 052ec5eaeb9c9eaa
+          name: evidence_payload
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 24
+          attributes:
+            observation_id: obs_6
+            kind: factor
+            source: variant
+      partial: false
+    - trace_id: f0089a2b05b98ca37d4594335837c417
+      span_id: d0aead2a965f6d95
+      parent_span_id: 052ec5eaeb9c9eaa
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-10-03T17:24:04.126881Z'
+      ended_at: '2026-10-03T17:24:04.165578Z'
+      start_monotonic_ns: 922721866786250
+      end_monotonic_ns: 922721905481291
+      duration_ns: 38695041
+      start_sequence: 8
+      end_sequence: 25
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 0b1553e3-7dc9-48fa-b11d-833b8578a5e2
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.126991Z'
+          monotonic_ns: 922721866893583
+          sequence: 9
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d0aead2a965f6d95
+          name: input
+          semantic_type: operation.input
+          body:
+            type: dict
+            length: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 99bd2f55-51b8-48c7-9ad6-f60cbc169515
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.165494Z'
+          monotonic_ns: 922721905397250
+          sequence: 24
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: d0aead2a965f6d95
+          name: terminal_bench.public_evidence_reference
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_20
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+      measurements:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 071ad8c2-dca6-4ce3-a5ae-43d6487b3994
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.127059Z'
+          monotonic_ns: 922721866961583
+          sequence: 10
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: terminal_bench.reward.reward
+          semantic_type: quality.correctness
+          value: 1.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_7
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8ef76831-e8c0-434a-a4d1-128afc374503
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.127115Z'
+          monotonic_ns: 922721867017666
+          sequence: 11
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: terminal_bench.grader_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_8
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 41
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 69552ba9-1446-465b-8491-9e953c158c55
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.127161Z'
+          monotonic_ns: 922721867063333
+          sequence: 12
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.trial_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_9
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 21
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 1c41ae6a-14f7-4192-b4ff-e87452f171bc
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.127192Z'
+          monotonic_ns: 922721867094750
+          sequence: 13
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: terminal_bench.duration
+          semantic_type: time.latency
+          value: 744.627631
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_10
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d2f45a8e-e3ad-4239-8825-5d5640510796
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.127216Z'
+          monotonic_ns: 922721867118791
+          sequence: 14
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.input_tokens
+          semantic_type: llm.tokens.input
+          value: 3462652
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_11
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: afae0c43-65e2-4636-b6aa-d6aa64a3cc20
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133548Z'
+          monotonic_ns: 922721873451375
+          sequence: 15
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.cache_read_tokens
+          semantic_type: llm.tokens.cached_input
+          value: 3323392
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_12
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d9336d25-38ca-4f9f-bcaf-2cd9bc7262c0
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133583Z'
+          monotonic_ns: 922721873486000
+          sequence: 16
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.cache_write_tokens
+          semantic_type: llm.tokens.cache_write
+          value: 0
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_13
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 3a0a69fa-7eeb-402b-8ff8-d12d5b95cc71
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133608Z'
+          monotonic_ns: 922721873510166
+          sequence: 17
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.output_tokens
+          semantic_type: llm.tokens.output
+          value: 31175
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_14
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: efbf7fea-6937-46ae-98fe-373687332b58
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133627Z'
+          monotonic_ns: 922721873529750
+          sequence: 18
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.total_tokens
+          semantic_type: llm.tokens.total
+          value: 3493827
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_15
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 454ada92-17aa-42c4-aa4d-c172dfad1d5d
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133648Z'
+          monotonic_ns: 922721873550458
+          sequence: 19
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.requests
+          semantic_type: llm.request.count
+          value: 57
+          unit: request
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_16
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5ca8edb3-1abb-43d3-8781-3c2956fde56f
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133674Z'
+          monotonic_ns: 922721873576416
+          sequence: 20
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.tool_calls
+          semantic_type: tool.call.count
+          value: 63
+          unit: call
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_17
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5b056015-73a3-4820-939f-e35068a9dcad
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133699Z'
+          monotonic_ns: 922721873601791
+          sequence: 21
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.cost_usd
+          semantic_type: money.cost
+          value: 0.13172984
+          unit: USD
+          direction: minimize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_18
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 1a8f6d54-b506-49ff-a771-719895c32ecf
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.133721Z'
+          monotonic_ns: 922721873623958
+          sequence: 22
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: d0aead2a965f6d95
+          name: kedi.cache_read_ratio
+          semantic_type: coverage.ratio
+          value: 0.9597822709299115
+          unit: ratio
+          direction: maximize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_19
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+      references:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 80fe950b-6795-407f-8a93-a0e60f050ca9
+          trace_id: f0089a2b05b98ca37d4594335837c417
+          emitted_at: '2026-10-03T17:24:04.165415Z'
+          monotonic_ns: 922721905322791
+          sequence: 23
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+            case_id: path-tracing-reverse__crYNDTZ
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: d0aead2a965f6d95
+          semantic_type: artifact.content
+          name: terminal_bench.public_evidence_reference
+          reference:
+            kind: artifact
+            id: artifact_f8527df283095bfcfb272954
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_1
+      partial: false
+  signals:
+    - protocol: abp
+      protocol_version: 1
+      signal_id: cab9c6f3-6e83-434f-a7d1-bfdf8a39bc30
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.050901Z'
+      monotonic_ns: 922721790802250
+      sequence: 1
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: 052ec5eaeb9c9eaa
+      operation: benchmark.run
+      kind: task
+      attributes:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3533e044-7333-45b5-a6f4-443262bc1b29
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.050991Z'
+      monotonic_ns: 922721790891958
+      sequence: 2
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 052ec5eaeb9c9eaa
+      name: capture_only
+      semantic_type: factor.value
+      body: true
+      attributes:
+        observation_id: obs_1
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1c23c278-12ca-4f38-8cfb-207fae4edab8
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.051047Z'
+      monotonic_ns: 922721790947500
+      sequence: 3
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 052ec5eaeb9c9eaa
+      name: adapter
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 9
+      attributes:
+        observation_id: obs_2
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 34a59c6b-10c0-4570-bfe9-241f3967f781
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.051084Z'
+      monotonic_ns: 922721790985208
+      sequence: 4
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 052ec5eaeb9c9eaa
+      name: model
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 18
+      attributes:
+        observation_id: obs_3
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1906d8d2-0a96-4662-8f33-0142a18b3b30
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.051116Z'
+      monotonic_ns: 922721791016750
+      sequence: 5
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 052ec5eaeb9c9eaa
+      name: effort
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 4
+      attributes:
+        observation_id: obs_4
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9c9205c9-4b16-4103-b353-95d0f7332523
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.051147Z'
+      monotonic_ns: 922721791048041
+      sequence: 6
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 052ec5eaeb9c9eaa
+      name: transport
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 23
+      attributes:
+        observation_id: obs_5
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 4e95838f-e5d0-46f9-bdfc-9e8e52a33cf9
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.051176Z'
+      monotonic_ns: 922721791076541
+      sequence: 7
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 052ec5eaeb9c9eaa
+      name: evidence_payload
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 24
+      attributes:
+        observation_id: obs_6
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5ca7cc7a-09ae-4029-8058-ef758de6bb45
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.126881Z'
+      monotonic_ns: 922721866786250
+      sequence: 8
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: d0aead2a965f6d95
+      parent_span_id: 052ec5eaeb9c9eaa
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 0b1553e3-7dc9-48fa-b11d-833b8578a5e2
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.126991Z'
+      monotonic_ns: 922721866893583
+      sequence: 9
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d0aead2a965f6d95
+      name: input
+      semantic_type: operation.input
+      body:
+        type: dict
+        length: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 071ad8c2-dca6-4ce3-a5ae-43d6487b3994
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.127059Z'
+      monotonic_ns: 922721866961583
+      sequence: 10
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: terminal_bench.reward.reward
+      semantic_type: quality.correctness
+      value: 1.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_7
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8ef76831-e8c0-434a-a4d1-128afc374503
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.127115Z'
+      monotonic_ns: 922721867017666
+      sequence: 11
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: terminal_bench.grader_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_8
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 41
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 69552ba9-1446-465b-8491-9e953c158c55
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.127161Z'
+      monotonic_ns: 922721867063333
+      sequence: 12
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.trial_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_9
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 21
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1c41ae6a-14f7-4192-b4ff-e87452f171bc
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.127192Z'
+      monotonic_ns: 922721867094750
+      sequence: 13
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: terminal_bench.duration
+      semantic_type: time.latency
+      value: 744.627631
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_10
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d2f45a8e-e3ad-4239-8825-5d5640510796
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.127216Z'
+      monotonic_ns: 922721867118791
+      sequence: 14
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.input_tokens
+      semantic_type: llm.tokens.input
+      value: 3462652
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_11
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: afae0c43-65e2-4636-b6aa-d6aa64a3cc20
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133548Z'
+      monotonic_ns: 922721873451375
+      sequence: 15
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.cache_read_tokens
+      semantic_type: llm.tokens.cached_input
+      value: 3323392
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_12
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d9336d25-38ca-4f9f-bcaf-2cd9bc7262c0
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133583Z'
+      monotonic_ns: 922721873486000
+      sequence: 16
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.cache_write_tokens
+      semantic_type: llm.tokens.cache_write
+      value: 0
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_13
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 3a0a69fa-7eeb-402b-8ff8-d12d5b95cc71
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133608Z'
+      monotonic_ns: 922721873510166
+      sequence: 17
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.output_tokens
+      semantic_type: llm.tokens.output
+      value: 31175
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_14
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: efbf7fea-6937-46ae-98fe-373687332b58
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133627Z'
+      monotonic_ns: 922721873529750
+      sequence: 18
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.total_tokens
+      semantic_type: llm.tokens.total
+      value: 3493827
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_15
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 454ada92-17aa-42c4-aa4d-c172dfad1d5d
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133648Z'
+      monotonic_ns: 922721873550458
+      sequence: 19
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.requests
+      semantic_type: llm.request.count
+      value: 57
+      unit: request
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_16
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5ca8edb3-1abb-43d3-8781-3c2956fde56f
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133674Z'
+      monotonic_ns: 922721873576416
+      sequence: 20
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.tool_calls
+      semantic_type: tool.call.count
+      value: 63
+      unit: call
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_17
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5b056015-73a3-4820-939f-e35068a9dcad
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133699Z'
+      monotonic_ns: 922721873601791
+      sequence: 21
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.cost_usd
+      semantic_type: money.cost
+      value: 0.13172984
+      unit: USD
+      direction: minimize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_18
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1a8f6d54-b506-49ff-a771-719895c32ecf
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.133721Z'
+      monotonic_ns: 922721873623958
+      sequence: 22
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: d0aead2a965f6d95
+      name: kedi.cache_read_ratio
+      semantic_type: coverage.ratio
+      value: 0.9597822709299115
+      unit: ratio
+      direction: maximize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_19
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 80fe950b-6795-407f-8a93-a0e60f050ca9
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.165415Z'
+      monotonic_ns: 922721905322791
+      sequence: 23
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: d0aead2a965f6d95
+      semantic_type: artifact.content
+      name: terminal_bench.public_evidence_reference
+      reference:
+        kind: artifact
+        id: artifact_f8527df283095bfcfb272954
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 99bd2f55-51b8-48c7-9ad6-f60cbc169515
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.165494Z'
+      monotonic_ns: 922721905397250
+      sequence: 24
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: d0aead2a965f6d95
+      name: terminal_bench.public_evidence_reference
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_20
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f102fe4e-3b34-40e4-b575-de00475e637c
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.165578Z'
+      monotonic_ns: 922721905481291
+      sequence: 25
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: d0aead2a965f6d95
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 55edd4ac-1883-4223-87dc-61192d66483f
+      trace_id: f0089a2b05b98ca37d4594335837c417
+      emitted_at: '2026-10-03T17:24:04.165912Z'
+      monotonic_ns: 922721905815916
+      sequence: 26
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket
+        case_id: path-tracing-reverse__crYNDTZ
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: 052ec5eaeb9c9eaa
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+  started_at: '2026-10-03T17:24:04.050901Z'
+  ended_at: '2026-10-03T17:24:04.165912Z'
+  partial: false
+spans:
+  span_1:
+    name: capture terminal-bench publication metrics
+    kind: workflow
+    started_at: '2026-10-03T17:24:04.126881+00:00'
+    ended_at: '2026-10-03T17:24:04.165578+00:00'
+    duration: 0.038695041
+    input:
+      task_name: terminal-bench/path-tracing-reverse
+      trial_name: path-tracing-reverse__crYNDTZ
+    output:
+      task_name: path-tracing-reverse
+      trial_name: path-tracing-reverse__crYNDTZ
+      rewards:
+        reward: 1.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 3323392
+        cache_write_tokens: 0
+        cost_usd: 0.13172984
+        input_tokens: 3462652
+        output_tokens: 31175
+        requests: 57
+        tool_calls: 63
+        total_tokens: 3493827
+        uncached_input_tokens: 139260
+      evidence_reference:
+        trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2/path-tracing-reverse__crYNDTZ
+        result_sha256: 974aa6f3a9e8481438768a8d3ea69b85e9d18817927e1d70e0b640025158e0c2
+        kedi_result_sha256: c4f1a9d3a306f5eb0a2e818ba029204943a81b9dc95dff77707b1438073dfecd
+        sanitization_manifest: evidence/sanitization-report.json
+        pricing_manifest: evidence/pricing.json
+        usage_cost_origin: offline genai-prices estimate, not a provider invoice
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+    artifacts:
+      - artifact_1
+artifacts:
+  terminal_bench.public_evidence_reference:
+    id: artifact_1
+    name: terminal_bench.public_evidence_reference
+    media: application/json
+    path: artifacts/run_0053_0001_path_tracing_reverse_cryndtz__langchain_luna_high_websocket/artifact_1.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: 3f8cebb30a9f2c75ed7a2123796f81ce7ab51a6497fbebc5a6f5736ac95d04bc
+    byte_count: 730
+output:
+  task_name: path-tracing-reverse
+  trial_name: path-tracing-reverse__crYNDTZ
+  harbor_exception: null
+  rewards:
+    reward: 1.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 3323392
+    cache_write_tokens: 0
+    cost_usd: 0.13172984
+    input_tokens: 3462652
+    output_tokens: 31175
+    requests: 57
+    tool_calls: 63
+    total_tokens: 3493827
+    uncached_input_tokens: 139260
+  evidence_reference:
+    trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-standard81-c2/path-tracing-reverse__crYNDTZ
+    result_sha256: 974aa6f3a9e8481438768a8d3ea69b85e9d18817927e1d70e0b640025158e0c2
+    kedi_result_sha256: c4f1a9d3a306f5eb0a2e818ba029204943a81b9dc95dff77707b1438073dfecd
+    sanitization_manifest: evidence/sanitization-report.json
+    pricing_manifest: evidence/pricing.json
+    usage_cost_origin: offline genai-prices estimate, not a provider invoice

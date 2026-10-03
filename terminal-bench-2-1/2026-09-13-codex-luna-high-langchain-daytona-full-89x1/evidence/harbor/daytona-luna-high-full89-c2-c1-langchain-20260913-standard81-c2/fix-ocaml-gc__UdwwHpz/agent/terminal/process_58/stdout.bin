@@ -1,0 +1,76 @@
+    /* count the number of pools */
+    int num_pools = 0;
+
+    while (cur_pool) {
+      num_pools++;
+      cur_pool = cur_pool->next;
+    }
+
+    struct compact_pool_stat* pool_stats = caml_stat_alloc_noexc(
+      sizeof(struct compact_pool_stat) * num_pools);
+
+    /* if we're unable to allocate pool_stats here then we should avoid
+      evacuating this size class. It's unlikely but it may be that we had
+      better success with an earlier size class and that results in some
+      memory being freed up. */
+    if( pool_stats == NULL ) {
+      caml_gc_log("Unable to allocate pool_stats for size class %d", sz_class);
+
+      continue;
+    }
+
+    cur_pool = heap->unswept_avail_pools[sz_class];
+
+    /* Count the number of free and live blocks in each pool. Note that a live
+       block here currently has the header status UNMARKED (because it was
+       MARKED in the previous cycle). After compaction the shared pools will
+       contain UNMARKED and GARBAGE from the "to" pools and UNMARKED from the
+       "from" pools which were evacuated.
+
+       At the cost of some complexity or an additional pass we could compute the
+       exact amount of space needed or even sweep all pools in this counting
+       pass.
+    */
+    int k = 0;
+    int total_live_blocks = 0;
+#ifdef DEBUG
+    int total_free_blocks = 0;
+#endif
+    while (cur_pool) {
+      header_t* p = POOL_FIRST_BLOCK(cur_pool, sz_class);
+      header_t* end = POOL_END(cur_pool);
+      mlsize_t wh = wsize_sizeclass[sz_class];
+
+      pool_stats[k].free_blocks = 0;
+      pool_stats[k].live_blocks = 0;
+
+      while (p + wh <= end) {
+        header_t h = (header_t)atomic_load_relaxed((atomic_uintnat*)p);
+
+        if (POOL_BLOCK_FREE_HD(h)) {
+          /* this tells us the number of spaces of size wh after this */
+          mlsize_t wosize = Wosize_hd(h);
+
+          pool_stats[k].free_blocks += wosize + 1;
+#ifdef DEBUG
+          total_free_blocks += wosize + 1;
+#endif
+          /* skip to the next block */
+          p += wh * wosize;
+        } else if (Has_status_hd(h, caml_global_heap_state.UNMARKED)) {
+          total_live_blocks++;
+          pool_stats[k].live_blocks++;
+        }
+        p += wh;
+      }
+
+      cur_pool = cur_pool->next;
+      k++;
+    }
+
+    /* Note that partially filled pools must have at least some free space*/
+#ifdef DEBUG
+    CAMLassert(total_free_blocks > 0);
+#endif
+
+    if (!total_live_blocks) {

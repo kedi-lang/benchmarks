@@ -1,0 +1,733 @@
+// Emacs style mode select   -*- C++ -*- 
+//-----------------------------------------------------------------------------
+//
+// $Id:$
+//
+// Copyright (C) 1993-1996 by id Software, Inc.
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// $Log:$
+//
+// DESCRIPTION:
+//	DOOM graphics stuff for X11, UNIX.
+//
+//-----------------------------------------------------------------------------
+
+static const char
+rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
+
+#include "config.h"
+#include "v_video.h"
+#include "m_argv.h"
+#include "d_event.h"
+#include "d_main.h"
+#include "i_video.h"
+#include "z_zone.h"
+
+#include "tables.h"
+#include "doomkeys.h"
+
+#include "doomgeneric.h"
+
+#include <stdbool.h>
+#include <stdlib.h>
+
+#include <fcntl.h>
+
+#include <stdarg.h>
+
+#include <sys/types.h>
+
+//#define CMAP256
+
+struct FB_BitField
+{
+	uint32_t offset;			/* beginning of bitfield	*/
+	uint32_t length;			/* length of bitfield		*/
+};
+
+struct FB_ScreenInfo
+{
+	uint32_t xres;			/* visible resolution		*/
+	uint32_t yres;
+	uint32_t xres_virtual;		/* virtual resolution		*/
+	uint32_t yres_virtual;
+
+	uint32_t bits_per_pixel;		/* guess what			*/
+	
+							/* >1 = FOURCC			*/
+	struct FB_BitField red;		/* bitfield in s_Fb mem if true color, */
+	struct FB_BitField green;	/* else only length is significant */
+	struct FB_BitField blue;
+	struct FB_BitField transp;	/* transparency			*/
+};
+
+static struct FB_ScreenInfo s_Fb;
+int fb_scaling = 1;
+int usemouse = 0;
+
+
+#ifdef CMAP256
+
+boolean palette_changed;
+struct color colors[256];
+
+#else  // CMAP256
+
+static struct color colors[256];
+
+
+#endif  // CMAP256
+
+
+void I_GetEvent(void);
+
+// The screen buffer; this is modified to draw things to the screen
+
+byte *I_VideoBuffer = NULL;
+
+// If true, game is running as a screensaver
+
+boolean screensaver_mode = false;
+
+// Flag indicating whether the screen is currently visible:
+// when the screen isnt visible, don't render the screen
+
+boolean screenvisible;
+
+// Mouse acceleration
+//
+// This emulates some of the behavior of DOS mouse drivers by increasing
+// the speed when the mouse is moved fast.
+//
+// The mouse input values are input directly to the game, but when
+// the values exceed the value of mouse_threshold, they are multiplied
+// by mouse_acceleration to increase the speed.
+
+float mouse_acceleration = 2.0;
+int mouse_threshold = 10;
+
+// Gamma correction level to use
+
+int usegamma = 0;
+
+typedef struct
+{
+	byte r;
+	byte g;
+	byte b;
+} col_t;
+
+// Palette converted to RGB565
+
+static uint16_t rgb565_palette[256];
+
+void cmap_to_rgb565(uint16_t * out, uint8_t * in, int in_pixels)
+{
+    int i, j;
+    struct color c;
+    uint16_t r, g, b;
+
+    for (i = 0; i < in_pixels; i++)
+    {
+        c = colors[*in]; 
+        r = ((uint16_t)(c.r >> 3)) << 11;
+        g = ((uint16_t)(c.g >> 2)) << 5;
+        b = ((uint16_t)(c.b >> 3)) << 0;
+        *out = (r | g | b);
+
+        in++;
+        for (j = 0; j < fb_scaling; j++) {
+            out++;
+        }
+    }
+}
+
+void cmap_to_fb(uint8_t * out, uint8_t * in, int in_pixels)
+{
+    int i, j, k;
+    struct color c;
+    uint32_t pix;
+    uint16_t r, g, b;
+
+    for (i = 0; i < in_pixels; i++)
+    {
+        c = colors[*in];  /* R:8 G:8 B:8 format! */
+        r = (uint16_t)(c.r >> (8 - s_Fb.red.length));
+        g = (uint16_t)(c.g >> (8 - s_Fb.green.length));
+        b = (uint16_t)(c.b >> (8 - s_Fb.blue.length));
+        pix = r << s_Fb.red.offset;
+        pix |= g << s_Fb.green.offset;
+        pix |= b << s_Fb.blue.offset;
+
+        for (k = 0; k < fb_scaling; k++) {
+            for (j = 0; j < s_Fb.bits_per_pixel/8; j++) {
+                *out = (pix >> (j*8));
+                out++;
+            }
+        }
+        in++;
+    }
+}
+
+void I_InitGraphics (void)
+{
+    int i;
+
+	memset(&s_Fb, 0, sizeof(struct FB_ScreenInfo));
+	s_Fb.xres = DOOMGENERIC_RESX;
+	s_Fb.yres = DOOMGENERIC_RESY;
+	s_Fb.xres_virtual = s_Fb.xres;
+	s_Fb.yres_virtual = s_Fb.yres;
+
+#ifdef CMAP256
+
+	s_Fb.bits_per_pixel = 8;
+
+#else  // CMAP256
+
+	s_Fb.bits_per_pixel = 32;
+
+	s_Fb.blue.length = 8;
+	s_Fb.green.length = 8;
+	s_Fb.red.length = 8;
+	s_Fb.transp.length = 8;
+
+	s_Fb.blue.offset = 0;
+	s_Fb.green.offset = 8;
+	s_Fb.red.offset = 16;
+	s_Fb.transp.offset = 24;
+	
+#endif  // CMAP256
+
+    printf("I_InitGraphics: framebuffer: x_res: %d, y_res: %d, x_virtual: %d, y_virtual: %d, bpp: %d\n",
+            s_Fb.xres, s_Fb.yres, s_Fb.xres_virtual, s_Fb.yres_virtual, s_Fb.bits_per_pixel);
+
+    printf("I_InitGraphics: framebuffer: RGBA: %d%d%d%d, red_off: %d, green_off: %d, blue_off: %d, transp_off: %d\n",
+            s_Fb.red.length, s_Fb.green.length, s_Fb.blue.length, s_Fb.transp.length, s_Fb.red.offset, s_Fb.green.offset, s_Fb.blue.offset, s_Fb.transp.offset);
+
+    printf("I_InitGraphics: DOOM screen size: w x h: %d x %d\n", SCREENWIDTH, SCREENHEIGHT);
+
+
+    i = M_CheckParmWithArgs("-scaling", 1);
+    if (i > 0) {
+        i = atoi(myargv[i + 1]);
+        fb_scaling = i;
+        printf("I_InitGraphics: Scaling factor: %d\n", fb_scaling);
+    } else {
+        fb_scaling = s_Fb.xres / SCREENWIDTH;
+        if (s_Fb.yres / SCREENHEIGHT < fb_scaling)
+            fb_scaling = s_Fb.yres / SCREENHEIGHT;
+        printf("I_InitGraphics: Auto-scaling factor: %d\n", fb_scaling);
+    }
+
+
+    /* Allocate screen to draw to */
+	I_VideoBuffer = (byte*)Z_Malloc (SCREENWIDTH * SCREENHEIGHT, PU_STATIC, NULL);  // For DOOM to draw on
+
+	screenvisible = true;
+
+    extern void I_InitInput(void);
+    I_InitInput();
+}
+
+void I_ShutdownGraphics (void)
+{
+	Z_Free (I_VideoBuffer);
+}
+
+void I_StartFrame (void)
+{
+
+}
+
+void I_StartTic (void)
+{
+	I_GetEvent();
+}
+
+void I_UpdateNoBlit (void)
+{
+}
+
+//
+// I_FinishUpdate
+//
+
+void I_FinishUpdate (void)
+{
+    int y;
+    int x_offset, y_offset, x_offset_end;
+    unsigned char *line_in, *line_out;
+
+    /* Offsets in case FB is bigger than DOOM */
+    /* 600 = s_Fb heigt, 200 screenheight */
+    /* 600 = s_Fb heigt, 200 screenheight */
+    /* 2048 =s_Fb width, 320 screenwidth */
+    y_offset     = (((s_Fb.yres - (SCREENHEIGHT * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2;
+    x_offset     = (((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2; // XXX: siglent FB hack: /4 instead of /2, since it seems to handle the resolution in a funny way
+    //x_offset     = 0;
+    x_offset_end = ((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8) - x_offset;
+
+    /* DRAW SCREEN */
+    line_in  = (unsigned char *) I_VideoBuffer;
+    line_out = (unsigned char *) DG_ScreenBuffer;
+
+    y = SCREENHEIGHT;
+
+    while (y--)
+    {
+        int i;
+        for (i = 0; i < fb_scaling; i++) {
+            line_out += x_offset;
+#ifdef CMAP256
+            if (fb_scaling == 1) {
+                memcpy(line_out, line_in, SCREENWIDTH); /* fb_width is bigger than Doom SCREENWIDTH... */
+            } else {
+                int j;
+
+                for (j = 0; j < SCREENWIDTH; j++) {
+                    int k;
+                    for (k = 0; k < fb_scaling; k++) {
+                        line_out[j * fb_scaling + k] = line_in[j];
+                    }
+                }
+            }
+#else
+            //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
+            cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
+#endif
+            line_out += (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel/8)) + x_offset_end;
+        }
+        line_in += SCREENWIDTH;
+    }
+
+	DG_DrawFrame();
+}
+
+//
+// I_ReadScreen
+//
+void I_ReadScreen (byte* scr)
+{
+    memcpy (scr, I_VideoBuffer, SCREENWIDTH * SCREENHEIGHT);
+}
+
+//
+// I_SetPalette
+//
+#define GFX_RGB565(r, g, b)			((((r & 0xF8) >> 3) << 11) | (((g & 0xFC) >> 2) << 5) | ((b & 0xF8) >> 3))
+#define GFX_RGB565_R(color)			((0xF800 & color) >> 11)
+#define GFX_RGB565_G(color)			((0x07E0 & color) >> 5)
+#define GFX_RGB565_B(color)			(0x001F & color)
+
+void I_SetPalette (byte* palette)
+{
+	int i;
+	//col_t* c;
+
+	//for (i = 0; i < 256; i++)
+	//{
+	//	c = (col_t*)palette;
+
+	//	rgb565_palette[i] = GFX_RGB565(gammatable[usegamma][c->r],
+	//								   gammatable[usegamma][c->g],
+	//								   gammatable[usegamma][c->b]);
+
+	//	palette += 3;
+	//}
+    
+
+    /* performance boost:
+     * map to the right pixel format over here! */
+
+    for (i=0; i<256; ++i ) {
+        colors[i].a = 0;
+        colors[i].r = gammatable[usegamma][*palette++];
+        colors[i].g = gammatable[usegamma][*palette++];
+        colors[i].b = gammatable[usegamma][*palette++];
+    }
+
+#ifdef CMAP256
+
+    palette_changed = true;
+
+#endif  // CMAP256
+}
+
+// Given an RGB value, find the closest matching palette index.
+
+int I_GetPaletteIndex (int r, int g, int b)
+{
+    int best, best_diff, diff;
+    int i;
+    col_t color;
+
+    printf("I_GetPaletteIndex\n");
+
+    best = 0;
+    best_diff = INT_MAX;
+
+    for (i = 0; i < 256; ++i)
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//
+
+
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <stdarg.h>
+
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
+#ifdef ORIGCODE
+#include "SDL.h"
+#endif
+
+#include "config.h"
+
+#include "deh_str.h"
+#include "doomtype.h"
+#include "m_argv.h"
+#include "m_config.h"
+#include "m_misc.h"
+#include "i_joystick.h"
+#include "i_sound.h"
+#include "i_timer.h"
+#include "i_video.h"
+
+#include "i_system.h"
+
+#include "w_wad.h"
+#include "z_zone.h"
+
+#ifdef __MACOSX__
+#include <CoreFoundation/CFUserNotification.h>
+#endif
+
+#define DEFAULT_RAM 6 /* MiB */
+#define MIN_RAM     6  /* MiB */
+
+
+typedef struct atexit_listentry_s atexit_listentry_t;
+
+struct atexit_listentry_s
+{
+    atexit_func_t func;
+    boolean run_on_error;
+    atexit_listentry_t *next;
+};
+
+static atexit_listentry_t *exit_funcs = NULL;
+
+void I_AtExit(atexit_func_t func, boolean run_on_error)
+{
+    atexit_listentry_t *entry;
+
+    entry = malloc(sizeof(*entry));
+
+    entry->func = func;
+    entry->run_on_error = run_on_error;
+    entry->next = exit_funcs;
+    exit_funcs = entry;
+}
+
+// Tactile feedback function, probably used for the Logitech Cyberman
+
+void I_Tactile(int on, int off, int total)
+{
+}
+
+// Zone memory auto-allocation function that allocates the zone size
+// by trying progressively smaller zone sizes until one is found that
+// works.
+
+static byte *AutoAllocMemory(int *size, int default_ram, int min_ram)
+{
+    byte *zonemem;
+
+    // Allocate the zone memory.  This loop tries progressively smaller
+    // zone sizes until a size is found that can be allocated.
+    // If we used the -mb command line parameter, only the parameter
+    // provided is accepted.
+
+    zonemem = NULL;
+
+    while (zonemem == NULL)
+    {
+        // We need a reasonable minimum amount of RAM to start.
+
+        if (default_ram < min_ram)
+        {
+            I_Error("Unable to allocate %i MiB of RAM for zone", default_ram);
+        }
+
+        // Try to allocate the zone memory.
+
+        *size = default_ram * 1024 * 1024;
+
+        zonemem = malloc(*size);
+
+        // Failed to allocate?  Reduce zone size until we reach a size
+        // that is acceptable.
+
+        if (zonemem == NULL)
+        {
+            default_ram -= 1;
+        }
+    }
+
+    return zonemem;
+}
+
+byte *I_ZoneBase (int *size)
+{
+    byte *zonemem;
+    int min_ram, default_ram;
+    int p;
+
+    //!
+    // @arg <mb>
+    //
+    // Specify the heap size, in MiB (default 16).
+    //
+
+    p = M_CheckParmWithArgs("-mb", 1);
+
+    if (p > 0)
+    {
+        default_ram = atoi(myargv[p+1]);
+        min_ram = default_ram;
+    }
+    else
+    {
+        default_ram = DEFAULT_RAM;
+        min_ram = MIN_RAM;
+    }
+
+    zonemem = AutoAllocMemory(size, default_ram, min_ram);
+
+    printf("zone memory: %p, %x allocated for zone\n", 
+           zonemem, *size);
+
+    return zonemem;
+}
+
+void I_PrintBanner(char *msg)
+{
+    int i;
+    int spaces = 35 - (strlen(msg) / 2);
+
+    for (i=0; i<spaces; ++i)
+        putchar(' ');
+
+    puts(msg);
+}
+
+void I_PrintDivider(void)
+{
+    int i;
+
+    for (i=0; i<75; ++i)
+    {
+        putchar('=');
+    }
+
+    putchar('\n');
+}
+
+void I_PrintStartupBanner(char *gamedescription)
+{
+    I_PrintDivider();
+    I_PrintBanner(gamedescription);
+    I_PrintDivider();
+    
+    printf(
+    " " PACKAGE_NAME " is free software, covered by the GNU General Public\n"
+    " License.  There is NO warranty; not even for MERCHANTABILITY or FITNESS\n"
+    " FOR A PARTICULAR PURPOSE. You are welcome to change and distribute\n"
+    " copies under certain conditions. See the source for more information.\n");
+
+    I_PrintDivider();
+}
+
+// 
+// I_ConsoleStdout
+//
+// Returns true if stdout is a real console, false if it is a file
+//
+
+boolean I_ConsoleStdout(void)
+{
+#ifdef _WIN32
+    // SDL "helpfully" always redirects stdout to a file.
+    return 0;
+#else
+#if ORIGCODE
+    return isatty(fileno(stdout));
+#else
+	return 0;
+#endif
+#endif
+}
+
+//
+// I_Init
+//
+/*
+void I_Init (void)
+{
+    I_CheckIsScreensaver();
+    I_InitTimer();
+    I_InitJoystick();
+}
+void I_BindVariables(void)
+{
+    I_BindVideoVariables();
+    I_BindJoystickVariables();
+    I_BindSoundVariables();
+}
+*/
+#ifndef DOOM_GENERIC
+#define DOOM_GENERIC
+
+#include <stdlib.h>
+#include <stdint.h>
+
+#ifndef DOOMGENERIC_RESX
+#define DOOMGENERIC_RESX 640
+#endif  // DOOMGENERIC_RESX
+
+#ifndef DOOMGENERIC_RESY
+#define DOOMGENERIC_RESY 400
+#endif  // DOOMGENERIC_RESY
+
+
+#ifdef CMAP256
+
+typedef uint8_t pixel_t;
+
+#else  // CMAP256
+
+typedef uint32_t pixel_t;
+
+#endif  // CMAP256
+
+
+extern pixel_t* DG_ScreenBuffer;
+
+void doomgeneric_Create(int argc, char **argv);
+void doomgeneric_Tick();
+
+
+//Implement below functions for your platform
+void DG_Init();
+void DG_DrawFrame();
+void DG_SleepMs(uint32_t ms);
+uint32_t DG_GetTicksMs();
+int DG_GetKey(int* pressed, unsigned char* key);
+void DG_SetWindowTitle(const char * title);
+
+#endif //DOOM_GENERIC
+doomgeneric/doomgeneric/am_map.c:430:    fb = I_VideoBuffer;
+doomgeneric/doomgeneric/d_main.c:251:    	I_SetPalette (W_CacheLumpName (DEH_String("PLAYPAL"),PU_CACHE));
+doomgeneric/doomgeneric/d_main.c:1076:     || screensaver_mode || M_CheckParm("-testcontrols") > 0)
+doomgeneric/doomgeneric/f_finale.c:241:    dest = I_VideoBuffer;
+doomgeneric/doomgeneric/f_finale.c:584:    desttop = I_VideoBuffer + x;
+doomgeneric/doomgeneric/f_wipe.c:238:    I_ReadScreen(wipe_scr_start);
+doomgeneric/doomgeneric/f_wipe.c:250:    I_ReadScreen(wipe_scr_end);
+doomgeneric/doomgeneric/f_wipe.c:276:	wipe_scr = I_VideoBuffer;
+doomgeneric/doomgeneric/i_scale.c:35:// Should be I_VideoBuffer
+doomgeneric/doomgeneric/i_sound.c:174:    if (!nosound && !screensaver_mode)
+doomgeneric/doomgeneric/i_video.c:76:int usemouse = 0;
+doomgeneric/doomgeneric/i_video.c:96:byte *I_VideoBuffer = NULL;
+doomgeneric/doomgeneric/i_video.c:100:boolean screensaver_mode = false;
+doomgeneric/doomgeneric/i_video.c:113:// the values exceed the value of mouse_threshold, they are multiplied
+doomgeneric/doomgeneric/i_video.c:114:// by mouse_acceleration to increase the speed.
+doomgeneric/doomgeneric/i_video.c:116:float mouse_acceleration = 2.0;
+doomgeneric/doomgeneric/i_video.c:117:int mouse_threshold = 10;
+doomgeneric/doomgeneric/i_video.c:121:int usegamma = 0;
+doomgeneric/doomgeneric/i_video.c:235:	I_VideoBuffer = (byte*)Z_Malloc (SCREENWIDTH * SCREENHEIGHT, PU_STATIC, NULL);  // For DOOM to draw on
+doomgeneric/doomgeneric/i_video.c:245:	Z_Free (I_VideoBuffer);
+doomgeneric/doomgeneric/i_video.c:282:    line_in  = (unsigned char *) I_VideoBuffer;
+doomgeneric/doomgeneric/i_video.c:318:// I_ReadScreen
+doomgeneric/doomgeneric/i_video.c:320:void I_ReadScreen (byte* scr)
+doomgeneric/doomgeneric/i_video.c:322:    memcpy (scr, I_VideoBuffer, SCREENWIDTH * SCREENHEIGHT);
+doomgeneric/doomgeneric/i_video.c:326:// I_SetPalette
+doomgeneric/doomgeneric/i_video.c:333:void I_SetPalette (byte* palette)
+doomgeneric/doomgeneric/i_video.c:342:	//	rgb565_palette[i] = GFX_RGB565(gammatable[usegamma][c->r],
+doomgeneric/doomgeneric/i_video.c:343:	//								   gammatable[usegamma][c->g],
+doomgeneric/doomgeneric/i_video.c:344:	//								   gammatable[usegamma][c->b]);
+doomgeneric/doomgeneric/i_video.c:355:        colors[i].r = gammatable[usegamma][*palette++];
+doomgeneric/doomgeneric/i_video.c:356:        colors[i].g = gammatable[usegamma][*palette++];
+doomgeneric/doomgeneric/i_video.c:357:        colors[i].b = gammatable[usegamma][*palette++];
+doomgeneric/doomgeneric/i_video.c:369:int I_GetPaletteIndex (int r, int g, int b)
+doomgeneric/doomgeneric/i_video.c:375:    printf("I_GetPaletteIndex\n");
+doomgeneric/doomgeneric/i_video.c:405:void I_BeginRead (void)
+doomgeneric/doomgeneric/i_video.c:409:void I_EndRead (void)
+doomgeneric/doomgeneric/m_config.c:571:    CONFIG_VARIABLE_INT(usegamma),
+doomgeneric/doomgeneric/m_config.c:769:    // exceeds the threshold value (mouse_threshold), the speed is
+doomgeneric/doomgeneric/m_config.c:773:    CONFIG_VARIABLE_FLOAT(mouse_acceleration),
+doomgeneric/doomgeneric/m_config.c:778:    // acceleration factor (mouse_acceleration).
+doomgeneric/doomgeneric/m_config.c:781:    CONFIG_VARIABLE_INT(mouse_threshold),
+doomgeneric/doomgeneric/m_menu.c:1745:	    usegamma++;
+doomgeneric/doomgeneric/m_menu.c:1746:	    if (usegamma > 4)
+doomgeneric/doomgeneric/m_menu.c:1747:		usegamma = 0;
+doomgeneric/doomgeneric/m_menu.c:1748:	    players[consoleplayer].message = DEH_String(gammamsg[usegamma]);
+doomgeneric/doomgeneric/m_menu.c:1749:            I_SetPalette (W_CacheLumpName (DEH_String("PLAYPAL"),PU_CACHE));
+doomgeneric/doomgeneric/r_draw.c:800:	ylookup[i] = I_VideoBuffer + (i+viewwindowy)*SCREENWIDTH; 
+doomgeneric/doomgeneric/r_draw.c:931:        memcpy(I_VideoBuffer + ofs, background_buffer + ofs, count); 
+doomgeneric/doomgeneric/st_stuff.c:996:	I_SetPalette (pal);
+doomgeneric/doomgeneric/st_stuff.c:1406:    I_SetPalette (W_CacheLumpNum (lu_palette, PU_CACHE));
+doomgeneric/doomgeneric/v_video.c:74:    if (dest_screen == I_VideoBuffer)
+doomgeneric/doomgeneric/v_video.c:534:    buf = I_VideoBuffer + SCREENWIDTH * y + x;
+doomgeneric/doomgeneric/v_video.c:554:    buf = I_VideoBuffer + SCREENWIDTH * y + x;
+doomgeneric/doomgeneric/v_video.c:567:    buf = I_VideoBuffer + SCREENWIDTH * y + x;
+doomgeneric/doomgeneric/v_video.c:615:    dest_screen = I_VideoBuffer;
+doomgeneric/doomgeneric/v_video.c:829:    WritePNGfile(lbmname, I_VideoBuffer,
+doomgeneric/doomgeneric/v_video.c:837:    WritePCXfile(lbmname, I_VideoBuffer,
+doomgeneric/doomgeneric/v_video.c:848:    extern int usemouse;
+doomgeneric/doomgeneric/v_video.c:858:    bgcolor = I_GetPaletteIndex(0x77, 0x77, 0x77);
+doomgeneric/doomgeneric/v_video.c:859:    bordercolor = I_GetPaletteIndex(0x55, 0x55, 0x55);
+doomgeneric/doomgeneric/v_video.c:860:    red = I_GetPaletteIndex(0xff, 0x00, 0x00);
+doomgeneric/doomgeneric/v_video.c:861:    black = I_GetPaletteIndex(0x00, 0x00, 0x00);
+doomgeneric/doomgeneric/v_video.c:862:    yellow = I_GetPaletteIndex(0xff, 0xff, 0x00);
+doomgeneric/doomgeneric/v_video.c:863:    white = I_GetPaletteIndex(0xff, 0xff, 0xff);
+doomgeneric/doomgeneric/v_video.c:868:    if (!usemouse || fabs(mouse_acceleration - 1) < 0.01)
+doomgeneric/doomgeneric/v_video.c:890:    if (speed < mouse_threshold)
+doomgeneric/doomgeneric/v_video.c:896:        original_speed = speed - mouse_threshold;
+doomgeneric/doomgeneric/v_video.c:897:        original_speed = (int) (original_speed / mouse_acceleration);
+doomgeneric/doomgeneric/v_video.c:898:        original_speed += mouse_threshold;
+doomgeneric/doomgeneric/v_video.c:903:    linelen = (original_speed * redline_x) / mouse_threshold;
+doomgeneric/doomgeneric/w_wad.c:354:    I_BeginRead ();
+doomgeneric/doomgeneric/w_wad.c:364:    I_EndRead ();

@@ -1,0 +1,81 @@
+sub get_uint32
+{
+  my $fp = shift;
+
+  my $bytes = my_read ($fp, 4);
+
+  return (0, 0) if (length ($bytes) != 4);
+
+  my $num = unpack ("L", $bytes);
+
+  return $num;
+}
+
+sub get_uint64
+{
+  my $fp = shift;
+
+  my $bytes = my_read ($fp, 8);
+
+  return (0, 0) if (length ($bytes) != 8);
+
+  my ($uint1, $uint2) = unpack ("LL<", $bytes);
+
+  my $num = $uint2 << 32 | $uint1;
+
+  return $bytes, $num;
+}
+
+sub read_number
+{
+  my $fp = shift;
+
+  my $b = ord (my_read ($fp, 1));
+
+  if (($b & 0x80) == 0)
+  {
+    return $b;
+  }
+
+  my $value = ord (my_read ($fp, 1));
+
+  for (my $i = 1; $i < 8; $i++)
+  {
+    my $mask = 0x80 >> $i;
+
+    if (($b & $mask) == 0)
+    {
+      my $high = $b & ($mask - 1);
+
+      $value |= ($high << ($i * 8));
+
+      return $value;
+    }
+
+    my $next = ord (my_read ($fp, 1));
+
+    $value |= ($next << ($i * 8));
+  }
+
+  return $value;
+}
+
+sub num_to_id
+{
+  my $num = shift;
+
+  # special case:
+
+  return "\x00" if ($num == 0);
+
+  # normal case:
+
+  my $id = "";
+
+  while ($num > 0)
+  {
+    my $value = $num & 0xff;
+
+    $id = chr ($value) . $id;
+
+    $num >>= 8;

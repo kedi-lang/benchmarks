@@ -1,0 +1,46 @@
+endif
+
+.INTERMEDIATE: tmpheader.exe
+tmpheader.exe: header.$(O)
+	$(V_MKEXE)$(call MKEXE_VIA_CC,$@,$^ $(HEADERLIBS))
+# Do not strip the header produced by cl
+ifneq "$(TOOLCHAIN)" "msvc"
+	$(STRIP) $@
+endif
+
+stdlib.cma: $(OBJS)
+	$(V_LINKC)$(CAMLC) -a -o $@ $^
+
+stdlib.cmxa: $(OBJS:.cmo=.cmx)
+	$(V_LINKOPT)$(CAMLOPT) -a -o $@ $^
+
+.PHONY: distclean
+distclean: clean
+	rm -f sys.ml META runtime.info target_runtime.info
+
+.PHONY: clean
+clean::
+	rm -f $(HEADER_NAME) target_$(HEADER_NAME)
+
+export AWK
+
+%.cmi: %.mli
+	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) -c $<
+
+# The dependency on the .mli file is in .depend (since stdlib__Foo.cmi
+# depends on stdlib__foo.mli)
+stdlib__%.cmi:
+	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) \
+	         -o $@ -c $(filter %.mli, $^)
+
+%.cmo: %.ml
+	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) -c $<
+
+# The dependency on the .ml file is in .depend (since stdlib__Foo.cmo
+# depends on stdlib__foo.ml)
+stdlib__%.cmo:
+	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) \
+	         -o $@ -c $(filter %.ml, $^)
+
+%.cmx: %.ml
+	$(V_OCAMLOPT)$(CAMLOPT) $(COMPFLAGS) $(OPTCOMPFLAGS) $(shell ./Compflags $@) -c $<

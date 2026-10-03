@@ -1,0 +1,51 @@
+                             const unsigned char* image, unsigned w, unsigned h,
+                             LodePNGColorType colortype, unsigned bitdepth);
+
+/*Same as lodepng_encode_file, but always encodes from 32-bit RGBA raw image.
+
+NOTE: Wide-character filenames are not supported, you can use an external method
+to handle such files and encode in-memory.*/
+unsigned lodepng_encode32_file(const char* filename,
+                               const unsigned char* image, unsigned w, unsigned h);
+
+/*Same as lodepng_encode_file, but always encodes from 24-bit RGB raw image.
+
+NOTE: Wide-character filenames are not supported, you can use an external method
+to handle such files and encode in-memory.*/
+unsigned lodepng_encode24_file(const char* filename,
+                               const unsigned char* image, unsigned w, unsigned h);
+#endif /*LODEPNG_COMPILE_DISK*/
+#endif /*LODEPNG_COMPILE_ENCODER*/
+
+
+#ifdef LODEPNG_COMPILE_CPP
+namespace lodepng {
+#ifdef LODEPNG_COMPILE_DECODER
+/*Same as lodepng_decode_memory, but decodes to an std::vector. The colortype
+is the format to output the pixels to. Default is RGBA 8-bit per channel.*/
+unsigned decode(std::vector<unsigned char>& out, unsigned& w, unsigned& h,
+                const unsigned char* in, size_t insize,
+                LodePNGColorType colortype = LCT_RGBA, unsigned bitdepth = 8);
+unsigned decode(std::vector<unsigned char>& out, unsigned& w, unsigned& h,
+                const std::vector<unsigned char>& in,
+                LodePNGColorType colortype = LCT_RGBA, unsigned bitdepth = 8);
+#ifdef LODEPNG_COMPILE_DISK
+/*
+Converts PNG file from disk to raw pixel data in memory.
+Same as the other decode functions, but instead takes a filename as input.
+
+NOTE: Wide-character filenames are not supported, you can use an external method
+to handle such files and decode in-memory.
+*/
+unsigned decode(std::vector<unsigned char>& out, unsigned& w, unsigned& h,
+                const std::string& filename,
+                LodePNGColorType colortype = LCT_RGBA, unsigned bitdepth = 8);
+#endif /* LODEPNG_COMPILE_DISK */
+#endif /* LODEPNG_COMPILE_DECODER */
+
+#ifdef LODEPNG_COMPILE_ENCODER
+/*Same as lodepng_encode_memory, but encodes to an std::vector. colortype
+is that of the raw input data. The output PNG color type will be auto chosen.*/
+unsigned encode(std::vector<unsigned char>& out,
+                const unsigned char* in, unsigned w, unsigned h,
+                LodePNGColorType colortype = LCT_RGBA, unsigned bitdepth = 8);

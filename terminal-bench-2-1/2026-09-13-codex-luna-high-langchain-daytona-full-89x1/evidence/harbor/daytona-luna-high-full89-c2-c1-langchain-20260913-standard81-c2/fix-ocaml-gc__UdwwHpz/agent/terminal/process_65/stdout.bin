@@ -1,0 +1,504 @@
+Line 569 of "runtime/shared_heap.c" starts at address 0x50059 <pool_sweep+217> and ends at 0x5005c <pool_sweep+220>.
+Line 570 of "runtime/shared_heap.c" is at address 0x50079 <pool_sweep+249> but contains no code.
+Line 579 of "runtime/shared_heap.c" is at address 0x50079 <pool_sweep+249> but contains no code.
+Line 655 of "runtime/shared_heap.c" is at address 0x501b6 <pool_sweep+566> but contains no code.
+Dump of assembler code for function pool_sweep:
+544	                         sizeclass sz, int release_to_global_pool) {
+   0x000000000004ff80 <+0>:	push   %r15
+   0x000000000004ff82 <+2>:	push   %r14
+   0x000000000004ff84 <+4>:	push   %r13
+   0x000000000004ff86 <+6>:	push   %r12
+   0x000000000004ff88 <+8>:	push   %rbp
+   0x000000000004ff89 <+9>:	push   %rbx
+   0x000000000004ff8a <+10>:	sub    $0x48,%rsp
+   0x000000000004ff91 <+17>:	mov    %edx,0x38(%rsp)
+
+545	  intnat work;
+
+546	  pool* a = *plist;
+   0x000000000004ff8e <+14>:	mov    (%rsi),%r9
+
+547	  if (!a) return 0;
+   0x000000000004ff95 <+21>:	test   %r9,%r9
+   0x000000000004ff98 <+24>:	je     0x503e0 <pool_sweep+1120>
+   0x00000000000503e4 <+1124>:	xor    %eax,%eax
+
+548	  *plist = a->next;
+   0x000000000004ff9e <+30>:	mov    (%r9),%rax
+   0x000000000004ffae <+46>:	mov    %rax,(%rsi)
+
+549	
+550	  {
+551	    header_t* p = POOL_FIRST_BLOCK(a, sz);
+   0x000000000004ffa1 <+33>:	mov    %edx,%r14d
+   0x000000000004ffa4 <+36>:	mov    %rdi,%r15
+   0x000000000004ffb1 <+49>:	lea    0x1d8a8(%rip),%rax        # 0x6d860 <wastage_sizeclass>
+   0x000000000004ffb8 <+56>:	movzbl (%rax,%r14,1),%eax
+   0x000000000004ffbd <+61>:	lea    0x20(,%rax,8),%r12
+   0x000000000004ffd0 <+80>:	lea    (%r9,%r12,1),%rbx
+
+552	    header_t* last_free_block = NULL;
+   0x000000000004fff2 <+114>:	xor    %r10d,%r10d
+
+553	    const header_t* end = POOL_END(a);
+   0x000000000004ffa7 <+39>:	lea    0x8000(%r9),%r13
+
+554	    const mlsize_t wh = wsize_sizeclass[sz];
+   0x000000000004ffc5 <+69>:	lea    0x1d8b4(%rip),%rax        # 0x6d880 <wsize_sizeclass>
+   0x000000000004ffcc <+76>:	mov    (%rax,%r14,4),%ebp
+
+555	    int all_used = 1;
+   0x0000000000050015 <+149>:	movl   $0x1,0x8(%rsp)
+   0x000000000005001d <+157>:	jmp    0x50047 <pool_sweep+199>
+   0x000000000005001f <+159>:	nop
+
+556	    struct heap_stats* s = &local->stats;
+
+557	
+558	    CAMLassert(a->owner == local->owner);
+   0x000000000004ffd4 <+84>:	mov    0x418(%rdi),%rax
+   0x000000000004ffdb <+91>:	cmp    %rax,0x10(%r9)
+   0x000000000004ffdf <+95>:	jne    0x50488 <pool_sweep+1288>
+   0x0000000000050488 <+1288>:	mov    $0x22e,%edx
+   0x000000000005048d <+1293>:	lea    0x168fb(%rip),%rsi        # 0x66d8f
+   0x0000000000050494 <+1300>:	lea    0x169ac(%rip),%rdi        # 0x66e47
+   0x000000000005049b <+1307>:	mov    %ecx,0x10(%rsp)
+   0x000000000005049f <+1311>:	mov    %r9,0x8(%rsp)
+   0x00000000000504a4 <+1316>:	call   0x1b340 <caml_failed_assert>
+   0x00000000000504a9 <+1321>:	mov    0x10(%rsp),%ecx
+   0x00000000000504ad <+1325>:	mov    0x8(%rsp),%r9
+   0x00000000000504b2 <+1330>:	jmp    0x4ffe5 <pool_sweep+101>
+
+559	
+560	    a->next_obj = 0;
+   0x000000000005000d <+141>:	movq   $0x0,0x8(%r9)
+
+561	
+562	    /* note that the below will have to be changed for the new GC pacing
+563	      logic */
+564	    work = end - p;
+   0x00000000000501e3 <+611>:	mov    $0x8000,%eax
+   0x00000000000501ec <+620>:	sub    %r12,%rax
+   0x00000000000501f1 <+625>:	sar    $0x3,%rax
+
+565	    do {
+
+566	      header_t hd = (header_t)atomic_load_relaxed((atomic_uintnat*)p);
+   0x0000000000050047 <+199>:	mov    (%rbx),%r12
+
+567	
+568	      if( (char*)p + caml_plat_pagesize < (char*)end ) {
+   0x000000000005004a <+202>:	mov    0x31a17(%rip),%rdx        # 0x81a68 <caml_plat_pagesize>
+   0x0000000000050051 <+209>:	add    %rbx,%rdx
+   0x0000000000050054 <+212>:	cmp    %r13,%rdx
+   0x0000000000050057 <+215>:	jae    0x5005c <pool_sweep+220>
+
+569	        caml_prefetch((char*)p + caml_plat_pagesize);
+   0x0000000000050059 <+217>:	prefetcht0 (%rdx)
+
+570	      }
+571	
+572	      /* The pools mark a block as being free by setting the tag to No_scan_tag
+573	        and the color to NOT_MARKABLE. The wosize is used to indicate the
+574	        number of contiguous free blocks that follow. The first field is a
+575	        pointer to the next free block beyond the immediately following
+576	        contiguous free blocks (if any). */
+577	
+578	      /* Check if the current block is garbage, if it is turn it into a free
+579	      block */
+580	      if (Has_status_hd(hd, caml_global_heap_state.GARBAGE)) {
+   0x0000000000050070 <+240>:	cmp    %rdx,0x310b9(%rip)        # 0x81130 <caml_global_heap_state+16>
+   0x0000000000050077 <+247>:	jne    0x50020 <pool_sweep+160>
+
+581	        CAMLassert(Whsize_hd(hd) <= wh);
+   0x000000000005005f <+223>:	mov    %r12,%rbp
+   0x000000000005006c <+236>:	shr    $0xa,%rbp
+   0x0000000000050079 <+249>:	lea    0x1(%rbp),%rdx
+   0x000000000005007d <+253>:	cmp    %rdx,%rax
+   0x0000000000050080 <+256>:	jb     0x503f8 <pool_sweep+1144>
+   0x00000000000503f8 <+1144>:	mov    $0x245,%edx
+   0x00000000000503fd <+1149>:	lea    0x1698b(%rip),%rsi        # 0x66d8f
+   0x0000000000050404 <+1156>:	lea    0x16a28(%rip),%rdi        # 0x66e33
+   0x000000000005040b <+1163>:	mov    %ecx,0x3c(%rsp)
+   0x000000000005040f <+1167>:	mov    %rax,0x30(%rsp)
+   0x0000000000050414 <+1172>:	mov    %r11,0x28(%rsp)
+   0x0000000000050419 <+1177>:	mov    %r10,0x20(%rsp)
+   0x000000000005041e <+1182>:	mov    %r9d,0x8(%rsp)
+   0x0000000000050423 <+1187>:	call   0x1b340 <caml_failed_assert>
+   0x0000000000050428 <+1192>:	mov    0x3c(%rsp),%ecx
+   0x000000000005042c <+1196>:	mov    0x30(%rsp),%rax
+   0x0000000000050431 <+1201>:	movabs $0xd701d7d7d701d6d8,%r8
+   0x000000000005043b <+1211>:	mov    0x28(%rsp),%r11
+   0x0000000000050440 <+1216>:	mov    0x20(%rsp),%r10
+   0x0000000000050445 <+1221>:	mov    0x8(%rsp),%r9d
+   0x000000000005044a <+1226>:	jmp    0x50086 <pool_sweep+262>
+
+582	        if (Tag_hd (hd) == Custom_tag) {
+   0x0000000000050062 <+226>:	movzbl %r12b,%r9d
+   0x0000000000050086 <+262>:	cmp    $0xff,%r9d
+   0x000000000005008d <+269>:	je     0x50270 <pool_sweep+752>
+
+583	          void (*final_fun)(value) = Custom_ops_val(Val_hp(p))->finalize;
+   0x0000000000050270 <+752>:	mov    0x8(%rbx),%rdx
+   0x0000000000050274 <+756>:	mov    0x8(%rdx),%rdx
+
+584	          if (final_fun != NULL) final_fun(Val_hp(p));
+   0x0000000000050278 <+760>:	test   %rdx,%rdx
+   0x000000000005027b <+763>:	je     0x50093 <pool_sweep+275>
+   0x0000000000050281 <+769>:	mov    %ecx,0x30(%rsp)
+   0x0000000000050285 <+773>:	lea    0x8(%rbx),%rdi
+   0x0000000000050289 <+777>:	mov    %rax,0x28(%rsp)
+   0x000000000005028e <+782>:	mov    %r11,0x20(%rsp)
+   0x0000000000050293 <+787>:	mov    %r10,0x8(%rsp)
+   0x0000000000050298 <+792>:	call   *%rdx
+   0x00000000000502a1 <+801>:	mov    0x30(%rsp),%ecx
+   0x00000000000502a5 <+805>:	movabs $0xd701d7d7d701d6d8,%r8
+   0x00000000000502af <+815>:	mov    0x28(%rsp),%rax
+   0x00000000000502b4 <+820>:	mov    0x20(%rsp),%r11
+   0x00000000000502b9 <+825>:	mov    0x8(%rsp),%r10
+
+585	        }
+586	
+587	        /* add to freelist. This could be optimised, we don't need
+588	        to write the free header if we're going to merge it with a prior
+589	        free block but it makes this codepath more complex. */
+590	        *p = POOL_FREE_HEADER(0);
+   0x0000000000050093 <+275>:	movq   $0x3fb,(%rbx)
+   0x000000000005029a <+794>:	movq   $0x3fb,(%rbx)
+
+591	
+592	        CAMLassert(Is_block((value)p));
+   0x000000000005009a <+282>:	test   $0x1,%bl
+   0x000000000005009d <+285>:	jne    0x502c7 <pool_sweep+839>
+   0x00000000000502be <+830>:	test   $0x1,%bl
+   0x00000000000502c1 <+833>:	je     0x500a3 <pool_sweep+291>
+   0x00000000000502c7 <+839>:	mov    $0x250,%edx
+   0x00000000000502cc <+844>:	lea    0x16abc(%rip),%rsi        # 0x66d8f
+   0x00000000000502d3 <+851>:	lea    0x16b86(%rip),%rdi        # 0x66e60
+   0x00000000000502da <+858>:	mov    %ecx,0x30(%rsp)
+   0x00000000000502de <+862>:	mov    %rax,0x28(%rsp)
+   0x00000000000502e3 <+867>:	mov    %r11,0x20(%rsp)
+   0x00000000000502e8 <+872>:	mov    %r10,0x8(%rsp)
+   0x00000000000502ed <+877>:	call   0x1b340 <caml_failed_assert>
+   0x00000000000502f2 <+882>:	mov    0x30(%rsp),%ecx
+   0x00000000000502f6 <+886>:	mov    0x28(%rsp),%rax
+   0x00000000000502fb <+891>:	movabs $0xd701d7d7d701d6d8,%r8
+   0x0000000000050305 <+901>:	mov    0x20(%rsp),%r11
+   0x000000000005030a <+906>:	mov    0x8(%rsp),%r10
+   0x000000000005030f <+911>:	jmp    0x500a3 <pool_sweep+291>
+
+593	#ifdef DEBUG
+594	        for (mlsize_t i = 1, wo = Wosize_whsize(wh); i < wo; i++) {
+   0x00000000000500a3 <+291>:	lea    -0x1(%rax),%rdi
+   0x00000000000500a7 <+295>:	lea    0x10(%rbx),%rdx
+   0x00000000000500ab <+299>:	lea    (%rbx,%r14,1),%rsi
+   0x00000000000500af <+303>:	cmp    $0x1,%rdi
+   0x00000000000500b3 <+307>:	jbe    0x500e0 <pool_sweep+352>
+   0x00000000000500b5 <+309>:	mov    %rsi,%rdi
+   0x00000000000500b8 <+312>:	sub    %rdx,%rdi
+   0x00000000000500bb <+315>:	and    $0x8,%edi
+   0x00000000000500be <+318>:	je     0x500d0 <pool_sweep+336>
+   0x00000000000500c3 <+323>:	lea    0x18(%rbx),%rdx
+   0x00000000000500c7 <+327>:	cmp    %rdx,%rsi
+   0x00000000000500ca <+330>:	je     0x500e0 <pool_sweep+352>
+   0x00000000000500cc <+332>:	nopl   0x0(%rax)
+   0x00000000000500d3 <+339>:	add    $0x10,%rdx
+   0x00000000000500db <+347>:	cmp    %rdx,%rsi
+   0x00000000000500de <+350>:	jne    0x500d0 <pool_sweep+336>
+
+595	          Field(Val_hp(p), i) = Debug_free_major;
+   0x000000000004ffed <+109>:	mov    %r14,0x18(%rsp)
+   0x000000000004fff5 <+117>:	movabs $0xd701d7d7d701d6d8,%r8
+   0x000000000004ffff <+127>:	mov    %rax,%r14
+   0x0000000000050002 <+130>:	mov    %r12,0x10(%rsp)
+   0x0000000000050007 <+135>:	mov    %r9,%r11
+   0x000000000005000a <+138>:	mov    %rbp,%rax
+   0x00000000000500c0 <+320>:	mov    %r8,(%rdx)
+   0x00000000000500d0 <+336>:	mov    %r8,(%rdx)
+   0x00000000000500d7 <+343>:	mov    %r8,-0x8(%rdx)
+
+596	        }
+597	#endif
+598	
+599	        all_used = 0;
+
+600	        /* update stats */
+601	        s->pool_live_blocks--;
+   0x00000000000500e3 <+355>:	subq   $0x1,0x438(%r15)
+
+602	        s->pool_live_words -= Whsize_hd(hd);
+   0x00000000000500e0 <+352>:	mov    %rbp,%rdx
+   0x00000000000500f1 <+369>:	not    %rdx
+   0x00000000000500f4 <+372>:	add    %rdx,0x430(%r15)
+
+603	        local->owner->swept_words += Whsize_hd(hd);
+   0x00000000000500fb <+379>:	mov    0x418(%r15),%rdx
+   0x0000000000050102 <+386>:	mov    0xa8(%rdx),%rsi
+   0x0000000000050109 <+393>:	lea    0x1(%rbp,%rsi,1),%rsi
+   0x0000000000050111 <+401>:	mov    %rsi,0xa8(%rdx)
+
+604	        s->pool_frag_words -= (wh - Whsize_hd(hd));
+   0x000000000005010e <+398>:	sub    %rax,%rbp
+   0x0000000000050118 <+408>:	mov    0x440(%r15),%rdx
+   0x000000000005011f <+415>:	lea    0x1(%rbp,%rdx,1),%rdx
+   0x0000000000050124 <+420>:	xor    %ebp,%ebp
+   0x0000000000050126 <+422>:	mov    %rdx,0x440(%r15)
+
+605	
+606	        /* reload hd */
+607	        hd = POOL_FREE_HEADER(0);
+   0x00000000000500eb <+363>:	mov    $0x3fb,%r12d
+
+608	      }
+609	
+610	      /* If the current block was garbage (and is now a free block) or was
+611	      initially a free block, see if we can merge it with the last free block we
+612	      encountered or if we cannot then update the pointer in the last free block
+613	      to point to this one */
+614	      if (POOL_BLOCK_FREE_HD(hd)) {
+   0x0000000000050020 <+160>:	cmp    $0xfb,%r9d
+   0x0000000000050027 <+167>:	je     0x50200 <pool_sweep+640>
+   0x0000000000050200 <+640>:	cmp    $0x300,%rdx
+   0x0000000000050207 <+647>:	jne    0x5002d <pool_sweep+173>
+
+615	        /* if any block is free then this is no longer a full pool */
+616	        all_used = 0;
+
+617	
+618	        /* if there was a free block before us, check first if we can
+619	           merge with it */
+620	        if( last_free_block ) {
+   0x000000000005012d <+429>:	test   %r10,%r10
+   0x0000000000050130 <+432>:	je     0x50220 <pool_sweep+672>
+   0x000000000005020d <+653>:	test   %r10,%r10
+   0x0000000000050210 <+656>:	jne    0x50136 <pool_sweep+438>
+   0x0000000000050216 <+662>:	cs nopw 0x0(%rax,%rax,1)
+
+621	          CAMLassert(POOL_BLOCK_FREE_HP(last_free_block));
+   0x0000000000050136 <+438>:	mov    (%r10),%rdx
+   0x0000000000050139 <+441>:	cmp    $0xfb,%dl
+   0x000000000005013c <+444>:	jne    0x50390 <pool_sweep+1040>
+   0x0000000000050142 <+450>:	mov    (%r10),%rdx
+   0x0000000000050145 <+453>:	not    %rdx
+   0x0000000000050148 <+456>:	and    $0x3,%dh
+   0x000000000005014b <+459>:	jne    0x50390 <pool_sweep+1040>
+   0x0000000000050390 <+1040>:	mov    $0x26d,%edx
+   0x0000000000050395 <+1045>:	lea    0x169f3(%rip),%rsi        # 0x66d8f
+   0x000000000005039c <+1052>:	lea    0x1b24d(%rip),%rdi        # 0x6b5f0
+   0x00000000000503a3 <+1059>:	mov    %ecx,0x30(%rsp)
+   0x00000000000503a7 <+1063>:	mov    %rax,0x28(%rsp)
+   0x00000000000503ac <+1068>:	mov    %r11,0x20(%rsp)
+   0x00000000000503b1 <+1073>:	mov    %r10,0x8(%rsp)
+   0x00000000000503b6 <+1078>:	call   0x1b340 <caml_failed_assert>
+   0x00000000000503bb <+1083>:	mov    0x30(%rsp),%ecx
+   0x00000000000503bf <+1087>:	mov    0x28(%rsp),%rax
+   0x00000000000503c4 <+1092>:	movabs $0xd701d7d7d701d6d8,%r8
+   0x00000000000503ce <+1102>:	mov    0x20(%rsp),%r11
+   0x00000000000503d3 <+1107>:	mov    0x8(%rsp),%r10
+   0x00000000000503d8 <+1112>:	jmp    0x50151 <pool_sweep+465>
+   0x00000000000503dd <+1117>:	nopl   (%rax)
+
+622	
+623	          /* check if we can merge with the last free block */
+624	          if( last_free_block + (1 + Wosize_hp(last_free_block)) * wh == p ) {
+   0x0000000000050151 <+465>:	mov    (%r10),%rdx
+   0x0000000000050154 <+468>:	shr    $0xa,%rdx
+   0x0000000000050158 <+472>:	add    $0x1,%rdx
+   0x000000000005015c <+476>:	imul   %r14,%rdx
+   0x0000000000050160 <+480>:	add    %r10,%rdx
+   0x0000000000050163 <+483>:	cmp    %rdx,%rbx
+   0x0000000000050166 <+486>:	je     0x50368 <pool_sweep+1000>
+
+625	            /* if we can then update the wosize of the last free block */
+626	            *last_free_block = POOL_FREE_HEADER(Wosize_hp(last_free_block)
+   0x0000000000050368 <+1000>:	mov    (%r10),%rdx
+   0x000000000005036b <+1003>:	shr    $0xa,%rdx
+   0x000000000005036f <+1007>:	lea    0x1(%rbp,%rdx,1),%rdx
+   0x0000000000050374 <+1012>:	shl    $0xa,%rdx
+   0x0000000000050378 <+1016>:	add    $0x3fb,%rdx
+   0x000000000005037f <+1023>:	mov    %rdx,(%r10)
+   0x0000000000050382 <+1026>:	jmp    0x50173 <pool_sweep+499>
+   0x0000000000050387 <+1031>:	nopw   0x0(%rax,%rax,1)
+
+627	                                                  + Wosize_hd(hd) + 1);
+628	          } else {
+629	            /* in this case there's a non-free block between us so update
+630	                the next pointer */
+631	            last_free_block[1] = (value)p;
+   0x000000000005016c <+492>:	mov    %rbx,0x8(%r10)
+
+632	
+633	            last_free_block = p;
+   0x0000000000050170 <+496>:	mov    %rbx,%r10
+
+634	          }
+635	        } else {
+636	          /* if we're the first free block then set the next_obj pointer for
+637	            the pool (which indicates the start of the freelist) */
+638	          a->next_obj = (value*)p;
+   0x0000000000050220 <+672>:	mov    %rbx,0x8(%r11)
+
+639	
+640	          last_free_block = p;
+   0x0000000000050224 <+676>:	jmp    0x50170 <pool_sweep+496>
+   0x0000000000050229 <+681>:	nopl   0x0(%rax)
+
+641	        }
+642	
+643	        /* add the free blocks following this block, skipping over them */
+644	        p += wh * Wosize_hd(hd);
+   0x0000000000050173 <+499>:	shr    $0xa,%r12
+   0x0000000000050182 <+514>:	imul   %r14,%r12
+   0x0000000000050186 <+518>:	add    %r12,%rbx
+
+645	      } else {
+646	        /* there's still a live block, the pool can't be released to the global
+647	            freelist */
+648	        release_to_global_pool = 0;
+649	      }
+650	      /* Free blocks are represented by a run-length encoded header.  The
+651	         header's size is the number of following blocks, not the size of an
+652	         object in words. */
+653	      p += POOL_BLOCK_FREE_HD(hd) ? wh : Whsize_hd(hd);
+   0x000000000004ffe5 <+101>:	lea    0x0(,%rbp,8),%rax
+   0x000000000005002d <+173>:	lea    0x8(,%rbp,8),%rdx
+   0x0000000000050035 <+181>:	xor    %ecx,%ecx
+   0x0000000000050037 <+183>:	add    %rdx,%rbx
+   0x0000000000050177 <+503>:	mov    %r14,%rdx
+   0x000000000005017a <+506>:	movl   $0x0,0x8(%rsp)
+   0x0000000000050189 <+521>:	add    %rdx,%rbx
+
+654	    } while (p + wh <= end);
+   0x000000000005003a <+186>:	lea    (%rbx,%r14,1),%rdx
+   0x000000000005003e <+190>:	cmp    %rdx,%r13
+   0x0000000000050041 <+193>:	jb     0x501a0 <pool_sweep+544>
+   0x000000000005018c <+524>:	lea    (%rbx,%r14,1),%rdx
+   0x0000000000050190 <+528>:	cmp    %rdx,%r13
+   0x0000000000050193 <+531>:	jae    0x50047 <pool_sweep+199>
+   0x0000000000050199 <+537>:	nopl   0x0(%rax)
+
+655	    CAMLassert(p == end);
+   0x00000000000501a0 <+544>:	mov    0x10(%rsp),%r12
+   0x00000000000501a5 <+549>:	mov    0x18(%rsp),%r14
+   0x00000000000501aa <+554>:	mov    %r11,%r9
+   0x00000000000501ad <+557>:	cmp    %rbx,%r13
+   0x00000000000501b0 <+560>:	jne    0x5044f <pool_sweep+1231>
+   0x000000000005044f <+1231>:	mov    $0x28f,%edx
+   0x0000000000050454 <+1236>:	lea    0x16934(%rip),%rsi        # 0x66d8f
+   0x000000000005045b <+1243>:	lea    0x16a11(%rip),%rdi        # 0x66e73
+   0x0000000000050462 <+1250>:	mov    %ecx,0x20(%rsp)
+   0x0000000000050466 <+1254>:	mov    %r10,0x10(%rsp)
+   0x000000000005046b <+1259>:	mov    %r11,0x18(%rsp)
+   0x0000000000050470 <+1264>:	call   0x1b340 <caml_failed_assert>
+   0x0000000000050475 <+1269>:	mov    0x20(%rsp),%ecx
+   0x0000000000050479 <+1273>:	mov    0x18(%rsp),%r9
+   0x000000000005047e <+1278>:	mov    0x10(%rsp),%r10
+   0x0000000000050483 <+1283>:	jmp    0x501b6 <pool_sweep+566>
+
+656	
+657	    if( !all_used ) {
+   0x00000000000501b6 <+566>:	mov    0x8(%rsp),%eax
+   0x00000000000501ba <+570>:	test   %eax,%eax
+   0x00000000000501bc <+572>:	je     0x50230 <pool_sweep+688>
+
+658	      /* the last free block should have 0 as its next pointer */
+659	      last_free_block[1] = 0;
+   0x0000000000050230 <+688>:	movq   $0x0,0x8(%r10)
+
+660	    }
+661	
+662	    CAMLassert(
+   0x00000000000501be <+574>:	cmpq   $0x0,0x8(%r9)
+   0x00000000000501c3 <+579>:	jne    0x504b7 <pool_sweep+1335>
+   0x0000000000050238 <+696>:	mov    0x8(%r9),%rax
+   0x000000000005023c <+700>:	mov    (%rax),%rdx
+   0x000000000005023f <+703>:	cmp    $0xfb,%dl
+   0x0000000000050242 <+706>:	jne    0x50314 <pool_sweep+916>
+   0x0000000000050248 <+712>:	mov    (%rax),%rax
+   0x000000000005024b <+715>:	not    %rax
+   0x000000000005024e <+718>:	test   $0x3,%ah
+   0x0000000000050251 <+721>:	jne    0x50314 <pool_sweep+916>
+   0x0000000000050314 <+916>:	mov    $0x296,%edx
+   0x0000000000050319 <+921>:	lea    0x16a6f(%rip),%rsi        # 0x66d8f
+   0x0000000000050320 <+928>:	lea    0x1b2f1(%rip),%rdi        # 0x6b618
+   0x0000000000050327 <+935>:	mov    %ecx,0x10(%rsp)
+   0x000000000005032b <+939>:	mov    %r9,0x8(%rsp)
+   0x0000000000050330 <+944>:	call   0x1b340 <caml_failed_assert>
+   0x00000000000504b7 <+1335>:	mov    $0x296,%edx
+   0x00000000000504bc <+1340>:	lea    0x168cc(%rip),%rsi        # 0x66d8f
+   0x00000000000504c3 <+1347>:	lea    0x1b14e(%rip),%rdi        # 0x6b618
+   0x00000000000504ca <+1354>:	mov    %ecx,0x10(%rsp)
+   0x00000000000504ce <+1358>:	mov    %r9,0x8(%rsp)
+   0x00000000000504d3 <+1363>:	call   0x1b340 <caml_failed_assert>
+
+663	      /* if all spaces are used then next_obj should be 0 */
+664	      (all_used && !a->next_obj)
+665	      /* otherwise it should point to a free block */
+666	      || (!all_used && POOL_BLOCK_FREE_HP(a->next_obj))
+667	    );
+668	
+669	    if (release_to_global_pool) {
+   0x00000000000501c9 <+585>:	test   %ecx,%ecx
+   0x00000000000501cb <+587>:	jne    0x50350 <pool_sweep+976>
+   0x0000000000050257 <+727>:	test   %ecx,%ecx
+   0x0000000000050259 <+729>:	jne    0x50350 <pool_sweep+976>
+   0x0000000000050335 <+949>:	mov    0x10(%rsp),%ecx
+   0x0000000000050339 <+953>:	mov    0x8(%rsp),%r9
+   0x000000000005033e <+958>:	test   %ecx,%ecx
+   0x0000000000050340 <+960>:	je     0x5025f <pool_sweep+735>
+   0x0000000000050346 <+966>:	cs nopw 0x0(%rax,%rax,1)
+   0x00000000000504d8 <+1368>:	mov    0x10(%rsp),%ecx
+   0x00000000000504dc <+1372>:	mov    0x8(%rsp),%r9
+   0x00000000000504e1 <+1377>:	test   %ecx,%ecx
+   0x00000000000504e3 <+1379>:	je     0x501d1 <pool_sweep+593>
+   0x00000000000504e9 <+1385>:	jmp    0x50350 <pool_sweep+976>
+
+670	      pool_release(local, a, sz);
+   0x0000000000050350 <+976>:	mov    0x38(%rsp),%edx
+   0x0000000000050354 <+980>:	mov    %r9,%rsi
+   0x0000000000050357 <+983>:	mov    %r15,%rdi
+   0x000000000005035a <+986>:	call   0x4fd30 <pool_release>
+   0x000000000005035f <+991>:	jmp    0x501e3 <pool_sweep+611>
+   0x0000000000050364 <+996>:	nopl   0x0(%rax)
+
+671	    } else {
+672	      pool** list = all_used ? &local->full_pools[sz] : &local->avail_pools[sz];
+   0x00000000000501d1 <+593>:	lea    0x20(%r14),%rdx
+   0x00000000000501d5 <+597>:	lea    (%r15,%rdx,8),%rax
+   0x00000000000501d9 <+601>:	mov    (%r15,%rdx,8),%rdx
+   0x000000000005025f <+735>:	mov    (%r15,%r14,8),%rdx
+   0x0000000000050263 <+739>:	lea    (%r15,%r14,8),%rax
+   0x0000000000050267 <+743>:	jmp    0x501dd <pool_sweep+605>
+   0x000000000005026c <+748>:	nopl   0x0(%rax)
+
+673	      a->next = *list;
+   0x00000000000501dd <+605>:	mov    %rdx,(%r9)
+
+674	      *list = a;
+   0x00000000000501e0 <+608>:	mov    %r9,(%rax)
+
+675	    }
+676	  }
+677	
+678	  return work;
+679	}
+   0x00000000000501e8 <+616>:	add    $0x48,%rsp
+   0x00000000000501ef <+623>:	pop    %rbx
+   0x00000000000501f0 <+624>:	pop    %rbp
+   0x00000000000501f5 <+629>:	pop    %r12
+   0x00000000000501f7 <+631>:	pop    %r13
+   0x00000000000501f9 <+633>:	pop    %r14
+   0x00000000000501fb <+635>:	pop    %r15
+   0x00000000000501fd <+637>:	ret
+   0x00000000000501fe <+638>:	xchg   %ax,%ax
+   0x00000000000503e0 <+1120>:	add    $0x48,%rsp
+   0x00000000000503e6 <+1126>:	pop    %rbx
+   0x00000000000503e7 <+1127>:	pop    %rbp
+   0x00000000000503e8 <+1128>:	pop    %r12
+   0x00000000000503ea <+1130>:	pop    %r13
+   0x00000000000503ec <+1132>:	pop    %r14
+   0x00000000000503ee <+1134>:	pop    %r15
+   0x00000000000503f0 <+1136>:	ret
+   0x00000000000503f1 <+1137>:	nopl   0x0(%rax)
+
+End of assembler dump.

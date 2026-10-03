@@ -1,0 +1,206 @@
+
+mystery:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000401fd0 <vector_create>:
+  401fd0:	f3 0f 1e fa          	endbr64
+  401fd4:	0f 14 c1             	unpcklps xmm0,xmm1
+  401fd7:	0f 28 ca             	movaps xmm1,xmm2
+  401fda:	c3                   	ret
+  401fdb:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+
+0000000000401fe0 <vector_add>:
+  401fe0:	f3 0f 1e fa          	endbr64
+  401fe4:	f3 0f 58 cb          	addss  xmm1,xmm3
+  401fe8:	0f 58 c2             	addps  xmm0,xmm2
+  401feb:	c3                   	ret
+  401fec:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+
+0000000000401ff0 <vector_subtract>:
+  401ff0:	f3 0f 1e fa          	endbr64
+  401ff4:	f3 0f 5c cb          	subss  xmm1,xmm3
+  401ff8:	0f 5c c2             	subps  xmm0,xmm2
+  401ffb:	c3                   	ret
+  401ffc:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+
+0000000000402000 <vector_multiply>:
+  402000:	f3 0f 1e fa          	endbr64
+  402004:	f3 0f 59 ca          	mulss  xmm1,xmm2
+  402008:	66 0f 6f d8          	movdqa xmm3,xmm0
+  40200c:	0f 28 c2             	movaps xmm0,xmm2
+  40200f:	0f c6 c0 e0          	shufps xmm0,xmm0,0xe0
+  402013:	0f 59 c3             	mulps  xmm0,xmm3
+  402016:	c3                   	ret
+  402017:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  40201e:	00 00 
+
+0000000000402020 <vector_dot>:
+  402020:	f3 0f 1e fa          	endbr64
+  402024:	66 0f d6 54 24 e0    	movq   QWORD PTR [rsp-0x20],xmm2
+  40202a:	f3 0f 59 cb          	mulss  xmm1,xmm3
+  40202e:	66 0f d6 44 24 f0    	movq   QWORD PTR [rsp-0x10],xmm0
+  402034:	f3 0f 10 44 24 f0    	movss  xmm0,DWORD PTR [rsp-0x10]
+  40203a:	f3 0f 10 54 24 f4    	movss  xmm2,DWORD PTR [rsp-0xc]
+  402040:	f3 0f 59 44 24 e0    	mulss  xmm0,DWORD PTR [rsp-0x20]
+  402046:	f3 0f 59 54 24 e4    	mulss  xmm2,DWORD PTR [rsp-0x1c]
+  40204c:	f3 0f 58 c2          	addss  xmm0,xmm2
+  402050:	f3 0f 58 c1          	addss  xmm0,xmm1
+  402054:	c3                   	ret
+  402055:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  40205c:	00 00 00 00 
+
+0000000000402060 <vector_length>:
+  402060:	f3 0f 1e fa          	endbr64
+  402064:	66 0f d6 44 24 f0    	movq   QWORD PTR [rsp-0x10],xmm0
+  40206a:	f3 0f 10 54 24 f0    	movss  xmm2,DWORD PTR [rsp-0x10]
+  402070:	f3 0f 59 c9          	mulss  xmm1,xmm1
+  402074:	f3 0f 10 44 24 f4    	movss  xmm0,DWORD PTR [rsp-0xc]
+  40207a:	f3 0f 59 d2          	mulss  xmm2,xmm2
+  40207e:	f3 0f 59 c0          	mulss  xmm0,xmm0
+  402082:	f3 0f 58 d0          	addss  xmm2,xmm0
+  402086:	f3 0f 58 d1          	addss  xmm2,xmm1
+  40208a:	f3 0f 51 d2          	sqrtss xmm2,xmm2
+  40208e:	0f 28 c2             	movaps xmm0,xmm2
+  402091:	c3                   	ret
+  402092:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  402099:	00 00 00 00 
+  40209d:	0f 1f 00             	nop    DWORD PTR [rax]
+
+00000000004020a0 <vector_normalize>:
+  4020a0:	f3 0f 1e fa          	endbr64
+  4020a4:	0f 28 e0             	movaps xmm4,xmm0
+  4020a7:	0f 28 d0             	movaps xmm2,xmm0
+  4020aa:	0f c6 e4 e5          	shufps xmm4,xmm4,0xe5
+  4020ae:	f3 0f 59 d0          	mulss  xmm2,xmm0
+  4020b2:	0f 28 dc             	movaps xmm3,xmm4
+  4020b5:	f3 0f 59 dc          	mulss  xmm3,xmm4
+  4020b9:	f3 0f 58 d3          	addss  xmm2,xmm3
+  4020bd:	0f 28 d9             	movaps xmm3,xmm1
+  4020c0:	f3 0f 59 d9          	mulss  xmm3,xmm1
+  4020c4:	f3 0f 58 d3          	addss  xmm2,xmm3
+  4020c8:	f3 0f 51 d2          	sqrtss xmm2,xmm2
+  4020cc:	f3 0f 5e ca          	divss  xmm1,xmm2
+  4020d0:	0f 28 da             	movaps xmm3,xmm2
+  4020d3:	0f c6 db e0          	shufps xmm3,xmm3,0xe0
+  4020d7:	0f 16 1d 7a 39 08 00 	movhps xmm3,QWORD PTR [rip+0x8397a]        # 485a58 <__PRETTY_FUNCTION__.0+0x40>
+  4020de:	0f 5e c3             	divps  xmm0,xmm3
+  4020e1:	c3                   	ret
+  4020e2:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  4020e9:	00 00 00 00 
+  4020ed:	0f 1f 00             	nop    DWORD PTR [rax]
+
+00000000004020f0 <ray_create>:
+  4020f0:	f3 0f 1e fa          	endbr64
+  4020f4:	66 0f d6 54 24 d8    	movq   QWORD PTR [rsp-0x28],xmm2
+  4020fa:	48 89 f8             	mov    rax,rdi
+  4020fd:	f3 0f 11 5c 24 e0    	movss  DWORD PTR [rsp-0x20],xmm3
+  402103:	f3 0f 10 5c 24 d8    	movss  xmm3,DWORD PTR [rsp-0x28]
+  402109:	f3 0f 7e 54 24 dc    	movq   xmm2,QWORD PTR [rsp-0x24]
+  40210f:	66 0f d6 44 24 e8    	movq   QWORD PTR [rsp-0x18],xmm0
+  402115:	0f 28 ea             	movaps xmm5,xmm2
+  402118:	0f 28 c3             	movaps xmm0,xmm3
+  40211b:	0f 28 f2             	movaps xmm6,xmm2
+  40211e:	f3 0f 59 ea          	mulss  xmm5,xmm2
+  402122:	0f c6 f6 e5          	shufps xmm6,xmm6,0xe5
+  402126:	0f 28 e6             	movaps xmm4,xmm6
+  402129:	f3 0f 59 c3          	mulss  xmm0,xmm3
+  40212d:	f3 0f 59 e6          	mulss  xmm4,xmm6
+  402131:	f3 0f 58 c5          	addss  xmm0,xmm5
+  402135:	f3 0f 58 c4          	addss  xmm0,xmm4
+  402139:	f3 0f 10 64 24 ec    	movss  xmm4,DWORD PTR [rsp-0x14]
+  40213f:	f3 0f 51 c0          	sqrtss xmm0,xmm0
+  402143:	f3 0f 5e d8          	divss  xmm3,xmm0
+  402147:	0f c6 c0 e0          	shufps xmm0,xmm0,0xe0
+  40214b:	0f 16 05 06 39 08 00 	movhps xmm0,QWORD PTR [rip+0x83906]        # 485a58 <__PRETTY_FUNCTION__.0+0x40>
+  402152:	0f 5e d0             	divps  xmm2,xmm0
+  402155:	0f 14 cb             	unpcklps xmm1,xmm3
+  402158:	f3 0f 10 5c 24 e8    	movss  xmm3,DWORD PTR [rsp-0x18]
+  40215e:	0f 14 dc             	unpcklps xmm3,xmm4
+  402161:	0f 16 d9             	movlhps xmm3,xmm1
+  402164:	0f 11 1f             	movups XMMWORD PTR [rdi],xmm3
+  402167:	0f 13 57 10          	movlps QWORD PTR [rdi+0x10],xmm2
+  40216b:	c3                   	ret
+  40216c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+
+0000000000402170 <ray_at>:
+  402170:	f3 0f 1e fa          	endbr64
+  402174:	f3 0f 10 4c 24 1c    	movss  xmm1,DWORD PTR [rsp+0x1c]
+  40217a:	f3 0f 7e 54 24 14    	movq   xmm2,QWORD PTR [rsp+0x14]
+  402180:	f3 0f 59 c8          	mulss  xmm1,xmm0
+  402184:	0f c6 c0 e0          	shufps xmm0,xmm0,0xe0
+  402188:	0f 59 d0             	mulps  xmm2,xmm0
+  40218b:	f3 0f 7e 44 24 08    	movq   xmm0,QWORD PTR [rsp+0x8]
+  402191:	f3 0f 58 4c 24 10    	addss  xmm1,DWORD PTR [rsp+0x10]
+  402197:	0f 58 c2             	addps  xmm0,xmm2
+  40219a:	c3                   	ret
+  40219b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+
+00000000004021a0 <sphere_intersect>:
+  4021a0:	f3 0f 1e fa          	endbr64
+  4021a4:	48 83 ec 78          	sub    rsp,0x78
+  4021a8:	48 89 f8             	mov    rax,rdi
+  4021ab:	f3 0f 10 94 24 8c 00 	movss  xmm2,DWORD PTR [rsp+0x8c]
+  4021b2:	00 00 
+  4021b4:	66 0f d6 44 24 60    	movq   QWORD PTR [rsp+0x60],xmm0
+  4021ba:	f3 44 0f 10 94 24 90 	movss  xmm10,DWORD PTR [rsp+0x90]
+  4021c1:	00 00 00 
+  4021c4:	f3 0f 10 bc 24 94 00 	movss  xmm7,DWORD PTR [rsp+0x94]
+  4021cb:	00 00 
+  4021cd:	f3 0f 10 64 24 60    	movss  xmm4,DWORD PTR [rsp+0x60]
+  4021d3:	66 0f d6 4c 24 68    	movq   QWORD PTR [rsp+0x68],xmm1
+  4021d9:	44 0f 28 e2          	movaps xmm12,xmm2
+  4021dd:	41 0f 28 c2          	movaps xmm0,xmm10
+  4021e1:	f3 44 0f 10 84 24 80 	movss  xmm8,DWORD PTR [rsp+0x80]
+  4021e8:	00 00 00 
+  4021eb:	f3 44 0f 10 8c 24 84 	movss  xmm9,DWORD PTR [rsp+0x84]
+  4021f2:	00 00 00 
+  4021f5:	f3 41 0f 59 c2       	mulss  xmm0,xmm10
+  4021fa:	f3 0f 10 6c 24 64    	movss  xmm5,DWORD PTR [rsp+0x64]
+  402200:	f3 44 0f 10 9c 24 88 	movss  xmm11,DWORD PTR [rsp+0x88]
+  402207:	00 00 00 
+  40220a:	f3 44 0f 59 e2       	mulss  xmm12,xmm2
+  40220f:	41 0f 28 d9          	movaps xmm3,xmm9
+  402213:	41 0f 28 c8          	movaps xmm1,xmm8
+  402217:	f3 0f 10 74 24 68    	movss  xmm6,DWORD PTR [rsp+0x68]
+  40221d:	f3 0f 5c dd          	subss  xmm3,xmm5
+  402221:	f3 0f 5c cc          	subss  xmm1,xmm4
+  402225:	45 0f 28 f3          	movaps xmm14,xmm11
+  402229:	f3 44 0f 10 6c 24 6c 	movss  xmm13,DWORD PTR [rsp+0x6c]
+  402230:	f3 44 0f 5c f6       	subss  xmm14,xmm6
+  402235:	f3 45 0f 59 ed       	mulss  xmm13,xmm13
+  40223a:	44 0f 28 fb          	movaps xmm15,xmm3
+  40223e:	f3 44 0f 58 e0       	addss  xmm12,xmm0
+  402243:	f3 45 0f 59 fa       	mulss  xmm15,xmm10
+  402248:	0f 28 c7             	movaps xmm0,xmm7
+  40224b:	f3 0f 59 c7          	mulss  xmm0,xmm7
+  40224f:	f3 0f 59 db          	mulss  xmm3,xmm3
+  402253:	f3 44 0f 58 e0       	addss  xmm12,xmm0
+  402258:	0f 28 c1             	movaps xmm0,xmm1
+  40225b:	f3 0f 59 c2          	mulss  xmm0,xmm2
+  40225f:	f3 0f 59 c9          	mulss  xmm1,xmm1
+  402263:	f3 41 0f 58 c7       	addss  xmm0,xmm15
+  402268:	45 0f 28 fe          	movaps xmm15,xmm14
+  40226c:	f3 44 0f 59 ff       	mulss  xmm15,xmm7
+  402271:	f3 0f 58 d9          	addss  xmm3,xmm1
+  402275:	f3 0f 10 0d 87 dd 07 	movss  xmm1,DWORD PTR [rip+0x7dd87]        # 480004 <_IO_stdin_used+0x4>
+  40227c:	00 
+  40227d:	f3 45 0f 59 f6       	mulss  xmm14,xmm14
+  402282:	f3 41 0f 59 cc       	mulss  xmm1,xmm12
+  402287:	f3 41 0f 58 c7       	addss  xmm0,xmm15
+  40228c:	f3 41 0f 58 de       	addss  xmm3,xmm14
+  402291:	f3 0f 58 c0          	addss  xmm0,xmm0
+  402295:	f3 41 0f 5c dd       	subss  xmm3,xmm13
+  40229a:	44 0f 28 f8          	movaps xmm15,xmm0
+  40229e:	f3 44 0f 59 f8       	mulss  xmm15,xmm0
+  4022a3:	f3 0f 59 d9          	mulss  xmm3,xmm1
+  4022a7:	41 0f 28 cf          	movaps xmm1,xmm15
+  4022ab:	f3 0f 5c cb          	subss  xmm1,xmm3
+  4022af:	66 0f ef db          	pxor   xmm3,xmm3
+  4022b3:	0f 2f d9             	comiss xmm3,xmm1
+  4022b6:	0f 87 e4 00 00 00    	ja     4023a0 <sphere_intersect+0x200>
+  4022bc:	0f                   	.byte 0xf
+  4022bd:	57                   	push   rdi
+  4022be:	05                   	.byte 0x5
+  4022bf:	ed                   	in     eax,dx

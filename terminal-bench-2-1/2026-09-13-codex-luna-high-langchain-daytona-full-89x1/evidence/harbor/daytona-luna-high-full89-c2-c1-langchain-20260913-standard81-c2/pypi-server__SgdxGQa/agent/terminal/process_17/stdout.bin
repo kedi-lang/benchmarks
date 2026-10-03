@@ -1,0 +1,17 @@
+vectorops-0.1.0-py3-none-any.whl
+"""Small helpers for working with vectors."""
+
+
+def dotproduct(left: list[float | int], right: list[float | int]) -> float | int:
+    """Return the dot product of two vectors.
+
+    The vectors are expected to have the same length and contain numbers.
+    """
+    if len(left) != len(right):
+        raise ValueError("dot product requires vectors of equal length")
+    return sum(a * b for a, b in zip(left, right))
+
+
+__all__ = ["dotproduct"]
+
+['Metadata-Version: 2.1', 'Name: vectorops', 'Version: 0.1.0', 'Summary: Basic vector operations', 'Requires-Python: >=3.8']

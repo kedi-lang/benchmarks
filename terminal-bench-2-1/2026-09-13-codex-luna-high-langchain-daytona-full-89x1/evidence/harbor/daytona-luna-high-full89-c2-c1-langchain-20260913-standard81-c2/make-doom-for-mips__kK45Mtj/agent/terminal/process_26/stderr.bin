@@ -1,0 +1,59 @@
+p_setup.c: In function ‘P_SetupLevel’:
+p_setup.c:780:43: warning: ‘%i’ directive output may be truncated writing between 2 and 10 bytes into a region of size 6 [-Wformat-truncation=]
+  780 |             DEH_snprintf(lumpname, 9, "map%i", map);
+      |                                           ^~
+p_setup.c:780:39: note: directive argument in the range [10, 2147483647]
+  780 |             DEH_snprintf(lumpname, 9, "map%i", map);
+      |                                       ^~~~~~~
+In file included from deh_main.h:23,
+                 from p_setup.c:26:
+deh_str.h:41:22: note: ‘snprintf’ output between 6 and 14 bytes into a destination of size 9
+   41 | #define DEH_snprintf snprintf
+p_setup.c:780:13: note: in expansion of macro ‘DEH_snprintf’
+  780 |             DEH_snprintf(lumpname, 9, "map%i", map);
+      |             ^~~~~~~~~~~~
+p_setup.c:778:44: warning: ‘%i’ directive output may be truncated writing between 1 and 11 bytes into a region of size 5 [-Wformat-truncation=]
+  778 |             DEH_snprintf(lumpname, 9, "map0%i", map);
+      |                                            ^~
+p_setup.c:778:39: note: directive argument in the range [-2147483648, 9]
+  778 |             DEH_snprintf(lumpname, 9, "map0%i", map);
+      |                                       ^~~~~~~~
+deh_str.h:41:22: note: ‘snprintf’ output between 6 and 16 bytes into a destination of size 9
+   41 | #define DEH_snprintf snprintf
+p_setup.c:778:13: note: in expansion of macro ‘DEH_snprintf’
+  778 |             DEH_snprintf(lumpname, 9, "map0%i", map);
+      |             ^~~~~~~~~~~~
+wi_stuff.c: In function ‘WI_loadUnloadData’:
+wi_stuff.c:1596:53: warning: ‘%.2d’ directive output may be truncated writing between 2 and 10 bytes into a region of size between 0 and 5 [-Wformat-truncation=]
+ 1596 |                         DEH_snprintf(name, 9, "WIA%d%.2d%.2d", wbs->epsd, j, i);
+      |                                                     ^~~~
+wi_stuff.c:1596:47: note: directive argument in the range [0, 2147483646]
+ 1596 |                         DEH_snprintf(name, 9, "WIA%d%.2d%.2d", wbs->epsd, j, i);
+      |                                               ^~~~~~~~~~~~~~~
+wi_stuff.c:1596:47: note: directive argument in the range [0, 2147483646]
+In file included from deh_main.h:23,
+                 from wi_stuff.c:27:
+deh_str.h:41:22: note: ‘snprintf’ output between 9 and 35 bytes into a destination of size 9
+   41 | #define DEH_snprintf snprintf
+wi_stuff.c:1596:25: note: in expansion of macro ‘DEH_snprintf’
+ 1596 |                         DEH_snprintf(name, 9, "WIA%d%.2d%.2d", wbs->epsd, j, i);
+      |                         ^~~~~~~~~~~~
+wi_stuff.c:1564:41: warning: ‘%2.2d’ directive output may be truncated writing between 2 and 10 bytes into a region of size 4 [-Wformat-truncation=]
+ 1564 |             DEH_snprintf(name, 9, "CWILV%2.2d", i);
+      |                                         ^~~~~
+wi_stuff.c:1564:35: note: directive argument in the range [0, 2147483646]
+ 1564 |             DEH_snprintf(name, 9, "CWILV%2.2d", i);
+      |                                   ^~~~~~~~~~~~
+deh_str.h:41:22: note: ‘snprintf’ output between 8 and 16 bytes into a destination of size 9
+   41 | #define DEH_snprintf snprintf
+wi_stuff.c:1564:13: note: in expansion of macro ‘DEH_snprintf’
+ 1564 |             DEH_snprintf(name, 9, "CWILV%2.2d", i);
+      |             ^~~~~~~~~~~~
+In function ‘writeBMPFile’,
+    inlined from ‘DG_DrawFrame’ at doomgeneric_img.c:175:5:
+doomgeneric_img.c:150:9: warning: ‘free’ called on pointer ‘bmp’ with nonzero offset 2 [-Wfree-nonheap-object]
+  150 |         free(bmp);
+      |         ^~~~~~~~~
+doomgeneric_img.c:98:30: note: returned from ‘malloc’
+   98 |     uint8_t* bmp = (uint8_t*)malloc(file_size+2);
+      |                              ^~~~~~~~~~~~~~~~~~~

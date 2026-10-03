@@ -1,0 +1,47 @@
+    @staticmethod
+    def get_prompt_name(
+        task_to_prompt: dict[str, str] | None,
+        task_name: str,
+        prompt_type: PromptType | None,
+    ) -> str | None:
+        """A wrapper function around the model.encode method that handles the prompt_name argument and standardizes the output to a numpy array.
+        The order of priorities for prompt selection are:
+            1. Composed prompt of task name + prompt type (query or passage)
+            2. Specific task prompt
+            3. Composed prompt of task type + prompt type (query or passage)
+            4. Specific task type prompt
+            5. Specific prompt type (query or passage)
+
+
+        Args:
+            task_to_prompt: The tasks names and their corresponding prompt_names
+            task_name: The task name to use for building the encoding prompt
+            prompt_type: The prompt type (e.g. "query" | "passage") to use for building the encoding prompt
+        """
+        task = mteb.get_task(task_name=task_name)
+        task_type = task.metadata.type
+        prompt_type_value = prompt_type.value if prompt_type else None
+
+        if (
+            task_name
+            and prompt_type
+            and f"{task_name}-{prompt_type_value}" in task_to_prompt
+        ):
+            return f"{task_name}-{prompt_type_value}"
+        if task_name and task_name in task_to_prompt:
+            return task_name
+        if (
+            task_type
+            and prompt_type
+            and f"{task_type}-{prompt_type_value}" in task_to_prompt
+        ):
+            return f"{task_type}-{prompt_type_value}"
+        if task_type and task_type in task_to_prompt:
+            return task_type
+        if prompt_type and prompt_type_value in task_to_prompt:
+            return prompt_type_value
+        logger.info(
+            "No combination of task name and prompt type was found in model prompts."
+        )
+        return None
+

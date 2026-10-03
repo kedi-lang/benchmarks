@@ -1,0 +1,61 @@
+make clean
+make[1]: Entering directory '/tmp/CompCert'
+rm -f  lib/*.vo*  common/*.vo*  x86_64/*.vo*  x86/*.vo*  backend/*.vo*  cfrontend/*.vo*  driver/*.vo*  export/*.vo*  cparser/*.vo*  flocq/Core/*.vo*  flocq/Prop/*.vo*  flocq/Calc/*.vo*  flocq/IEEE754/*.vo*  MenhirLib/*.vo*
+rm -f  lib/.*.aux  common/.*.aux  x86_64/.*.aux  x86/.*.aux  backend/.*.aux  cfrontend/.*.aux  driver/.*.aux  export/.*.aux  cparser/.*.aux  flocq/Core/.*.aux  flocq/Prop/.*.aux  flocq/Calc/.*.aux  flocq/IEEE754/.*.aux  MenhirLib/.*.aux
+rm -rf doc/html doc/*.glob
+rm -f driver/Version.ml
+rm -f compcert.ini compcert.config
+rm -f extraction/STAMP extraction/*.ml extraction/*.mli .depend.extr
+rm -f tools/ndfun tools/modorder tools/*.cm? tools/*.o
+rm -f x86/ConstpropOp.v x86/SelectOp.v x86/SelectLong.v backend/SelectDiv.v backend/SplitLong.v cparser/Parser.v .depend
+rm -f .lia.cache
+make -f Makefile.extr clean
+make[2]: Entering directory '/tmp/CompCert'
+rm -f ccomp ccomp.byte cchecklink cchecklink.byte clightgen clightgen.byte
+rm -f cparser/pre_parser.mli cparser/pre_parser.ml cparser/Lexer.ml lib/Tokenize.ml lib/Readconfig.ml lib/Responsefile.ml cparser/pre_parser_messages.ml
+for d in extraction lib common x86 backend cfrontend cparser driver export debug; do rm -f $d/*.cm[iotx] $d/*cmti $d/*.o; done
+make -C cparser clean
+make[3]: Entering directory '/tmp/CompCert/cparser'
+rm -f pre_parser.automaton
+rm -f pre_parser.conflicts
+rm -f pre_parser.messages
+rm -f handcrafted.messages.raw handcrafted.messages.bak
+rm -f deLexer
+make[3]: Leaving directory '/tmp/CompCert/cparser'
+make[2]: Leaving directory '/tmp/CompCert'
+make -C runtime clean
+make[2]: Entering directory '/tmp/CompCert/runtime'
+rm -f *.o libcompcert.a *.tmp?.s
+rm -f test/test_int64
+make[2]: Leaving directory '/tmp/CompCert/runtime'
+make -C test clean
+make[2]: Entering directory '/tmp/CompCert/test'
+for i in c compression raytracer spass regression abi; do make -C $i clean; done
+make[3]: Entering directory '/tmp/CompCert/test/c'
+rm -f *.compcert *.gcc
+rm -f *.compcert.c *.light.c *.parsed.c *.s *.o *.sdump *~ 
+make[3]: Leaving directory '/tmp/CompCert/test/c'
+make[3]: Entering directory '/tmp/CompCert/test/compression'
+rm -f *.o *.light.c *.s *.sdump arcode lzw lzss
+make[3]: Leaving directory '/tmp/CompCert/test/compression'
+make[3]: Entering directory '/tmp/CompCert/test/raytracer'
+rm -f *.o *.parsed.c *.light.c *.s *.sdump *.ppm render
+make[3]: Leaving directory '/tmp/CompCert/test/raytracer'
+make[3]: Entering directory '/tmp/CompCert/test/spass'
+rm -f spass
+rm -f *.o *.s *.parsed.c *.light.c *.sdump
+make[3]: Leaving directory '/tmp/CompCert/test/spass'
+make[3]: Entering directory '/tmp/CompCert/test/regression'
+rm -f *.compcert
+rm -f *.parsed.c *.compcert.c *.light.c *.s *.o *.sdump *~ 
+make[3]: Leaving directory '/tmp/CompCert/test/regression'
+make[3]: Entering directory '/tmp/CompCert/test/abi'
+rm -f generator.exe genlayout.exe *.cm[iox]
+rm -f fixed_decl.h fixed_def.c fixed_use.c
+rm -f vararg_decl.h vararg_def.c vararg_use.c
+rm -f struct_decl.h struct_def.c struct_use.c
+rm -f *.[os] *.compcert *.cc2compcert *.compcert2cc *.light.c
+make[3]: Leaving directory '/tmp/CompCert/test/abi'
+make[2]: Leaving directory '/tmp/CompCert/test'
+make[1]: Leaving directory '/tmp/CompCert'
+rm -f Makefile.config

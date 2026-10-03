@@ -1,0 +1,127 @@
+
+mystery:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000402570 <plane_intersect>:
+  402570:	f3 0f 1e fa          	endbr64
+  402574:	f3 0f 10 4c 24 18    	movss  xmm1,DWORD PTR [rsp+0x18]
+  40257a:	f3 0f 10 1d 8a da 07 	movss  xmm3,DWORD PTR [rip+0x7da8a]        # 48000c <_IO_stdin_used+0xc>
+  402581:	00 
+  402582:	48 89 f8             	mov    rax,rdi
+  402585:	0f 28 d1             	movaps xmm2,xmm1
+  402588:	0f 54 15 31 35 08 00 	andps  xmm2,XMMWORD PTR [rip+0x83531]        # 485ac0 <sigall_set+0x20>
+  40258f:	0f 2f da             	comiss xmm3,xmm2
+  402592:	77 5c                	ja     4025f0 <plane_intersect+0x80>
+  402594:	f3 0f 10 54 24 0c    	movss  xmm2,DWORD PTR [rsp+0xc]
+  40259a:	f3 0f 10 1d 66 da 07 	movss  xmm3,DWORD PTR [rip+0x7da66]        # 480008 <_IO_stdin_used+0x8>
+  4025a1:	00 
+  4025a2:	f3 0f 5c c2          	subss  xmm0,xmm2
+  4025a6:	f3 0f 5e c1          	divss  xmm0,xmm1
+  4025aa:	0f 2f d8             	comiss xmm3,xmm0
+  4025ad:	77 41                	ja     4025f0 <plane_intersect+0x80>
+  4025af:	f3 0f 59 c8          	mulss  xmm1,xmm0
+  4025b3:	f3 0f 10 5c 24 14    	movss  xmm3,DWORD PTR [rsp+0x14]
+  4025b9:	ba 01 00 00 00       	mov    edx,0x1
+  4025be:	f3 0f 59 d8          	mulss  xmm3,xmm0
+  4025c2:	f3 0f 58 5c 24 08    	addss  xmm3,DWORD PTR [rsp+0x8]
+  4025c8:	f3 0f 58 ca          	addss  xmm1,xmm2
+  4025cc:	f3 0f 10 54 24 1c    	movss  xmm2,DWORD PTR [rsp+0x1c]
+  4025d2:	f3 0f 59 d0          	mulss  xmm2,xmm0
+  4025d6:	0f 14 c3             	unpcklps xmm0,xmm3
+  4025d9:	f3 0f 58 54 24 10    	addss  xmm2,DWORD PTR [rsp+0x10]
+  4025df:	0f 14 ca             	unpcklps xmm1,xmm2
+  4025e2:	0f 16 c1             	movlhps xmm0,xmm1
+  4025e5:	f3 0f 10 0d ef 34 08 	movss  xmm1,DWORD PTR [rip+0x834ef]        # 485adc <sigall_set+0x3c>
+  4025ec:	00 
+  4025ed:	eb 0b                	jmp    4025fa <plane_intersect+0x8a>
+  4025ef:	90                   	nop
+  4025f0:	66 0f ef c0          	pxor   xmm0,xmm0
+  4025f4:	66 0f ef c9          	pxor   xmm1,xmm1
+  4025f8:	31 d2                	xor    edx,edx
+  4025fa:	c7 40 10 00 00 00 00 	mov    DWORD PTR [rax+0x10],0x0
+  402601:	c7 40 18 00 00 00 00 	mov    DWORD PTR [rax+0x18],0x0
+  402608:	89 50 1c             	mov    DWORD PTR [rax+0x1c],edx
+  40260b:	0f 11 00             	movups XMMWORD PTR [rax],xmm0
+  40260e:	f3 0f 11 48 14       	movss  DWORD PTR [rax+0x14],xmm1
+  402613:	c3                   	ret
+  402614:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  40261b:	00 00 00 00 
+  40261f:	90                   	nop
+
+0000000000402620 <sky_color>:
+  402620:	f3 0f 1e fa          	endbr64
+  402624:	f3 0f 10 0d b0 34 08 	movss  xmm1,DWORD PTR [rip+0x834b0]        # 485adc <sigall_set+0x3c>
+  40262b:	00 
+  40262c:	f3 0f 10 54 24 18    	movss  xmm2,DWORD PTR [rsp+0x18]
+  402632:	f3 0f 7e 1d 26 34 08 	movq   xmm3,QWORD PTR [rip+0x83426]        # 485a60 <__PRETTY_FUNCTION__.0+0x48>
+  402639:	00 
+  40263a:	f3 0f 58 d1          	addss  xmm2,xmm1
+  40263e:	f3 0f 59 15 1a 34 08 	mulss  xmm2,DWORD PTR [rip+0x8341a]        # 485a60 <__PRETTY_FUNCTION__.0+0x48>
+  402645:	00 
+  402646:	0f 28 c2             	movaps xmm0,xmm2
+  402649:	f3 0f 5c ca          	subss  xmm1,xmm2
+  40264d:	0f c6 c0 e0          	shufps xmm0,xmm0,0xe0
+  402651:	0f 59 c3             	mulps  xmm0,xmm3
+  402654:	0f 28 d9             	movaps xmm3,xmm1
+  402657:	f3 0f 58 ca          	addss  xmm1,xmm2
+  40265b:	0f c6 db e0          	shufps xmm3,xmm3,0xe0
+  40265f:	0f 58 c3             	addps  xmm0,xmm3
+  402662:	c3                   	ret
+  402663:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  40266a:	00 00 00 00 
+  40266e:	66 90                	xchg   ax,ax
+
+0000000000402670 <is_in_shadow>:
+  402670:	f3 0f 1e fa          	endbr64
+  402674:	48 81 ec 88 00 00 00 	sub    rsp,0x88
+  40267b:	66 0f d6 54 24 10    	movq   QWORD PTR [rsp+0x10],xmm2
+  402681:	48 8d 7c 24 50       	lea    rdi,[rsp+0x50]
+  402686:	48 83 ec 20          	sub    rsp,0x20
+  40268a:	f3 0f 11 5c 24 38    	movss  DWORD PTR [rsp+0x38],xmm3
+  402690:	f3 0f 7e 54 24 34    	movq   xmm2,QWORD PTR [rsp+0x34]
+  402696:	f3 0f 10 5c 24 30    	movss  xmm3,DWORD PTR [rsp+0x30]
+  40269c:	66 0f d6 44 24 40    	movq   QWORD PTR [rsp+0x40],xmm0
+  4026a2:	64 48 8b 04 25 28 00 	mov    rax,QWORD PTR fs:0x28
+  4026a9:	00 00 
+  4026ab:	48 89 84 24 98 00 00 	mov    QWORD PTR [rsp+0x98],rax
+  4026b2:	00 
+  4026b3:	31 c0                	xor    eax,eax
+  4026b5:	0f 28 fa             	movaps xmm7,xmm2
+  4026b8:	0f 28 c3             	movaps xmm0,xmm3
+  4026bb:	0f c6 ff e5          	shufps xmm7,xmm7,0xe5
+  4026bf:	f3 0f 59 c3          	mulss  xmm0,xmm3
+  4026c3:	0f 28 f7             	movaps xmm6,xmm7
+  4026c6:	0f 28 fa             	movaps xmm7,xmm2
+  4026c9:	f3 0f 59 fa          	mulss  xmm7,xmm2
+  4026cd:	f3 0f 59 f6          	mulss  xmm6,xmm6
+  4026d1:	f3 0f 58 c7          	addss  xmm0,xmm7
+  4026d5:	f3 0f 58 c6          	addss  xmm0,xmm6
+  4026d9:	f3 0f 10 74 24 44    	movss  xmm6,DWORD PTR [rsp+0x44]
+  4026df:	f3 0f 51 c0          	sqrtss xmm0,xmm0
+  4026e3:	f3 0f 5e d8          	divss  xmm3,xmm0
+  4026e7:	0f c6 c0 e0          	shufps xmm0,xmm0,0xe0
+  4026eb:	0f 16 05 66 33 08 00 	movhps xmm0,QWORD PTR [rip+0x83366]        # 485a58 <__PRETTY_FUNCTION__.0+0x40>
+  4026f2:	0f 5e d0             	divps  xmm2,xmm0
+  4026f5:	66 0f 6f c4          	movdqa xmm0,xmm4
+  4026f9:	0f 14 cb             	unpcklps xmm1,xmm3
+  4026fc:	f3 0f 10 5c 24 40    	movss  xmm3,DWORD PTR [rsp+0x40]
+  402702:	0f 14 de             	unpcklps xmm3,xmm6
+  402705:	0f 16 d9             	movlhps xmm3,xmm1
+  402708:	66 0f 6f cd          	movdqa xmm1,xmm5
+  40270c:	0f 13 54 24 60       	movlps QWORD PTR [rsp+0x60],xmm2
+  402711:	48 8b 44 24 60       	mov    rax,QWORD PTR [rsp+0x60]
+  402716:	0f 11 1c 24          	movups XMMWORD PTR [rsp],xmm3
+  40271a:	48 89 44 24 10       	mov    QWORD PTR [rsp+0x10],rax
+  40271f:	e8 7c fa ff ff       	call   4021a0 <sphere_intersect>
+  402724:	8b 84 24 8c 00 00 00 	mov    eax,DWORD PTR [rsp+0x8c]
+  40272b:	48 83 c4 20          	add    rsp,0x20
+  40272f:	48 8b 54 24 78       	mov    rdx,QWORD PTR [rsp+0x78]
+  402734:	64 48 2b 14 25 28 00 	sub    rdx,QWORD PTR fs:0x28
+  40273b:	00 00 
+  40273d:	75 08                	jne    402747 <is_in_shadow+0xd7>
+  40273f:	48 81 c4 88 00 00 00 	add    rsp,0x88
+  402746:	c3                   	ret
+  402747:	e8 c4 99 01 00       	call   41c110 <__stack_chk_fail>
+  40274c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]

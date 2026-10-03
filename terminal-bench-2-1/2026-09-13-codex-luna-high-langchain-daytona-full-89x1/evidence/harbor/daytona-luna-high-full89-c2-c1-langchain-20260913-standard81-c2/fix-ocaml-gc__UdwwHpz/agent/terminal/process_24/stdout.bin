@@ -1,0 +1,56 @@
+
+    ./configure CC="cc -m64"
++
+If something goes wrong during the automatic configuration, or if the generated
+files cause errors later on, then look at the template files:
+
+        Makefile.config.in
+        Makefile.build_config.in
+        runtime/caml/m.h.in
+        runtime/caml/s.h.in
++
+for guidance on how to edit the generated files by hand.
+
+== Building the compiler
+
+From the top directory, do:
+
+        make
+
+This builds the OCaml compiler for the first time.  This phase is
+fairly verbose; consider redirecting the output to a file:
+
+        make > make.log 2>&1     # in sh
+        make >& make.log         # in csh
+
+== (Optional) Running the testsuite
+
+To be sure everything works well, you can run the test suite
+   that comes with the compiler. To do so, do:
+
+        make tests
+
+== Installing the compiler
+
+You can now install the OCaml system. This will create the following commands
+   (in the binary directory selected during autoconfiguration):
+
+[width="70%",frame="topbot",cols="25%,75%"]
+|===============================================================================
+| `ocamlc`     | the batch bytecode compiler
+| `ocamlopt`   | the batch native-code compiler (if supported)
+| `ocamlrun`   | the runtime system for the bytecode compiler
+| `ocamlyacc`  | the parser generator
+| `ocamllex`   | the lexer generator
+| `ocaml`      | the interactive, toplevel-based system
+| `ocamlmktop` | a tool to make toplevel systems that integrate user-defined C
+                 primitives and OCaml code
+| `ocamldebug` | the source-level replay debugger
+| `ocamldep`   | generator of "make" dependencies for OCaml sources
+| `ocamldoc`   | the documentation generator
+| `ocamlprof`  | the execution count profiler
+| `ocamlcp`    | the bytecode compiler in profiling mode
+|===============================================================================
+
+From the top directory, become superuser and do:
+

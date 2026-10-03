@@ -1,0 +1,150 @@
+driver/Assembler.ml:23:    Configuration.asm;
+driver/Assembler.ml:35: [ Prefix "-Wa,", Self (fun s -> if Configuration.gnu_toolchain then
+driver/Assembler.ml:39:  Exact "-Xassembler", String (fun s -> if Configuration.gnu_toolchain then
+driver/Clflags.ml:37:let option_mthumb = ref (Configuration.model = "armv7m")
+driver/Clflags.ml:53:let option_gdwarf = ref (if Configuration.system = "diab" then 2 else 3)
+driver/Clflags.ml:62:  ref (if Configuration.arch = "powerpc"
+driver/Clflags.ml:63:       && Configuration.abi = "eabi"
+driver/Clflags.ml:64:       && Configuration.system = "diab"
+driver/Clflags.ml:69:let stdlib_path = ref Configuration.stdlib_path
+driver/Clflags.ml:70:let use_standard_headers =  ref Configuration.has_standard_headers
+driver/CommonOptions.ml:99:  -conf <file>   Read configuration from file
+driver/CommonOptions.ml:104:  [ Exact "-conf", Ignore; (* Ignore option since it is already handled *)
+driver/CommonOptions.ml:107:    Exact "-stdlib", String(fun s -> stdlib_path := s);
+driver/Configuration.ml:34:  match search_argv "-conf" with
+driver/Configuration.ml:38:        Sys.getenv "COMPCERT_CONFIG"
+driver/Configuration.ml:42:        | None -> "compcert.ini" in
+driver/Configuration.ml:55:            eprintf "Cannot find compcert.ini configuration file.\n";
+driver/Configuration.ml:65:    Readconfig.read_config_file ini_file_name
+driver/Configuration.ml:67:  | Readconfig.Error(file, lineno, msg) ->
+driver/Configuration.ml:68:      eprintf "Error reading configuration file %s.\n" ini_file_name;
+driver/Configuration.ml:72:      eprintf "Error reading configuration file %s.\n" ini_file_name;
+driver/Configuration.ml:76:let get_config key =
+driver/Configuration.ml:77:  match Readconfig.key_val key with
+driver/Configuration.ml:79:  | None -> eprintf "Configuration option `%s' is not set\n" key; exit 2
+driver/Configuration.ml:81:let bad_config key vl =
+driver/Configuration.ml:82:  eprintf "Invalid value `%s' for configuration option `%s'\n"
+driver/Configuration.ml:86:let get_config_string key =
+driver/Configuration.ml:87:  match get_config key with
+driver/Configuration.ml:89:  | vl -> bad_config key vl
+driver/Configuration.ml:91:let get_config_list key =
+driver/Configuration.ml:92:  match get_config key with
+driver/Configuration.ml:93:  | [] -> bad_config key []
+driver/Configuration.ml:106:let opt_config_list key =
+driver/Configuration.ml:107:  match Readconfig.key_val key with
+driver/Configuration.ml:112:  tool_absolute_path (get_config_list "prepro")@(opt_config_list "prepro_options")
+driver/Configuration.ml:114:  tool_absolute_path (get_config_list "asm")@(opt_config_list "asm_options")
+driver/Configuration.ml:116:  tool_absolute_path (get_config_list "linker")@(opt_config_list "linker_options")
+driver/Configuration.ml:118:let get_bool_config key =
+driver/Configuration.ml:119:  match get_config_string key with
+driver/Configuration.ml:122:  | v -> bad_config key [v]
+driver/Configuration.ml:125:  match get_config_string "arch" with
+driver/Configuration.ml:127:  | v -> bad_config "arch" [v]
+driver/Configuration.ml:128:let model = get_config_string "model"
+driver/Configuration.ml:129:let abi = get_config_string "abi"
+driver/Configuration.ml:131:  match get_config_string "endianness" with
+driver/Configuration.ml:134:  | v -> bad_config "endianness" [v]
+driver/Configuration.ml:135:let system = get_config_string "system"
+driver/Configuration.ml:136:let has_runtime_lib = get_bool_config "has_runtime_lib"
+driver/Configuration.ml:137:let has_standard_headers = get_bool_config "has_standard_headers"
+driver/Configuration.ml:138:let stdlib_path =
+driver/Configuration.ml:140:    let path = get_config_string "stdlib_path" in
+driver/Configuration.ml:144:let asm_supports_cfi = get_bool_config "asm_supports_cfi"
+driver/Configuration.ml:152:  match get_config_string "response_file_style" with
+driver/Configuration.ml:156:  | v -> bad_config "response_file_style" [v]
+driver/Configuration.mli:40:val stdlib_path: string
+driver/Driver.ml:78:    Machine.config := Machine.compcert_interpreter !Machine.config;
+driver/Driver.ml:151:  if Congrep: driver/Configuration.cmi: binary file matches
+grep: driver/Configuration.cmti: binary file matches
+grep: driver/Clflags.cmi: binary file matches
+grep: driver/Clflags.cmt: binary file matches
+grep: driver/Clflags.cmo: binary file matches
+grep: driver/Configuration.cmt: binary file matches
+grep: driver/Configuration.o: binary file matches
+grep: driver/Configuration.cmx: binary file matches
+grep: driver/Clflags.o: binary file matches
+grep: driver/Clflags.cmx: binary file matches
+grep: driver/CommonOptions.cmi: binary file matches
+grep: driver/CommonOptions.cmt: binary file matches
+grep: driver/CommonOptions.o: binary file matches
+grep: driver/CommonOptions.cmx: binary file matches
+grep: driver/Driveraux.cmt: binary file matches
+grep: driver/Driveraux.o: binary file matches
+grep: driver/Driveraux.cmx: binary file matches
+grep: driver/Assembler.cmt: binary file matches
+grep: driver/Assembler.o: binary file matches
+grep: driver/Assembler.cmx: binary file matches
+grep: driver/Timing.cmi: binary file matches
+grep: driver/Timing.cmt: binary file matches
+grep: driver/Timing.cmx: binary file matches
+grep: driver/Linker.cmt: binary file matches
+grep: driver/Linker.o: binary file matches
+grep: driver/Linker.cmx: binary file matches
+grep: driver/Frontend.cmt: binary file matches
+grep: driver/Frontend.o: binary file matches
+grep: driver/Frontend.cmx: binary file matches
+grep: driver/Interp.cmi: binary file matches
+grep: driver/Interp.cmt: binary file matches
+grep: driver/Interp.cmx: binary file matches
+grep: driver/Driver.cmi: binary file matches
+grep: driver/Driver.cmt: binary file matches
+grep: driver/Driver.o: binary file matches
+grep: driver/Driver.cmx: binary file matches
+grep: lib/Readconfig.cmi: binary file matches
+figuration.arch = "arm" && Configuration.model <> "armv6" then
+driver/Driver.ml:160:  if not Configuration.gnu_toolchain then begin
+driver/Driver.ml:307:  (if Configuration.arch = "arm" then
+driver/Driver.ml:308:    if Configuration.model = "armv6" then
+driver/Driver.ml:315:    (if not Configuration.gnu_toolchain then
+driver/Driveraux.ml:65:  let resp = Sys.win32 && Configuration.response_file_style <> Configuration.Unsupported in
+driver/Driveraux.ml:67:    let quote,prefix = match Configuration.response_file_style with
+driver/Driveraux.ml:68:    | Configuration.Unsupported -> assert false
+driver/Driveraux.ml:69:    | Configuration.Gnu -> Responsefile.gnu_quote,"@"
+driver/Driveraux.ml:70:    | Configuration.Diab -> Responsefile.diab_quote,"-@" in
+driver/Frontend.ml:67:    Configuration.prepro;
+driver/Frontend.ml:68:    (if Configuration.gnu_toolchain
+driver/Frontend.ml:74:     then ["-I" ^ Filename.concat !Clflags.stdlib_path "include" ]
+driver/Frontend.ml:108:  Machine.config:=
+driver/Frontend.ml:109:    begin match Configuration.arch with
+driver/Frontend.ml:110:    | "powerpc" -> if Configuration.model = "e5500" || Configuration.model = "ppc64"
+driver/Frontend.ml:111:                   then if Configuration.abi = "linux" then Machine.ppc_32_r64_linux_bigendian
+driver/Frontend.ml:112:                   else if Configuration.gnu_toolchain then Machine.ppc_32_r64_bigendian
+driver/Frontend.ml:114:                   else if Configuration.abi = "linux" then Machine.ppc_32_linux_bigendian
+driver/Frontend.ml:115:                   else if Configuration.gnu_toolchain then Machine.ppc_32_bigendian
+driver/Frontend.ml:117:    | "arm"     -> if Configuration.is_big_endian
+driver/Frontend.ml:120:    | "x86"     -> if Configuration.model = "64" then
+driver/Frontend.ml:123:                     if Configuration.abi = "macos"
+driver/Frontend.ml:125:                     else if Configuration.system = "bsd"
+driver/Frontend.ml:128:    | "riscV"   -> if Configuration.model = "64"
+driver/Frontend.ml:131:    | "aarch64" -> if Configuration.abi = "apple"
+driver/Frontend.ml:187:  @ (if Configuration.gnu_toolchain then gnu_prepro_actions else [])
+driver/Frontend.ml:227:  ^ (if Configuration.gnu_toolchain then gnu_prepro_help else "")
+driver/Interp.ml:27:(* Configuration *)
+driver/Linker.ml:24:    Configuration.linker;
+driver/Linker.ml:27:    (if Configuration.has_runtime_lib
+driver/Linker.ml:28:     then ["-L" ^ !stdlib_path; "-lcompcert"]
+driver/Linker.ml:51: (if Configuration.gnu_toolchain then gnu_linker_help else "") ^
+driver/Linker.ml:67:        if Configuration.gnu_toolchain then
+driver/Linker.ml:72:  (if Configuration.gnu_toolchain then
+driver/Linker.ml:78:    Exact "-T", String (fun s -> if Configuration.gnu_toolchain then begin
+driver/Linker.ml:83:    Exact "-Xlinker", String (fun s -> if Configuration.system = "diab" then
+lib/Readconfig.mli:17:(* Reading configuration files *)
+lib/Readconfig.mli:19:(* The format of a configuration file is a list of lines
+lib/Readconfig.mli:29:val read_config_file: string -> unit
+lib/Readconfig.mll:100:let read_config_file filename =
+lib/Readconfig.ml:1:# 17 "lib/Readconfig.mll"
+lib/Readconfig.ml:37:# 38 "lib/Readconfig.ml"
+lib/Readconfig.ml:464:# 59 "lib/Readconfig.mll"
+grep: lib/Readconfig.cmti: binary file matches
+grep: lib/Readconfig.o: binary file matches
+grep: lib/Readconfig.cmx: binary file matches
+grep: lib/Readconfig.cmt: binary file matches
+driver/Clflags.ml:69:let stdlib_path = ref Configuration.stdlib_path
+driver/CommonOptions.ml:94:  -stdlib <dir>  Set the path of the Compcert run-time library
+driver/CommonOptions.ml:107:    Exact "-stdlib", String(fun s -> stdlib_path := s);
+driver/Configuration.ml:138:let stdlib_path =
+driver/Configuration.ml:140:    let path = get_config_string "stdlib_path" in
+driver/Frontend.ml:74:     then ["-I" ^ Filename.concat !Clflags.stdlib_path "include" ]
+driver/Linker.ml:28:     then ["-L" ^ !stdlib_path; "-lcompcert"]
+driver/Linker.ml:40:  -nostdlib      Do not use the standard system startup files or
+driver/Linker.ml:74:      Exact "-nostdlib", Self push_linker_arg;]

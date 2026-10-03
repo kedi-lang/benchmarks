@@ -1,0 +1,203 @@
+00405b28 <doomgeneric_Create>:
+  405b28:	27bdffe8 	addiu	sp,sp,-24
+  405b2c:	afbf0014 	sw	ra,20(sp)
+  405b30:	3c020051 	lui	v0,0x51
+  405b34:	ac44fbf8 	sw	a0,-1032(v0)
+  405b38:	3c020051 	lui	v0,0x51
+  405b3c:	0c1035e1 	jal	40d784 <M_FindResponseFile>
+  405b40:	ac45fbf4 	sw	a1,-1036(v0)
+  405b44:	3c04000f 	lui	a0,0xf
+  405b48:	0c100098 	jal	400260 <.pic.malloc>
+  405b4c:	3484a000 	ori	a0,a0,0xa000
+  405b50:	3c030051 	lui	v1,0x51
+  405b54:	0c1016dc 	jal	405b70 <DG_Init>
+  405b58:	ac62e194 	sw	v0,-7788(v1)
+  405b5c:	0c101227 	jal	40489c <D_DoomMain>
+  405b60:	00000000 	nop
+  405b64:	8fbf0014 	lw	ra,20(sp)
+  405b68:	03e00008 	jr	ra
+  405b6c:	27bd0018 	addiu	sp,sp,24
+
+00405b70 <DG_Init>:
+00405b70 <DG_Init>:
+  405b70:	27bdffe8 	addiu	sp,sp,-24
+  405b70:	27bdffe8 	addiu	sp,sp,-24
+  405b74:	afbf0014 	sw	ra,20(sp)
+  405b74:	afbf0014 	sw	ra,20(sp)
+  405b78:	3c020051 	lui	v0,0x51
+  405b78:	3c020051 	lui	v0,0x51
+  405b7c:	ac40e1a4 	sw	zero,-7772(v0)
+  405b7c:	ac40e1a4 	sw	zero,-7772(v0)
+  405b80:	2442e1a4 	addiu	v0,v0,-7772
+  405b80:	2442e1a4 	addiu	v0,v0,-7772
+  405b84:	ac400004 	sw	zero,4(v0)
+  405b84:	ac400004 	sw	zero,4(v0)
+  405b88:	ac400008 	sw	zero,8(v0)
+  405b88:	ac400008 	sw	zero,8(v0)
+  405b8c:	ac40000c 	sw	zero,12(v0)
+  405b8c:	ac40000c 	sw	zero,12(v0)
+  405b90:	ac400010 	sw	zero,16(v0)
+  405b90:	ac400010 	sw	zero,16(v0)
+  405b94:	ac400014 	sw	zero,20(v0)
+  405b94:	ac400014 	sw	zero,20(v0)
+  405b98:	ac400018 	sw	zero,24(v0)
+  405b98:	ac400018 	sw	zero,24(v0)
+  405b9c:	ac40001c 	sw	zero,28(v0)
+  405b9c:	ac40001c 	sw	zero,28(v0)
+  405ba0:	3c04004b 	lui	a0,0x4b
+  405ba0:	3c04004b 	lui	a0,0x4b
+  405ba4:	0c1124e2 	jal	449388 <.pic.puts>
+  405ba4:	0c1124e2 	jal	449388 <.pic.puts>
+  405ba8:	24841af4 	addiu	a0,a0,6900
+  405ba8:	24841af4 	addiu	a0,a0,6900
+  405bac:	8fbf0014 	lw	ra,20(sp)
+  405bac:	8fbf0014 	lw	ra,20(sp)
+  405bb0:	03e00008 	jr	ra
+  405bb0:	03e00008 	jr	ra
+  405bb4:	27bd0018 	addiu	sp,sp,24
+  405bb4:	27bd0018 	addiu	sp,sp,24
+
+
+00405bb8 <DG_DrawFrame>:
+00405bb8 <DG_DrawFrame>:
+  405bb8:	3c020051 	lui	v0,0x51
+  405bb8:	3c020051 	lui	v0,0x51
+  405bbc:	8c44e19c 	lw	a0,-7780(v0)
+  405bbc:	8c44e19c 	lw	a0,-7780(v0)
+  405bc0:	24830001 	addiu	v1,a0,1
+  405bc0:	24830001 	addiu	v1,a0,1
+  405bc4:	ac43e19c 	sw	v1,-7780(v0)
+  405bc4:	ac43e19c 	sw	v1,-7780(v0)
+  405bc8:	3c026666 	lui	v0,0x6666
+  405bc8:	3c026666 	lui	v0,0x6666
+  405bcc:	24426667 	addiu	v0,v0,26215
+  405bcc:	24426667 	addiu	v0,v0,26215
+  405bd0:	00820018 	mult	a0,v0
+  405bd0:	00820018 	mult	a0,v0
+  405bd4:	00001010 	mfhi	v0
+  405bd4:	00001010 	mfhi	v0
+  405bd8:	00021083 	sra	v0,v0,0x2
+  405bd8:	00021083 	sra	v0,v0,0x2
+  405bdc:	00041fc3 	sra	v1,a0,0x1f
+  405bdc:	00041fc3 	sra	v1,a0,0x1f
+  405be0:	00431023 	subu	v0,v0,v1
+  405be0:	00431023 	subu	v0,v0,v1
+  405be4:	00021880 	sll	v1,v0,0x2
+  405be4:	00021880 	sll	v1,v0,0x2
+  405be8:	00621021 	addu	v0,v1,v0
+  405be8:	00621021 	addu	v0,v1,v0
+  405bec:	00021040 	sll	v0,v0,0x1
+  405bec:	00021040 	sll	v0,v0,0x1
+  405bf0:	10820003 	beq	a0,v0,405c00 <DG_DrawFrame+0x48>
+  405bf0:	10820003 	beq	a0,v0,405c00 <DG_DrawFrame+0x48>
+  405bf4:	00000000 	nop
+  405bf4:	00000000 	nop
+  405bf8:	03e00008 	jr	ra
+  405bf8:	03e00008 	jr	ra
+  405bfc:	00000000 	nop
+  405bfc:	00000000 	nop
+  405c00:	27bdffd8 	addiu	sp,sp,-40
+  405c00:	27bdffd8 	addiu	sp,sp,-40
+  405c04:	afbf0024 	sw	ra,36(sp)
+  405c04:	afbf0024 	sw	ra,36(sp)
+  405c08:	afb30020 	sw	s3,32(sp)
+  405c08:	afb30020 	sw	s3,32(sp)
+  405c0c:	afb2001c 	sw	s2,28(sp)
+  405c0c:	afb2001c 	sw	s2,28(sp)
+  405c10:	afb10018 	sw	s1,24(sp)
+  405c10:	afb10018 	sw	s1,24(sp)
+  405c14:	afb00014 	sw	s0,20(sp)
+  405c14:	afb00014 	sw	s0,20(sp)
+  405c18:	3c020051 	lui	v0,0x51
+  405c18:	3c020051 	lui	v0,0x51
+  405c1c:	8c50e194 	lw	s0,-7788(v0)
+  405c1c:	8c50e194 	lw	s0,-7788(v0)
+  405c20:	3c04000f 	lui	a0,0xf
+  405c20:	3c04000f 	lui	a0,0xf
+  405c24:	0c100098 	jal	400260 <.pic.malloc>
+  405c24:	0c100098 	jal	400260 <.pic.malloc>
+  405c28:	3484a038 	ori	a0,a0,0xa038
+  405c28:	3484a038 	ori	a0,a0,0xa038
+  405c2c:	00408825 	move	s1,v0
+  405c2c:	00408825 	move	s1,v0
+  405c30:	00401825 	move	v1,v0
+  405c30:	00401825 	move	v1,v0
+  405c34:	24440400 	addiu	a0,v0,1024
+  405c34:	24440400 	addiu	a0,v0,1024
+  405c38:	a0600000 	sb	zero,0(v1)
+  405c38:	a0600000 	sb	zero,0(v1)
+  405c3c:	24630001 	addiu	v1,v1,1
+  405c3c:	24630001 	addiu	v1,v1,1
+  405c40:	1464fffd 	bne	v1,a0,405c38 <DG_DrawFrame+0x80>
+  405c40:	1464fffd 	bne	v1,a0,405c38 <DG_DrawFrame+0x80>
+  405c44:	00000000 	nop
+  405c44:	00000000 	nop
+  405c48:	12200045 	beqz	s1,405d60 <DG_DrawFrame+0x1a8>
+  405c48:	12200045 	beqz	s1,405d60 <DG_DrawFrame+0x1a8>
+  405c4c:	26320002 	addiu	s2,s1,2
+  405c4c:	26320002 	addiu	s2,s1,2
+  405c50:	24024d42 	li	v0,19778
+  405c50:	24024d42 	li	v0,19778
+  405c54:	a6220002 	sh	v0,2(s1)
+  405c54:	a6220002 	sh	v0,2(s1)
+  405c58:	3c02000f 	lui	v0,0xf
+  405c5c:	3442a036 	ori	v0,v0,0xa036
+  405c60:	ae220004 	sw	v0,4(s1)
+  405c64:	ae200008 	sw	zero,8(s1)
+  405c68:	24030036 	li	v1,54
+  405c6c:	ae23000c 	sw	v1,12(s1)
+  405c70:	24030028 	li	v1,40
+  405c74:	ae230010 	sw	v1,16(s1)
+  405c78:	24030280 	li	v1,640
+  405c7c:	ae230014 	sw	v1,20(s1)
+  405c80:	2403fe70 	li	v1,-400
+  405c84:	ae230018 	sw	v1,24(s1)
+  405c88:	24030001 	li	v1,1
+  405c8c:	a623001c 	sh	v1,28(s1)
+  405c90:	24030020 	li	v1,32
+  405c94:	a623001e 	sh	v1,30(s1)
+  405c98:	ae200020 	sw	zero,32(s1)
+  405c9c:	2442ffca 	addiu	v0,v0,-54
+  405ca0:	ae220024 	sw	v0,36(s1)
+  405ca4:	ae200028 	sw	zero,40(s1)
+0040d784 <M_FindResponseFile>:
+  40d784:	3c020051 	lui	v0,0x51
+  40d788:	8c43fbf8 	lw	v1,-1032(v0)
+  40d78c:	28620002 	slti	v0,v1,2
+  40d790:	14400004 	bnez	v0,40d7a4 <M_FindResponseFile+0x20>
+  40d794:	24020001 	li	v0,1
+  40d798:	24420001 	addiu	v0,v0,1
+  40d79c:	1462ffff 	bne	v1,v0,40d79c <M_FindResponseFile+0x18>
+  40d7a0:	24420001 	addiu	v0,v0,1
+  40d7a4:	03e00008 	jr	ra
+  40d7a8:	00000000 	nop
+
+0040d7ac <M_ClearBox>:
+  40d7ac:	3c028000 	lui	v0,0x8000
+  40d7b0:	ac82000c 	sw	v0,12(a0)
+  40d7b4:	ac820000 	sw	v0,0(a0)
+  40d7b8:	3c027fff 	lui	v0,0x7fff
+  40d7bc:	3442ffff 	ori	v0,v0,0xffff
+  40d7c0:	ac820008 	sw	v0,8(a0)
+  40d7c4:	03e00008 	jr	ra
+  40d7c8:	ac820004 	sw	v0,4(a0)
+
+0040d7cc <M_AddToBox>:
+  40d7cc:	8c820008 	lw	v0,8(a0)
+  40d7d0:	00a2102a 	slt	v0,a1,v0
+  40d7d4:	10400008 	beqz	v0,40d7f8 <M_AddToBox+0x2c>
+  40d7d8:	00000000 	nop
+  40d7dc:	ac850008 	sw	a1,8(a0)
+  40d7e0:	8c820004 	lw	v0,4(a0)
+  40d7e4:	00c2102a 	slt	v0,a2,v0
+  40d7e8:	10400009 	beqz	v0,40d810 <M_AddToBox+0x44>
+  40d7ec:	00000000 	nop
+  40d7f0:	03e00008 	jr	ra
+  40d7f4:	ac860004 	sw	a2,4(a0)
+  40d7f8:	8c82000c 	lw	v0,12(a0)
+  40d7fc:	0045102a 	slt	v0,v0,a1
+  40d800:	1040fff7 	beqz	v0,40d7e0 <M_AddToBox+0x14>
+  40d804:	00000000 	nop
+  40d808:	1000fff5 	b	40d7e0 <M_AddToBox+0x14>
+  40d80c:	ac85000c 	sw	a1,12(a0)
+  40d810:	8c820000 	lw	v0,0(a0)

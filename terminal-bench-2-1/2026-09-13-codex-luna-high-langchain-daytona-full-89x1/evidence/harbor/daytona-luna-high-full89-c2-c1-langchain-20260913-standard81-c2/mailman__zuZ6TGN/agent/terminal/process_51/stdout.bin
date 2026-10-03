@@ -1,0 +1,131 @@
+                self.mlist.is_subscribed(self.user)) or
+                self.mlist.is_subscribed(self.address)):
+            raise AlreadySubscribedError(
+                self.mlist.fqdn_listname,
+                self.address.email,
+                MemberRole.member)
+        # Is this email address banned?
+        if IBanManager(self.mlist).is_banned(self.address.email):
+            raise MembershipIsBannedError(self.mlist, self.address.email)
+        # Don't allow the list posting address.
+        if self.address.email.lower() == self.mlist.posting_address:
+            raise InvalidEmailAddressError('List posting address not allowed')
+        # Check if there is already a subscription request for this email.
+        pendings = getUtility(IPendings).find(
+            mlist=self.mlist,
+            pend_type='subscription')
+        for token, pendable in pendings:
+            if pendable['email'] == self.address.email:
+                raise SubscriptionPendingError(self.mlist, self.address.email)
+        # Start out with the subscriber being the token owner.
+        self.push('verification_checks')
+
+    def _step_verification_checks(self):
+        # If this is an invitation, send it now.
+        if self.invitation:
+            self.push('send_invitation')
+            return
+        # Is the address already verified, or is the pre-verified flag set?
+        if self.address.verified_on is None:
+            if self.pre_verified:
+                self.address.verified_on = now()
+            else:
+                # The address being subscribed is not yet verified, so we need
+                # to send a validation email that will also confirm that the
+                # user wants to be subscribed to this mailing list.
+                self.push('send_confirmation')
+                return
+        self.push('confirmation_checks')
+
+    def _step_confirmation_checks(self):
+        # If the list's subscription policy is open, then the user can be
+        # subscribed right here and now.
+        if self.mlist.subscription_policy is SubscriptionPolicy.open:
+            self.push('do_subscription')
+            return
+        # If we do not need the user's confirmation, then skip to the
+        # moderation checks.
+        if self.mlist.subscription_policy is SubscriptionPolicy.moderate:
+            self.push('moderation_checks')
+            return
+        # If the subscription has been pre-confirmed, then we can skip the
+        # confirmation check can be skipped.  If moderator approval is
+        # required we need to check that, otherwise we can go straight to
+        # subscription.
+        if self.pre_confirmed:
+            next_step = (
+                'moderation_checks'
+                if self.mlist.subscription_policy is
+                    SubscriptionPolicy.confirm_then_moderate   # noqa: E131
+                else 'do_subscription')
+            self.push(next_step)
+            return
+        # The user must confirm their subscription.
+        self.push('send_confirmation')
+
+    def _step_moderation_checks(self):
+        # Does the moderator need to approve the subscription request?
+        assert self.mlist.subscription_policy in (
+            SubscriptionPolicy.moderate,
+            SubscriptionPolicy.confirm_then_moderate,
+            ), self.mlist.subscription_policy
+        if self.pre_approved:
+            self.push('do_subscription')
+        else:
+            self.push('get_moderator_approval')
+
+    def _step_get_moderator_approval(self):
+        # Here's the next step in the workflow, assuming the moderator
+        # approves of the subscription.  If they don't, the workflow and
+        # subscription request will just be thrown away.
+        self._set_token(TokenOwner.moderator)
+        self.push('subscribe_from_restored')
+        self.save()
+        log.info('{}: held subscription request from {}'.format(
+            self.mlist.fqdn_listname, self.address.email))
+        # Possibly send a notification to the list moderators.
+        if self.mlist.admin_immed_notify:
+            subject = _(
+                'New subscription request to ${self.mlist.display_name} '
+                'from ${self.address.email}')
+            username =\
+                f'{self.subscriber.display_name} <{self.address.email}>'\
+                if self.subscriber.display_name else self.address.email
+            template = getUtility(ITemplateLoader).get(
+                'list:admin:action:subscribe', self.mlist)
+            text = wrap(expand(template, self.mlist, dict(
+                member=username,
+                )))
+            # This message should appear to come from the <list>-owner so as
+            # to avoid any useless bounce processing.
+            msg = UserNotification(
+                self.mlist.owner_address, self.mlist.owner_address,
+                subject, text, self.mlist.preferred_language)
+            msg.send(self.mlist)
+        # The workflow must stop running here.
+        raise StopIteration
+
+    def _step_subscribe_from_restored(self):
+        # Prevent replay attacks.
+        self._set_token(TokenOwner.no_one)
+        # Restore a little extra state that can't be stored in the database
+        # (because the order of setattr() on restore is indeterminate), then
+        # subscribe the user.
+        if self.which is WhichSubscriber.address:
+            self.subscriber = self.address
+        else:
+            assert self.which is WhichSubscriber.user
+            self.subscriber = self.user
+        self.push('do_subscription')
+
+    def _step_do_subscription(self):
+        # We can immediately subscribe the user to the mailing list.
+        self.member = self.mlist.subscribe(
+            self.subscriber, send_welcome_message=self.send_welcome_message)
+        # Set member attributes.
+        if self.delivery_mode:
+            self.member.preferences.delivery_mode = DeliveryMode[
+                self.delivery_mode]
+        if self.delivery_status:
+            self.member.preferences.delivery_status = DeliveryStatus[
+                self.delivery_status]

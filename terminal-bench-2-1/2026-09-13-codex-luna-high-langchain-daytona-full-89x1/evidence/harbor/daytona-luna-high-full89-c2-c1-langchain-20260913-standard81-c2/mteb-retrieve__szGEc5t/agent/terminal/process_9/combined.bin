@@ -1,0 +1,22 @@
+def get_model(model_name: str, revision: str | None = None, **kwargs: Any) -> Encoder:
+    """A function to fetch a model object by name.
+
+    Args:
+        model_name: Name of the model to fetch
+        revision: Revision of the model to fetch
+        **kwargs: Additional keyword arguments to pass to the model loader
+
+    Returns:
+        A model object
+    """
+    meta = get_model_meta(model_name, revision)
+    model = meta.load_model(**kwargs)
+
+    # If revision not available in the modelmeta, try to extract it from sentence-transformers
+    if meta.revision is None and isinstance(model, SentenceTransformer):
+        _meta = model_meta_from_sentence_transformers(model)
+        meta.revision = _meta.revision if _meta.revision else meta.revision
+
+    model.mteb_model_meta = meta  # type: ignore
+    return model
+

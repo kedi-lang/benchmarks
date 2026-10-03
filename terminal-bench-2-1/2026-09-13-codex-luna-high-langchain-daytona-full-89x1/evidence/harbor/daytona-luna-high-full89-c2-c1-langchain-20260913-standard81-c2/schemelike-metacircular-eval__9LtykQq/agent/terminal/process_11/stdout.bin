@@ -1,0 +1,202 @@
+### 01-factorial.scm
+1:;; Test 1: Factorial - Classic recursive function
+3:(define (factorial n)
+6:      (* n (factorial (- n 1)))))
+8:;; Test factorial of 5
+9:(display (factorial 5))
+12:;; Test factorial of 10
+13:(display (factorial 10))
+17:(define (factorial-tail n)
+24:;; Test factorial of 20 (tail-recursive)
+25:(display (factorial-tail 20))
+### 02-fibonacci.scm
+1:;; Test 2: Fibonacci - Another classic recursive function
+6:        (else (+ (fib (- n 1)) (fib (- n 2))))))
+### 03-list-operations.scm
+1:;; Test 3: List operations - Working with cons cells
+3:;; List creation and manipulation
+45:        (else (filter pred (cdr lst)))))
+### 04-higher-order.scm
+1:;; Test 4: Higher-order functions and closures
+### 05-simple-io.scm
+8:(display "Hello, World!")
+### 06-interactive-io.scm
+1:;; Test 6: Interactive I/O with read
+3:(display "Interactive calculator")
+5:(display "Enter two numbers and an operation (+, -, *, /)")
+9:(define num1 (read))
+11:(define num2 (read))
+13:(define op (read))
+16:  (cond ((eq? op '+) (+ num1 num2))
+17:        ((eq? op '-) (- num1 num2))
+18:        ((eq? op '*) (* num1 num2))
+19:        ((eq? op '/) (/ num1 num2))
+20:        (else 'invalid-operation)))
+27:(display "Mini expression evaluator (type 'quit to exit)")
+32:  (let ((expr (read)))
+33:    (if (eq? expr 'quit)
+### 08-progn-sequencing.scm
+1:;; Test 8: progn and sequencing with side effects
+34:;; Simulating a for loop with progn
+35:(define (for-loop start end body)
+39:        (for-loop (+ start 1) end body))))
+41:(display "For loop 1-5: ")
+42:(for-loop 1 5 
+### 09-mutual-recursion.scm
+1:;; Test 9: Mutual recursion - even? and odd?
+13:(display "Testing even? and odd?:")
+### 10-advanced-features.scm
+1:;; Test 10: Advanced features - Y combinator, quasiquote simulation, macros
+3:;; Y combinator for anonymous recursion
+9:;; Factorial using Y combinator
+10:(display "Factorial using Y combinator:")
+25:  ;; Simplified - just handles lists with 'unquote markers
+28:;; Association lists and property lists
+33:        ((eq? (car (car alist)) key) (cdr (car alist)))
+34:        (else (assoc-get key (cdr alist)))))
+49:      (cond ((eq? msg 'get) count)
+50:            ((eq? msg 'inc) (set! count (+ count 1)))
+51:            ((eq? msg 'reset) (set! count init))))))
+66:;; Continuation-like behavior with callbacks
+68:  (let ((f (fopen filename mode)))
+73:(display "File handling with callback:")
+77:    (fdisplay f "Written with callback!")
+78:    (fputchr f 10)
+### accumulator_patterns.scm
+1:;; Test accumulator patterns and tail recursion
+3:;; Tail-recursive factorial with accumulator
+4:(define (factorial-acc n acc)
+7:      (factorial-acc (- n 1) (* n acc))))
+9:(define (factorial n)
+10:  (factorial-acc n 1))
+40:(display "Factorial of 6: ")
+41:(display (factorial 6))
+56:;; Multi-accumulator pattern
+57:(define (sum-and-product lst sum-acc prod-acc)
+60:      (sum-and-product (cdr lst) 
+64:(display "Sum and product of (2 3 4): ")
+65:(display (sum-and-product '(2 3 4) 0 1))
+### binary_tree.scm
+33:(define (tree-inorder tree)
+36:      (append (tree-inorder (tree-left tree))
+38:                    (tree-inorder (tree-right tree))))))
+47:(display "Tree in-order traversal: ")
+48:(display (tree-inorder tree5))
+### calculator.scm
+3:(let ((line (read)))
+### church_numerals.scm
+8:;; Successor function
+### closures.scm
+1:;; Test closures and lexical scoping
+### continuation_passing.scm
+3:;; Regular factorial
+4:(define (fact-normal n)
+7:      (* n (fact-normal (- n 1)))))
+9:;; CPS factorial
+16:(display "Normal factorial of 5: ")
+17:(display (fact-normal 5))
+20:(display "CPS factorial of 5: ")
+28:        (else 
+### currying.scm
+1:;; Test currying and partial application
+### filter_operations.scm
+7:        (else (filter pred (cdr lst)))))
+13:  (not (even? n)))
+### fold_operations.scm
+### function_composition.scm
+1:;; Test function composition and higher-order functions
+47:(define (make-pipeline . funcs)
+55:;; This won't work without rest parameters, so simplified version:
+### lazy_evaluation.scm
+3:;; Force - evaluates a thunk
+4:(define (force thunk)
+15:  (force (cdr stream)))
+### list_operations.scm
+4:(define (or a b)
+14:  (if (or (null? lst1) (null? lst2))
+24:        (else (cons (car lst) (flatten (cdr lst))))))
+38:        ((equal? x (car lst)) #t)
+39:        (else (member? x (cdr lst)))))
+### map_operations.scm
+1:;; Test map and list operations
+### memoization.scm
+6:        ((equal? key (car (car alist))) (car alist))
+7:        (else (assoc key (cdr alist)))))
+31:                         (else (+ (fib (- n 1))
+### mutual_recursion.scm
+3:;; Even and odd mutual recursion
+26:;; Hofstadter Female and Male sequences
+27:;; F(n) = if n=0 then 1 else n - M(F(n-1))
+28:;; M(n) = if n=0 then 0 else n - F(M(n-1))
+59:      (+ 1 (count-forest (cdr tree)))))
+61:(define (count-forest forest)
+62:  (if (null? forest)
+64:      (+ (count-nodes (car forest))
+65:         (count-forest (cdr forest)))))
+77:      (if (eq? (car lst) 'begin)
+84:      (if (eq? (car lst) 'end)
+### nested_defines.scm
+1:;; Test nested defines and lexical scoping
+14:    (define (another-inner w)
+17:    (+ (inner-function 5) (another-inner 2)))
+49:;; Test nested defines without forward references
+50:(define (no-forward-ref x)
+59:(display (no-forward-ref 5))
+### oeis_sequences.scm
+7:        (else (+ (fibonacci (- n 1))
+14:        (else (+ (jacobsthal (- n 1))
+24:          (else (+ (p n (- k 1))
+28:;; A000142 - Factorial numbers
+29:(define (factorial n)
+32:      (* n (factorial (- n 1)))))
+35:;; Using recursive formula with Stirling numbers
+41:          (else (+ (* k (stirling2 (- n 1) k))
+72:(display "First 8 Factorial numbers (A000142): ")
+73:(display (generate-sequence factorial 8))
+### oeis_sequences2.scm
+1:;; More OEIS sequences
+3:;; Define and function
+4:(define (and a b)
+32:        (else
+36:                 (else (check (+ d 2)))))
+43:          (else (find-prime count (+ num 1)))))
+50:  (and (is-prime? p) (is-prime? (+ p 2))))
+56:          (else (find-twin count (+ num 1)))))
+### oeis_sequences3.scm
+1:;; More interesting OEIS sequences
+3:;; A006577 - Number of steps for Collatz sequence to reach 1
+9:          (else 
+19:        (else (+ (* 2 (pell (- n 1)))
+22:;; A002110 - Primorial numbers: product of first n primes
+27:        (else
+31:                 (else (check (+ d 2)))))
+38:          (else (find-prime count (+ num 1)))))
+43:(define (primorial n)
+46:      (* (nth-prime (- n 1)) (primorial (- n 1)))))
+49:(define (factorial n)
+52:      (* n (factorial (- n 1)))))
+55:  (/ (factorial (* 2 n))
+56:     (* (factorial n) (factorial n))))
+62:        (else (* (- n 1)
+72:  (gen 1))  ; Start from 1 for these sequences
+74:(display "Collatz steps for 1-10 (A006577): ")
+83:(display "First 6 Primorial numbers (A002110): ")
+84:(display (generate-seq primorial 7))
+### recursive_structures.scm
+49:      (if (equal? (car (car dict)) key)
+### test_read.scm
+3:(display (read))
+### variadic_functions.scm
+78:;; Function that takes function and applies to all args
+79:(define (apply-to-all f lst)
+82:      (cons (f (car lst)) (apply-to-all f (cdr lst)))))
+85:(display (apply-to-all (lambda (x) (* x x)) '(1 2 3 4)))
+### y_combinator.scm
+1:;; Test Y combinator and fixed-point recursion
+3:;; Y combinator (applicative order version)
+9:;; Factorial using Y combinator
+10:(define factorial
+17:(display "Factorial of 5 using Y combinator: ")
+18:(display (factorial 5))
+21:;; Fibonacci using Y combinator
+27:               (else (+ (fib (- n 1)) (fib (- n 2)))))))))

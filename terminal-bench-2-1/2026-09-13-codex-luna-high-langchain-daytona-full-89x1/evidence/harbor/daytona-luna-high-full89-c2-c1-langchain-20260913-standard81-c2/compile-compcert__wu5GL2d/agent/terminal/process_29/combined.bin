@@ -1,0 +1,66 @@
+[WARNING] Running as root is not recommended
+[WARNING] Running as root is not recommended
+The following actions will be performed:
+  - install conf-pkg-config 5      [required by zarith]
+  - install dune            3.23.1 [required by coq]
+  - install ocamlfind       1.9.8  [required by coq]
+  - install conf-gmp        5      [required by zarith]
+  - install conf-findutils  1      [required by coq]
+  - install zarith          1.14   [required by coq]
+  - install coq             8.16.1
+===== 7 to install =====
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> retrieved conf-gmp.5  (https://opam.ocaml.org/cache)
+-> installed conf-findutils.1
+-> installed conf-gmp.5
+-> retrieved conf-pkg-config.5  (2 extra sources)
+-> installed conf-pkg-config.5
+-> retrieved coq.8.16.1  (https://opam.ocaml.org/cache)
+-> retrieved ocamlfind.1.9.8  (https://opam.ocaml.org/cache)
+-> retrieved zarith.1.14  (https://opam.ocaml.org/cache)
+-> retrieved dune.3.23.1  (https://opam.ocaml.org/cache)
+-> installed ocamlfind.1.9.8
+-> installed zarith.1.14
+-> installed dune.3.23.1
+[ERROR] The compilation of coq.8.16.1 failed at "make COQ_USE_DUNE= -j47".
+
+#=== ERROR while compiling coq.8.16.1 =========================================#
+# context              2.1.5 | linux/x86_64 | ocaml.4.14.1 | https://opam.ocaml.org#999026c52ea9e3e1dea44978add7a3568bfd2fa1
+# path                 ~/.opam/default/.opam-switch/build/coq.8.16.1
+# command              /usr/bin/make COQ_USE_DUNE= -j47
+# exit-code            2
+# env-file             ~/.opam/log/coq-6670-c77415.env
+# output-file          ~/.opam/log/coq-6670-c77415.out
+### output ###
+# [...]
+# COQC      theories/ZArith/Zpow_def.v
+# COQC      theories/Numbers/Cyclic/Abstract/DoubleType.v
+# COQC      theories/ZArith/Int.v
+# COQC      theories/Structures/OrdersLists.v
+# COQC      theories/ZArith/Zeuclid.v
+# COQC      theories/ZArith/Zpow_alt.v
+# COQC      theories/Numbers/Integer/Binary/ZBinary.v
+# make[1]: *** [Makefile.build:338: _build_vo/default//lib/coq/theories/Strings/Byte.vo] Killed
+# make[1]: *** [_build_vo/default//lib/coq/theories/Strings/Byte.vo] Deleting file '_build_vo/default//lib/coq/theories/Strings/Byte.glob'
+# make[1]: *** Waiting for unfinished jobs....
+# make[1]: Leaving directory '/root/.opam/default/.opam-switch/build/coq.8.16.1'
+# make: *** [Makefile.make:122: submake] Error 2
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
++- The following actions failed
+| - build coq 8.16.1
++- 
++- The following changes have been performed
+| - install conf-findutils  1
+| - install conf-gmp        5
+| - install conf-pkg-config 5
+| - install dune            3.23.1
+| - install ocamlfind       1.9.8
+| - install zarith          1.14
++- 
+
+The former state can be restored with:
+    /usr/bin/opam switch import "/root/.opam/default/.opam-switch/backup/state-20260913170116.export"

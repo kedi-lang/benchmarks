@@ -1,0 +1,242 @@
+make: Entering directory '/tmp/CompCert/test'
+set -e; for i in c compression raytracer spass regression abi; do make CCOMPOPTS='' -C $i all; done
+make[1]: Entering directory '/tmp/CompCert/test/c'
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o fib.compcert fib.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o integr.compcert integr.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o qsort.compcert qsort.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o fft.compcert fft.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o fftsp.compcert fftsp.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o fftw.compcert fftw.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o sha1.compcert sha1.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o sha3.compcert sha3.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o aes.compcert aes.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o almabench.compcert almabench.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o lists.compcert lists.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o binarytrees.compcert binarytrees.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o fannkuch.compcert fannkuch.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o knucleotide.compcert knucleotide.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o mandelbrot.compcert mandelbrot.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o nbody.compcert nbody.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o nsieve.compcert nsieve.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o nsievebits.compcert nsievebits.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o spectral.compcert spectral.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o vmach.compcert vmach.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o bisect.compcert bisect.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o chomp.compcert chomp.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o perlin.compcert perlin.c -lm
+../../ccomp  -stdlib ../../runtime -dc -dclight -dasm -o siphash24.compcert siphash24.c -lm
+make[1]: Leaving directory '/tmp/CompCert/test/c'
+make[1]: Entering directory '/tmp/CompCert/test/compression'
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o optlist.o optlist.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o bitfile.o bitfile.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o arcode.o arcode.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o armain.o armain.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm -o arcode optlist.o bitfile.o arcode.o armain.o 
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzwencode.o lzwencode.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzwdecode.o lzwdecode.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzwmain.o lzwmain.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm -o lzw optlist.o bitfile.o lzwencode.o lzwdecode.o lzwmain.o 
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzvars.o lzvars.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzhash.o lzhash.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzencode.o lzencode.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzdecode.o lzdecode.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm   -c -o lzssmain.o lzssmain.c
+../../ccomp   -U__GNUC__ -stdlib ../../runtime -dclight -dasm -o lzss optlist.o bitfile.o lzvars.o lzhash.o lzencode.o lzdecode.o lzssmain.o 
+make[1]: Leaving directory '/tmp/CompCert/test/compression'
+make[1]: Entering directory '/tmp/CompCert/test/raytracer'
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o memory.o memory.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o gmllexer.o gmllexer.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o gmlparser.o gmlparser.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o eval.o eval.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o arrays.o arrays.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o vector.o vector.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o matrix.o matrix.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o object.o object.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o intersect.o intersect.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o surface.o surface.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o light.o light.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o simplify.o simplify.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o render.o render.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o main.o main.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return -o render memory.o gmllexer.o gmlparser.o eval.o arrays.o vector.o matrix.o object.o intersect.o surface.o light.o simplify.o render.o main.o -lm
+make[1]: Leaving directory '/tmp/CompCert/test/raytracer'
+make[1]: Entering directory '/tmp/CompCert/test/spass'
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o analyze.o analyze.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o clause.o clause.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o clock.o clock.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o closure.o closure.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o cnf.o cnf.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o component.o component.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o condensing.o condensing.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o context.o context.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o defs.o defs.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o dfgparser.o dfgparser.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o dfgscanner.o dfgscanner.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o doc-proof.o doc-proof.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o flags.o flags.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o foldfg.o foldfg.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o graph.o graph.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o hash.o hash.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o hasharray.o hasharray.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o iaparser.o iaparser.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o iascanner.o iascanner.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o kbo.o kbo.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o list.o list.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o memory.o memory.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o misc.o misc.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o options.o options.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o order.o order.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o partition.o partition.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o proofcheck.o proofcheck.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o renaming.o renaming.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o resolution.o resolution.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o rpos.o rpos.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o rules-inf.o rules-inf.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o rules-red.o rules-red.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o rules-sort.o rules-sort.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o rules-split.o rules-split.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o rules-ur.o rules-ur.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o search.o search.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o sharing.o sharing.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o sort.o sort.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o st.o st.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o stack.o stack.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o strings.o strings.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o subst.o subst.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o subsumption.o subsumption.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o symbol.o symbol.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o table.o table.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o tableau.o tableau.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o term.o term.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o terminator.o terminator.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o top.o top.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o unify.o unify.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return   -c -o vector.o vector.c
+../../ccomp   -stdlib ../../runtime -dparse -dclight -dasm -fstruct-return -o spass analyze.o clause.o clock.o closure.o cnf.o component.o condensing.o context.o defs.o dfgparser.o dfgscanner.o doc-proof.o flags.o foldfg.o graph.o hash.o hasharray.o iaparser.o iascanner.o kbo.o list.o memory.o misc.o options.o order.o partition.o proofcheck.o renaming.o resolution.o rpos.o rules-inf.o rules-red.o rules-sort.o rules-split.o rules-ur.o search.o sharing.o sort.o st.o stack.o strings.o subst.o subsumption.o symbol.o table.o tableau.o term.o terminator.o top.o unify.o vector.o -lm
+make[1]: Leaving directory '/tmp/CompCert/test/spass'
+make[1]: Entering directory '/tmp/CompCert/test/regression'
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o int32.compcert int32.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o int64.compcert int64.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o floats.compcert floats.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o floats-basics.compcert floats-basics.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o floats-lit.compcert floats-lit.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o expr1.compcert expr1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o expr6.compcert expr6.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o funptr2.compcert funptr2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o initializers.compcert initializers.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o initializers2.compcert initializers2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o initializers3.compcert initializers3.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o volatile1.compcert volatile1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o volatile2.compcert volatile2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o volatile3.compcert volatile3.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o volatile4.compcert volatile4.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o funct3.compcert funct3.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o expr5.compcert expr5.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o struct7.compcert struct7.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o struct8.compcert struct8.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o struct11.compcert struct11.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o struct12.compcert struct12.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o casts1.compcert casts1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o casts2.compcert casts2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o char1.compcert char1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o sizeof1.compcert sizeof1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o sizeof2.compcert sizeof2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o binops.compcert binops.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bool.compcert bool.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o for1.compcert for1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o for2.compcert for2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o switch.compcert switch.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o switch2.compcert switch2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o compound.compcert compound.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o decl1.compcert decl1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields9.compcert bitfields9.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o ptrs3.compcert ptrs3.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o telescopes.compcert telescopes.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o parsing.compcert parsing.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o krfun.compcert krfun.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o ifconv.compcert ifconv.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o generic.compcert generic.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o attribs1.compcert attribs1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields1.compcert bitfields1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields2.compcert bitfields2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields3.compcert bitfields3.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields4.compcert bitfields4.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields5.compcert bitfields5.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields6.compcert bitfields6.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields7.compcert bitfields7.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields8.compcert bitfields8.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields_uint_t.compcert bitfields_uint_t.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o bitfields10.compcert bitfields10.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o builtins-common.compcert builtins-common.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o builtins-x86.compcert builtins-x86.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o packedstruct1.compcert packedstruct1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o packedstruct2.compcert packedstruct2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o alignas.compcert alignas.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o varargs1.compcert varargs1.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o varargs2.compcert varargs2.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o varargs3.compcert varargs3.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o sections.compcert sections.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o alias.compcert alias.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o aligned.compcert aligned.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o switch3.compcert switch3.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -o NaNs.compcert NaNs.c -lm
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S annot1.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S commaprec.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S expr2.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S expr3.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S expr4.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S extern1.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S funct2.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S funptr1.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S pragmas.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S ptrs1.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S ptrs2.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct1.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct2.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct3.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct4.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct5.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct6.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct9.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S struct10.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S types1.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S seqops.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S singlefloats.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S emptydecl.c
+../../ccomp  -stdlib ../../runtime -dparse -dc -dclight -dasm -fall -DARCH_x86 -DMODEL_64 -S extasm.c
+make[1]: Leaving directory '/tmp/CompCert/test/regression'
+make[1]: Entering directory '/tmp/CompCert/test/abi'
+ocamlopt -g -o generator.exe generator.ml
+./generator.exe -rnd 500 -o fixed
+../../ccomp -stdlib ../../runtime  -c -o fixed_def_compcert.o fixed_def.c
+../../ccomp -stdlib ../../runtime  -c -o fixed_use_compcert.o fixed_use.c
+../../ccomp -stdlib ../../runtime -o fixed.compcert fixed_def_compcert.o fixed_use_compcert.o
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -c -o fixed_use_cc.o fixed_use.c
+../../ccomp -stdlib ../../runtime -o fixed.cc2compcert fixed_def_compcert.o fixed_use_cc.o
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -c -o fixed_def_cc.o fixed_def.c
+../../ccomp -stdlib ../../runtime -o fixed.compcert2cc fixed_def_cc.o fixed_use_compcert.o
+./generator.exe -vararg -rnd 500 -o vararg
+../../ccomp -stdlib ../../runtime  -c -o vararg_def_compcert.o vararg_def.c
+../../ccomp -stdlib ../../runtime  -c -o vararg_use_compcert.o vararg_use.c
+../../ccomp -stdlib ../../runtime -o vararg.compcert vararg_def_compcert.o vararg_use_compcert.o
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -c -o vararg_use_cc.o vararg_use.c
+../../ccomp -stdlib ../../runtime -o vararg.cc2compcert vararg_def_compcert.o vararg_use_cc.o
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -c -o vararg_def_cc.o vararg_def.c
+../../ccomp -stdlib ../../runtime -o vararg.compcert2cc vararg_def_cc.o vararg_use_compcert.o
+./generator.exe -structs -o struct
+../../ccomp -stdlib ../../runtime -fstruct-passing -dclight -c -o struct_def_compcert.o struct_def.c
+../../ccomp -stdlib ../../runtime -fstruct-passing -dclight -c -o struct_use_compcert.o struct_use.c
+../../ccomp -stdlib ../../runtime -o struct.compcert struct_def_compcert.o struct_use_compcert.o
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -c -o struct_use_cc.o struct_use.c
+../../ccomp -stdlib ../../runtime -o struct.cc2compcert struct_def_compcert.o struct_use_cc.o
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -c -o struct_def_cc.o struct_def.c
+../../ccomp -stdlib ../../runtime -o struct.compcert2cc struct_def_cc.o struct_use_compcert.o
+ocamlopt -g -o genlayout.exe genlayout.ml
+./genlayout.exe  > layout.h
+../../ccomp -stdlib ../../runtime  -o layout.compcert layout.c
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -o layout.cc layout.c
+../../ccomp -stdlib ../../runtime  -o staticlayout.compcert staticlayout.c
+gcc -m64 -O -Wno-overflow -Wno-constant-conversion -o staticlayout.cc staticlayout.c
+rm fixed_def_cc.o struct_def_compcert.o vararg_use_compcert.o fixed_use_cc.o struct_use_compcert.o vararg_def_cc.o fixed_def_compcert.o struct_def_cc.o struct_use_cc.o vararg_use_cc.o vararg_def_compcert.o fixed_use_compcert.o
+make[1]: Leaving directory '/tmp/CompCert/test/abi'
+make: Leaving directory '/tmp/CompCert/test'

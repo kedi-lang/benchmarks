@@ -1,0 +1,84 @@
+Makefile:346:clean:
+Makefile-347-	rm -f $(patsubst %, %/*.vo*, $(DIRS))
+Makefile-348-	rm -f $(patsubst %, %/.*.aux, $(DIRS))
+Makefile-349-	rm -rf doc/html doc/*.glob
+Makefile-350-	rm -f driver/Version.ml
+Makefile-351-	rm -f compcert.ini compcert.config
+Makefile-352-	rm -f extraction/STAMP extraction/*.ml extraction/*.mli .depend.extr
+Makefile-353-	rm -f tools/ndfun tools/modorder tools/*.cm? tools/*.o
+Makefile-354-	rm -f $(GENERATED) .depend
+Makefile-355-	rm -f .lia.cache
+Makefile-356-	$(MAKE) -f Makefile.extr clean
+Makefile-357-	$(MAKE) -C runtime clean
+Makefile-358-	$(MAKE) -C test clean
+Makefile-359-
+Makefile:360:distclean:
+Makefile-361-	$(MAKE) clean
+Makefile-362-	rm -f Makefile.config
+Makefile-363-
+Makefile-364-check-admitted: $(FILES)
+Makefile-365-	@grep -w 'admit\|Admitted\|ADMITTED' $^ || echo "Nothing admitted."
+Makefile-366-
+Makefile-367-check-proof: $(FILES)
+Makefile-368-	$(COQCHK) compcert.driver.Complements
+Makefile-369-
+Makefile-370-print-includes:
+Makefile-371-	@echo $(COQINCLUDES)
+Makefile-372-
+Makefile-373-CoqProject:
+Makefile-374-	@echo $(COQINCLUDES) > _CoqProject
+Makefile-375-
+Makefile-376--include .depend
+Makefile-377-
+Makefile-378-FORCE:
+--
+Makefile.extr:152:clean:
+Makefile.extr-153-	rm -f $(EXECUTABLES)
+Makefile.extr-154-	rm -f $(GENERATED)
+Makefile.extr-155-	for d in $(DIRS); do rm -f $$d/*.cm[iotx] $$d/*cmti $$d/*.o; done
+Makefile.extr-156-	$(MAKE) -C cparser clean
+Makefile.extr-157-
+Makefile.extr-158-# Generation of .depend.extr
+Makefile.extr-159-
+Makefile.extr-160-depend: $(GENERATED)
+Makefile.extr-161-	@echo "Analyzing OCaml dependencies"
+Makefile.extr-162-	@$(OCAMLDEP) $(foreach d,$(DIRS),$(wildcard $(d)/*.ml)) $(GENERATED) >.depend.extr || { rm -f .depend.extr; exit 2; }
+Makefile.extr-163-	@$(OCAMLDEP) $(foreach d,$(DIRS),$(wildcard $(d)/*.mli)) $(GENERATED) >>.depend.extr || { rm -f .depend.extr; exit 2; }
+--
+runtime/Makefile:70:clean::
+runtime/Makefile-71-	rm -f *.o $(LIB) *.tmp?.s
+runtime/Makefile-72-
+runtime/Makefile-73-ifeq ($(strip $(HAS_RUNTIME_LIB)),true)
+runtime/Makefile-74-install::
+runtime/Makefile-75-	install -d $(DESTDIR)$(LIBDIR)
+runtime/Makefile-76-	install -m 0644 $(LIB) $(DESTDIR)$(LIBDIR)
+runtime/Makefile-77-else
+runtime/Makefile-78-install::
+runtime/Makefile-79-endif
+runtime/Makefile-80-
+runtime/Makefile-81-ifeq ($(strip $(HAS_STANDARD_HEADERS)),true)
+runtime/Makefile-82-install::
+runtime/Makefile-83-	install -d $(DESTDIR)$(LIBDIR)/include
+runtime/Makefile-84-	install -m 0644 $(INCLUDES) $(DESTDIR)$(LIBDIR)/include
+runtime/Makefile-85-else
+runtime/Makefile-86-install::
+runtime/Makefile-87-endif
+runtime/Makefile-88-
+runtime/Makefile-89-test/test_int64: test/test_int64.c $(LIB)
+runtime/Makefile-90-	$(CC) -g -o $@ test/test_int64.c $(LIB)
+--
+runtime/Makefile:92:clean::
+runtime/Makefile-93-	rm -f test/test_int64
+runtime/Makefile-94-
+runtime/Makefile-95-.PHONY: test
+runtime/Makefile-96-
+runtime/Makefile-97-test: FORCE test/test_int64
+runtime/Makefile-98-	test/test_int64
+runtime/Makefile-99-
+runtime/Makefile-100-FORCE:
+[WARNING] Running as root is not recommended
+/root/.opam/default/bin/coqc
+The Coq Proof Assistant, version 8.16.1
+compiled with OCaml 4.14.1
+[WARNING] Running as root is not recommended
+coq             8.16.1      Formal proof management system

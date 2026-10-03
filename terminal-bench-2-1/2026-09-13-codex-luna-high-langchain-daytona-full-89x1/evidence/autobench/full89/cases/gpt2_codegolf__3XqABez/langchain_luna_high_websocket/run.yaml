@@ -1,0 +1,2020 @@
+# yaml-language-server: $schema=.autobench-schema-cache/0.3.0/schemas/run_record_schema.json
+record:
+  type: run
+  version: 6
+protocol:
+  name: abp
+  version: 1
+  semantic_registry: 1
+run:
+  id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+  experiment: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+  benchmark: kedi-tb21-langchain-full89-daytona-publication
+  case: gpt2-codegolf__3XqABez
+  variant: langchain-luna-high-websocket
+  status: passed
+  partial: false
+  end_reason: completed
+  outcome:
+    evaluation: passed
+    task: passed
+case:
+  id: gpt2-codegolf__3XqABez
+  input:
+    job_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-high-memory8-c1
+    trial_dir: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-high-memory8-c1/gpt2-codegolf__3XqABez
+    trial_name: gpt2-codegolf__3XqABez
+    task_name: gpt2-codegolf
+  metadata:
+    source: harbor
+    dataset: terminal-bench@2.1
+    batch: high-memory8-c1
+    qemu_fixed: false
+variant:
+  id: langchain-luna-high-websocket
+  factors:
+    capture_only: true
+    adapter: langchain
+    model: codex/gpt-5.6-luna
+    effort: high
+    transport: websocket-http-fallback
+    evidence_payload: sanitized-harbor-sibling
+metrics:
+  factors:
+    capture_only:
+      sequence: 1
+      id: obs_1
+      name: capture_only
+      kind: factor
+      value: true
+      source: variant
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    adapter:
+      sequence: 2
+      id: obs_2
+      name: adapter
+      kind: factor
+      value: langchain
+      source: variant
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    model:
+      sequence: 3
+      id: obs_3
+      name: model
+      kind: factor
+      value: codex/gpt-5.6-luna
+      source: variant
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    effort:
+      sequence: 4
+      id: obs_4
+      name: effort
+      kind: factor
+      value: high
+      source: variant
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    transport:
+      sequence: 5
+      id: obs_5
+      name: transport
+      kind: factor
+      value: websocket-http-fallback
+      source: variant
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    evidence_payload:
+      sequence: 6
+      id: obs_6
+      name: evidence_payload
+      kind: factor
+      value: sanitized-harbor-sibling
+      source: variant
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+  measurements:
+    terminal_bench.reward.reward:
+      sequence: 7
+      id: obs_7
+      name: terminal_bench.reward.reward
+      kind: metric
+      value: 0.0
+      semantic: quality.correctness
+      goal: maximize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    terminal_bench.grader_completed:
+      sequence: 8
+      id: obs_8
+      name: terminal_bench.grader_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: official Harbor verifier produced rewards
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.trial_completed:
+      sequence: 9
+      id: obs_9
+      name: kedi.trial_completed
+      kind: metric
+      value: true
+      semantic: quality.correctness
+      role: constraint
+      span: span_1
+      source: task_observation
+      tags:
+        reason: 'Kedi state: completed'
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.cost_usd:
+      sequence: 18
+      id: obs_18
+      name: kedi.cost_usd
+      kind: metric
+      value: 0.18186268
+      semantic: money.cost
+      unit: USD
+      goal: minimize
+      role: objective
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+  diagnostics:
+    terminal_bench.duration:
+      sequence: 10
+      id: obs_10
+      name: terminal_bench.duration
+      kind: metric
+      value: 1105.697627
+      semantic: time.latency
+      unit: s
+      goal: minimize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.input_tokens:
+      sequence: 11
+      id: obs_11
+      name: kedi.input_tokens
+      kind: metric
+      value: 5053553
+      semantic: llm.tokens.input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.cache_read_tokens:
+      sequence: 12
+      id: obs_12
+      name: kedi.cache_read_tokens
+      kind: metric
+      value: 4903424
+      semantic: llm.tokens.cached_input
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.cache_write_tokens:
+      sequence: 13
+      id: obs_13
+      name: kedi.cache_write_tokens
+      kind: metric
+      value: 0
+      semantic: llm.tokens.cache_write
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.output_tokens:
+      sequence: 14
+      id: obs_14
+      name: kedi.output_tokens
+      kind: metric
+      value: 44807
+      semantic: llm.tokens.output
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.total_tokens:
+      sequence: 15
+      id: obs_15
+      name: kedi.total_tokens
+      kind: metric
+      value: 5098360
+      semantic: llm.tokens.total
+      unit: token
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.requests:
+      sequence: 16
+      id: obs_16
+      name: kedi.requests
+      kind: metric
+      value: 99
+      semantic: llm.request.count
+      unit: request
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.tool_calls:
+      sequence: 17
+      id: obs_17
+      name: kedi.tool_calls
+      kind: metric
+      value: 104
+      semantic: tool.call.count
+      unit: call
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+    kedi.cache_read_ratio:
+      sequence: 19
+      id: obs_19
+      name: kedi.cache_read_ratio
+      kind: metric
+      value: 0.9702923863665821
+      semantic: coverage.ratio
+      unit: ratio
+      goal: maximize
+      role: diagnostic
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+  events:
+    terminal_bench.public_evidence_reference:
+      sequence: 20
+      id: obs_20
+      name: terminal_bench.public_evidence_reference
+      kind: artifact
+      value: artifact_1
+      span: span_1
+      source: task_observation
+      case: gpt2-codegolf__3XqABez
+      variant: langchain-luna-high-websocket
+trace:
+  protocol: abp
+  protocol_version: 1
+  trace_id: 2d438b1af7aa82994170c877fc57840e
+  execution:
+    benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+    experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+    run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+    case_id: gpt2-codegolf__3XqABez
+    variant_id: langchain-luna-high-websocket
+  root_span_ids:
+    - 0eb24d42864d9139
+  spans:
+    - trace_id: 2d438b1af7aa82994170c877fc57840e
+      span_id: 0eb24d42864d9139
+      operation: benchmark.run
+      kind: task
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-10-03T17:24:11.596879Z'
+      ended_at: '2026-10-03T17:24:11.724146Z'
+      start_monotonic_ns: 922729336942375
+      end_monotonic_ns: 922729464208083
+      duration_ns: 127265708
+      start_sequence: 1
+      end_sequence: 26
+      attributes:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 387b206c-72aa-4eb8-9efb-271ffe4b854a
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.608710Z'
+          monotonic_ns: 922729348771875
+          sequence: 2
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 0eb24d42864d9139
+          name: capture_only
+          semantic_type: factor.value
+          body: true
+          attributes:
+            observation_id: obs_1
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d8337996-48c1-4f58-a48c-60eb64bf7c48
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.608787Z'
+          monotonic_ns: 922729348846333
+          sequence: 3
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 0eb24d42864d9139
+          name: adapter
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 9
+          attributes:
+            observation_id: obs_2
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 629bc81f-0d91-4663-a55c-b998b098de65
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.608833Z'
+          monotonic_ns: 922729348892083
+          sequence: 4
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 0eb24d42864d9139
+          name: model
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 18
+          attributes:
+            observation_id: obs_3
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: c1d635ec-e002-4b4a-8acf-1e877a6ed51f
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.608870Z'
+          monotonic_ns: 922729348929625
+          sequence: 5
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 0eb24d42864d9139
+          name: effort
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 4
+          attributes:
+            observation_id: obs_4
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 42db11f1-dea8-4f52-9852-d3a9e48dde02
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.608904Z'
+          monotonic_ns: 922729348963208
+          sequence: 6
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 0eb24d42864d9139
+          name: transport
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 23
+          attributes:
+            observation_id: obs_5
+            kind: factor
+            source: variant
+        - protocol: abp
+          protocol_version: 1
+          signal_id: bfac2a2e-928a-42a8-a8b8-e194e5a98f34
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.608937Z'
+          monotonic_ns: 922729348995958
+          sequence: 7
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: 0eb24d42864d9139
+          name: evidence_payload
+          semantic_type: factor.value
+          body:
+            type: str
+            length: 24
+          attributes:
+            observation_id: obs_6
+            kind: factor
+            source: variant
+      partial: false
+    - trace_id: 2d438b1af7aa82994170c877fc57840e
+      span_id: c9f56281f6efb9e3
+      parent_span_id: 0eb24d42864d9139
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      capture: metadata
+      started_at: '2026-10-03T17:24:11.722564Z'
+      ended_at: '2026-10-03T17:24:11.723839Z'
+      start_monotonic_ns: 922729462629500
+      end_monotonic_ns: 922729463901083
+      duration_ns: 1271583
+      start_sequence: 8
+      end_sequence: 25
+      output:
+        type: dict
+        length: 7
+      status: ok
+      end_reason: completed
+      events:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: acbf873e-afd8-4a1b-96fa-8f4d290591b9
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722699Z'
+          monotonic_ns: 922729462760833
+          sequence: 9
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c9f56281f6efb9e3
+          name: input
+          semantic_type: operation.input
+          body:
+            type: dict
+            length: 2
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 0b94eb9c-3a6a-4be0-be91-e612d18d957e
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723767Z'
+          monotonic_ns: 922729463829125
+          sequence: 24
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: event
+          span_id: c9f56281f6efb9e3
+          name: terminal_bench.public_evidence_reference
+          semantic_type: event.occurrence
+          body:
+            type: str
+            length: 10
+          attributes:
+            observation_id: obs_20
+            kind: artifact
+            source: task_observation
+            legacy_span_id: span_1
+      measurements:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: dd573ce4-625f-4b93-83dc-940e8030a605
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722779Z'
+          monotonic_ns: 922729462841333
+          sequence: 10
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: terminal_bench.reward.reward
+          semantic_type: quality.correctness
+          value: 0.0
+          direction: maximize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_7
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: d92c7b7e-6b7b-48ba-9f8d-2cdddd463e3e
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722840Z'
+          monotonic_ns: 922729462901791
+          sequence: 11
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: terminal_bench.grader_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_8
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 41
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 4e7b8cea-9f7a-4864-ac1f-67d8fffeace7
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722890Z'
+          monotonic_ns: 922729462951375
+          sequence: 12
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.trial_completed
+          semantic_type: quality.correctness
+          value: true
+          role: constraint
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_9
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+            tags:
+              reason:
+                type: str
+                length: 21
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 6071ddd8-3240-4317-9694-43ba3595c55a
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722924Z'
+          monotonic_ns: 922729462985541
+          sequence: 13
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: terminal_bench.duration
+          semantic_type: time.latency
+          value: 1105.697627
+          unit: s
+          direction: minimize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_10
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 5dea5aa7-397b-4854-9111-e2a466990ce5
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722950Z'
+          monotonic_ns: 922729463011166
+          sequence: 14
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.input_tokens
+          semantic_type: llm.tokens.input
+          value: 5053553
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_11
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 518b105a-3d55-413b-92de-470149cbb8d5
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722972Z'
+          monotonic_ns: 922729463033291
+          sequence: 15
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.cache_read_tokens
+          semantic_type: llm.tokens.cached_input
+          value: 4903424
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_12
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f2206f50-4792-4d30-89db-cbf1b798a715
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.722993Z'
+          monotonic_ns: 922729463054916
+          sequence: 16
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.cache_write_tokens
+          semantic_type: llm.tokens.cache_write
+          value: 0
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_13
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 72540120-0b47-4b05-aef3-df7b1e71441b
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723014Z'
+          monotonic_ns: 922729463076041
+          sequence: 17
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.output_tokens
+          semantic_type: llm.tokens.output
+          value: 44807
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_14
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: e4e9d153-0833-407e-af2c-d0195b08ee5e
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723035Z'
+          monotonic_ns: 922729463096625
+          sequence: 18
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.total_tokens
+          semantic_type: llm.tokens.total
+          value: 5098360
+          unit: token
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_15
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 44b1d56e-fdb8-451f-8ac5-fb81da239a73
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723056Z'
+          monotonic_ns: 922729463117583
+          sequence: 19
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.requests
+          semantic_type: llm.request.count
+          value: 99
+          unit: request
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_16
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 9eed84c9-d862-4a56-98d9-9ae50fac93b9
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723084Z'
+          monotonic_ns: 922729463145208
+          sequence: 20
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.tool_calls
+          semantic_type: tool.call.count
+          value: 104
+          unit: call
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_17
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: 8da190c5-e9d2-422f-b3a7-0ebdc371c96b
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723110Z'
+          monotonic_ns: 922729463172000
+          sequence: 21
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.cost_usd
+          semantic_type: money.cost
+          value: 0.18186268
+          unit: USD
+          direction: minimize
+          role: objective
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_18
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+        - protocol: abp
+          protocol_version: 1
+          signal_id: f05fe199-8b91-4894-8433-2d9fe506c9d6
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723132Z'
+          monotonic_ns: 922729463193791
+          sequence: 22
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: measurement
+          span_id: c9f56281f6efb9e3
+          name: kedi.cache_read_ratio
+          semantic_type: coverage.ratio
+          value: 0.9702923863665821
+          unit: ratio
+          direction: maximize
+          role: diagnostic
+          measurement_scope: direct
+          layer: application
+          attributes:
+            observation_id: obs_19
+            kind: metric
+            source: task_observation
+            legacy_span_id: span_1
+      references:
+        - protocol: abp
+          protocol_version: 1
+          signal_id: a7a9c217-47ef-4588-9c83-246687bf3bf7
+          trace_id: 2d438b1af7aa82994170c877fc57840e
+          emitted_at: '2026-10-03T17:24:11.723726Z'
+          monotonic_ns: 922729463788333
+          sequence: 23
+          execution:
+            benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+            experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+            run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+            case_id: gpt2-codegolf__3XqABez
+            variant_id: langchain-luna-high-websocket
+          scope:
+            instrumentor_name: autobench.manual
+            instrumentor_version: 0.3.0
+            package_name: autobench
+            package_version: 0.3.0
+            mechanism: manual
+            layer: application
+          type: reference
+          span_id: c9f56281f6efb9e3
+          semantic_type: artifact.content
+          name: terminal_bench.public_evidence_reference
+          reference:
+            kind: artifact
+            id: artifact_f6f0da1047b92f591362b0ef
+            media_type: application/json
+          attributes:
+            artifact_id: artifact_1
+      partial: false
+  signals:
+    - protocol: abp
+      protocol_version: 1
+      signal_id: b1b8faae-6d2d-483f-b62f-cd94c4cab18d
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.596879Z'
+      monotonic_ns: 922729336942375
+      sequence: 1
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: 0eb24d42864d9139
+      operation: benchmark.run
+      kind: task
+      attributes:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 387b206c-72aa-4eb8-9efb-271ffe4b854a
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.608710Z'
+      monotonic_ns: 922729348771875
+      sequence: 2
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 0eb24d42864d9139
+      name: capture_only
+      semantic_type: factor.value
+      body: true
+      attributes:
+        observation_id: obs_1
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d8337996-48c1-4f58-a48c-60eb64bf7c48
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.608787Z'
+      monotonic_ns: 922729348846333
+      sequence: 3
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 0eb24d42864d9139
+      name: adapter
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 9
+      attributes:
+        observation_id: obs_2
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 629bc81f-0d91-4663-a55c-b998b098de65
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.608833Z'
+      monotonic_ns: 922729348892083
+      sequence: 4
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 0eb24d42864d9139
+      name: model
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 18
+      attributes:
+        observation_id: obs_3
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c1d635ec-e002-4b4a-8acf-1e877a6ed51f
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.608870Z'
+      monotonic_ns: 922729348929625
+      sequence: 5
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 0eb24d42864d9139
+      name: effort
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 4
+      attributes:
+        observation_id: obs_4
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 42db11f1-dea8-4f52-9852-d3a9e48dde02
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.608904Z'
+      monotonic_ns: 922729348963208
+      sequence: 6
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 0eb24d42864d9139
+      name: transport
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 23
+      attributes:
+        observation_id: obs_5
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: bfac2a2e-928a-42a8-a8b8-e194e5a98f34
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.608937Z'
+      monotonic_ns: 922729348995958
+      sequence: 7
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: 0eb24d42864d9139
+      name: evidence_payload
+      semantic_type: factor.value
+      body:
+        type: str
+        length: 24
+      attributes:
+        observation_id: obs_6
+        kind: factor
+        source: variant
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8e2c29ae-1397-484b-901f-2d337a7bc625
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722564Z'
+      monotonic_ns: 922729462629500
+      sequence: 8
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_start
+      span_id: c9f56281f6efb9e3
+      parent_span_id: 0eb24d42864d9139
+      operation: capture terminal-bench publication metrics
+      kind: workflow
+      capture: metadata
+    - protocol: abp
+      protocol_version: 1
+      signal_id: acbf873e-afd8-4a1b-96fa-8f4d290591b9
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722699Z'
+      monotonic_ns: 922729462760833
+      sequence: 9
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c9f56281f6efb9e3
+      name: input
+      semantic_type: operation.input
+      body:
+        type: dict
+        length: 2
+    - protocol: abp
+      protocol_version: 1
+      signal_id: dd573ce4-625f-4b93-83dc-940e8030a605
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722779Z'
+      monotonic_ns: 922729462841333
+      sequence: 10
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: terminal_bench.reward.reward
+      semantic_type: quality.correctness
+      value: 0.0
+      direction: maximize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_7
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: d92c7b7e-6b7b-48ba-9f8d-2cdddd463e3e
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722840Z'
+      monotonic_ns: 922729462901791
+      sequence: 11
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: terminal_bench.grader_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_8
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 41
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 4e7b8cea-9f7a-4864-ac1f-67d8fffeace7
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722890Z'
+      monotonic_ns: 922729462951375
+      sequence: 12
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.trial_completed
+      semantic_type: quality.correctness
+      value: true
+      role: constraint
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_9
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+        tags:
+          reason:
+            type: str
+            length: 21
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 6071ddd8-3240-4317-9694-43ba3595c55a
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722924Z'
+      monotonic_ns: 922729462985541
+      sequence: 13
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: terminal_bench.duration
+      semantic_type: time.latency
+      value: 1105.697627
+      unit: s
+      direction: minimize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_10
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 5dea5aa7-397b-4854-9111-e2a466990ce5
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722950Z'
+      monotonic_ns: 922729463011166
+      sequence: 14
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.input_tokens
+      semantic_type: llm.tokens.input
+      value: 5053553
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_11
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 518b105a-3d55-413b-92de-470149cbb8d5
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722972Z'
+      monotonic_ns: 922729463033291
+      sequence: 15
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.cache_read_tokens
+      semantic_type: llm.tokens.cached_input
+      value: 4903424
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_12
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f2206f50-4792-4d30-89db-cbf1b798a715
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.722993Z'
+      monotonic_ns: 922729463054916
+      sequence: 16
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.cache_write_tokens
+      semantic_type: llm.tokens.cache_write
+      value: 0
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_13
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 72540120-0b47-4b05-aef3-df7b1e71441b
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723014Z'
+      monotonic_ns: 922729463076041
+      sequence: 17
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.output_tokens
+      semantic_type: llm.tokens.output
+      value: 44807
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_14
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: e4e9d153-0833-407e-af2c-d0195b08ee5e
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723035Z'
+      monotonic_ns: 922729463096625
+      sequence: 18
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.total_tokens
+      semantic_type: llm.tokens.total
+      value: 5098360
+      unit: token
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_15
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 44b1d56e-fdb8-451f-8ac5-fb81da239a73
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723056Z'
+      monotonic_ns: 922729463117583
+      sequence: 19
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.requests
+      semantic_type: llm.request.count
+      value: 99
+      unit: request
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_16
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 9eed84c9-d862-4a56-98d9-9ae50fac93b9
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723084Z'
+      monotonic_ns: 922729463145208
+      sequence: 20
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.tool_calls
+      semantic_type: tool.call.count
+      value: 104
+      unit: call
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_17
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 8da190c5-e9d2-422f-b3a7-0ebdc371c96b
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723110Z'
+      monotonic_ns: 922729463172000
+      sequence: 21
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.cost_usd
+      semantic_type: money.cost
+      value: 0.18186268
+      unit: USD
+      direction: minimize
+      role: objective
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_18
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: f05fe199-8b91-4894-8433-2d9fe506c9d6
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723132Z'
+      monotonic_ns: 922729463193791
+      sequence: 22
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: measurement
+      span_id: c9f56281f6efb9e3
+      name: kedi.cache_read_ratio
+      semantic_type: coverage.ratio
+      value: 0.9702923863665821
+      unit: ratio
+      direction: maximize
+      role: diagnostic
+      measurement_scope: direct
+      layer: application
+      attributes:
+        observation_id: obs_19
+        kind: metric
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: a7a9c217-47ef-4588-9c83-246687bf3bf7
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723726Z'
+      monotonic_ns: 922729463788333
+      sequence: 23
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: reference
+      span_id: c9f56281f6efb9e3
+      semantic_type: artifact.content
+      name: terminal_bench.public_evidence_reference
+      reference:
+        kind: artifact
+        id: artifact_f6f0da1047b92f591362b0ef
+        media_type: application/json
+      attributes:
+        artifact_id: artifact_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 0b94eb9c-3a6a-4be0-be91-e612d18d957e
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723767Z'
+      monotonic_ns: 922729463829125
+      sequence: 24
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: event
+      span_id: c9f56281f6efb9e3
+      name: terminal_bench.public_evidence_reference
+      semantic_type: event.occurrence
+      body:
+        type: str
+        length: 10
+      attributes:
+        observation_id: obs_20
+        kind: artifact
+        source: task_observation
+        legacy_span_id: span_1
+    - protocol: abp
+      protocol_version: 1
+      signal_id: c9a8fdab-ebed-4bf1-b06b-4f63051a30e0
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.723839Z'
+      monotonic_ns: 922729463901083
+      sequence: 25
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: c9f56281f6efb9e3
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+    - protocol: abp
+      protocol_version: 1
+      signal_id: 1dd8941b-cf29-417b-b0ed-82a4af3e880c
+      trace_id: 2d438b1af7aa82994170c877fc57840e
+      emitted_at: '2026-10-03T17:24:11.724146Z'
+      monotonic_ns: 922729464208083
+      sequence: 26
+      execution:
+        benchmark_id: kedi-tb21-langchain-full89-daytona-publication
+        experiment_id: exp_kedi_tb21_langchain_full89_daytona_publication_20261003T172354382395Z
+        run_id: run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket
+        case_id: gpt2-codegolf__3XqABez
+        variant_id: langchain-luna-high-websocket
+      scope:
+        instrumentor_name: autobench.manual
+        instrumentor_version: 0.3.0
+        package_name: autobench
+        package_version: 0.3.0
+        mechanism: manual
+        layer: application
+      type: span_end
+      span_id: 0eb24d42864d9139
+      output:
+        type: dict
+        length: 7
+      status: ok
+      reason: completed
+      partial: false
+  started_at: '2026-10-03T17:24:11.596879Z'
+  ended_at: '2026-10-03T17:24:11.724146Z'
+  partial: false
+spans:
+  span_1:
+    name: capture terminal-bench publication metrics
+    kind: workflow
+    started_at: '2026-10-03T17:24:11.722564+00:00'
+    ended_at: '2026-10-03T17:24:11.723839+00:00'
+    duration: 0.001271583
+    input:
+      task_name: terminal-bench/gpt2-codegolf
+      trial_name: gpt2-codegolf__3XqABez
+    output:
+      task_name: gpt2-codegolf
+      trial_name: gpt2-codegolf__3XqABez
+      rewards:
+        reward: 0.0
+      kedi_state: completed
+      usage:
+        cache_read_tokens: 4903424
+        cache_write_tokens: 0
+        cost_usd: 0.18186268
+        input_tokens: 5053553
+        output_tokens: 44807
+        requests: 99
+        tool_calls: 104
+        total_tokens: 5098360
+        uncached_input_tokens: 150129
+      evidence_reference:
+        trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-high-memory8-c1/gpt2-codegolf__3XqABez
+        result_sha256: 6363e59ec7f678d623fad23c67540a784258630d8eb5eeb7518e9077c2db0385
+        kedi_result_sha256: ee838621dc0e13979c5832612db07f126524f119762fa172732f245701353dbc
+        sanitization_manifest: evidence/sanitization-report.json
+        pricing_manifest: evidence/pricing.json
+        usage_cost_origin: offline genai-prices estimate, not a provider invoice
+    observations:
+      - obs_7
+      - obs_8
+      - obs_9
+      - obs_10
+      - obs_11
+      - obs_12
+      - obs_13
+      - obs_14
+      - obs_15
+      - obs_16
+      - obs_17
+      - obs_18
+      - obs_19
+      - obs_20
+    artifacts:
+      - artifact_1
+artifacts:
+  terminal_bench.public_evidence_reference:
+    id: artifact_1
+    name: terminal_bench.public_evidence_reference
+    media: application/json
+    path: artifacts/run_0084_0001_gpt2_codegolf_3xqabez__langchain_luna_high_websocket/artifact_1.yaml
+    span: span_1
+    source: value
+    state: complete
+    sha256: c8481ad6622ec591e0e1ae2de73dad5d59a966b328aeb0dbbd8761ab68ffbee5
+    byte_count: 725
+output:
+  task_name: gpt2-codegolf
+  trial_name: gpt2-codegolf__3XqABez
+  harbor_exception: null
+  rewards:
+    reward: 0.0
+  kedi_state: completed
+  usage:
+    cache_read_tokens: 4903424
+    cache_write_tokens: 0
+    cost_usd: 0.18186268
+    input_tokens: 5053553
+    output_tokens: 44807
+    requests: 99
+    tool_calls: 104
+    total_tokens: 5098360
+    uncached_input_tokens: 150129
+  evidence_reference:
+    trial_root: evidence/harbor/daytona-luna-high-full89-c2-c1-langchain-20260913-high-memory8-c1/gpt2-codegolf__3XqABez
+    result_sha256: 6363e59ec7f678d623fad23c67540a784258630d8eb5eeb7518e9077c2db0385
+    kedi_result_sha256: ee838621dc0e13979c5832612db07f126524f119762fa172732f245701353dbc
+    sanitization_manifest: evidence/sanitization-report.json
+    pricing_manifest: evidence/pricing.json
+    usage_cost_origin: offline genai-prices estimate, not a provider invoice

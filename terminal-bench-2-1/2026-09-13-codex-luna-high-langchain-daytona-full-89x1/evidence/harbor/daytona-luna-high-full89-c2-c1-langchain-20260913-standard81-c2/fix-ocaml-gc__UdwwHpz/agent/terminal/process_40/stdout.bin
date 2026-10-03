@@ -1,0 +1,23 @@
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGILL, Illegal instruction.
+caml_failed_assert (expr=expr@entry=0x5555555bae73 "p == end", file_os=file_os@entry=0x5555555bad8f "runtime/shared_heap.c", line=line@entry=652) at runtime/misc.c:51
+51	  caml_abort();
+#1  0x00005555555a449d in pool_sweep (local=local@entry=0x5555555e16b0, plist=plist@entry=0x5555555e18b8, sz=sz@entry=1, release_to_global_pool=<optimized out>, release_to_global_pool@entry=1) at runtime/shared_heap.c:652
+652	    CAMLassert(p == end);
+$1 = 0x7fffe77eeab8
+$2 = 0x7fffe77ed000
+$3 = 2
+$4 = 0x7fffe77e9a70
+$5 = 0x7fffe77e5000
+0x7fffe77eea68:	0x00007fffe77eea80	0x00007fffe77eeac8
+0x7fffe77eea78:	0x0000000000000800	0x00007fffe77eea98
+0x7fffe77eea88:	0x00007fffe77eeab0	0x00000000000008fc
+0x7fffe77eea98:	0x6c5f3233746e6925	0x0500000000006c73
+0x7fffe77eeaa8:	0x0000000000000800	0x00007fffe781cda8
+0x7fffe77eeab8:	0x0000000000000005	0x0000000000000800
+0x7fffe77eeac8:	0x00007fffe77eeae0	0x00007fffe77eeb28
+0x7fffe77eead8:	0x0000000000000800	0x00007fffe77eeaf8
+0x7fffe77eeae8:	0x00007fffe77eeb10	0x00000000000008fc
+0x7fffe77eeaf8:	0x6c5f3233746e6925	0x0500000000007273

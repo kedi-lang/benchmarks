@@ -1,0 +1,89 @@
+mteb/leaderboard/app.py 54851
+mteb/leaderboard/table.py 11570
+scripts/make_leaderboard.py 4689
+/tmp/app.py:20:from mteb.benchmarks._leaderboard_menu import (
+/tmp/app.py:28:from mteb.leaderboard.benchmark_selector import (
+/tmp/app.py:32:from mteb.leaderboard.event_logger import EventLogger
+/tmp/app.py:33:from mteb.leaderboard.figures import (
+/tmp/app.py:38:from mteb.leaderboard.table import (
+/tmp/app.py:43:from mteb.leaderboard.text_segments import ACKNOWLEDGEMENT, FAQ
+/tmp/app.py:45:from mteb.results.benchmark_results import BenchmarkResults
+/tmp/app.py:239:    key=lambda benchmark_name, all_benchmark_results: hash(benchmark_name),
+/tmp/app.py:242:    benchmark_name: str, all_benchmark_results: BenchmarkResults
+/tmp/app.py:264:    bm_pl_df = all_benchmark_results[benchmark_name]
+/tmp/app.py:428:def get_leaderboard_app(  # noqa: PLR0914
+/tmp/app.py:431:    cache_repo_id: str = "mteb/results",
+/tmp/app.py:433:    """Returns a Gradio Blocks app for the MTEB leaderboard.
+/tmp/app.py:437:        rebuild: If True, bypasses the processed parquet cache and rebuilds the
+/tmp/app.py:438:                per-benchmark leaderboard data from results, then rewrites the parquet
+/tmp/app.py:440:                frames directly from the parquet cache if present (skipping the results
+/tmp/app.py:442:                parquet for next time. Use rebuild=True to pick up newly added results.
+/tmp/app.py:443:        cache_repo_id: Optional HF dataset repo id (e.g. "mteb/results"). When set and
+/tmp/app.py:444:                rebuild/push_cache are False, startup loads the parquet cache from the hub
+/tmp/app.py:445:                (``hf://datasets/{cache_repo_id}/leaderboard/benchmark_results.parquet``)
+/tmp/app.py:446:                before falling back to the local parquet cache or a full rebuild.
+/tmp/app.py:449:        gr.Blocks: A Gradio Blocks application configured with the MTEB leaderboard interface
+/tmp/app.py:451:    # Ensure leaderboard timing logs are visible regardless of the caller's
+/tmp/app.py:453:    _lb_logger = logging.getLogger("mteb.leaderboard")
+/tmp/app.py:463:    logger.info("=== Starting leaderboard app initialization ===")
+/tmp/app.py:488:    logger.info("Step 2/6: Loading benchmark results...")
+/tmp/app.py:490:    parquet_path = cache.leaderboard_parquet_path
+/tmp/app.py:500:            logger.warning(f"Failed to load leaderboard cache from {source_label}: {e}")
+/tmp/app.py:514:            lambda: BenchmarkResults.load_leaderboard_cache(
+/tmp/app.py:519:    if loaded is None and use_cache and parquet_path.exists():
+/tmp/app.py:521:            f"local parquet {parquet_path}",
+/tmp/app.py:522:            lambda: BenchmarkResults.load_leaderboard_cache(parquet_path),
+/tmp/app.py:526:        all_results = cache._load_from_cache(rebuild=True)
+/tmp/app.py:528:        loaded = {b.name: all_results._to_results_df(b.tasks) for b in benchmarks}
+/tmp/app.py:529:        BenchmarkResults.save_leaderboard_cache(loaded, parquet_path)
+/tmp/app.py:532:            f"{parquet_path} in {time.time() - load_start:.2f}s"
+/tmp/app.py:535:    # Benchmarks absent from the cache (e.g. empty results) become empty frames.
+/tmp/app.py:536:    all_benchmark_results: dict[str, pl.DataFrame] = {
+/tmp/app.py:541:    default_pl_df = all_benchmark_results[default_benchmark.name]
+/tmp/app.py:694:        This leaderboard compares 100+ text and image embedding models across 1000+ languages. We refer to the publication of each selectable benchmark for details on metrics, languages, tasks, and task types. Anyone is welcome [to add a model](https://embeddings-benchmark.github.io/mteb/contributing/adding_a_model/), [add benchmarks](https://embeddings-benchmark.github.io/mteb/contributing/adding_a_benchmark/), [help us improve zero-shot annotations](https://github.com/embeddings-benchmark/mteb/blob/06489abca007261c7e6b11f36d4844c5ed5efdcb/mteb/models/bge_models.py#L91) or [propose other changes to the leaderboard](https://github.com/embeddings-benchmark/mteb/issues/new?template=enhancement.yaml).
+/tmp/app.py:907:            ) = _cache_on_benchmark_select(benchmark_name, all_benchmark_results)
+/tmp/app.py:918:            bm_pl_df = all_benchmark_results[benchmark_name]
+/tmp/app.py:1068:                all_benchmark_results[benchmark_name]
+/tmp/app.py:1229:            bm_pl_df = all_benchmark_results[benchmark_name]
+/tmp/app.py:1463:    logger.info(f"Starting leaderboard app in process {os.getpid()}")
+/tmp/app.py:1466:    logging.getLogger("mteb.results.task_result").setLevel(logging.ERROR)
+/tmp/app.py:1468:    logging.getLogger("mteb.results.benchmark_results").setLevel(logging.ERROR)
+/tmp/app.py:1479:    app = get_leaderboard_app()
+/tmp/table.py:83:        pl_df: Polars pre-aggregation DataFrame containing model results (may be pre-filtered)
+/tmp/table.py:94:            "apply_summary_styling [%s]: create_table=%.3fs (no results)",
+/tmp/table.py:123:        pl_df: Polars pre-aggregation DataFrame containing model results (may be pre-filtered)
+/tmp/table.py:126:        Styled gr.DataFrame ready for display in the leaderboard
+/tmp/table.py:132:    if "No results" in per_task_pl.columns:
+/tmp/table.py:134:            "apply_per_task_styling [%s]: create_table=%.3fs (no results)",
+/tmp/table.py:161:        pl_df: Polars pre-aggregation DataFrame containing model results (may be pre-filtered)
+/tmp/table.py:164:        Styled gr.DataFrame ready for display in the leaderboard
+/tmp/table.py:170:    if "No results" in per_language_pl.columns:
+/tmp/table.py:172:            "apply_per_language_styling [%s]: create_table=%.3fs (no results)",
+/tmp/table.py:207:        Styled gr.DataFrame ready for display in the leaderboard
+/tmp/table.py:292:        Styled gr.DataFrame ready for display in the leaderboard
+/tmp/table.py:322:        gr.DataFrame ready for display in the leaderboard
+/tmp/make_leaderboard.py:8:from mteb.leaderboard.table import (
+/tmp/make_leaderboard.py:12:from mteb.load_results import load_results
+/tmp/make_leaderboard.py:24:def load_leaderboard(
+/tmp/make_leaderboard.py:26:    results_repo: str,
+/tmp/make_leaderboard.py:30:    """Load the MTEB leaderboard for a specific benchmark, results repo, and models.
+/tmp/make_leaderboard.py:35:        results_repo: Path to results repo (local or remote). Default is None (default repo).
+/tmp/make_leaderboard.py:36:        save_path: Path to save the leaderboard as CSV.
+/tmp/make_leaderboard.py:40:        per_task_df: Per-task leaderboard table.
+/tmp/make_leaderboard.py:52:    # Load all results from the specified repository
+/tmp/make_leaderboard.py:53:    benchmark_results = load_results(
+/tmp/make_leaderboard.py:54:        results_repo=results_repo,
+/tmp/make_leaderboard.py:59:    # Filter results for the selected benchmark
+/tmp/make_leaderboard.py:60:    benchmark_results_filtered = benchmark._load_results(
+/tmp/make_leaderboard.py:61:        base_results=benchmark_results
+/tmp/make_leaderboard.py:64:    # Convert scores into leaderboard tables
+/tmp/make_leaderboard.py:67:        loaded_benchmark, benchmark_results_filtered
+/tmp/make_leaderboard.py:70:        loaded_benchmark, benchmark_results_filtered
+/tmp/make_leaderboard.py:105:        logger.info(f"Per-task results saved to {per_task_file}")
+/tmp/make_leaderboard.py:112:        description="Generate and save an MTEB leaderboard for a specified benchmark."
+/tmp/make_leaderboard.py:131:        "--results_repo",
+/tmp/make_leaderboard.py:133:        default="https://github.com/embeddings-benchmark/results",
+/tmp/make_leaderboard.py:134:        help="Path to results repository. Default is the official MTEB results repo.",
+/tmp/make_leaderboard.py:141:        help="Path to save the leaderboard as a CSV file",
+/tmp/make_leaderboard.py:145:    summary_df, per_task_df = load_leaderboard(
+/tmp/make_leaderboard.py:148:        results_repo=args.results_repo,

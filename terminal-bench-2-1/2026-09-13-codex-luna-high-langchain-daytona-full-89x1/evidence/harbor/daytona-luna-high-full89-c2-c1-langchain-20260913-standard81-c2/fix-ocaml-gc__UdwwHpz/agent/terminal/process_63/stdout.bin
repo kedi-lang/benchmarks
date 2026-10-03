@@ -1,0 +1,27 @@
+Breakpoint 1 at 0x50471: file runtime/shared_heap.c, line 655.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+### OCaml runtime: debug mode ###
+### set OCAMLRUNPARAM=v=0 to silence this message
+[00] file runtime/shared_heap.c; line 655 ### Assertion failed: p == end
+
+Program received signal SIGILL, Illegal instruction.
+caml_failed_assert (expr=expr@entry=0x5555555bae73 "p == end", file_os=file_os@entry=0x5555555bad8f "runtime/shared_heap.c", line=line@entry=655) at runtime/misc.c:51
+51	  caml_abort();
+rbx(p)=0x5555555bae73 r14(end)=0x8 r12=30 r15=5555555e16b0 rbp=35c075f5f5c075 r13=7fffe78dd000
+0x5555555bae53:	0x6f3e2d6c61636f6c	0x5f73490072656e77
+0x5555555bae63:	0x7628286b636f6c62	0x0029702965756c61
+0x5555555bae73:	0x646e65203d3d2070	0x3e2d706165682100
+0x5555555bae83:	0x5f74706577736e75	0x6f705f6c69617661
+#0  caml_failed_assert (expr=expr@entry=0x5555555bae73 "p == end", file_os=file_os@entry=0x5555555bad8f "runtime/shared_heap.c", line=line@entry=655) at runtime/misc.c:51
+#1  0x00005555555a4475 in pool_sweep (local=local@entry=0x5555555e16b0, plist=plist@entry=0x5555555e18f0, sz=sz@entry=8, release_to_global_pool=<optimized out>, release_to_global_pool@entry=1) at runtime/shared_heap.c:655
+#2  0x00005555555a5785 in caml_sweep (local=0x5555555e16b0, work=4116, work@entry=16384) at runtime/shared_heap.c:739
+#3  0x00005555555952b8 in major_collection_slice (howmuch=<optimized out>, participant_count=participant_count@entry=0, barrier_participants=barrier_participants@entry=0x0, mode=mode@entry=Slice_interruptible, force_compaction=0) at runtime/major_gc.c:1844
+#4  0x0000555555595926 in caml_major_collection_slice (howmuch=howmuch@entry=-1) at runtime/major_gc.c:2044
+#5  0x000055555557ca59 in caml_poll_gc_work () at runtime/domain.c:2010
+#6  0x00005555555a7773 in caml_do_pending_actions_res () at runtime/signals.c:338
+#7  0x000055555559ec95 in caml_alloc_small_dispatch (dom_st=dom_st@entry=0x5555555e0af0, wosize=wosize@entry=12, flags=flags@entry=3, nallocs=nallocs@entry=1, encoded_alloc_lens=encoded_alloc_lens@entry=0x0) at runtime/minor_gc.c:980
+#8  0x00005555555b20a4 in caml_bytecode_interpreter (prog=prog@entry=0x7fffe791e010, prog_size=prog_size@entry=3020496, initial_env=<optimized out>, initial_extra_args=initial_extra_args@entry=0) at runtime/interp.c:766
+#9  0x00005555555b332d in caml_interprete (prog_size=3020496, prog=0x7fffe791e010) at runtime/caml/interp.h:34
+#10 caml_main (argv=<optimized out>) at runtime/startup_byt.c:579
+#11 0x000055555556f402 in main (argc=<optimized out>, argv=<optimized out>) at runtime/main.c:37

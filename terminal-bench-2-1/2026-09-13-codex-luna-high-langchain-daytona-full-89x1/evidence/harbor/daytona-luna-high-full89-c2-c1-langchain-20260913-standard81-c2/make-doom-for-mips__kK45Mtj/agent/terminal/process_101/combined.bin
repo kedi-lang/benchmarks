@@ -1,0 +1,57 @@
+doomgeneric/doomgeneric/i_sdlmusic.c:237:        comment = calloc(1, comment_len + 1);
+doomgeneric/doomgeneric/i_sdlmusic.c:464:        realloc(subst_music, sizeof(subst_music_t) * subst_music_len);
+doomgeneric/doomgeneric/w_checksum.c:47:    open_wadfiles = realloc(open_wadfiles,
+doomgeneric/doomgeneric/w_wad.c:92:    newlumpinfo = calloc(newnumlumps, sizeof(lumpinfo_t));
+doomgeneric/doomgeneric/w_wad.c:96:	I_Error ("Couldn't realloc lumpinfo");
+doomgeneric/doomgeneric/mips_runtime.c:24:void *calloc(size_t count, size_t size)
+doomgeneric/doomgeneric/mips_runtime.c:34:void *realloc(void *ptr, size_t size)
+doomgeneric/doomgeneric/g_game.c:1554:    save_stream = fopen(savename, "rb");
+doomgeneric/doomgeneric/g_game.c:1565:        fclose(save_stream);
+doomgeneric/doomgeneric/g_game.c:1585:    fclose(save_stream);
+doomgeneric/doomgeneric/g_game.c:1624:    save_stream = fopen(temp_savegame_file, "wb");
+doomgeneric/doomgeneric/g_game.c:1631:        save_stream = fopen(recovery_savegame_file, "wb");
+doomgeneric/doomgeneric/g_game.c:1653:    if (vanilla_savegame_limit && ftell(save_stream) > SAVEGAMESIZE)
+doomgeneric/doomgeneric/g_game.c:1660:    fclose(save_stream);
+doomgeneric/doomgeneric/gusconf.c:202:    fstream = fopen(path, "w");
+doomgeneric/doomgeneric/gusconf.c:239:    fclose(fstream);
+doomgeneric/doomgeneric/i_sdlmusic.c:209:    if (fread(&buf, 4, 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:213:    if (fseek(fs, LONG(buf), SEEK_CUR) != 0)
+doomgeneric/doomgeneric/i_sdlmusic.c:219:    if (fread(&buf, 4, 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:229:        if (fread(&buf, 4, 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:239:         || fread(comment, 1, comment_len, fs) < comment_len)
+doomgeneric/doomgeneric/i_sdlmusic.c:256:    if (fread(buf, sizeof(buf), 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:282:        if (fread(header, 4, 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:291:        pos = ftell(fs);
+doomgeneric/doomgeneric/i_sdlmusic.c:312:        if (fseek(fs, pos + block_len, SEEK_SET) != 0)
+doomgeneric/doomgeneric/i_sdlmusic.c:323:    if (fread(buf, sizeof(buf), 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:348:        if (fread(&buf[6], 1, 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:380:    fs = fopen(filename, "r");
+doomgeneric/doomgeneric/i_sdlmusic.c:390:    if (fread(header, 4, 1, fs) < 1)
+doomgeneric/doomgeneric/i_sdlmusic.c:392:        fclose(fs);
+doomgeneric/doomgeneric/i_sdlmusic.c:405:    fclose(fs);
+doomgeneric/doomgeneric/i_sdlmusic.c:630:    fs = fopen(filename, "r");
+doomgeneric/doomgeneric/i_sdlmusic.c:654:    fclose(fs);
+doomgeneric/doomgeneric/i_sdlmusic.c:733:    fs = fopen(filename, "w");
+doomgeneric/doomgeneric/i_sdlmusic.c:771:    fclose(fs);
+doomgeneric/doomgeneric/i_sdlmusic.c:792:    fstream = fopen(write_path, "w");
+doomgeneric/doomgeneric/i_sdlmusic.c:809:    fclose(fstream);
+doomgeneric/doomgeneric/i_sdlsound.c:489:    wav = fopen(filename, "wb");
+doomgeneric/doomgeneric/i_sdlsound.c:493:    fwrite("RIFF", 1, 4, wav);
+doomgeneric/doomgeneric/i_sdlsound.c:495:    fwrite(&i, 4, 1, wav);
+doomgeneric/doomgeneric/i_sdlsound.c:496:    fwrite("WAVE", 1, 4, wav);
+doomgeneric/doomgeneric/i_sdlsound.c:500:    fwrite("fmt ", 1, 4, wav);
+doomgeneric/doomgeneric/i_sdlsound.c:502:    fwrite(&i, 4, 1, wav);           // Length
+doomgeneric/doomgeneric/i_sdlsound.c:504:    fwrite(&s, 2, 1, wav);           // Format (PCM)
+doomgeneric/doomgeneric/i_sdlsound.c:506:    fwrite(&s, 2, 1, wav);           // Channels (2=stereo)
+doomgeneric/doomgeneric/i_sdlsound.c:508:    fwrite(&i, 4, 1, wav);           // Sample rate
+doomgeneric/doomgeneric/i_sdlsound.c:510:    fwrite(&i, 4, 1, wav);           // Byte rate (samplerate * stereo * 16 bit)
+doomgeneric/doomgeneric/i_sdlsound.c:512:    fwrite(&s, 2, 1, wav);           // Block align (stereo * 16 bit)
+doomgeneric/doomgeneric/i_sdlsound.c:514:    fwrite(&s, 2, 1, wav);           // Bits per sample (16 bit)
+doomgeneric/doomgeneric/i_sdlsound.c:518:    fwrite("data", 1, 4, wav);
+doomgeneric/doomgeneric/i_sdlsound.c:520:    fwrite(&i, 4, 1, wav);           // Data length
+doomgeneric/doomgeneric/i_sdlsound.c:521:    fwrite(data, 1, length, wav);    // Data
+doomgeneric/doomgeneric/i_sdlsound.c:523:    fclose(wav);
+doomgeneric/doomgeneric/m_argv.c:90:    handle = fopen(response_filename, "rb");
+doomgeneric/doomgeneric/m_argv.c:115:        k = fread(file + i, 1, size - i, handle);
+doomgeneric/doomgeneric/m_argv.c:125:    fclose(handle);
+doomgeneric/doomgeneric/m_config.c:1616:    f = fopen (collection->filename, "w");

@@ -1,0 +1,26 @@
+          last_free_block = p;
+        }
+
+        /* add the free blocks following this block, skipping over them */
+        p += wh * Wosize_hd(hd);
+      } else {
+        /* there's still a live block, the pool can't be released to the global
+            freelist */
+        release_to_global_pool = 0;
+      }
+      /* Free blocks are represented by a run-length encoded header.  The
+         header's size is the number of following blocks, not the size of an
+         object in words. */
+      p += POOL_BLOCK_FREE_HD(hd) ? wh : Whsize_hd(hd);
+    } while (p + wh <= end);
+    CAMLassert(p == end);
+
+    if( !all_used ) {
+      /* the last free block should have 0 as its next pointer */
+      last_free_block[1] = 0;
+    }
+
+    CAMLassert(
+      /* if all spaces are used then next_obj should be 0 */
+      (all_used && !a->next_obj)
+      /* otherwise it should point to a free block */

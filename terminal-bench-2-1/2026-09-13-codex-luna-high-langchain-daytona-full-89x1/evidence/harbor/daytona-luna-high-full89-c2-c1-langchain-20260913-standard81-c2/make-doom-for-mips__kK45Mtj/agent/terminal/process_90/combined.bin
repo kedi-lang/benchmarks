@@ -1,0 +1,25 @@
+  40df14:	03e00008 	jr	ra
+  40df18:	00000000 	nop
+
+0040df1c <FixedMul>:
+  40df1c:	000417c3 	sra	v0,a0,0x1f
+  40df20:	00051fc3 	sra	v1,a1,0x1f
+  40df24:	00640018 	mult	v1,a0
+  40df28:	70450000 	madd	v0,a1
+  40df2c:	00001012 	mflo	v0
+  40df30:	00850019 	multu	a0,a1
+  40df34:	00002012 	mflo	a0
+  40df38:	00002810 	mfhi	a1
+  40df3c:	00452821 	addu	a1,v0,a1
+  40df40:	00051400 	sll	v0,a1,0x10
+  40df44:	00042402 	srl	a0,a0,0x10
+  40df48:	03e00008 	jr	ra
+  40df4c:	00441025 	or	v0,v0,a0
+
+0040df50 <FixedDiv>:
+  40df50:	00a03025 	move	a2,a1
+  40df54:	0480000d 	bltz	a0,40df8c <FixedDiv+0x3c>
+  40df58:	00801025 	move	v0,a0
+  40df5c:	00021383 	sra	v0,v0,0xe
+  40df60:	04c0000c 	bltz	a2,40df94 <FixedDiv+0x44>
+??:?

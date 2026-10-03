@@ -1,0 +1,20 @@
+grep: ./driver/Configuration.cmi: binary file matches
+grep: ./driver/Configuration.cmti: binary file matches
+grep: ./driver/Clflags.cmi: binary file matches
+grep: ./driver/Clflags.cmt: binary file matches
+grep: ./driver/Configuration.cmt: binary file matches
+grep: ./driver/Configuration.o: binary file matches
+grep: ./driver/Clflags.o: binary file matches
+grep: ./driver/CommonOptions.cmt: binary file matches
+grep: ./driver/Linker.cmt: binary file matches
+grep: ./driver/Frontend.cmt: binary file matches
+grep: ./ccomp: binary file matches
+./Makefile:269:	(echo "stdlib_path=$(LIBDIR)"; \
+./driver/Clflags.ml:69:let stdlib_path = ref Configuration.stdlib_path
+./driver/CommonOptions.ml:107:    Exact "-stdlib", String(fun s -> stdlib_path := s);
+./driver/Configuration.ml:138:let stdlib_path =
+./driver/Configuration.ml:140:    let path = get_config_string "stdlib_path" in
+./driver/Configuration.mli:40:val stdlib_path: string
+./driver/Frontend.ml:74:     then ["-I" ^ Filename.concat !Clflags.stdlib_path "include" ]
+./driver/Linker.ml:28:     then ["-L" ^ !stdlib_path; "-lcompcert"]
+./compcert.ini:1:stdlib_path=/usr/local/lib/compcert

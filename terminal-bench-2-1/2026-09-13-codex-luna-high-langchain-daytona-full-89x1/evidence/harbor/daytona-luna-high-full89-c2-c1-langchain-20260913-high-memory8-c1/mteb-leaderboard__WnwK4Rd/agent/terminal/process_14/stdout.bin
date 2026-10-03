@@ -1,0 +1,258 @@
+            "PublicHealthQA",
+            "MedrxivClusteringP2P.v2",
+            "MedrxivClusteringS2S.v2",
+            "CmedqaRetrieval",
+            "CMedQAv2-reranking",
+        ],
+    ),
+    description="Medical information retrieval across clinical, biomedical, and consumer health domains, spanning retrieval, reranking, and clustering tasks.",
+    reference=None,
+    citation=None,
+)
+
+MTEB_MINERS_BITEXT_MINING = Benchmark(
+    name="MINERSBitextMining",
+    tasks=get_tasks(
+        tasks=[
+            "BUCC",
+            "LinceMTBitextMining",
+            "NollySentiBitextMining",
+            "NusaXBitextMining",
+            "NusaTranslationBitextMining",
+            "PhincBitextMining",
+            "Tatoeba",
+        ]
+    ),
+    description="Multilingual bitext mining quality across diverse language pairs, drawn from the MINERS benchmark for evaluating semantic retrieval in multilingual settings.",
+    reference="https://arxiv.org/pdf/2406.07424",
+    citation=r"""
+@article{winata2024miners,
+  author = {Winata, Genta Indra and Zhang, Ruochen and Adelani, David Ifeoluwa},
+  journal = {arXiv preprint arXiv:2406.07424},
+  title = {MINERS: Multilingual Language Models as Semantic Retrievers},
+  year = {2024},
+}
+""",
+)
+
+SEB = Benchmark(
+    name="MTEB(Scandinavian, v1)",
+    aliases=["MTEB(Scandinavian)", "SEB"],
+    display_name="Scandinavian",
+    icon="https://github.com/lipis/flag-icons/raw/260c91531be024944c6514130c5defb2ebb02b7d/flags/4x3/dk.svg",
+    language_view=["dan-Latn", "swe-Latn", "nno-Latn", "nob-Latn"],
+    tasks=get_tasks(
+        tasks=[
+            # Bitext
+            "BornholmBitextMining",
+            "NorwegianCourtsBitextMining",
+            # Classification
+            "AngryTweetsClassification",
+            "DanishPoliticalCommentsClassification",
+            "DalajClassification",
+            "DKHateClassification",
+            "LccSentimentClassification",
+            "MassiveIntentClassification",
+            "MassiveScenarioClassification",
+            "NordicLangClassification",
+            "NoRecClassification",
+            "NorwegianParliamentClassification",
+            "ScalaClassification",
+            "SwedishSentimentClassification",
+            "SweRecClassification",
+            # Retrieval
+            "DanFeverRetrieval",
+            "NorQuadRetrieval",
+            "SNLRetrieval",
+            "SwednRetrieval",
+            "SweFaqRetrieval",
+            "TV2Nordretrieval",
+            "TwitterHjerneRetrieval",
+            # Clustering
+            "SNLHierarchicalClusteringS2S",
+            "SNLHierarchicalClusteringP2P",
+            "SwednClusteringP2P",
+            "SwednClusteringS2S",
+            "VGHierarchicalClusteringS2S",
+            "VGHierarchicalClusteringP2P",
+        ],
+        languages=["dan", "swe", "nno", "nob"],
+    ),
+    description="Scandinavian text embedding quality covering Danish, Swedish, Norwegian Bokmål, and Nynorsk and spanning classification, clustering, retrieval as well as bitext  tasks across dialects or written forms.",
+    reference="https://kennethenevoldsen.github.io/scandinavian-embedding-benchmark/",
+    citation=r"""
+@article{enevoldsenScandinavianEmbeddingBenchmarks2024,
+  author = {Enevoldsen, Kenneth and Kardos, Márton and Muennighoff, Niklas and Nielbo, Kristoffer},
+  language = {en},
+  month = feb,
+  shorttitle = {The {Scandinavian} {Embedding} {Benchmarks}},
+  title = {The {Scandinavian} {Embedding} {Benchmarks}: {Comprehensive} {Assessment} of {Multilingual} and {Monolingual} {Text} {Embedding}},
+  url = {https://openreview.net/forum?id=pJl_i7HIA72},
+  urldate = {2024-04-12},
+  year = {2024},
+}
+""",
+    contacts=["KennethEnevoldsen", "x-tabdeveloping", "Samoed"],
+)
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
+import gradio as gr
+
+from mteb import Benchmark
+from mteb.benchmarks.benchmarks import MTEB_multilingual_v2
+
+if TYPE_CHECKING:
+    from mteb.benchmarks._leaderboard_menu import MenuEntry
+
+DEFAULT_BENCHMARK_NAME = MTEB_multilingual_v2.name
+
+
+def _create_button(
+    i: int,
+    benchmark: Benchmark,
+    state: gr.State,
+    label_to_value: dict[str, str],
+    **kwargs: Any,
+) -> gr.Button:
+    val = benchmark.name
+    label = (
+        benchmark.display_name if benchmark.display_name is not None else benchmark.name
+    )
+    label_to_value[label] = benchmark.name
+    button = gr.Button(
+        label,
+        variant="secondary" if i != 0 else "primary",
+        icon=benchmark.icon,
+        key=f"{i}_button_{val}",
+        elem_classes="text-white",
+        **kwargs,
+    )
+
+    def _update_variant(state: str) -> gr.Button:
+        if state == label_to_value[label]:
+            return gr.Button(variant="primary")
+        return gr.Button(variant="secondary")
+
+    def _update_value() -> str:
+        return label_to_value[label]
+
+    state.change(_update_variant, inputs=[state], outputs=[button])
+    button.click(_update_value, outputs=[state])
+    return button
+
+
+def _make_selector(entries: list[MenuEntry]) -> tuple[gr.State, gr.Column]:
+    """Creates a UI selector from menu entries with up to 3 levels of nesting.
+
+    Args:
+        entries: List of MenuEntry objects to build the selector from
+
+    Returns:
+        tuple: (state object, column widget)
+    """
+    label_to_value = {}
+    button_counter = 0
+
+    with gr.Column() as column:
+        state = gr.State(DEFAULT_BENCHMARK_NAME)
+
+        for category_entry in entries:
+            button_counter = _render_category(
+                category_entry, state, label_to_value, button_counter
+            )
+
+    return state, column
+
+
+def _render_category(
+    entry: MenuEntry,
+    state: gr.State,
+    label_to_value: dict,
+    button_counter: int,
+) -> int:
+    gr.Markdown(f"## {entry.name}")
+    if entry.description:
+        gr.Markdown(entry.description)
+
+    for benchmarks_group in entry.benchmarks:
+        button_counter = _render_benchmark_item(
+            benchmarks_group, state, label_to_value, button_counter, level=0
+        )
+
+    return button_counter
+
+
+def _render_benchmark_item(
+    item: Benchmark | MenuEntry,
+    state: gr.State,
+    label_to_value: dict,
+    button_counter: int,
+    level: int,
+) -> int:
+    if isinstance(item, Benchmark):
+        size = "md" if level == 0 else "sm"
+        _create_button(button_counter, item, state, label_to_value, size=size)
+        return button_counter + 1
+
+    with gr.Accordion(item.name, open=item.open):
+        for nested_item in item.benchmarks:
+            button_counter = _render_benchmark_item(
+                nested_item, state, label_to_value, button_counter, level + 1
+            )
+
+    return button_counter
+/tmp/benchmark.py:19:from mteb._hf_integration.hf_hub_utils import _get_file_on_hub
+/tmp/benchmark.py:26:    from mteb.results import BenchmarkResults, ModelResult
+/tmp/benchmark.py:27:    from mteb.results.task_result import TaskResult
+/tmp/benchmark.py:33:    """Aggregation columns a benchmark can surface in its leaderboard summary.
+/tmp/benchmark.py:35:    Inherits from ``str`` so the values serialise as plain strings in JSON
+/tmp/benchmark.py:40:    the same dispatch the leaderboard's polars summary builder follows
+/tmp/benchmark.py:80:    def aggregate(self, task_results: list[TaskResult]) -> dict[str, float | None]:
+/tmp/benchmark.py:87:        and the leaderboard summary stay numerically consistent on the same
+/tmp/benchmark.py:93:            task_results: All
+/tmp/benchmark.py:94:                [TaskResult][mteb.results.task_result.TaskResult] objects for
+/tmp/benchmark.py:103:                which emits one key per task type seen in `task_results`.
+/tmp/benchmark.py:115:                return {self.get_score_keys[0]: _compute_mean_task(task_results)}
+/tmp/benchmark.py:117:                return {self.get_score_keys[0]: _compute_mean_task_type(task_results)}
+/tmp/benchmark.py:119:                return _task_types_or_nulls(task_results)
+/tmp/benchmark.py:121:                return _compute_mean_public_private(task_results)
+/tmp/benchmark.py:123:                return _compute_mean_subset(task_results)
+/tmp/benchmark.py:158:def _get_benchmarks_on_leaderboard() -> set[str]:
+/tmp/benchmark.py:159:    from mteb.benchmarks._leaderboard_menu import (
+/tmp/benchmark.py:191:        reference: A link reference, to a source containing additional information typically to a paper, leaderboard or github.
+/tmp/benchmark.py:195:        aggregations: Which aggregations to use in on leaderboard
+/tmp/benchmark.py:196:        summary_sort_column: The column to sort benchmarks by on leaderboard
+/tmp/benchmark.py:227:    # Whether the leaderboard summary table surfaces the Zero-shot column.
+/tmp/benchmark.py:233:    # Sort column(s) for the leaderboard summary. ``None`` keeps the default
+/tmp/benchmark.py:242:    def display_on_leaderboard(self) -> bool:
+/tmp/benchmark.py:243:        """Whether the benchmark should be displayed on the leaderboard."""
+/tmp/benchmark.py:244:        benchmarks_on_leaderboard = _get_benchmarks_on_leaderboard()
+/tmp/benchmark.py:245:        return self.name in benchmarks_on_leaderboard
+/tmp/benchmark.py:281:        Called by the leaderboard app.
+/tmp/benchmark.py:298:        """Create per-task table from a long polars pre-agg frame. Called by the leaderboard app."""
+/tmp/benchmark.py:300:            _create_per_task_table_from_benchmark_results,
+/tmp/benchmark.py:303:        return _create_per_task_table_from_benchmark_results(pl_df, pivot=pivot)
+/tmp/benchmark.py:306:        """Create per-language table from a long polars pre-agg frame. Called by the leaderboard app."""
+/tmp/benchmark.py:308:            _create_per_language_table_from_benchmark_results,
+/tmp/benchmark.py:312:            return _create_per_language_table_from_benchmark_results(
+/tmp/benchmark.py:317:                "No results": [
+/tmp/benchmark.py:508:            model_result: The model whose results to aggregate.
+/tmp/benchmark.py:517:            ValueError: If the model is missing results for some benchmark tasks.
+/tmp/benchmark.py:519:        filtered = model_result.select_tasks(self.tasks).task_results
+/tmp/benchmark.py:532:        results: BenchmarkResults,
+/tmp/benchmark.py:536:        """Get aggregated scores for all models in *results*.
+/tmp/benchmark.py:542:            results: A `BenchmarkResults` object containing the model
+/tmp/benchmark.py:543:                results to score.
+/tmp/benchmark.py:544:            raise_error: Weather to raise an error on missing results.
+/tmp/benchmark.py:567:                with the highest total is ranked 1. Matches the leaderboard.
+/tmp/benchmark.py:572:        bench_results = results.join_revisions()
+/tmp/benchmark.py:576:        for model_result in bench_results:
+/tmp/benchmark.py:578:            filtered = model_result.select_tasks(self.tasks).task_results
+/tmp/benchmark.py:585:                    "Some task results are missing. Filling results with None"
+/tmp/benchmark.py:625:    leaderboard summary. The override filters `is_public=True` before
+/tmp/benchmarks.py:81:    description="English text embedding quality across classification, clustering, retrieval, reranking, pair classification, and semantic similarity, prioritizing tasks not commonly used for fine-tuning to give a more realistic estimate of generalization performance. The original v1 leaderboard is available under [MTEB(eng, v1)](http://mteb-leaderboard.hf.space/?benchmark_name=MTEB%28eng%2C+v1%29).",
+/tmp/benchmarks.py:165:    description="English text embedding quality across classification, clustering, retrieval, reranking, pair classification, and semantic similarity. We recommend using [MTEB(eng, v2)](http://mteb-leaderboard.hf.space/?benchmark_name=MTEB%28eng%2C+v2%29) instead, which resolves [a known scoring bug](https://github.com/embeddings-benchmark/mteb/issues/1156), uses updated task versions, and removes common fine-tuning datasets such as MSMARCO for more comparable scores.",
+/tmp/benchmarks.py:2871:    description="Visual document retrieval across multi-modal enterprise documents spanning finance, industrial, computer science, pharmaceutical, and other professional domains. Includes both open and closed datasets; to submit results on private tasks, please [open an issue](https://github.com/embeddings-benchmark/mteb/issues?template=eval_request.yaml).",
+/tmp/benchmarks.py:2912:    description="Visual document retrieval across multi-modal enterprise documents spanning finance, industrial, computer science, pharmaceutical, and other professional domains. Includes both open and closed datasets; to submit results on private tasks, please [open an issue](https://github.com/embeddings-benchmark/mteb/issues?template=eval_request.yaml). v3.1 adds markdown derived from OCR to support text-only and joint image-text baselines.",

@@ -1,0 +1,160 @@
+README.md:10:verified using the Coq proof assistant: the generated assembly code is
+README.md:15:features, installation instructions, using the compiler, etc), please
+configure:24:coqdevdir='$(PREFIX)/lib/compcert/coq'
+configure:30:install_coqdev=false
+configure:31:ignore_coq_version=false
+configure:32:ignore_ocaml_version=false
+configure:33:library_Flocq=local
+configure:34:library_MenhirLib=local
+configure:89:  -prefix <dir>        Install in <dir>/bin and <dir>/lib/compcert
+configure:90:  -bindir <dir>        Install binaries in <dir>
+configure:91:  -libdir <dir>        Install libraries in <dir>
+configure:92:  -sharedir <dir>      Install configuration file in <dir>
+configure:93:  -mandir <dir>        Install man pages in <dir>
+configure:94:  -coqdevdir <dir>     Install Coq development (.vo files) in <dir>
+configure:96:  -use-external-Flocq  Use an already-installed Flocq library
+configure:97:  -use-external-MenhirLib  Use an already-installed MenhirLib library
+configure:98:  -no-runtime-lib      Do not compile nor install the runtime support library
+configure:99:  -no-standard-headers Do not install nor use the standard .h headers
+configure:100:  -clightgen           Also compile and install the clightgen tool
+configure:101:  -install-coqdev      Also install the Coq development (implied by -clightgen)
+configure:102:  -ignore-coq-version  Accept to use experimental or unsupported versions of Coq
+configure:103:  -ignore-ocaml-version Accept to use experimental or unsupported versions of OCaml
+configure:128:    -coqdevdir|--coqdevdir)
+configure:129:        coqdevdir="$2"; install_coqdev=true; shift;;
+configure:138:        install_coqdev=true;;
+configure:139:    -ignore-coq-version|--ignore-coq-version)
+configure:140:        ignore_coq_version=true;;
+configure:141:    -ignore-ocaml-version|--ignore-ocaml-version)
+configure:142:        ignore_ocaml_version=true;;
+configure:143:    -install-coqdev|--install-coqdev|-install-coq-dev|--install-coq-dev)
+configure:144:        install_coqdev=true;;
+configure:145:    -use-external-Flocq|--use-external-Flocq)
+configure:146:        library_Flocq=external;;
+configure:147:    -use-external-MenhirLib|--use-external-MenhirLib)
+configure:148:        library_MenhirLib=external;;
+configure:222:# then redefine the required parameters for each target,
+configure:500:# Test Availability of Required Tools
+configure:504:echo "Testing Coq... " | tr -d '\n'
+configure:505:coq_ver=$(${COQBIN}coqc -v 2>/dev/null | tr -d '\r' | sed -n -e 's/The Coq Proof Assistant, version \([^ ]*\).*$/\1/p')
+configure:506:case "$coq_ver" in
+configure:508:        echo "version $coq_ver -- good!";;
+configure:510:        echo "version $coq_ver -- UNSUPPORTED"
+configure:511:        if $ignore_coq_version; then
+configure:512:            echo "Warning: this version of Coq is unsupported, proceed at your own risks."
+configure:514:            echo "Error: CompCert requires a version of Coq between 8.12.0 and 8.16.1"
+configure:519:        echo "Error: make sure Coq version 8.13.2 is installed."
+configure:523:echo "Testing OCaml... " | tr -d '\n'
+configure:524:ocaml_ver=`ocamlc -version 2>/dev/null | tr -d '\r'`
+configure:525:case "$ocaml_ver" in
+configure:527:        echo "version $ocaml_ver -- good!";;
+configure:529:        echo "version $ocaml_ver -- UNSUPPORTED"
+configure:530:        if $ignore_ocaml_version; then
+configure:531:            echo "Warning: this version of OCaml is unsupported, proceed at your own risks."
+configure:533:            echo "Error: make sure OCaml version 4.05 to 4.14 is installed."
+configure:541:echo "Testing OCaml native-code compiler... " | tr -d '\n'
+configure:542:ocamlopt_ver=`ocamlopt -version 2>/dev/null | tr -d '\r'`
+configure:543:if test "$ocamlopt_ver" = "$ocaml_ver"; then
+configure:545:  ocaml_native_comp=true
+configure:548:  ocaml_native_comp=false
+configure:551:echo "Testing OCaml .opt compilers... " | tr -d '\n'
+configure:552:ocamlopt_opt_ver=`ocamlopt.opt -version 2>/dev/null | tr -d '\r'`
+configure:553:if test "$ocamlopt_opt_ver" = "$ocaml_ver"; then
+configure:555:  ocaml_opt_comp=true
+configure:558:  ocaml_opt_comp=false
+configure:561:MENHIR_REQUIRED=20190626
+configure:562:echo "Testing Menhir... " | tr -d '\n'
+configure:563:menhir_ver=`menhir --version 2>/dev/null | sed -n -e 's/^.*version \([0-9]*\).*$/\1/p'`
+configure:564:case "$menhir_ver" in
+configure:566:      if test "$menhir_ver" -ge $MENHIR_REQUIRED; then
+configure:567:          echo "version $menhir_ver -- good!"
+configure:568:          menhir_dir=$(ocamlfind query menhirLib 2>/dev/null) || \
+configure:569:          menhir_dir=$(menhir --suggest-menhirLib) || \
+configure:570:          menhir_dir=""
+configure:571:          menhir_dir=$(echo "$menhir_dir" | tr -d '\r' | tr '\\' '/')
+configure:572:          if test ! -d "$menhir_dir"; then
+configure:573:              echo "Error: cannot determine the location of the Menhir API library."
+configure:574:              echo "This can be due to an incorrect Menhir package."
+configure:575:              echo "Consider using the OPAM package for Menhir."
+configure:579:          echo "version $menhir_ver -- UNSUPPORTED"
+configure:580:          echo "Error: CompCert requires a version greater or equal to $MENHIR_REQUIRED."
+configure:585:        echo "Error: make sure Menhir version $MENHIR_REQUIRED or later is installed."
+configure:602:  echo "Error: make sure GNU Make version 3.80 or later is installed."
+configure:607:  echo "One or several required tools are missing or too old.  Aborting."
+configure:649:COQDEVDIR=$coqdevdir
+configure:650:OCAML_NATIVE_COMP=$ocaml_native_comp
+configure:651:OCAML_OPT_COMP=$ocaml_opt_comp
+configure:652:MENHIR_DIR=$menhir_dir
+configure:675:INSTALL_COQDEV=$install_coqdev
+configure:680:LIBRARY_FLOCQ=$library_Flocq
+configure:681:LIBRARY_MENHIRLIB=$library_MenhirLib
+configure:765:# Turn on/off the installation and use of the runtime support library
+configure:768:# Turn on/off the installation and use of the standard header files
+configure:781:# Whether to use the local copies of Flocq and MenhirLib
+configure:782:LIBRARY_FLOCQ=local      # external
+configure:783:LIBRARY_MENHIRLIB=local  # external
+configure:788:# Generate Merlin and CoqProject files to simplify development
+configure:814:$make CoqProject
+configure:849:    Menhir API library............ $menhir_dir
+configure:850:    The Flocq library............. $library_Flocq
+configure:851:    The MenhirLib library......... $library_MenhirLib
+configure:852:    Binaries installed in......... $(expandprefix $bindir)
+configure:853:    Shared config installed in.... $(expandprefix $sharedir)
+configure:855:    Library files installed in.... $(expandprefix $libdir)
+configure:856:    Man pages installed in........ $(expandprefix $mandir)
+configure:858:    Standard headers installed in. $(expandprefix $libdir)/include
+configure:861:if $install_coqdev; then
+configure:863:    Coq development installed in.. $(expandprefix $coqdevdir)
+configure:867:    Coq development will not be installed
+Makefile:33:COQINCLUDES := $(foreach d, $(DIRS), -R $(d) compcert.$(d))
+Makefile:35:ifeq ($(LIBRARY_FLOCQ),local)
+Makefile:36:DIRS += flocq/Core flocq/Prop flocq/Calc flocq/IEEE754
+Makefile:37:COQINCLUDES += -R flocq Flocq
+Makefile:40:ifeq ($(LIBRARY_MENHIRLIB),local)
+Makefile:41:DIRS += MenhirLib
+Makefile:42:COQINCLUDES += -R MenhirLib MenhirLib
+Makefile:45:# Notes on silenced Coq warnings:
+Makefile:55:#    triggered by Menhir-generated files, to be solved upstream in Menhir
+Makefile:57:COQCOPTS ?= \
+Makefile:61:cparser/Parser.vo: COQCOPTS += -w -deprecated-instance-without-locality
+Makefile:63:COQC="$(COQBIN)coqc" -q $(COQINCLUDES) $(COQCOPTS)
+Makefile:64:COQDEP="$(COQBIN)coqdep" $(COQINCLUDES)
+Makefile:65:COQDOC="$(COQBIN)coqdoc"
+Makefile:66:COQEXEC="$(COQBIN)coqtop" $(COQINCLUDES) -batch -load-vernac-source
+Makefile:67:COQCHK="$(COQBIN)coqchk" $(COQINCLUDES)
+Makefile:68:MENHIR=menhir
+Makefile:74:# Flocq
+Makefile:76:ifeq ($(LIBRARY_FLOCQ),local)
+Makefile:77:FLOCQ=\
+Makefile:85:FLOCQ=
+Makefile:90:VLIB=Axioms.v Coqlib.v Intv.v Maps.v Heaps.v Lattice.v Ordered.v \
+Makefile:145:# MenhirLib
+Makefile:147:ifeq ($(LIBRARY_MENHIRLIB),local)
+Makefile:148:MENHIRLIB=Alphabet.v Automaton.v Grammar.v Interpreter_complete.v \
+Makefile:152:MENHIRLIB=
+Makefile:169:FILES=$(VLIB) $(COMMON) $(BACKEND) $(CFRONTEND) $(DRIVER) $(FLOCQ) \
+Makefile:170:  $(MENHIRLIB) $(PARSER) $(EXPORTLIB)
+Makefile:190:ifeq ($(INSTALL_COQDEV),true)
+Makefile:196:# Turn off some warnings for Flocq and Menhirlib
+Makefile:199:flocq/%.vo: COQCOPTS+=-w -deprecated-syntactic-definition
+Makefile:200:MenhirLib/%.vo: COQCOPTS+=-w -deprecated-syntactic-definition
+Makefile:206:	$(COQEXEC) extraction/extraction.v
+Makefile:208:            echo "An error occured during extraction to OCaml code."; \
+Makefile:209:            echo "Check the versions of Flocq and MenhirLib used."; \
+Makefile:237:	coq2html -d doc/html/ -base compcert -short-names doc/*.glob \
+Makefile:238:          $(filter-out doc/coq2html cparser/Parser.v, $^)
+Makefile:241:ifeq ($(OCAML_NATIVE_COMP),true)
+Makefile:242:	ocamlopt -o tools/ndfun str.cmxa tools/ndfun.ml
+Makefile:244:	ocamlc -o tools/ndfun str.cma tools/ndfun.ml
+Makefile:248:ifeq ($(OCAML_NATIVE_COMP),true)
+Makefile:249:	ocamlopt -o tools/modorder str.cmxa tools/modorder.ml
+Makefile:251:	ocamlc -o tools/modorder str.cma tools/modorder.ml
+Makefile:255:	cd doc; $(COQDOC) --latex -o doc/doc.tex -g $(FILES)
+Makefile:259:	@echo "COQC $*.v"
+Makefile:260:	@$(COQC) -dump-glob doc/$(*F).glob $*.v
+Makefile:309:	$(MENHIR) --coq --coq-no-version-check cparser/Parser.vy
+Makefile:315:	@echo "Analyzing Coq dependencies"
+Makefile:316:	@$(COQDEP) $^ > .depend
+Makefile:318:install:
+Makefile:319:	install -d $(DESTDIR)$(BINDIR)
+Makefile:320:	install -m 0755 ./ccomp $(DESTDIR)$(BINDIR)

@@ -1,0 +1,28 @@
+
+configuration:
+stdlib_path=/usr/local/lib/compcert
+prepro=gcc
+linker=gcc
+asm=gcc
+prepro_options=-m64 -U__GNUC__ -U__SIZEOF_INT128__ -E
+asm_options=-m64 -c
+linker_options=-m64 -no-pie
+arch=x86
+model=64
+abi=standard
+endianness=little
+system=linux
+has_runtime_lib=true
+has_standard_headers=true
+asm_supports_cfi=true
+response_file_style=gnu
+
+compiler/runtime:
+/tmp/CompCert/ccomp executable
+ ccomp: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=7954b8bc9f00d643d6cf94a6cced3a64df7385ff, for GNU/Linux 3.2.0, with debug_info, not stripped
+runtime library installed
+
+smoke recheck:
+/usr/bin/ld: warning: /tmp/compcert88d280.o: missing .note.GNU-stack section implies executable stack
+/usr/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+exit=7

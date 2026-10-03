@@ -1,0 +1,62 @@
+        '''
+        Returns the translations of b1 that could make it overlap b2.
+        '''
+        b1 = self
+        b2 = b
+
+        size1 = b1.maxs - b1.mins
+        size2 = b2.maxs - b2.mins
+
+        if not isinstance(shape, (int, float)):
+            assert len(set(shape)) == 1
+            shape = float(shape[0])
+
+        # should these have +1 and -1?
+        steps_mins = np.floor((b2.mins - b1.maxs) / shape).astype(np.int) + 1
+        steps_maxs = np.floor((b2.maxs - b1.mins) / shape).astype(np.int)
+
+        return steps_mins, steps_maxs
+
+        distance_from_b2_to_b1 = b2.mins - b1.mins
+        num_steps_from_b2_to_b1 = distance_from_b2_to_b1 / shape
+
+
+def get_linking_between_loops(line1, line2, shape,
+                              same_loop=False,
+                              periodic=True):
+
+def get_linking_between_loop_and_line(loop, line, shape,
+                                      periodic=True):
+
+    loop= np.vstack(loop)
+    line = np.vstack(line)
+    loop = Knot.from_periodic_line(loop, shape)
+    line = OpenKnot.from_periodic_line(line, shape)
+
+    line_closure = (line.points[-1] - line.points[0]) / shape[0]
+    line_closure = np.round(line_closure).astype(np.int)
+
+    print('closure is', line_closure)
+
+    b1 = BoundingBox(line.points)
+    b2 = BoundingBox(loop.points)
+
+        self.points = points
+
+    def simplify_straight_segments(self, closed=False):
+        '''Replaces successive curve segments with identical tangents with a
+        single longer segment.'''
+
+        points = self.points
+        ts = np.roll(points, -1, axis=0) - points
+
+        keep_points = np.ones(len(points), dtype=np.bool)
+
+        ts_range = ts[:-2] if not closed else ts
+
+        for i1, t1 in enumerate(ts_range):
+            t1 /= np.sqrt(np.sum(t1**2))
+./pyknotid/spacecurves/periodiccell.py:394:        steps_mins = np.floor((b2.mins - b1.maxs) / shape).astype(np.int) + 1
+./pyknotid/spacecurves/periodiccell.py:395:        steps_maxs = np.floor((b2.maxs - b1.mins) / shape).astype(np.int)
+./pyknotid/spacecurves/periodiccell.py:460:    line_closure = np.round(line_closure).astype(np.int)
+./pyknotid/spacecurves/spacecurve.py:1083:        keep_points = np.ones(len(points), dtype=np.bool)

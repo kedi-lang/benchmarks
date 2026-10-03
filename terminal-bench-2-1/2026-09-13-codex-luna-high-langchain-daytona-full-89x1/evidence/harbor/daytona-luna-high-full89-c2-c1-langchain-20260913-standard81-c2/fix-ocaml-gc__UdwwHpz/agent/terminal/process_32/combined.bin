@@ -1,0 +1,106 @@
+      }
+
+      budget--; /* header word */
+      if (Tag_hd(hd) >= No_scan_tag) {
+        /* Nothing to scan here */
+        budget -= Wosize_hd(hd);
+        continue;
+      }
+
+      me.start = Op_val(block);
+      me.end = me.start + Wosize_hd(hd);
+
+      if (Tag_hd(hd) == Closure_tag) {
+        uintnat env_offset = Start_env_closinfo(Closinfo_val(block));
+        budget -= env_offset;
+        me.start += env_offset;
+      }
+    }
+    else if (budget <= 0 || stk->count == 0) {
+      if (pb.waterline > 0) {
+        /* Dequeue from pb even when close to empty, because
+           we have nothing else to do */
+        pb_drain_mode(&pb);
+        continue;
+      }
+      else {
+        /* Couldn't find work with pb in draining mode,
+           so there's nothing to do */
+        break;
+      }
+    }
+    else {
+      me = stk->stack[--stk->count];
+    }
+
+    value_ptr scan_end = me.end;
+    if (scan_end - me.start > budget) {
+      intnat scan_len = budget < 0 ? 0 : budget;
+      scan_end = me.start + scan_len;
+    }
+
+    for (; me.start < scan_end; me.start++) {
+      CAMLassert(budget >= 0);
+
+      value child = volatile_load_uninstrumented(me.start);
+
+      budget--;
+      if (Is_markable(child)) {
+        if (pb_full(&pb))
+          break;
+        prefetch_block(child);
+        pb_push(&pb, child);
+      }
+    }
+
+    if (me.start < me.end) {
+      /* Didn't finish scanning this object, either because budget <= 0,
+         or the prefetch buffer filled up. Leave the rest on the stack. */
+      mark_stack_push_range(stk, me.start, me.end);
+      caml_prefetch((void*)(me.start + 1));
+
+      if (pb_size(&pb) > PREFETCH_BUFFER_MIN) {
+        /* We may have just discovered more work when we were about to run out.
+           Reset waterline so that we try to refill the buffer again. */
+        pb_fill_mode(&pb);
+      }
+    }
+  }
+
+  Caml_state->stat_blocks_marked += blocks_marked;
+  CAMLassert(pb_size(&pb) == 0);
+  return budget;
+}
+
+/* mark until the budget runs out or marking is done */
+static intnat mark(intnat budget) {
+  caml_domain_state *domain_state = Caml_state;
+  while (budget > 0 && !domain_state->marking_done) {
+    budget = do_some_marking(domain_state->mark_stack, budget);
+    if (budget > 0) {
+      struct mark_stack* mstk = domain_state->mark_stack;
+      addrmap_iterator it = mstk->compressed_stack_iter;
+      if (caml_addrmap_iter_ok(&mstk->compressed_stack, it)) {
+        uintnat chunk = caml_addrmap_iter_key(&mstk->compressed_stack, it);
+        uintnat bitset = caml_addrmap_iter_value(&mstk->compressed_stack, it);
+
+        /* NB: must update the iterator here, as possible that
+           mark_slice_darken could lead to the mark stack being pruned
+           and invalidation of the iterator */
+        mstk->compressed_stack_iter =
+                      caml_addrmap_next(&mstk->compressed_stack, it);
+
+        for(int ofs=0; ofs<BITS_PER_WORD; ofs++) {
+          if(bitset & ((uintnat)1 << ofs)) {
+            value_ptr p = chunk_and_offset_to_ptr(chunk, ofs);
+            mark_slice_darken(domain_state->mark_stack, *p, &budget);
+          }
+        }
+      } else {
+        ephe_next_cycle ();
+        domain_state->marking_done = 1;
+        (void)caml_atomic_counter_decr(&num_domains_to_mark);
+      }
+    }
+  }
+  return budget;

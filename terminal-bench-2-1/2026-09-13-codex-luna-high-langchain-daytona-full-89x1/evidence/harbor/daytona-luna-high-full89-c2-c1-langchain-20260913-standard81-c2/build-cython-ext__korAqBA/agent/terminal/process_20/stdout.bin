@@ -1,0 +1,113 @@
+    if mode == 'maxima':
+        return alexander_maxima(representation, quadrant,
+                                verbose=False,
+                                simplify=False)
+    elif mode == 'cypari':
+        return alexander_cypari(representation, quadrant,
+                                verbose=False,
+                                simplify=False)
+    elif mode == 'mathematica':
+        return alexander_mathematica(representation, quadrant,
+                                     verbose=False)
+                                     
+
+    if isinstance(variable, (int, float, complex)):
+        return _alexander_numpy(crossings, variable, quadrant)
+    else:
+        return _alexander_sympy(crossings, variable, quadrant)
+
+
+def _alexander_numpy(crossings, variable=-1.0, quadrant='lr'):
+    '''
+    Numpy implementation of the Alexander polynomial (evaluated
+    at a float), assuming the input has been sanitised by
+    :func:`alexander`.
+    '''
+    import numpy as n
+    num_crossings = int(len(crossings)/2)
+    dtype = n.complex if isinstance(variable, n.complex) else n.float
+    matrix = n.zeros((num_crossings, num_crossings), dtype=dtype)
+    line_num = 0
+    crossing_num_counter = 0
+    crossing_dict = {}
+    crossing_exists = False
+
+    over_clock = 1. - 1. / variable
+    under_clock_after = 1. / variable
+    over_aclock = 1 - variable
+    under_aclock_after = variable
+
+    for i in range(len(crossings)):
+        identifier, over, clockwise = crossings[i]
+        if identifier in crossing_dict:
+            crossing_num = crossing_dict.pop(identifier)
+            crossing_exists = True
+        if not crossing_exists:
+            crossing_num = crossing_num_counter
+            crossing_num_counter += 1
+            crossing_dict[identifier] = crossing_num
+        crossing_exists = False
+
+        if over > 0.99999:
+            mat_elt = over_clock if clockwise > 0.999 else over_aclock
+            matrix[crossing_num, line_num % num_crossings] = mat_elt
+        else:
+            new_mat_elt = (under_clock_after if clockwise > 0.999 else
+                           under_aclock_after)
+            matrix[crossing_num, line_num % num_crossings] = -1
+            line_num += 1
+            matrix[crossing_num, line_num % num_crossings] = new_mat_elt
+    if quadrant == 'lr':
+        poly_val = n.linalg.det(matrix[1:, 1:])
+    elif quadrant == 'ur':
+        poly_val = n.linalg.det(matrix[:-1, 1:])
+    elif quadrant == 'ul':
+        poly_val = n.linalg.det(matrix[:-1:, :-1])
+    elif quadrant == 'll':
+        poly_val = n.linalg.det(matrix[1:, :-1])
+    if not isinstance(poly_val, n.complex):
+        poly_val = n.abs(poly_val)
+    return poly_val
+
+
+def _alexander_sympy(crossings, variable=None, quadrant='lr'):
+    '''
+    Sympy implementation of the Alexander polynomial, evaluated
+    with the variable replaced by some sympy expression.
+    '''
+    # This is almost the same as the numpy implementation...they should
+    # probably be merged.
+    import sympy as sym
+    if variable is None:
+                      under_crossing_indices[index])
+              for index in crossing_numbers}
+
+    return arrows, signs
+
+def _crossing_arrows_and_signs_numpy(gc, crossing_numbers):
+    ## Arrow diagram for v_2 is
+    ## appear -> leave -> leave -> appear (with crossed arrows)
+    over_crossing_indices = {}
+    under_crossing_indices = {}
+    signs = {}
+    for i, row in enumerate(gc):
+        if row[1] == 1:
+            over_crossing_indices[row[0]] = i
+        else:
+            under_crossing_indices[row[0]] = i
+        signs[row[0]] = row[2]
+
+    arrows = n.zeros((len(crossing_numbers), 3), dtype=n.long)
+
+    for index, number in enumerate(crossing_numbers):
+        row = arrows[index]
+        row[0] = over_crossing_indices[number]
+        row[1] = under_crossing_indices[number]
+        row[2] = signs[number]
+
+    return arrows
+
+def second_order_writhe(representation):
+    '''Returns the second order writhe (i1,i3,i2,i4) of the
+    representation, as defined in Lin and Wang.
+23

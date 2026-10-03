@@ -1,0 +1,42 @@
+/etc/postfix/master.cf:139:#mailman   unix  -       n       n       -       -       pipe
+/etc/postfix/master.cf:140:#  flags=FRX user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py ${nexthop} ${user}
+/etc/postfix/master.cf.proto:139:#mailman   unix  -       n       n       -       -       pipe
+/etc/postfix/master.cf.proto:140:#  flags=FRX user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py ${nexthop} ${user}
+/etc/mailman3/mailman.cfg:18:# This file contains the Debian configuration for mailman.  It uses ini-style
+/etc/mailman3/mailman.cfg:23:[mailman]
+/etc/mailman3/mailman.cfg:87:# `mailman shell` (also `withlist`) gives you an interactive prompt that you
+/etc/mailman3/mailman.cfg:122:var_dir: /var/lib/mailman3
+/etc/mailman3/mailman.cfg:127:# the 'mailman' command.
+/etc/mailman3/mailman.cfg:128:bin_dir: /usr/lib/mailman3/bin
+/etc/mailman3/mailman.cfg:132:log_dir: /var/log/mailman3
+/etc/mailman3/mailman.cfg:140:etc_dir: /etc/mailman3
+/etc/mailman3/mailman.cfg:155:pid_file: /run/mailman3/master.pid
+/etc/mailman3/mailman.cfg:162:class: mailman.database.sqlite.SQLiteDatabase
+/etc/mailman3/mailman.cfg:163:#class: mailman.database.mysql.MySQLDatabase
+/etc/mailman3/mailman.cfg:164:#class: mailman.database.postgresql.PostgreSQLDatabase
+/etc/mailman3/mailman.cfg:171:url: sqlite:///$DATA_DIR/mailman.db
+/etc/mailman3/mailman.cfg:172:#url: mysql+pymysql://mailman3:mmpass@localhost/mailman3?charset=utf8&use_unicode=1
+/etc/mailman3/mailman.cfg:173:#url: postgresql://mailman3:mmpass@localhost/mailman3
+/etc/mailman3/mailman.cfg:190:#                logger to the root "mailman" logger.  You cannot override
+/etc/mailman3/mailman.cfg:194:# prefixed by 'mailman.'.  Use subsections to override settings for specific
+/etc/mailman3/mailman.cfg:216:path: mailman.log
+/etc/mailman3/mailman.cfg:243:#incoming: mailman.mta.exim4.LMTP
+/etc/mailman3/mailman.cfg:244:incoming: mailman.mta.postfix.LMTP
+/etc/mailman3/mailman.cfg:249:outgoing: mailman.mta.deliver.deliver
+/etc/mailman3/mailman.cfg:270:#configuration: python:mailman.config.exim4
+/etc/mailman3/mailman.cfg:271:configuration: python:mailman.config.postfix
+/usr/lib/systemd/system/mailman3.service:1:# systemd service template for mailman3 program
+/usr/lib/systemd/system/mailman3.service:5:Documentation=man:mailman(1)
+/usr/lib/systemd/system/mailman3.service:6:Documentation=https://mailman.readthedocs.io/
+/usr/lib/systemd/system/mailman3.service:7:ConditionPathExists=/etc/mailman3/mailman.cfg
+/usr/lib/systemd/system/mailman3.service:12:ExecStart=/usr/bin/mailman -C /etc/mailman3/mailman.cfg start --force
+/usr/lib/systemd/system/mailman3.service:13:ExecReload=/usr/bin/mailman -C /etc/mailman3/mailman.cfg restart
+/usr/lib/systemd/system/mailman3.service:14:ExecStop=/usr/bin/mailman -C /etc/mailman3/mailman.cfg stop
+/usr/lib/systemd/system/mailman3.service:16:PIDFile=/run/mailman3/master.pid
+/usr/lib/systemd/system/mailman3.service:17:SyslogIdentifier=mailman3
+/etc/init.d/mailman3:3:# Provides:          mailman3
+/etc/init.d/mailman3:18:NAME=mailman3
+/etc/init.d/mailman3:19:DAEMON=/usr/bin/mailman
+/etc/init.d/mailman3:20:DAEMON_ARGS="-C /etc/mailman3/mailman.cfg start"
+/etc/init.d/mailman3:21:PIDDIR=/run/mailman3
+/etc/init.d/mailman3:24:RUNNER=/usr/lib/mailman3/bin/runner

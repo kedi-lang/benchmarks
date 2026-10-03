@@ -1,0 +1,126 @@
+--enable-reserved-header-bits=R argument to configure.
+
+*/
+
+#define HEADER_BITS (sizeof(header_t) * CHAR_BIT)
+
+#define HEADER_TAG_BITS 8
+#define HEADER_TAG_MASK ((1ull << HEADER_TAG_BITS) - 1ull)
+
+#define HEADER_COLOR_BITS 2
+#define HEADER_COLOR_SHIFT HEADER_TAG_BITS
+#define HEADER_COLOR_MASK (((1ull << HEADER_COLOR_BITS) - 1ull) \
+                            << HEADER_COLOR_SHIFT)
+
+#define HEADER_WOSIZE_BITS (HEADER_BITS - HEADER_TAG_BITS \
+                            - HEADER_COLOR_BITS - HEADER_RESERVED_BITS)
+#define HEADER_WOSIZE_SHIFT (HEADER_COLOR_SHIFT  + HEADER_COLOR_BITS)
+#define HEADER_WOSIZE_MASK (((1ull << HEADER_WOSIZE_BITS) - 1ull) \
+                             << HEADER_WOSIZE_SHIFT)
+
+#define Tag_hd(hd) ((tag_t) ((hd) & HEADER_TAG_MASK))
+#define Hd_with_tag(hd, tag) (((hd) &~ HEADER_TAG_MASK) | (tag))
+#define Wosize_hd(hd) ((mlsize_t) (((hd) & HEADER_WOSIZE_MASK) \
+                                     >> HEADER_WOSIZE_SHIFT))
+
+/* A "clean" header, without reserved or color bits. */
+#define Cleanhd_hd(hd) (((header_t)(hd)) & \
+                        (HEADER_TAG_MASK | HEADER_WOSIZE_MASK))
+
+#if HEADER_RESERVED_BITS > 0
+
+#define HEADER_RESERVED_SHIFT (HEADER_BITS - HEADER_RESERVED_BITS)
+#define Reserved_hd(hd)   (((header_t) (hd)) >> HEADER_RESERVED_SHIFT)
+#define Hd_reserved(res)  ((header_t)(res) << HEADER_RESERVED_SHIFT)
+
+#else /* HEADER_RESERVED_BITS is 0 */
+
+#define Reserved_hd(hd)   ((reserved_t)0)
+#define Hd_reserved(res)  ((header_t)0)
+
+#endif
+
+/* Color values are pre-shifted */
+
+#define Color_hd(hd) ((hd) & HEADER_COLOR_MASK)
+#define Hd_with_color(hd, color) (((hd) &~ HEADER_COLOR_MASK) | (color))
+
+#define Hp_atomic_val(val) ((atomic_uintnat *)(val) - 1)
+CAMLno_tsan_for_perf Caml_inline header_t Hd_val(value val)
+{
+  return atomic_load_explicit(Hp_atomic_val(val), memory_order_relaxed);
+}
+
+#define Color_val(val) (Color_hd (Hd_val (val)))
+
+#define Hd_hp(hp) (* ((volatile header_t *) (hp)))      /* Also an l-value. */
+#define Hp_val(val) (((volatile header_t *) (val)) - 1)
+#define Hp_op(op) (Hp_val (op))
+#define Hp_bp(bp) (Hp_val (bp))
+#define Val_op(op) ((value) (op))
+#define Val_hp(hp) ((value) (((header_t *) (hp)) + 1))
+#define Op_hp(hp) ((volatile value *) Val_hp (hp))
+#define Bp_hp(hp) ((char *) Val_hp (hp))
+
+#define Num_tags (1ull << HEADER_TAG_BITS)
+#define Max_wosize ((1ull << HEADER_WOSIZE_BITS) - 1ull)
+
+#define Wosize_val(val) (Wosize_hd (Hd_val (val)))
+#define Wosize_op(op) (Wosize_val (op))
+#define Wosize_bp(bp) (Wosize_val (bp))
+#define Wosize_hp(hp) (Wosize_hd (Hd_hp (hp)))
+#define Whsize_wosize(sz) ((sz) + 1)
+#define Wosize_whsize(sz) ((sz) - 1)
+#define Wosize_bhsize(sz) ((sz) / sizeof (value) - 1)
+#define Bsize_wsize(sz) ((sz) * sizeof (value))
+#define Wsize_bsize(sz) ((sz) / sizeof (value))
+#define Bhsize_wosize(sz) (Bsize_wsize (Whsize_wosize (sz)))
+#define Bhsize_bosize(sz) ((sz) + sizeof (header_t))
+#define Bosize_val(val) (Bsize_wsize (Wosize_val (val)))
+#define Bosize_op(op) (Bosize_val (Val_op (op)))
+#define Bosize_bp(bp) (Bosize_val (Val_bp (bp)))
+#define Bosize_hd(hd) (Bsize_wsize (Wosize_hd (hd)))
+#define Whsize_hp(hp) (Whsize_wosize (Wosize_hp (hp)))
+#define Whsize_val(val) (Whsize_hp (Hp_val (val)))
+#define Whsize_bp(bp) (Whsize_val (Val_bp (bp)))
+#define Whsize_hd(hd) (Whsize_wosize (Wosize_hd (hd)))
+#define Bhsize_hp(hp) (Bsize_wsize (Whsize_hp (hp)))
+#define Bhsize_hd(hd) (Bsize_wsize (Whsize_hd (hd)))
+
+#define Reserved_val(val) (Reserved_hd (Hd_val (val)))
+
+/**************************************************************************/
+/*                                                                        */
+/*                                 OCaml                                  */
+/*                                                                        */
+/*              Damien Doligez, projet Para, INRIA Rocquencourt           */
+/*                                                                        */
+/*   Copyright 1996 Institut National de Recherche en Informatique et     */
+/*     en Automatique.                                                    */
+/*                                                                        */
+/*   All rights reserved.  This file is distributed under the terms of    */
+/*   the GNU Lesser General Public License version 2.1, with the          */
+/*   special exception on linking described in the file LICENSE.          */
+/*                                                                        */
+/**************************************************************************/
+
+#ifndef CAML_GC_H
+#define CAML_GC_H
+
+
+#include "mlvalues.h"
+
+/* This depends on the layout of the header.  See [mlvalues.h]. */
+
+#define Make_header_with_reserved(wosize, tag, color, reserved)      \
+      (/*CAMLassert ((wosize) <= Max_wosize),*/                      \
+       ((header_t) (Hd_reserved(reserved))                           \
+                    + ((header_t) (wosize) << HEADER_WOSIZE_SHIFT)   \
+                    + (color) /* colors are pre-shifted */           \
+                    + (tag_t) (tag)))
+
+
+#define Make_header(wosize, tag, color) \
+        Make_header_with_reserved(wosize, tag, color, 0)
+
+#endif /* CAML_GC_H */

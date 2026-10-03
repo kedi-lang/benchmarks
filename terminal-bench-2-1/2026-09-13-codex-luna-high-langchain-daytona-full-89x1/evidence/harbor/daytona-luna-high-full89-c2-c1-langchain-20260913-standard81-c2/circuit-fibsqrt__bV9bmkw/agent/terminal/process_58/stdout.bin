@@ -1,0 +1,7 @@
+101:nwork = b.reg(32, 'nwork')
+169:bit=nwork[15]
+172:nshift=nwork[0:15] # corrected below
+173:nshift=nwork[:31] + [zero]
+174:# nwork is little endian, left shift means bit i gets old bit i-1.
+175:nshift=[zero]+nwork[:31]
+202:b.setreg(nwork, [b.mux(fsetup,(root[i-16] if i >= 16 else zero),b.mux(fupdate,nshift[i],nwork[i])) for i in range(32)])

@@ -3,6 +3,10 @@
 Each directory below is a self-contained Kedi experiment with its environment,
 immutable manifests, Harbor evidence, Autobench records, and validation tools.
 
+- [2026-09-13 LangChain / Codex Luna high full 89-task run](2026-09-13-codex-luna-high-langchain-daytona-full-89x1/README.md)
+  - Solved: **68/89 (76.40%)**; 20 reward-zero trials and one unscored verifier timeout
+  - Request-level genai-prices estimate: **$5.05064428**, **5.6749 cents per task**
+  - Cache reads: **93.6471%**; one merged Autobench record, sanitized original Harbor layout
 - [2026-09-12 Codex Luna high full 89-task single-trial run](2026-09-12-codex-luna-high-daytona-full-89x1/README.md)
   - Official reward: **68/89 (76.40%)**
   - Provider-reported cost: **$4.93781512 total**, **$0.05548107 per task**

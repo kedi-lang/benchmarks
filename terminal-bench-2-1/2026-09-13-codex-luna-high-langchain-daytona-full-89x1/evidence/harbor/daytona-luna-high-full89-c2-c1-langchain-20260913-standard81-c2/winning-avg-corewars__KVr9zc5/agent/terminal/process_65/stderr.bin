@@ -1,0 +1,130 @@
+After pass 0
+Instruction (physical line, instr):
+
+(    6) ;assert CORESIZE == 8000
+(    8) step    equ 2667    
+(   10) start   spl 1       
+(   12) loop    mov copy, *ptr
+(   13)         add #1, ptr
+(   14)         mov copy, @ptr
+(   15)         add #step, ptr
+(   16)         jmp loop
+(   18) copy    spl 0, 0
+(   19) ptr     dat step, step*2
+(   21)         end start
+
+***END*OF*PASS***
+
+Parameter checking:
+Current parameter for ';assert': 8000 ==8000
+
+After pass 1
+Instruction (physical line, instr):
+
+(   10) SPL 1
+(   12) MOV copy,*ptr
+(   13) ADD #1,ptr
+(   14) MOV copy,@ptr
+(   15) ADD #2667,ptr
+(   16) JMP -4
+(   18) SPL 0,0
+(   19) DAT 2667,2667*2
+(   21) END 0
+
+***END*OF*PASS***
+
+Label references:
+Group label(s):
+ptr 
+Reference:
+(LABEL):    7
+
+Group label(s):
+copy 
+Reference:
+(LABEL):    6
+
+Group label(s):
+loop 
+Reference:
+(LABEL):    1
+
+Group label(s):
+start 
+Reference:
+(LABEL):    0
+
+Group label(s):
+step 
+Reference:
+(TEXT):
+ 2667    
+
+Group label(s):
+PSPACESIZE 
+Reference:
+(TEXT):
+500
+
+Group label(s):
+WRITELIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+READLIMIT 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+ROUNDS 
+Reference:
+(TEXT):
+1
+
+Group label(s):
+WARRIORS 
+Reference:
+(TEXT):
+1
+
+Group label(s):
+VERSION 
+Reference:
+(TEXT):
+94
+
+Group label(s):
+MINDISTANCE 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXLENGTH 
+Reference:
+(TEXT):
+100
+
+Group label(s):
+MAXCYCLES 
+Reference:
+(TEXT):
+80000
+
+Group label(s):
+MAXPROCESSES 
+Reference:
+(TEXT):
+8000
+
+Group label(s):
+CORESIZE 
+Reference:
+(TEXT):
+8000
+
+***END*OF*CHART***
+

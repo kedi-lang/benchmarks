@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from selenium import webdriver;from selenium.webdriver.chrome.options import Options;from selenium.webdriver.chrome.service import Service;from selenium.common.exceptions import NoAlertPresentException;import time;o=Options();o.add_argument('--headless');o.add_argument('--no-sandbox');o.add_argument('--disable-dev-shm-usage');o.binary_location='/usr/bin/chromium';d=webdriver.Chrome(service=Service('/usr/bin/chromedriver'),options=o);d.get('data:text/html,<script>alert(1)</script>');time.sleep(.5);print(d.current_url);print(d.switch_to.alert.text);d.quit()
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 587, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/selenium/webdriver/remote/errorhandler.py", line 231, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: 1
+Message: unexpected alert open: {Alert text : 1}
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x558998278c9e <unknown>
+#1 0x558997ccef17 <unknown>
+#2 0x558997d5cc3f <unknown>
+#3 0x558997d3d6c3 <unknown>
+#4 0x558997d0e1a9 <unknown>
+#5 0x558997d0ed11 <unknown>
+#6 0x558998242ed0 <unknown>
+#7 0x5589982462f1 <unknown>
+#8 0x558998245d88 <unknown>
+#9 0x558998246795 <unknown>
+#10 0x55899822cabc <unknown>
+#11 0x558998246b11 <unknown>
+#12 0x558998215b7a <unknown>
+#13 0x5589982659d5 <unknown>
+#14 0x558998265bce <unknown>
+#15 0x558998277765 <unknown>
+#16 0x7df6b854e1f5 <unknown>
+

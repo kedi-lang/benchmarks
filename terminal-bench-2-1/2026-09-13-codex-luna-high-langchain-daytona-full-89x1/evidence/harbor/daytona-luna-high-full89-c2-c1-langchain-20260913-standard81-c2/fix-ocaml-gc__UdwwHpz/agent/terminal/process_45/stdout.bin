@@ -1,0 +1,18 @@
+Breakpoint 1 at 0x4ff80: file runtime/shared_heap.c, line 546.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, pool_sweep (local=local@entry=0x5555555e16b0, plist=plist@entry=0x5555555e18b0, sz=sz@entry=0, release_to_global_pool=release_to_global_pool@entry=1) at runtime/shared_heap.c:546
+546	  pool* a = *plist;
+#0  pool_sweep (local=local@entry=0x5555555e16b0, plist=plist@entry=0x5555555e18b0, sz=sz@entry=0, release_to_global_pool=release_to_global_pool@entry=1) at runtime/shared_heap.c:546
+#1  0x00005555555a57d5 in caml_sweep (local=0x5555555e16b0, work=work@entry=16384) at runtime/shared_heap.c:736
+#2  0x00005555555952b8 in major_collection_slice (howmuch=<optimized out>, participant_count=participant_count@entry=0, barrier_participants=barrier_participants@entry=0x0, mode=mode@entry=Slice_interruptible, force_compaction=0) at runtime/major_gc.c:1844
+#3  0x0000555555595926 in caml_major_collection_slice (howmuch=howmuch@entry=-1) at runtime/major_gc.c:2044
+#4  0x000055555557ca59 in caml_poll_gc_work () at runtime/domain.c:2010
+#5  0x00005555555a77c3 in caml_do_pending_actions_res () at runtime/signals.c:338
+#6  0x000055555559ec95 in caml_alloc_small_dispatch (dom_st=dom_st@entry=0x5555555e0af0, wosize=wosize@entry=12, flags=flags@entry=3, nallocs=nallocs@entry=1, encoded_alloc_lens=encoded_alloc_lens@entry=0x0) at runtime/minor_gc.c:980
+#7  0x00005555555b20f4 in caml_bytecode_interpreter (prog=prog@entry=0x7fffe791e010, prog_size=prog_size@entry=3020496, initial_env=<optimized out>, initial_extra_args=initial_extra_args@entry=0) at runtime/interp.c:766
+#8  0x00005555555b337d in caml_interprete (prog_size=3020496, prog=0x7fffe791e010) at runtime/caml/interp.h:34
+#9  caml_main (argv=<optimized out>) at runtime/startup_byt.c:579
+#10 0x000055555556f402 in main (argc=<optimized out>, argv=<optimized out>) at runtime/main.c:37
+$1 = 0
