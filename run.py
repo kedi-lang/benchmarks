@@ -14,7 +14,8 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from . import state, task1, task2
+from . import state, task1, task2, task3
+from .loop_guard import guard_event_loops
 from .compactor import (
     CompactionLog,
     RecordingModel,
@@ -27,7 +28,7 @@ RECORDS = Path(__file__).parent / "records"
 
 SOURCE_HEAD = """\
 ```
-from benchmarks.agent_compaction.state import PROCESSOR, CONDITION, TASK, read_log
+from benchmarks.agent_compaction.state import PROCESSOR, CONDITION, TASK, PROBE, read_log
 ```
 
 ~Report(incidents: list[str], owner: str)
@@ -37,11 +38,16 @@ from benchmarks.agent_compaction.state import PROCESSOR, CONDITION, TASK, read_l
     > artifacts:
         enabled: false
 """
-HISTORY = """\
+NATIVE_HISTORY = """\
     > history:
         enabled: true
         compaction_mode: native
         compaction_threshold: __THRESHOLD__
+"""
+# The probe quotes the report so it runs after it (independent templates are pipelined concurrently).
+PROBE_TAIL = """\
+[probe: str] = `PROBE`
+>> You gave the final report <report>. <probe> [instructions: list[str]]
 """
 HISTORY = """\
     > history:
@@ -102,7 +108,7 @@ def _native_model(model_name: str, effort: str, cache_key: str, events: list) ->
             )
 
     model.client._client.event_hooks["response"].append(on_response)
-    return model
+    return guard_event_loops(model)
 
 
 def _estimated_tokens(messages: list) -> int:
@@ -123,16 +129,19 @@ def run_one(
     from benchmarks.subagent_comparison.common.model import build_model
 
     state.SEED = seed
-    case = None if task == "t1" else task2.scenario(task, seed)
+    held_out = task in task3.VARIANTS
+    case = (
+        None if task == "t1" else task3.scenario(task, seed) if held_out else task2.scenario(task, seed)
+    )
     state.SCENARIO = case
-    state.TASK = task1.TASK if case is None else task2.task_text(case)
+    state.TASK = task1.TASK if case is None else task3.TASK if held_out else task2.task_text(case)
     cache_key = f"ac-{uuid.uuid4().hex[:10]}"
     log = CompactionLog()
     native = strategy in {"native", "native-compact"}
     model = (
         _native_model(model_name, effort, cache_key, log.events)
         if native
-        else RecordingModel(build_model(model_name, effort), cache_key=cache_key)
+        else RecordingModel(guard_event_loops(build_model(model_name, effort)), cache_key=cache_key)
     )
     processor = state.PROCESSOR = {
         "A1": lambda: fork_compactor(model, log, structured=True, dynamic=True),
@@ -148,10 +157,16 @@ def run_one(
     state.CONDITION = lambda info: info.estimated_tokens >= threshold
     # `native` attaches the same capability Kedi's `compaction_mode: native` would; the DSL path
     # cannot be used here because Kedi checks the model type on its budget wrapper (bug, see REPORT).
-    history = HISTORY if processor else ""
-    source = SOURCE_HEAD + history + SOURCE_TAIL
+    history = (
+        NATIVE_HISTORY.replace("__THRESHOLD__", str(threshold))
+        if strategy == "native" and held_out
+        else HISTORY
+        if processor
+        else ""
+    )
+    source = SOURCE_HEAD + history + SOURCE_TAIL + (PROBE_TAIL if held_out else "")
     adapter_options: dict = {}
-    if strategy == "native":
+    if strategy == "native" and not held_out:
         from pydantic_ai.models.openai import OpenAICompaction
 
         adapter_options["capabilities"] = [OpenAICompaction(token_threshold=threshold)]
@@ -167,11 +182,14 @@ def run_one(
     started = time.monotonic()
     error = None
     answer: dict = {}
+    probe: list[str] | None = None
     try:
         with observe_invocations(usages.append):
             with InteractiveSession(adapter=PydanticAdapter(model, **adapter_options)) as session:
                 session.execute(source)
                 answer = force(session._env["report"]).model_dump(mode="json")
+                if held_out:
+                    probe = [str(x) for x in force(session._env["instructions"])]
     except Exception as exc:  # recorded, the batch continues
         error = f"{type(exc).__name__}: {str(exc)[:300]}"
     total = sum(usages, InvocationUsage())
@@ -186,9 +204,18 @@ def run_one(
         "error": error,
         "answer": answer,
         "task": task,
-        "grade": (task1.grade(seed, answer) if case is None else task2.grade(case, answer))
+        "grade": (
+            task1.grade(seed, answer)
+            if case is None
+            else task3.grade(case, answer)
+            if held_out
+            else task2.grade(case, answer)
+        )
         if answer
         else None,
+        "probe": None
+        if probe is None
+        else {"instructions": probe, "recalls_change": task3.probe_recalls(case, probe)},
         "usage": {
             "requests": total.requests,
             "input": total.input_tokens,
@@ -208,7 +235,7 @@ def main() -> None:
     parser.add_argument("--threshold", type=int, default=18_000)
     parser.add_argument("--model", default="gpt-6-luna")
     parser.add_argument("--effort", default="medium")
-    parser.add_argument("--task", default="t1", choices=["t1", *task2.VARIANTS])
+    parser.add_argument("--task", default="t1", choices=["t1", *task2.VARIANTS, *sorted(task3.VARIANTS)])
     args = parser.parse_args()
     RECORDS.mkdir(exist_ok=True)
     name = "task1" if args.task == "t1" else args.task
