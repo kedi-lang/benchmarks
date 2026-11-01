@@ -72,6 +72,31 @@ def _fisher_greater(a: int, n1: int, b: int, n2: int) -> float:
     return sum(comb(k, i) * comb(n - k, n1 - i) for i in range(a, min(k, n1) + 1)) / comb(n, n1)
 
 
+def _mcnemar_greater(left: list[bool], right: list[bool]) -> tuple[int, int, float]:
+    """Exact one-sided McNemar on paired runs: P(at least b of the b + c discordant pairs favor left)."""
+    b = sum(1 for x, y in zip(left, right) if x and not y)
+    c = sum(1 for x, y in zip(left, right) if y and not x)
+    n = b + c
+    return b, c, sum(comb(n, i) for i in range(b, n + 1)) / 2**n if n else 1.0
+
+
+def _paired(strategy: str) -> dict[tuple[str, int], bool]:
+    """Strict pass keyed by (task, seed), from the canonical phase of each task and strategy."""
+    sources = [("phase3_task1_ablation", "task1"), ("phase4_edge_cases", "rev"), ("phase4_edge_cases", "long"), ("phase4_edge_cases", "big")]
+    if strategy == "none":
+        sources[0] = ("phase2_task1_baselines", "task1")
+    if strategy == "native":
+        sources = [("phase5_native", t) for _, t in sources]
+    out: dict[tuple[str, int], bool] = {}
+    for folder, task in sources:
+        for path in (RECORDS / folder).glob(f"{task}_*{strategy}.jsonl"):
+            if _strategy_of(path) != strategy:
+                continue
+            for record in _load(path):
+                out[(task, record["seed"])] = _grade(task, record)["strict"]
+    return out
+
+
 def _row(task: str, strategy: str, records: list[dict]) -> dict:
     grades = [_grade(task, r) for r in records]
     total_input = [r["usage"]["input"] + (r["usage"].get("compaction_input") or 0) for r in records]
@@ -135,16 +160,24 @@ def main() -> None:
         if strategy in pooled:
             values = pooled[strategy]
             lines.append(f"| {strategy} | {DESCRIPTION[strategy]} | {sum(values)}/{len(values)} |")
-    lines += ["", "One-sided Fisher exact test (row strategy better than column):", ""]
-    pairs = [
-        ("A1-free", "none"),
-        ("A1-free", "B2"),
-        ("A1-free", "B3"),
-        ("A1-free", "native"),
-        ("A1-free", "A1"),
-        ("A1", "B3"),
-        ("A1", "native"),
+    lines += [
+        "",
+        "Paired comparison on the same (task, seed) runs — exact one-sided McNemar (primary):",
+        "",
+        "| left | right | pairs | left only | right only | p |",
+        "|---|---|---|---|---|---|",
     ]
+    comparisons = [("A1-free", s) for s in ("none", "B2", "B3", "native", "A1")] + [("A1", "B3"), ("A1", "native")]
+    for scope, tasks in (("all", None), ("rev+long", {"rev", "long"})):
+        for left, right in comparisons:
+            a, b = _paired(left), _paired(right)
+            keys = sorted(k for k in a.keys() & b.keys() if tasks is None or k[0] in tasks)
+            if not keys:
+                continue
+            only_left, only_right, p = _mcnemar_greater([a[k] for k in keys], [b[k] for k in keys])
+            lines.append(f"| {left} | {right} ({scope}) | {len(keys)} | {only_left} | {only_right} | {p:.4f} |")
+    lines += ["", "Unpaired one-sided Fisher exact (secondary, ignores pairing):", ""]
+    pairs = [("A1-free", "none"), ("A1-free", "B2"), ("A1-free", "B3"), ("A1-free", "native")]
     for left, right in pairs:
         if left in pooled and right in pooled:
             a, b = pooled[left], pooled[right]

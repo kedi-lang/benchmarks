@@ -64,15 +64,31 @@ Total input = main requests + compaction requests. Calls = main requests + compa
 | A1 | fork, structured, model selects kept groups | 19/20 |
 | A1-free | fork, free text, model selects kept groups | 20/20 |
 
-One-sided Fisher exact test (row strategy better than column):
+Paired comparison on the same (task, seed) runs — exact one-sided McNemar (primary):
+
+| left | right | pairs | left only | right only | p |
+|---|---|---|---|---|---|
+| A1-free | none (all) | 20 | 7 | 0 | 0.0078 |
+| A1-free | B2 (all) | 20 | 14 | 0 | 0.0001 |
+| A1-free | B3 (all) | 20 | 4 | 0 | 0.0625 |
+| A1-free | native (all) | 20 | 4 | 0 | 0.0625 |
+| A1-free | A1 (all) | 20 | 1 | 0 | 0.5000 |
+| A1 | B3 (all) | 20 | 4 | 1 | 0.1875 |
+| A1 | native (all) | 20 | 4 | 1 | 0.1875 |
+| A1-free | none (rev+long) | 10 | 5 | 0 | 0.0312 |
+| A1-free | B2 (rev+long) | 10 | 8 | 0 | 0.0039 |
+| A1-free | B3 (rev+long) | 10 | 3 | 0 | 0.1250 |
+| A1-free | native (rev+long) | 10 | 4 | 0 | 0.0625 |
+| A1-free | A1 (rev+long) | 10 | 1 | 0 | 0.5000 |
+| A1 | B3 (rev+long) | 10 | 3 | 1 | 0.3125 |
+| A1 | native (rev+long) | 10 | 4 | 1 | 0.1875 |
+
+Unpaired one-sided Fisher exact (secondary, ignores pairing):
 
 - A1-free vs none: p = 0.0042
 - A1-free vs B2: p = 0.0000
 - A1-free vs B3: p = 0.0530
 - A1-free vs native: p = 0.0530
-- A1-free vs A1: p = 0.5000
-- A1 vs B3: p = 0.1708
-- A1 vs native: p = 0.1708
 - fork (A1 + A1-free) 39/40 vs stateless (B2 + B3) 22/40: p = 4.03e-06
 
 Strict pass on rev + long (mid-task rule, retraction, update):

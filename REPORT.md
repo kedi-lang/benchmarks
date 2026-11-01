@@ -181,9 +181,10 @@ What broke, `rev` + `long`:
   6–20") in its last compaction; B2 stopped early once too. Not a compaction loss.
 - **Stateless loops**: without progress state, B2/B3 sometimes re-read logs, up to 79 calls.
 
-Statistics (one-sided Fisher exact, strict pass, 20 runs per strategy):
-- A1-free vs none p = 0.004; vs B2 p < 0.0001; vs B3 p = 0.053; vs A1 p = 0.5.
-- Fork (A1 + A1-free) 39/40 vs stateless (B2 + B3) 22/40: p = 4·10⁻⁶; fork vs none: p = 0.001.
+Statistics, paired on the same (task, seed), exact one-sided McNemar (primary; `results/RESULTS.md`):
+- A1-free vs none p = 0.008 (7 vs 0 discordant); vs B2 p = 0.0001 (14 vs 0); vs B3 p = 0.0625 (4 vs 0);
+  vs A1 p = 0.5.
+- Unpaired Fisher (secondary): fork (A1 + A1-free) 39/40 vs stateless (B2 + B3) 22/40, p = 4·10⁻⁶.
 
 ## 7b. Phase 5 — against the provider's own compaction
 
@@ -208,7 +209,7 @@ tested.
   it reported `search` incidents after the POLICY CHANGE; one `long` run also hit the request limit. It never
   reported a retracted incident and never missed one.
 - On the tasks where a rule arrives mid-task (rev + long): A1-free 10/10, A1 9/10, B3 7/10, native 6/10,
-  none 5/10, B2 2/10. A1-free vs native there: one-sided Fisher p = 0.043; over all 20 runs p = 0.053.
+  none 5/10, B2 2/10. A1-free vs native there: 4 discordant pairs, all favoring A1-free — exact one-sided McNemar p = 0.0625 (paired, primary); an unpaired Fisher test would give 0.043, but runs share seeds, so the paired test is the right one.
 - Kedi bug found on the way: `> history: compaction_mode: native` fails whenever a run budget is active,
   because the model-type check runs on Kedi's budget wrapper instead of the provider model.
 
@@ -220,9 +221,9 @@ arrive during the task. Neither dominates on both axes yet.
 Shown, on four synthetic tasks with one model:
 - Compacting with the agent's own context (the fork) is significantly better than no compaction and than a
   free-text external summary, and at least as accurate as the best structured external summary and the
-  provider's own compaction (p = 0.053 for both over 20 runs).
+  provider's own compaction (paired McNemar p = 0.0625 for both over 20 runs: 4 discordant pairs each, all in its favor).
 - Its specific advantage is **instructions that arrive during the task**: on the tasks with a mid-task rule
-  it was 10/10 against 6/10 for provider compaction (p = 0.043) and 7/10 for the best external summary.
+  it was 10/10 against 6/10 for provider compaction and 7/10 for the best external summary — not yet significant on a paired test (p = 0.0625); a held-out, pre-registered evaluation is set up in `PREREGISTRATION.md`.
 - Provider compaction is the cheapest (~30–35% less input than the fork); the fork is the cheapest of the
   strategies that keep the mid-task rule.
 - What matters for the fork is that the agent compacts with its full context and chooses what stays; its
