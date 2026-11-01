@@ -21,8 +21,9 @@ PHASES = [
     ("phase2_task1_baselines", "Phase 2 — task 1 baselines"),
     ("phase3_task1_ablation", "Phase 3 — task 1 ablation"),
     ("phase4_edge_cases", "Phase 4 — edge cases"),
+    ("phase5_native", "Phase 5 — provider (native) compaction"),
 ]
-ORDER = ["none", "B1", "B2", "B3", "A1-fixed", "A1", "A1-free"]
+ORDER = ["none", "B1", "B2", "B3", "native", "A1-fixed", "A1", "A1-free"]
 DESCRIPTION = {
     "none": "no compaction",
     "B1": "truncation, keep last 2 groups",
@@ -31,6 +32,7 @@ DESCRIPTION = {
     "A1": "fork, structured, model selects kept groups",
     "A1-free": "fork, free text, model selects kept groups",
     "A1-fixed": "fork, structured, keep last 2",
+    "native": "OpenAI server-side compaction (context_management), same trigger",
 }
 
 
@@ -73,7 +75,12 @@ def _fisher_greater(a: int, n1: int, b: int, n2: int) -> float:
 def _row(task: str, strategy: str, records: list[dict]) -> dict:
     grades = [_grade(task, r) for r in records]
     total_input = [r["usage"]["input"] + (r["usage"].get("compaction_input") or 0) for r in records]
-    calls = [r["usage"]["requests"] + len(r["compactions"]) for r in records]
+    # Separate compaction requests add calls; native compaction happens inside a normal request.
+    calls = [
+        r["usage"]["requests"]
+        + sum(1 for e in r["compactions"] if e.get("endpoint") != "inline")
+        for r in records
+    ]
     return {
         "task": task,
         "strategy": strategy,
@@ -129,7 +136,15 @@ def main() -> None:
             values = pooled[strategy]
             lines.append(f"| {strategy} | {DESCRIPTION[strategy]} | {sum(values)}/{len(values)} |")
     lines += ["", "One-sided Fisher exact test (row strategy better than column):", ""]
-    pairs = [("A1-free", "none"), ("A1-free", "B2"), ("A1-free", "B3"), ("A1-free", "A1"), ("A1", "B3")]
+    pairs = [
+        ("A1-free", "none"),
+        ("A1-free", "B2"),
+        ("A1-free", "B3"),
+        ("A1-free", "native"),
+        ("A1-free", "A1"),
+        ("A1", "B3"),
+        ("A1", "native"),
+    ]
     for left, right in pairs:
         if left in pooled and right in pooled:
             a, b = pooled[left], pooled[right]
@@ -140,6 +155,19 @@ def main() -> None:
     if fork and stateless:
         p = _fisher_greater(sum(fork), len(fork), sum(stateless), len(stateless))
         lines.append(f"- fork (A1 + A1-free) {sum(fork)}/{len(fork)} vs stateless (B2 + B3) {sum(stateless)}/{len(stateless)}: p = {p:.2e}")
+    # Rule adherence where a rule arrives mid-task (rev + long): only compaction can carry it.
+    lines += ["", "Strict pass on rev + long (mid-task rule, retraction, update):", ""]
+    for strategy in ORDER:
+        folder = "phase5_native" if strategy == "native" else "phase4_edge_cases"
+        values = [
+            _grade(task, r)["strict"]
+            for task in ("rev", "long")
+            for path in [RECORDS / folder / f"{task}_t18k_{strategy}.jsonl"]
+            if path.exists()
+            for r in _load(path)
+        ]
+        if values:
+            lines.append(f"- {strategy}: {sum(values)}/{len(values)}")
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n")
     print(OUT)

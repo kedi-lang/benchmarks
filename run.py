@@ -8,9 +8,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 import uuid
 from pathlib import Path
+from typing import Any
 
 from . import state, task1, task2
 from .compactor import (
@@ -38,6 +40,12 @@ from benchmarks.agent_compaction.state import PROCESSOR, CONDITION, TASK, read_l
 HISTORY = """\
     > history:
         enabled: true
+        compaction_mode: native
+        compaction_threshold: __THRESHOLD__
+"""
+HISTORY = """\
+    > history:
+        enabled: true
         processor: `PROCESSOR`
         processor_condition: `CONDITION`
 """
@@ -48,6 +56,60 @@ SOURCE_TAIL = """\
 > use: auditor
 >> <task> The final report is [report: Report].
 """
+
+
+def _native_model(model_name: str, effort: str, cache_key: str, events: list) -> Any:
+    """The provider model itself (native compaction needs a real OpenAIResponsesModel).
+
+    Same settings the RecordingModel adds, plus HTTP hooks that log provider compactions.
+    """
+    import httpx
+    from codex_auth_helper import create_codex_responses_model
+
+    from benchmarks.subagent_comparison.common.prompts import BASE_INSTRUCTIONS
+
+    model = create_codex_responses_model(
+        model_name,
+        instructions=BASE_INSTRUCTIONS,
+        settings={
+            "openai_reasoning_effort": effort,
+            "openai_prompt_cache_key": cache_key,
+            "parallel_tool_calls": False,
+        },
+        connection="http",
+        fallback="error",
+    )
+    model.client.max_retries = 0
+    model.client.timeout = httpx.Timeout(600.0, connect=60.0)
+
+    async def on_response(response: Any) -> None:
+        body = (await response.aread()).decode("utf-8", "replace")
+        compact_endpoint = response.request.url.path.endswith("/compact")
+        if compact_endpoint or '"type":"compaction"' in body:
+            usage = re.findall(r'"usage":(\{"input_tokens".*?"total_tokens":\d+)', body)
+            parsed = json.loads(usage[-1] + "}") if usage else {}
+            events.append(
+                {
+                    "strategy": "native",
+                    "endpoint": "compact" if compact_endpoint else "inline",
+                    "status": response.status_code,
+                    "input": parsed.get("input_tokens") if compact_endpoint else None,
+                    "cache_read": (parsed.get("input_tokens_details") or {}).get("cached_tokens")
+                    if compact_endpoint
+                    else None,
+                    "output": parsed.get("output_tokens") if compact_endpoint else None,
+                }
+            )
+
+    model.client._client.event_hooks["response"].append(on_response)
+    return model
+
+
+def _estimated_tokens(messages: list) -> int:
+    """Kedi's estimator (UTF-8 bytes / 3), so native triggers at the same point as the others."""
+    from pydantic_ai.messages import ModelMessagesTypeAdapter
+
+    return len(ModelMessagesTypeAdapter.dump_json(messages)) // 3
 
 
 def run_one(
@@ -64,8 +126,14 @@ def run_one(
     case = None if task == "t1" else task2.scenario(task, seed)
     state.SCENARIO = case
     state.TASK = task1.TASK if case is None else task2.task_text(case)
-    model = RecordingModel(build_model(model_name, effort), cache_key=f"ac-{uuid.uuid4().hex[:10]}")
+    cache_key = f"ac-{uuid.uuid4().hex[:10]}"
     log = CompactionLog()
+    native = strategy in {"native", "native-compact"}
+    model = (
+        _native_model(model_name, effort, cache_key, log.events)
+        if native
+        else RecordingModel(build_model(model_name, effort), cache_key=cache_key)
+    )
     processor = state.PROCESSOR = {
         "A1": lambda: fork_compactor(model, log, structured=True, dynamic=True),
         "A1-free": lambda: fork_compactor(model, log, structured=False, dynamic=True),
@@ -74,9 +142,26 @@ def run_one(
         "B3": lambda: stateless_compactor(model, log, structured=True),
         "B1": lambda: truncation_compactor(log),
         "none": lambda: None,
+        "native": lambda: None,
+        "native-compact": lambda: None,
     }[strategy]()
     state.CONDITION = lambda info: info.estimated_tokens >= threshold
-    source = SOURCE_HEAD + (HISTORY if processor else "") + SOURCE_TAIL
+    # `native` attaches the same capability Kedi's `compaction_mode: native` would; the DSL path
+    # cannot be used here because Kedi checks the model type on its budget wrapper (bug, see REPORT).
+    history = HISTORY if processor else ""
+    source = SOURCE_HEAD + history + SOURCE_TAIL
+    adapter_options: dict = {}
+    if strategy == "native":
+        from pydantic_ai.models.openai import OpenAICompaction
+
+        adapter_options["capabilities"] = [OpenAICompaction(token_threshold=threshold)]
+    if strategy == "native-compact":
+        from pydantic_ai.models.openai import OpenAICompaction
+
+        # Stateless `/responses/compact` (what Codex uses for remote compaction), same trigger point.
+        adapter_options["capabilities"] = [
+            OpenAICompaction(trigger=lambda messages: _estimated_tokens(messages) >= threshold)
+        ]
 
     usages: list[InvocationUsage] = []
     started = time.monotonic()
@@ -84,7 +169,7 @@ def run_one(
     answer: dict = {}
     try:
         with observe_invocations(usages.append):
-            with InteractiveSession(adapter=PydanticAdapter(model)) as session:
+            with InteractiveSession(adapter=PydanticAdapter(model, **adapter_options)) as session:
                 session.execute(source)
                 answer = force(session._env["report"]).model_dump(mode="json")
     except Exception as exc:  # recorded, the batch continues
@@ -118,7 +203,7 @@ def run_one(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--strategy", required=True, choices=["none", "B1", "B2", "B3", "A1", "A1-free", "A1-fixed"])
+    parser.add_argument("--strategy", required=True, choices=["none", "B1", "B2", "B3", "A1", "A1-free", "A1-fixed", "native", "native-compact"])
     parser.add_argument("--seeds", type=int, nargs="+", default=[1])
     parser.add_argument("--threshold", type=int, default=18_000)
     parser.add_argument("--model", default="gpt-6-luna")

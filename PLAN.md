@@ -364,3 +364,18 @@ Conclusion (scoped): on these four synthetic tasks with one model, compacting wi
 significantly better than no compaction and than free-text external summaries, and at least as good as the
 best structured external summary (borderline significance) while cheaper. The schema does not matter for the
 fork. Not yet shown: other models, reasoning on (needs 1b), real tool-heavy/coding tasks, larger n vs B3.
+
+## 16. Native (provider) compaction as a competitor (2026-11-01)
+
+Two OpenAI compaction paths, both through Pydantic AI's `OpenAICompaction`, trigger at the same 18K estimate:
+- `native` — stateful server-side compaction (`context_management` / `compact_threshold` on the normal
+  `/responses` request). **Works on the Codex backend**: inline `compaction` items appear in responses.
+- `native-compact` — stateless `/responses/compact` (Codex CLI's remote compaction endpoint for OpenAI):
+  **404 on the Codex subscription backend** for gpt-6-luna (`{'detail': 'Not Found'}`), so not testable here.
+
+**Kedi bug found:** `> history: compaction_mode: native` fails with "native compaction for Pydantic AI requires
+OpenAIResponsesModel or AnthropicModel" whenever a run budget is active, because `run_config.py` checks
+`effective_model(...)`, which under a budget is Kedi's own `BudgetedModel` wrapper (`budget.py`), not the
+provider model. The Codex model *is* an `OpenAIResponsesModel`. Fix: unwrap `WrapperModel` before the
+isinstance check (and test with a budget active). The benchmark attaches the identical capability through
+`PydanticAdapter(capabilities=[OpenAICompaction(token_threshold=…)])` instead.

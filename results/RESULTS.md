@@ -43,6 +43,15 @@ Total input = main requests + compaction requests. Calls = main requests + compa
 | rev | A1 | 5 | 5/5 | 5/5 | 135K | [12, 13, 12, 13, 12] | [3, 4, 3, 4, 3] | 0 | 0 | 0 | 0 |
 | rev | A1-free | 5 | 5/5 | 5/5 | 161K | [12, 13, 13, 13, 12] | [3, 4, 4, 4, 3] | 0 | 0 | 0 | 0 |
 
+## Phase 5 — provider (native) compaction
+
+| task | strategy | n | strict | lenient | median total input | calls | compactions | errors | policy viol. | retracted reported | missing |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| big | native | 5 | 5/5 | 5/5 | 129K | [9, 9, 9, 9, 9] | [2, 2, 2, 2, 2] | 0 | 0 | 0 | 0 |
+| long | native | 5 | 3/5 | 3/5 | 269K | [21, 34, 21, 21, 50] | [6, 10, 6, 6, 16] | 1 | 4 | 0 | 0 |
+| rev | native | 5 | 3/5 | 3/5 | 106K | [9, 9, 13, 9, 9] | [2, 2, 3, 2, 2] | 0 | 3 | 0 | 0 |
+| task1 | native | 5 | 5/5 | 5/5 | 105K | [9, 9, 9, 13, 9] | [2, 2, 2, 3, 2] | 0 | 0 | 0 | 0 |
+
 ## Pooled strict pass (task 1 + edge cases)
 
 | strategy | description | pass |
@@ -50,6 +59,7 @@ Total input = main requests + compaction requests. Calls = main requests + compa
 | none | no compaction | 13/20 |
 | B2 | stateless free-text summary, keep last 2 | 6/20 |
 | B3 | stateless structured summary, keep last 2 | 16/20 |
+| native | OpenAI server-side compaction (context_management), same trigger | 16/20 |
 | A1-fixed | fork, structured, keep last 2 | 5/5 |
 | A1 | fork, structured, model selects kept groups | 19/20 |
 | A1-free | fork, free text, model selects kept groups | 20/20 |
@@ -59,6 +69,17 @@ One-sided Fisher exact test (row strategy better than column):
 - A1-free vs none: p = 0.0042
 - A1-free vs B2: p = 0.0000
 - A1-free vs B3: p = 0.0530
+- A1-free vs native: p = 0.0530
 - A1-free vs A1: p = 0.5000
 - A1 vs B3: p = 0.1708
+- A1 vs native: p = 0.1708
 - fork (A1 + A1-free) 39/40 vs stateless (B2 + B3) 22/40: p = 4.03e-06
+
+Strict pass on rev + long (mid-task rule, retraction, update):
+
+- none: 5/10
+- B2: 2/10
+- B3: 7/10
+- native: 6/10
+- A1: 9/10
+- A1-free: 10/10

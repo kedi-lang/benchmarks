@@ -38,7 +38,7 @@ uv run --extra snapshots --group dev python -m pytest benchmarks/agent_compactio
 ```
 
 `run.py` writes new records to `records/` (top level); move a finished batch into its phase folder before
-running `summarize.py`. Strategies: `none B1 B2 B3 A1 A1-free A1-fixed`; tasks: `t1 rev long big`;
+running `summarize.py`. Strategies: `none B1 B2 B3 A1 A1-free A1-fixed native native-compact`; tasks: `t1 rev long big`;
 `--threshold` (tokens, default 18000).
 
 ## Preservation

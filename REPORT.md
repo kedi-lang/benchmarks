@@ -1,6 +1,6 @@
 # Letting the agent compact its own context — experiment report
 
-Status: 2026-11-01, phases 1–4 complete. Every number below comes from `records/` (tables regenerated in
+Status: 2026-11-01, phases 1–5 complete. Every number below comes from `records/` (tables regenerated in
 `results/RESULTS.md`) or, for phase 1, from the probe output recorded in `PLAN.md` §10.
 
 ## 1. Question
@@ -185,14 +185,48 @@ Statistics (one-sided Fisher exact, strict pass, 20 runs per strategy):
 - A1-free vs none p = 0.004; vs B2 p < 0.0001; vs B3 p = 0.053; vs A1 p = 0.5.
 - Fork (A1 + A1-free) 39/40 vs stateless (B2 + B3) 22/40: p = 4·10⁻⁶; fork vs none: p = 0.001.
 
+## 7b. Phase 5 — against the provider's own compaction
+
+The strongest real competitor is the provider's compaction. OpenAI's server-side compaction (the
+`context_management` / `compact_threshold` mechanism, run inside the normal `/responses` request and
+returning an opaque `compaction` item) works on the Codex backend; it was attached through Pydantic AI's
+`OpenAICompaction(token_threshold=18000)`, same trigger point as the other strategies. The stateless
+`/responses/compact` endpoint (Codex CLI's remote compaction) returns 404 on this backend and could not be
+tested.
+
+| task | native strict | A1-free strict | native median input | A1-free median input |
+|---|---|---|---|---|
+| t1 | 5/5 | 5/5 | 105K | 132K |
+| rev | 3/5 | 5/5 | 106K | 161K |
+| long | 3/5 | 5/5 | 269K | 411K |
+| big | 5/5 | 5/5 | 129K | 203K |
+| total | 16/20 | 20/20 | | |
+
+- **Native is the cheapest strategy** — about 30–35% less input than the fork. Compaction runs inside a
+  normal request: no extra round trip and a short opaque item instead of a text summary.
+- **Native loses the mid-task rule**: all of its failures are policy violations (3 in `rev`, 4 in `long`) —
+  it reported `search` incidents after the POLICY CHANGE; one `long` run also hit the request limit. It never
+  reported a retracted incident and never missed one.
+- On the tasks where a rule arrives mid-task (rev + long): A1-free 10/10, A1 9/10, B3 7/10, native 6/10,
+  none 5/10, B2 2/10. A1-free vs native there: one-sided Fisher p = 0.043; over all 20 runs p = 0.053.
+- Kedi bug found on the way: `> history: compaction_mode: native` fails whenever a run budget is active,
+  because the model-type check runs on Kedi's budget wrapper instead of the provider model.
+
+So the trade-off is explicit: provider compaction is cheaper; agent-led compaction keeps instructions that
+arrive during the task. Neither dominates on both axes yet.
+
 ## 8. Conclusion — what is shown and what is not
 
 Shown, on four synthetic tasks with one model:
 - Compacting with the agent's own context (the fork) is significantly better than no compaction and than a
-  free-text external summary, and at least as good as the best structured external summary (p = 0.053,
-  borderline) while cheaper or equal on every task.
-- What matters is that the agent compacts with its full context and chooses what stays. The output schema
-  does not matter for the fork; it matters a lot for an external summarizer.
+  free-text external summary, and at least as accurate as the best structured external summary and the
+  provider's own compaction (p = 0.053 for both over 20 runs).
+- Its specific advantage is **instructions that arrive during the task**: on the tasks with a mid-task rule
+  it was 10/10 against 6/10 for provider compaction (p = 0.043) and 7/10 for the best external summary.
+- Provider compaction is the cheapest (~30–35% less input than the fork); the fork is the cheapest of the
+  strategies that keep the mid-task rule.
+- What matters for the fork is that the agent compacts with its full context and chooses what stays; its
+  output schema does not matter. For an external summarizer the schema matters a lot.
 - Compaction improves correctness, not only cost: an unmanaged 55–400K context made more mistakes than a
   managed one, including breaking a rule it could still see.
 - It works in Kedi today as an ordinary history processor, after one framework fix.
@@ -200,12 +234,13 @@ Shown, on four synthetic tasks with one model:
 Not shown yet:
 - other models and providers; reasoning-on runs (blocked by item 1b);
 - real coding / research / tool-heavy tasks instead of synthetic logs;
-- a decisive margin over the structured external summary (needs more seeds);
+- a decisive margin over the structured external summary and over provider compaction (needs more seeds);
+- the stateless `/responses/compact` endpoint (unavailable on the Codex backend);
 - the progress-state mechanism in isolation.
 
 ## 9. Next steps (in order of evidence per cost)
 
-1. More seeds for A1-free vs B3 (n ≈ 15) to settle the borderline comparison.
+1. More seeds for A1-free vs B3 and vs native (n ≈ 15), and more mid-task-rule tasks, to settle the borderline comparisons.
 2. A second model.
 3. Isolate the mechanism: A1 without `pending`; B3 with a Kedi-computed progress line.
 4. Item 1b, then a reasoning-on run.
@@ -224,3 +259,4 @@ Not shown yet:
 | phase 2 | A1 5/5 vs none 3/5, B2 1/5, B1 0/5 |
 | phase 3 | ablation: schema irrelevant for the fork; agent-chosen retention makes it cheap |
 | phase 4 | edge cases: A1-free 20/20; fork 39/40 vs stateless 22/40 |
+| phase 5 | provider compaction: 16/20, cheapest, loses mid-task rules (rev + long 6/10 vs fork 10/10) |
