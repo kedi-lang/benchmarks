@@ -18,7 +18,7 @@ from . import task2, task3
 ROOT = Path(__file__).parent
 RECORDS = ROOT / "records"
 OUT = ROOT / "results" / "PHASES_6_8.md"
-INFRA = ("RateLimit", "Timeout")
+INFRA = ("RateLimit", "Timeout", "usage_limit_reached")
 
 
 def _runs(folders: list[str], task: str, strategy: str) -> dict[int, dict]:
@@ -119,6 +119,9 @@ def main() -> None:
     lines += _probe(["phase6b_scope_supplement"], ["scope"])
     lines += _table("Phases 7 + 8 — reset / reassert, rev and long (seeds 1–15; rev seed 8 not generatable)", ["phase7_reset_reassert", "phase8_more_seeds"], ["rev", "long"], s7, "A1-free")
     lines += _table("Phases 7 + 8 — long only", ["phase7_reset_reassert", "phase8_more_seeds"], ["long"], s7, "A1-free")
+    lines += _table("Phase 9 H4 — long, seeds 201–215 (pre-registered; gpt-6-luna medium)", ["phase9_prereg"], ["long"], ["A1-free", "native", "native+reassert"], "A1-free")
+    lines += _table("Phase 9 H5 — second model gpt-6.1-terra, effort low (pre-registered)", ["phase9_prereg"], ["override", "format"], ["A1-free", "native"], "A1-free")
+    lines += _table("Phase 9 H6 — untrusted fake instruction in tool output (pre-registered)", ["phase9_prereg"], ["override-inject"], ["A1-free", "native", "none"], "A1-free")
     OUT.write_text("\n".join(lines) + "\n")
     print(OUT)
 

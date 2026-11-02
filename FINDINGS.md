@@ -1,6 +1,6 @@
 # Findings — who should manage an agent's context?
 
-Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-02, phases 1–8.
+Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-02, phases 1–9 (phase 9 partly; see below).
 `REPORT.md` (phases 1–5, the exploratory story) is preserved unchanged in substance; this file follows the
 research brief's reporting format and covers everything, with phases 6–8 as the main evidence. Tables:
 `results/RESULTS.md` (phases 2–5) and `results/PHASES_6_8.md` (phases 6–8), both generated from `records/`.
@@ -21,7 +21,10 @@ grading. Primary statistic: exact paired McNemar.
 - **Short tasks: simple methods suffice.** On `rev` (8 logs, 14 seeds) a deterministic runtime checkpoint
   ("reset on policy") passed 13/14 at the lowest cost (84K median input); A1-free 12/14, native+reassert 12/14,
   native 11/14, no compaction 12/14. No meaningful differences.
-- **Long tasks: the fork is the most robust.** On `long` (20 logs, 15 seeds): A1-free 12/15,
+- **Long horizon, confirmed (phase 9, pre-registered, new seeds 201–215):** A1-free 15/15 vs native 8/15 on
+  `long`, 7 vs 0 discordant pairs, one-sided p = 0.0078 (two-sided 0.016), below the Holm threshold for
+  phase 9's three hypotheses. Native's failures were again policy violations (13).
+- **Long tasks (exploratory phases 7–8): the fork is the most robust.** On `long` (20 logs, 15 seeds): A1-free 12/15,
   native+reassert 9/14, native 8/15, no compaction 6/15, deterministic reset 4/15. A1-free vs reset p = 0.011,
   vs no compaction p = 0.035, vs native p = 0.14, vs native+reassert p = 0.25 (2 vs 0).
 - **Restating the policy fixes most of native's violations** (11 → 4 on `long`, 8 → 0 on `rev`) at no extra
@@ -70,8 +73,9 @@ compaction calls, median output incl. compaction output, median calls incl. fork
 | phase 6 control k=2 (45) | 10–4, p=0.090 | – | – | 15–2, p=0.001 | 19–2, p=0.0001 |
 | phases 7+8 rev+long (28–29) | 9–4, p=0.133 | 3–1, p=0.31 | 10–3, p=0.046 | – | 8–2, p=0.055 |
 | phases 7+8 long (14–15) | 6–2, p=0.14 | 2–0, p=0.25 | 9–1, p=0.011 | – | 7–1, p=0.035 |
+| **phase 9 H4 long, new seeds (15)** | **7–0, p=0.0078** | 0–0 (4 pairs) | – | – | – |
 
-Only the phase-6 k=5 native comparison is confirmatory (pre-registered). Everything else is exploratory;
+Confirmatory (pre-registered): phase 6 k=5 vs native and phase 9 H4 vs native. Everything else is exploratory;
 many comparisons were made, so treat p ≈ 0.03–0.06 values outside phase 6 as suggestive, not as findings.
 
 ## 6. Mechanism
@@ -148,6 +152,14 @@ output, reasoning off, n = 14–30 per comparison.
 
 Suggested title: **Who Should Manage an Agent's Context? Native Compaction, Agent Forks, and Policy Changes
 in Kedi.**
+
+## Phase 9 status
+
+`PREREGISTRATION_PHASE9.md` (committed `fb1d0e7` before any run). H4 complete (above). The subscription's
+usage quota ran out during the run (`usage_limit_reached`): H4's secondary arm native+reassert has 4/15 runs
+(4/4 pass), H5 (second model `gpt-6.1-terra`, effort low) has only 7 A1-free runs (1/7 pass) and no native runs,
+H6 (fake instruction in tool output) has none. Per the pre-registration the missing runs are rerun once with
+the same seeds when the quota resets; until then H5 and H6 are **not tested**.
 
 ## Not done (brief items), with commands
 

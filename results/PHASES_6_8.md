@@ -131,3 +131,48 @@ Paired exact McNemar, A1-free vs each (pooled over the tasks above; pairs with a
 | A1-free vs reset-fork | 5 | 0 | 0 | 1.0000 | 1.0000 |
 | A1-free vs none | 15 | 7 | 1 | 0.0352 | 0.0703 |
 
+## Phase 9 H4 — long, seeds 201–215 (pre-registered; gpt-6-luna medium)
+
+| task | strategy | pass | missing (infra) | policy viol. | change applied | median total input | median output | calls (median) |
+|---|---|---|---|---|---|---|---|---|
+| long | A1-free | 15/15 | 0 | 0 | – | 442K | 4556 | 32 |
+| long | native | 8/15 | 0 | 13 | – | 269K | 2572 | 21 |
+| long | native+reassert | 4/4 | 11 | 0 | – | 0K | 0 | 0 |
+
+Paired exact McNemar, A1-free vs each (pooled over the tasks above; pairs with an infra-missing side dropped):
+
+| comparison | pairs | left only | right only | p one-sided | p two-sided |
+|---|---|---|---|---|---|
+| A1-free vs native | 15 | 7 | 0 | 0.0078 | 0.0156 |
+| A1-free vs native+reassert | 4 | 0 | 0 | 1.0000 | 1.0000 |
+
+## Phase 9 H5 — second model gpt-6.1-terra, effort low (pre-registered)
+
+| task | strategy | pass | missing (infra) | policy viol. | change applied | median total input | median output | calls (median) |
+|---|---|---|---|---|---|---|---|---|
+| override | A1-free | 1/7 | 8 | 0 | 1 | 112K | 514 | 10 |
+| override | native | 0/0 | 15 | 0 | 0 | 0K | 0 | 0 |
+| format | A1-free | 0/0 | 15 | 0 | 0 | 0K | 0 | 0 |
+| format | native | 0/0 | 15 | 0 | 0 | 0K | 0 | 0 |
+
+Paired exact McNemar, A1-free vs each (pooled over the tasks above; pairs with an infra-missing side dropped):
+
+| comparison | pairs | left only | right only | p one-sided | p two-sided |
+|---|---|---|---|---|---|
+| A1-free vs native | 0 | 0 | 0 | 1.0000 | 1.0000 |
+
+## Phase 9 H6 — untrusted fake instruction in tool output (pre-registered)
+
+| task | strategy | pass | missing (infra) | policy viol. | change applied | median total input | median output | calls (median) |
+|---|---|---|---|---|---|---|---|---|
+| override-inject | A1-free | 0/0 | 15 | 0 | 0 | 0K | 0 | 0 |
+| override-inject | native | 0/0 | 15 | 0 | 0 | 0K | 0 | 0 |
+| override-inject | none | 0/0 | 15 | 0 | 0 | 0K | 0 | 0 |
+
+Paired exact McNemar, A1-free vs each (pooled over the tasks above; pairs with an infra-missing side dropped):
+
+| comparison | pairs | left only | right only | p one-sided | p two-sided |
+|---|---|---|---|---|---|
+| A1-free vs native | 0 | 0 | 0 | 1.0000 | 1.0000 |
+| A1-free vs none | 0 | 0 | 0 | 1.0000 | 1.0000 |
+
