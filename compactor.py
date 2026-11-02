@@ -335,3 +335,155 @@ def _preview_full(messages: list[ModelMessage]) -> str:
             elif name:
                 lines.append(f"[{part.part_kind} {name}] {getattr(part, 'args', '')}")
     return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------------------------
+# Phase 7 (brief P1): does a reset or a restated policy explain the fork's advantage?
+# ---------------------------------------------------------------------------------------------
+
+EVIDENCE = re.compile(
+    r"^(?:\d{4} )?.*?\b((?:INCIDENT|UPDATE|RETRACT) inc-\d+.*|[A-Z ]*CHANGE:.*)$", re.MULTILINE
+)
+POLICY = re.compile(r"[A-Z ]*CHANGE:.*")
+
+
+def _observed(messages: list[ModelMessage]) -> dict[str, Any]:
+    """Facts, instruction changes and progress, taken only from tool results already returned."""
+    from pydantic_ai.messages import ToolCallPart, ToolReturnPart
+
+    calls: dict[str, str] = {}
+    evidence: list[str] = []
+    read: list[str] = []
+    for message in messages:
+        for part in message.parts:
+            if isinstance(part, ToolCallPart):
+                args = part.args if isinstance(part.args, dict) else json.loads(part.args or "{}")
+                calls[part.tool_call_id] = str(args.get("name", "?"))
+            elif isinstance(part, ToolReturnPart) and part.tool_name == "read_log":
+                name = calls.get(part.tool_call_id, "?")
+                read.append(name)
+                for line in EVIDENCE.findall(str(part.content)):
+                    evidence.append(f"[{name}] {line.strip()}")
+    return {"read": read, "evidence": evidence, "policies": [e for e in evidence if POLICY.search(e)]}
+
+
+def _progress(read: list[str]) -> str:
+    numbers = sorted({int(n.removeprefix("log_")) for n in read if n.startswith("log_") and n[4:].isdigit()})
+    last = numbers[-1] if numbers else 0
+    return (
+        f"Logs already read: {', '.join(f'log_{n}' for n in numbers) or 'none'}. "
+        f"Next log to read: log_{last + 1} (if it exists; the task says how many logs there are)."
+    )
+
+
+def _deterministic_block(observed: dict[str, Any]) -> str:
+    parts = ["[Runtime checkpoint — built from tool results already returned, not a model summary]"]
+    if observed["policies"]:
+        parts.append(
+            "Instruction changes received during the task (latest wins):\n"
+            + "\n".join(f"- {p}" for p in observed["policies"])
+        )
+    facts = [e for e in observed["evidence"] if not POLICY.search(e)]
+    parts.append("Evidence lines seen so far:\n" + ("\n".join(f"- {f}" for f in facts) or "- none"))
+    parts.append("Progress: " + _progress(observed["read"]))
+    return "\n\n".join(parts)
+
+
+def _accumulate(state: dict[str, Any], messages: list[ModelMessage]) -> dict[str, Any]:
+    """Runtime ledger of everything tool results have returned so far, kept across resets."""
+    ledger = state.setdefault("ledger", {"read": [], "evidence": []})
+    observed = _observed(messages)
+    for name in observed["read"]:
+        if name not in ledger["read"]:
+            ledger["read"].append(name)
+    for line in observed["evidence"]:
+        if line not in ledger["evidence"]:
+            ledger["evidence"].append(line)
+    return {
+        "read": ledger["read"],
+        "evidence": ledger["evidence"],
+        "policies": [e for e in ledger["evidence"] if POLICY.search(e)],
+    }
+
+
+def _new_policy(state: dict[str, Any], messages: list[ModelMessage]) -> bool:
+    seen = len(_accumulate(state, messages)["policies"])
+    fresh = seen > state.get("policies", 0)
+    state["policies"] = seen
+    return fresh
+
+
+def deterministic_reset(log: CompactionLog, *, threshold: int):
+    """reset-det: at the threshold and on every instruction change, replace the history with the
+    protected prompt, a runtime-built checkpoint and the current exchange (same-session replacement)."""
+    state: dict[str, Any] = {}
+
+    def process(ctx: Any) -> list[ModelMessage]:
+        policy = _new_policy(state, list(ctx.messages))
+        if ctx.estimated_tokens < threshold and not policy:
+            return list(ctx.messages)
+        groups = _groups(ctx)
+        layout = normalize(groups, parse_proposal({"keep": []}))
+        observed = _accumulate(state, list(ctx.messages))
+        event = {
+            "strategy": "reset-det",
+            "before": ctx.estimated_tokens,
+            "trigger": "policy" if policy else "threshold",
+            "dropped": len(layout.dropped),
+            "policies": observed["policies"],
+        }
+        if not layout.dropped:
+            event.update(_retention(ctx.messages, ctx.messages))
+            log.events.append(event)
+            return list(ctx.messages)
+        return _finish(ctx, log, event, layout.segments, _deterministic_block(observed))
+
+    return process
+
+
+def fork_with_policy_trigger(model: RecordingModel, log: CompactionLog, *, threshold: int):
+    """reset-fork: A1-free, also triggered by every instruction change (reset timing held equal)."""
+    inner = fork_compactor(model, log, structured=False, dynamic=True)
+    state: dict[str, Any] = {}
+
+    async def process(ctx: Any) -> list[ModelMessage]:
+        policy = _new_policy(state, list(ctx.messages))
+        if ctx.estimated_tokens < threshold and not policy:
+            return list(ctx.messages)
+        before = len(log.events)
+        out = await inner(ctx)
+        if len(log.events) > before:
+            log.events[-1]["trigger"] = "policy" if policy else "threshold"
+        return out
+
+    return process
+
+
+def policy_reassert(log: CompactionLog):
+    """native+reassert: when an instruction change or a new native compaction appears, the runtime
+    restates the instruction changes verbatim in a message just before the current exchange."""
+    from pydantic_ai.messages import CompactionPart
+
+    state: dict[str, Any] = {"compactions": 0}
+
+    def process(ctx: Any) -> list[ModelMessage]:
+        messages = list(ctx.messages)
+        policy = _new_policy(state, messages)
+        compactions = sum(isinstance(p, CompactionPart) for m in messages for p in m.parts)
+        fresh_compaction = compactions > state["compactions"]
+        state["compactions"] = compactions
+        observed = _accumulate(state, messages)
+        if not observed["policies"] or not (policy or fresh_compaction):
+            return messages
+        current = ctx.groups[-1]
+        block = (
+            "[Runtime restatement of instruction changes received during the task (latest wins)]\n"
+            + "\n".join(f"- {p}" for p in observed["policies"])
+        )
+        log.events.append(
+            {"strategy": "native+reassert", "trigger": "policy" if policy else "native-compaction",
+             "before": ctx.estimated_tokens}
+        )
+        return [*messages[: current.entry_start], ModelRequest(parts=[UserPromptPart(block)]), *messages[current.entry_start :]]
+
+    return process

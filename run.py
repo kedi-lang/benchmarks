@@ -19,6 +19,9 @@ from .loop_guard import guard_event_loops
 from .compactor import (
     CompactionLog,
     RecordingModel,
+    deterministic_reset,
+    fork_with_policy_trigger,
+    policy_reassert,
     fork_compactor,
     stateless_compactor,
     truncation_compactor,
@@ -119,8 +122,15 @@ def _estimated_tokens(messages: list) -> int:
 
 
 def run_one(
-    strategy: str, seed: int, threshold: int, model_name: str, effort: str, task: str = "t1"
+    strategy: str,
+    seed: int,
+    threshold: int,
+    model_name: str,
+    effort: str,
+    task: str = "t1",
+    legacy_native: bool = False,
 ) -> dict:
+    """`legacy_native` reproduces phase 5 (capability attached directly, before the Kedi fix)."""
     from kedi.agent_adapter import PydanticAdapter
     from kedi.agent_adapter.invocation import InvocationUsage, observe_invocations
     from kedi.interactive_session import InteractiveSession
@@ -137,7 +147,7 @@ def run_one(
     state.TASK = task1.TASK if case is None else task3.TASK if held_out else task2.task_text(case)
     cache_key = f"ac-{uuid.uuid4().hex[:10]}"
     log = CompactionLog()
-    native = strategy in {"native", "native-compact"}
+    native = strategy in {"native", "native-compact", "native+reassert"}
     model = (
         _native_model(model_name, effort, cache_key, log.events)
         if native
@@ -153,20 +163,31 @@ def run_one(
         "none": lambda: None,
         "native": lambda: None,
         "native-compact": lambda: None,
+        "reset-det": lambda: deterministic_reset(log, threshold=threshold),
+        "reset-fork": lambda: fork_with_policy_trigger(model, log, threshold=threshold),
+        "native+reassert": lambda: policy_reassert(log),
     }[strategy]()
-    state.CONDITION = lambda info: info.estimated_tokens >= threshold
+    # Policy-triggered strategies decide inside the processor (a condition cannot see messages).
+    state.CONDITION = (
+        (lambda info: True)
+        if strategy in {"reset-det", "reset-fork", "native+reassert"}
+        else (lambda info: info.estimated_tokens >= threshold)
+    )
     # `native` attaches the same capability Kedi's `compaction_mode: native` would; the DSL path
     # cannot be used here because Kedi checks the model type on its budget wrapper (bug, see REPORT).
+    native_block = NATIVE_HISTORY.replace("__THRESHOLD__", str(threshold))
     history = (
-        NATIVE_HISTORY.replace("__THRESHOLD__", str(threshold))
-        if strategy == "native" and held_out
+        native_block + HISTORY.split("enabled: true\n", 1)[1]
+        if strategy == "native+reassert"
+        else native_block
+        if strategy == "native" and (held_out or not legacy_native)
         else HISTORY
         if processor
         else ""
     )
     source = SOURCE_HEAD + history + SOURCE_TAIL + (PROBE_TAIL if held_out else "")
     adapter_options: dict = {}
-    if strategy == "native" and not held_out:
+    if strategy == "native" and not held_out and legacy_native:
         from pydantic_ai.models.openai import OpenAICompaction
 
         adapter_options["capabilities"] = [OpenAICompaction(token_threshold=threshold)]
@@ -230,7 +251,7 @@ def run_one(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--strategy", required=True, choices=["none", "B1", "B2", "B3", "A1", "A1-free", "A1-fixed", "native", "native-compact"])
+    parser.add_argument("--strategy", required=True, choices=["none", "B1", "B2", "B3", "A1", "A1-free", "A1-fixed", "native", "native-compact", "reset-det", "reset-fork", "native+reassert"])
     parser.add_argument("--seeds", type=int, nargs="+", default=[1])
     parser.add_argument("--threshold", type=int, default=18_000)
     parser.add_argument("--model", default="gpt-6-luna")
