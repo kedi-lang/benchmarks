@@ -4,9 +4,11 @@ Can an agent compact its own conversation history better than no compaction, tru
 summarizer? This folder holds everything for that experiment: code, raw records, generated results, the
 narrative report and the original plan.
 
+- `FINDINGS.md` — current conclusions (phases 1–8) in the research brief's format; start here.
 - `REPORT.md` — the full story in order: hypothesis, design, every phase, numbers, dead ends, framework
   findings, caveats. Source for the blog post.
-- `results/RESULTS.md` — every table, regenerated from `records/` by `summarize.py`. Do not edit by hand.
+- `results/RESULTS.md` (phases 2–5, `summarize.py`) and `results/PHASES_6_8.md` (`summarize_6_8.py`) — tables generated from `records/`. Do not edit by hand.
+- `PREREGISTRATION.md` — the frozen phase-6 protocol.
 - `PLAN.md` — the working plan and lab notes as they were written during the experiment (copy of
   `plans/AGENT_COMPACTION_EXPERIMENT_PLAN.md` in the Kedi workspace).
 - `environment.json` — model, library versions and Kedi commits the records were produced with.

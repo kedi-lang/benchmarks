@@ -1,5 +1,7 @@
 # Letting the agent compact its own context — experiment report
 
+> Phases 6–8 (pre-registered held-out test, resets, more seeds) are in `FINDINGS.md`, which supersedes the conclusions below where they differ.
+
 Status: 2026-11-01, phases 1–5 complete. Every number below comes from `records/` (tables regenerated in
 `results/RESULTS.md`) or, for phase 1, from the probe output recorded in `PLAN.md` §10.
 
