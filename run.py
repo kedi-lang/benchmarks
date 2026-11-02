@@ -144,7 +144,13 @@ def run_one(
         None if task == "t1" else task3.scenario(task, seed) if held_out else task2.scenario(task, seed)
     )
     state.SCENARIO = case
-    state.TASK = task1.TASK if case is None else task3.TASK if held_out else task2.task_text(case)
+    state.TASK = (
+        task1.TASK
+        if case is None
+        else (task3.TASK_INJECT if case.inject else task3.TASK)
+        if held_out
+        else task2.task_text(case)
+    )
     cache_key = f"ac-{uuid.uuid4().hex[:10]}"
     log = CompactionLog()
     native = strategy in {"native", "native-compact", "native+reassert"}
