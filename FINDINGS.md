@@ -116,6 +116,12 @@ summary blocks accumulate as protected messages for all processor strategies.
 | no compaction | not recommended past ~50K | slower, expensive, worse instruction following |
 A hybrid (native + restatement, fork only on long horizons) is a proposal, not tested.
 
+## 8b. Cache claims withdrawn
+
+Phase 1's cache probe was only written down as notes. Its rerun with raw records
+(`records/phase1_cache_probe/`) did not reproduce it (fork cache hit 2/6, not 5/6; output-tool fork hit 1/6,
+not 0/6). No cache claim is made; accuracy and token results do not depend on caching.
+
 ## 9. Kedi issues and patches
 
 - Fixed: history processors could not trim a running tool loop (`dafe680`).
