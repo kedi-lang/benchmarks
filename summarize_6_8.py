@@ -18,7 +18,7 @@ from . import task2, task3
 ROOT = Path(__file__).parent
 RECORDS = ROOT / "records"
 OUT = ROOT / "results" / "PHASES_6_8.md"
-INFRA = ("RateLimit", "Timeout", "usage_limit_reached")
+INFRA = ("RateLimit", "Timeout", "usage_limit_reached", "ModelConnectionError")
 
 
 def _runs(folders: list[str], task: str, strategy: str) -> dict[int, dict]:
