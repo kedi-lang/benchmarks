@@ -1,6 +1,6 @@
 # Findings — who should manage an agent's context?
 
-Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-03, phases 1–9 (phase 9: 8 H5 reruns still wait for the quota; see below).
+Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-03, phases 1–10 (phase 9: 8 H5 reruns still wait for the quota; see below).
 `REPORT.md` (phases 1–5, the exploratory story) is preserved unchanged in substance; this file follows the
 research brief's reporting format and covers everything, with phases 6–8 as the main evidence. Tables:
 `results/RESULTS.md` (phases 2–5) and `results/PHASES_6_8.md` (phases 6–8), both generated from `records/`.
@@ -41,6 +41,14 @@ grading. Primary statistic: exact paired McNemar.
   (3 vs 1, p = 0.31) and no compaction 8/15. No strategy obeyed the fake instruction (0/15 each), so the
   pre-registered condition for the claim holds: the fork did not promote untrusted text more often than
   native. With 0/15 everywhere, the test cannot show a difference in that direction either.
+- **Second model family, not confirmed, at a ceiling (phase 10 H7, pre-registered):** with
+  `deepseek-v4.1-flash` (1M-token context, through OpenRouter) on `long`, seeds 401–415, every strategy
+  nearly always passes. A1-free 15/15, stateless summary B3 14/15 (1 vs 0 discordant pairs, p = 0.50), no
+  compaction 15/15. B3's one failure dropped an incident (`missing` 1), as stateless summaries did on luna.
+  On this model, compacting at an 18K threshold neither helps nor hurts accuracy: the fork costs about twice the
+  input tokens of no compaction (median 2.5M vs 1.26M) and more output. Measured cost on the pilot seed was
+  $0.080 vs $0.004. Native compaction does not exist for this model, so the phase 6/9 claim against native
+  is not tested here.
 - **Long tasks (exploratory phases 7–8): the fork is the most robust.** On `long` (20 logs, 15 seeds): A1-free 12/15,
   native+reassert 9/14, native 8/15, no compaction 6/15, deterministic reset 4/15. A1-free vs reset p = 0.011,
   vs no compaction p = 0.035, vs native p = 0.14, vs native+reassert p = 0.25 (2 vs 0).
@@ -75,7 +83,8 @@ grading. Primary statistic: exact paired McNemar.
 compaction calls, every compaction event, probe). Phases: `phase2_task1_baselines`, `phase3_task1_ablation`,
 `phase4_edge_cases`, `phase5_native`, `phase6_heldout` (includes the rate-limited first attempts),
 `phase6b_scope_supplement`, `phase7_reset_reassert`, `phase8_more_seeds`, `phase9_prereg` (all attempts,
-including the rate-limited first attempts and the reruns).
+including the rate-limited first attempts and the reruns), `phase10_prereg`, and `pilot_deepseek` (pilot runs
+before phase 10, with their own README).
 
 ## 4. Main tables
 
@@ -94,8 +103,10 @@ compaction calls, median output incl. compaction output, median calls incl. fork
 | **phase 9 H4 long, new seeds (15)** | **7–0, p=0.0078** | 0–0 (4 pairs) | – | – | – |
 | phase 9 H5 terra low, override+format (19) | 1–0, p=0.50 | – | – | – | – |
 | phase 9 H6 override-inject (15) | 3–1, p=0.31 | – | – | – | 5–0, p=0.031 |
+| phase 10 H7 long, deepseek-v4.1-flash (15) | – | – | – | 1–0, p=0.50 | 0–0 |
 
-Confirmatory (pre-registered): phase 6 k=5 vs native and phase 9 H4–H6 vs native. With a Holm correction over
+Confirmatory (pre-registered): phase 6 k=5 vs native, phase 9 H4–H6 vs native, and phase 10 H7 vs B3 (single
+primary, not confirmed). With a Holm correction over
 phase 9's three hypotheses, H4 holds (0.0078 < 0.05/3); H5 (0.50) and H6 (0.31) are not confirmed with or without
 it. A1-free vs none on H6 is secondary. Everything else is exploratory;
 many comparisons were made, so treat p ≈ 0.03–0.06 values outside phase 6 as suggestive, not as findings.
@@ -195,6 +206,16 @@ quota (`usage_limit_reached`); per the pre-registration each such seed got one r
 - **Classification:** a `503` (server unavailable) counts as infrastructure, like a connection error,
   because the request was not served. `summarize_6_8.py` now lists it with the other infra errors; before,
   the three 503s were counted as strategy failures.
+
+## Phase 10 status
+
+`PREREGISTRATION_PHASE10.md` (committed `4833f5e` before any test run). It was complete: 45/45 runs, no infra
+failures. Total spend about $3.4 of OpenRouter credit, plus about $0.2 for the pilots.
+
+The pilot (`records/pilot_deepseek/`, seeds 301–303) was disclosed in the pre-registration. It showed that this
+model applies changes delivered in tool output, unlike terra, and that it passes `long` even without
+compaction. That is why the primary compares the fork with a stateless summary instead of with none. The
+ceiling still held for B3, so H7 cannot separate the strategies on this model.
 
 ## Not done (brief items), with commands
 

@@ -123,6 +123,7 @@ def main() -> None:
     lines += _table("Phase 9 H4 — long, seeds 201–215 (pre-registered; gpt-6-luna medium)", ["phase9_prereg"], ["long"], ["A1-free", "native", "native+reassert"], "A1-free")
     lines += _table("Phase 9 H5 — second model gpt-6.1-terra, effort low (pre-registered)", ["phase9_prereg"], ["override", "format"], ["A1-free", "native"], "A1-free")
     lines += _table("Phase 9 H6 — untrusted fake instruction in tool output (pre-registered)", ["phase9_prereg"], ["override-inject"], ["A1-free", "native", "none"], "A1-free")
+    lines += _table("Phase 10 H7 — long, deepseek-v4.1-flash via OpenRouter, seeds 401–415 (pre-registered; primary A1-free vs B3)", ["phase10_prereg"], ["long"], ["A1-free", "B3", "none"], "A1-free")
     OUT.write_text("\n".join(lines) + "\n")
     print(OUT)
 

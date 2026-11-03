@@ -176,3 +176,18 @@ Paired exact McNemar, A1-free vs each (pooled over the tasks above; pairs with a
 | A1-free vs native | 15 | 3 | 1 | 0.3125 | 0.6250 |
 | A1-free vs none | 15 | 5 | 0 | 0.0312 | 0.0625 |
 
+## Phase 10 H7 — long, deepseek-v4.1-flash via OpenRouter, seeds 401–415 (pre-registered; primary A1-free vs B3)
+
+| task | strategy | pass | missing (infra) | policy viol. | change applied | median total input | median output | calls (median) |
+|---|---|---|---|---|---|---|---|---|
+| long | A1-free | 15/15 | 0 | 0 | – | 2513K | 26222 | 39 |
+| long | B3 | 14/15 | 0 | 0 | – | 1263K | 7920 | 39 |
+| long | none | 15/15 | 0 | 0 | – | 1260K | 2843 | 21 |
+
+Paired exact McNemar, A1-free vs each (pooled over the tasks above; pairs with an infra-missing side dropped):
+
+| comparison | pairs | left only | right only | p one-sided | p two-sided |
+|---|---|---|---|---|---|
+| A1-free vs B3 | 15 | 1 | 0 | 0.5000 | 1.0000 |
+| A1-free vs none | 15 | 0 | 0 | 1.0000 | 1.0000 |
+

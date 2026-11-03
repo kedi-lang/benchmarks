@@ -270,3 +270,4 @@ Not shown yet:
 | phase 4 | edge cases: A1-free 20/20; fork 39/40 vs stateless 22/40 |
 | phase 5 | provider compaction: 16/20, cheapest, loses mid-task rules (rev + long 6/10 vs fork 10/10) |
 | phases 6–9 | held-out and pre-registered tests; see `FINDINGS.md`. Phase 9: long horizon confirmed (15/15 vs 8/15, p = 0.0078); second model at a floor (not confirmed); fake instruction obeyed by no strategy |
+| phase 10 | `deepseek-v4.1-flash`, long: all strategies at a ceiling (fork 15/15, stateless 14/15, none 15/15); compaction not needed on this model |
