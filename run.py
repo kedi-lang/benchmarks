@@ -114,6 +114,64 @@ def _native_model(model_name: str, effort: str, cache_key: str, events: list) ->
     return guard_event_loops(model)
 
 
+COMPATIBLE = {
+    # prefix: (provider name, base URL, API key environment variable)
+    "openrouter": ("openrouter", "https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
+    "experiential": ("experiential", "https://api.experientiallabs.ai/v1", "EXPERIENTIAL_API_KEY"),
+}
+
+
+def _compatible_model(model_name: str, effort: str) -> Any:
+    """`openrouter:<id>` or `experiential:<id>`: an OpenAI-compatible Chat Completions model.
+
+    Gets the same base instruction the Codex models get, as a system prompt. Native compaction is
+    unavailable on these (Kedi supports it for OpenAI Responses and Anthropic only).
+    """
+    import os
+    from collections.abc import AsyncIterator
+    from contextlib import asynccontextmanager
+    from dataclasses import replace
+
+    import httpx
+    from pydantic_ai.messages import ModelRequest, SystemPromptPart
+    from pydantic_ai.models.openai import OpenAIChatModel
+    from pydantic_ai.models.wrapper import WrapperModel
+    from pydantic_ai.providers.openai_compatible import OpenAICompatibleProvider
+
+    from benchmarks.subagent_comparison.common.prompts import BASE_INSTRUCTIONS
+
+    prefix, _, name = model_name.partition(":")
+    provider_name, base_url, key_var = COMPATIBLE[prefix]
+    provider = OpenAICompatibleProvider(provider_name, base_url=base_url, api_key=os.environ[key_var])
+    model = OpenAIChatModel(name, provider=provider, settings={"openai_reasoning_effort": effort})
+    model.client.max_retries = 0
+    model.client.timeout = httpx.Timeout(600.0, connect=60.0)
+
+    def with_base(messages: list) -> list:
+        first = messages[0] if messages else None
+        if not isinstance(first, ModelRequest) or any(
+            isinstance(part, SystemPromptPart) and part.content == BASE_INSTRUCTIONS
+            for part in first.parts
+        ):
+            return messages
+        return [replace(first, parts=[SystemPromptPart(BASE_INSTRUCTIONS), *first.parts]), *messages[1:]]
+
+    class WithBaseInstructions(WrapperModel):
+        async def request(self, messages, model_settings, model_request_parameters):  # type: ignore[override]
+            return await super().request(with_base(messages), model_settings, model_request_parameters)
+
+        @asynccontextmanager
+        async def request_stream(  # type: ignore[override]
+            self, messages, model_settings, model_request_parameters, run_context=None
+        ) -> AsyncIterator[Any]:
+            async with super().request_stream(
+                with_base(messages), model_settings, model_request_parameters, run_context
+            ) as stream:
+                yield stream
+
+    return WithBaseInstructions(model)
+
+
 def _estimated_tokens(messages: list) -> int:
     """Kedi's estimator (UTF-8 bytes / 3), so native triggers at the same point as the others."""
     from pydantic_ai.messages import ModelMessagesTypeAdapter
@@ -154,9 +212,14 @@ def run_one(
     cache_key = f"ac-{uuid.uuid4().hex[:10]}"
     log = CompactionLog()
     native = strategy in {"native", "native-compact", "native+reassert"}
+    compatible = model_name.partition(":")[0] in COMPATIBLE
+    if native and compatible:
+        raise SystemExit(f"{strategy} needs provider compaction, which {model_name} does not offer")
     model = (
         _native_model(model_name, effort, cache_key, log.events)
         if native
+        else RecordingModel(_compatible_model(model_name, effort), cache_key=cache_key)
+        if compatible
         else RecordingModel(guard_event_loops(build_model(model_name, effort)), cache_key=cache_key)
     )
     processor = state.PROCESSOR = {
