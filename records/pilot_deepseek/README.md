@@ -16,5 +16,5 @@ a ceiling for this model. A test should use the longer `long` task. Cost: about 
 
 `long_t18k_A1-free.jsonl` and `long_t18k_none.jsonl`, seed 303: the gateway refused the model before any
 token was spent (`403 RestrictedModelsError`: free-tier credits have no access to `deepseek-v4.1-flash`;
-of the DeepSeek models tried, only `deepseek-v3.1` is open on the free tier). `run.py` gained the
-`vercel:<id>` prefix for this.
+of the DeepSeek models tried, only `deepseek-v3.1` is open on the free tier). The `vercel:<id>` prefix
+added to `run.py` for this was removed again (`git log -- run.py`).

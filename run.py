@@ -118,7 +118,6 @@ COMPATIBLE = {
     # prefix: (provider name, base URL, API key environment variable)
     "openrouter": ("openrouter", "https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
     "experiential": ("experiential", "https://api.experientiallabs.ai/v1", "EXPERIENTIAL_API_KEY"),
-    "vercel": ("vercel", "https://ai-gateway.vercel.sh/v1", "AI_GATEWAY_APIKEY"),
 }
 
 
