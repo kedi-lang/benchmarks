@@ -118,11 +118,12 @@ COMPATIBLE = {
     # prefix: (provider name, base URL, API key environment variable)
     "openrouter": ("openrouter", "https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
     "experiential": ("experiential", "https://api.experientiallabs.ai/v1", "EXPERIENTIAL_API_KEY"),
+    "vercel": ("vercel", "https://ai-gateway.vercel.sh/v1", "AI_GATEWAY_APIKEY"),
 }
 
 
 def _compatible_model(model_name: str, effort: str) -> Any:
-    """`openrouter:<id>` or `experiential:<id>`: an OpenAI-compatible Chat Completions model.
+    """`<gateway>:<id>` (see `COMPATIBLE`): an OpenAI-compatible Chat Completions model.
 
     Gets the same base instruction the Codex models get, as a system prompt. Native compaction is
     unavailable on these (Kedi supports it for OpenAI Responses and Anthropic only).
