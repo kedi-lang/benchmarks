@@ -18,3 +18,13 @@ a ceiling for this model. A test should use the longer `long` task. Cost: about 
 token was spent (`403 RestrictedModelsError`: free-tier credits have no access to `deepseek-v4.1-flash`;
 of the DeepSeek models tried, only `deepseek-v3.1` is open on the free tier). The `vercel:<id>` prefix
 added to `run.py` for this was removed again (`git log -- run.py`).
+
+## Long task on OpenRouter (2026-11-03)
+
+Seed 303, task `long`, `openrouter:deepseek/deepseek-v4.1-flash`, effort medium. These records are appended to
+the two `long_*` files above; the `model` field tells them apart from the refused Vercel attempts.
+- A1-free: strict pass, 18 compactions, about $0.080.
+- none: strict pass, 0 compactions, about $0.004 (1.10M of 1.26M input tokens read from cache).
+
+The model also passes `long` without compaction (luna: none 6/15), so a fork-vs-none primary would likely
+sit at a ceiling. That is why the phase 10 pre-registration compares the fork with a stateless summary.
