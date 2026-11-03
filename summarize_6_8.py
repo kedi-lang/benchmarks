@@ -18,7 +18,8 @@ from . import task2, task3
 ROOT = Path(__file__).parent
 RECORDS = ROOT / "records"
 OUT = ROOT / "results" / "PHASES_6_8.md"
-INFRA = ("RateLimit", "Timeout", "usage_limit_reached", "ModelConnectionError")
+# A 503 (server unavailable) is infrastructure like a connection error: the request was not served.
+INFRA = ("RateLimit", "Timeout", "usage_limit_reached", "ModelConnectionError", "status_code: 503")
 
 
 def _runs(folders: list[str], task: str, strategy: str) -> dict[int, dict]:

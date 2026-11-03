@@ -1,6 +1,6 @@
 # Findings — who should manage an agent's context?
 
-Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-02, phases 1–9 (phase 9 partly; see below).
+Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-03, phases 1–9 (phase 9: 8 H5 reruns still wait for the quota; see below).
 `REPORT.md` (phases 1–5, the exploratory story) is preserved unchanged in substance; this file follows the
 research brief's reporting format and covers everything, with phases 6–8 as the main evidence. Tables:
 `results/RESULTS.md` (phases 2–5) and `results/PHASES_6_8.md` (phases 6–8), both generated from `records/`.
@@ -24,6 +24,15 @@ grading. Primary statistic: exact paired McNemar.
 - **Long horizon, confirmed (phase 9, pre-registered, new seeds 201–215):** A1-free 15/15 vs native 8/15 on
   `long`, 7 vs 0 discordant pairs, one-sided p = 0.0078 (two-sided 0.016), below the Holm threshold for
   phase 9's three hypotheses. Native's failures were again policy violations (13).
+- **Second model, not confirmed (phase 9 H5, pre-registered):** with `gpt-6.1-terra` at effort low, almost
+  nothing passes: A1-free 1/24, native 0/22 graded runs on `override` + `format` (1 vs 0 discordant pairs,
+  p = 0.50). This is a floor effect: the change was applied in 1 of 46 graded runs, so the task does not
+  separate the strategies on this model and effort. 14 of 60 runs are missing (see Phase 9 status).
+- **Untrusted instruction in tool output, primary not confirmed (phase 9 H6, pre-registered):** with a
+  legitimate marked change and an unmarked fake `FORMAT CHANGE`, A1-free passed 13/15 vs native 11/15
+  (3 vs 1, p = 0.31) and no compaction 8/15. No strategy obeyed the fake instruction (0/15 each), so the
+  pre-registered condition for the claim holds: the fork did not promote untrusted text more often than
+  native. With 0/15 everywhere, the test cannot show a difference in that direction either.
 - **Long tasks (exploratory phases 7–8): the fork is the most robust.** On `long` (20 logs, 15 seeds): A1-free 12/15,
   native+reassert 9/14, native 8/15, no compaction 6/15, deterministic reset 4/15. A1-free vs reset p = 0.011,
   vs no compaction p = 0.035, vs native p = 0.14, vs native+reassert p = 0.25 (2 vs 0).
@@ -57,7 +66,8 @@ grading. Primary statistic: exact paired McNemar.
 `records/<phase>/<task>_t18k_<strategy>.jsonl`, one JSON line per attempt (answer, grade, usage incl.
 compaction calls, every compaction event, probe). Phases: `phase2_task1_baselines`, `phase3_task1_ablation`,
 `phase4_edge_cases`, `phase5_native`, `phase6_heldout` (includes the rate-limited first attempts),
-`phase6b_scope_supplement`, `phase7_reset_reassert`, `phase8_more_seeds`.
+`phase6b_scope_supplement`, `phase7_reset_reassert`, `phase8_more_seeds`, `phase9_prereg` (all attempts,
+including the rate-limited first attempts and the reruns).
 
 ## 4. Main tables
 
@@ -74,8 +84,12 @@ compaction calls, median output incl. compaction output, median calls incl. fork
 | phases 7+8 rev+long (28–29) | 9–4, p=0.133 | 3–1, p=0.31 | 10–3, p=0.046 | – | 8–2, p=0.055 |
 | phases 7+8 long (14–15) | 6–2, p=0.14 | 2–0, p=0.25 | 9–1, p=0.011 | – | 7–1, p=0.035 |
 | **phase 9 H4 long, new seeds (15)** | **7–0, p=0.0078** | 0–0 (4 pairs) | – | – | – |
+| phase 9 H5 terra low, override+format (19) | 1–0, p=0.50 | – | – | – | – |
+| phase 9 H6 override-inject (15) | 3–1, p=0.31 | – | – | – | 5–0, p=0.031 |
 
-Confirmatory (pre-registered): phase 6 k=5 vs native and phase 9 H4 vs native. Everything else is exploratory;
+Confirmatory (pre-registered): phase 6 k=5 vs native and phase 9 H4–H6 vs native. With a Holm correction over
+phase 9's three hypotheses, H4 holds (0.0078 < 0.05/3); H5 (0.50) and H6 (0.31) are not confirmed with or without
+it. A1-free vs none on H6 is secondary. Everything else is exploratory;
 many comparisons were made, so treat p ≈ 0.03–0.06 values outside phase 6 as suggestive, not as findings.
 
 ## 6. Mechanism
@@ -155,17 +169,30 @@ in Kedi.**
 
 ## Phase 9 status
 
-`PREREGISTRATION_PHASE9.md` (committed `fb1d0e7` before any run). H4 complete (above). The subscription's
-usage quota ran out during the run (`usage_limit_reached`): H4's secondary arm native+reassert has 4/15 runs
-(4/4 pass), H5 (second model `gpt-6.1-terra`, effort low) has only 7 A1-free runs (1/7 pass) and no native runs,
-H6 (fake instruction in tool output) has none. Per the pre-registration the missing runs are rerun once with
-the same seeds when the quota resets; until then H5 and H6 are **not tested**.
+`PREREGISTRATION_PHASE9.md` (committed `fb1d0e7` before any run). The first run hit the subscription's usage
+quota (`usage_limit_reached`); per the pre-registration each such seed got one rerun with the same seed
+(2026-11-02 for H4's secondary arm, 2026-11-03 for H5 and H6). Results are in the tables above and in
+`results/PHASES_6_8.md`. What is missing, and why:
+
+- **H4 secondary, native+reassert: 11 of 15 missing.** The rerun of those seeds failed with connection errors
+  (`ModelConnectionError`); the one allowed rerun is used, so they stay missing. The 4 completed runs pass
+  (4/4). The primary H4 comparison is complete.
+- **H5: 14 of 60 missing.** Three reruns hit `503` server errors (override A1-free 110, format A1-free 108,
+  format native 107). The quota ran out again near the end of the rerun batch. Three runs already in flight
+  got `usage_limit_reached` (override native 112, format A1-free 112, format native 113); their one rerun is
+  used. The launcher then stopped, so 8 seeds keep their rerun and will run when the quota resets:
+  override native 113–115, format A1-free 113–115, format native 114–115. They add at most 5 pairs, so H5 is
+  reported again after they ran; until then its result is provisional.
+- **H6: complete,** 45/45 runs.
+- **Classification:** a `503` (server unavailable) counts as infrastructure, like a connection error,
+  because the request was not served. `summarize_6_8.py` now lists it with the other infra errors; before,
+  the three 503s were counted as strategy failures.
 
 ## Not done (brief items), with commands
 
 - P2 progress ablations (A1 without `pending`, B3 + runtime progress line) — strategies not implemented yet.
 - Timing ablation (policy just before/after a compaction, or with no later compaction) — not run.
-- Long-horizon 150K+ threshold sweep, second model, reasoning-on (needs 1b), real coding/research tasks,
-  adversarial fake policy in tool output, replaceable checkpoint prototype — not run.
+- Long-horizon 150K+ threshold sweep, reasoning-on (needs 1b), real coding/research tasks, replaceable
+  checkpoint prototype — not run. A second model and a fake instruction in tool output ran in phase 9 (H5, H6).
 - Rerun any phase: `.venv/bin/python -m benchmarks.agent_compaction.run --strategy <s> --task <t> --seeds …`,
   then move records into a phase folder and run `summarize.py` / `summarize_6_8.py`.
