@@ -75,7 +75,7 @@ then regenerate the tables:
 uv run python -m agent_compaction.run --strategy A1-free --task long --seeds 201 202 203
 uv run python -m agent_compaction.summarize_6_8   # phases 6–10
 uv run python -m agent_compaction.summarize       # phases 2–5
-uv run pytest tests
+uv run pytest
 ```
 
 Defaults: `--model gpt-6-luna --effort medium --threshold 18000`. What each phase ran:
