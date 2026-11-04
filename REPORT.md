@@ -3,7 +3,7 @@
 > Phases 6–8 (pre-registered held-out test, resets, more seeds) are in `FINDINGS.md`, which supersedes the conclusions below where they differ.
 
 Status: 2026-11-01, phases 1–5 complete. Every number below comes from `records/` (tables regenerated in
-`results/RESULTS.md`) or, for phase 1, from the probe output recorded in `PLAN.md` §10.
+`results/RESULTS.md`) or, for phase 1, from the probe output recorded in `protocol/PLAN.md` §10.
 
 ## 1. Question
 
@@ -39,7 +39,7 @@ manage its own runtime (history, incremental execution, generated capabilities).
 appended to the last message: same model, same instructions, same tool definitions, same cache key. Tools
 stay declared but `tool_choice` is `none`, and text output is allowed, so the reply is the JSON proposal.
 
-**Kedi decides the layout, not the model** (`normalizer.py`): unknown ids are rejected; protected,
+**Kedi decides the layout, not the model** (`agent_compaction/normalizer.py`): unknown ids are rejected; protected,
 unfinished and current groups are always kept; kept groups go back to their original order; the
 compaction block is inserted at the first dropped group, so everything before it is byte-identical. The
 result passes Kedi's history-rewrite validation (atomic tool exchanges, protected entries, exact tail). A
@@ -112,7 +112,7 @@ Fix in Kedi (`dafe680`, "let history processors trim a running tool loop"): an u
 protected prompt plus one closed, droppable group per tool exchange that answers every call it makes; open
 or orphaned exchanges stay protected. Track A compaction keeps the whole latest cycle as before.
 
-Other framework findings recorded for later (`PLAN.md` §12):
+Other framework findings recorded for later (`protocol/PLAN.md` §12):
 - **1b**: entries with signed or encrypted reasoning are `provider_required` and can never be removed, so
   on reasoning models nothing is trimmed yet. Removing a whole closed exchange is valid for OpenAI and
   Anthropic; planned.
@@ -231,7 +231,7 @@ Shown, on four synthetic tasks with one model:
   free-text external summary, and at least as accurate as the best structured external summary and the
   provider's own compaction (paired McNemar p = 0.0625 for both over 20 runs: 4 discordant pairs each, all in its favor).
 - Its specific advantage is **instructions that arrive during the task**: on the tasks with a mid-task rule
-  it was 10/10 against 6/10 for provider compaction and 7/10 for the best external summary — not yet significant on a paired test (p = 0.0625); a held-out, pre-registered evaluation is set up in `PREREGISTRATION.md`.
+  it was 10/10 against 6/10 for provider compaction and 7/10 for the best external summary — not yet significant on a paired test (p = 0.0625); a held-out, pre-registered evaluation is set up in `protocol/PREREGISTRATION.md`.
 - Provider compaction is the cheapest (~30–35% less input than the fork); the fork is the cheapest of the
   strategies that keep the mid-task rule.
 - What matters for the fork is that the agent compacts with its full context and chooses what stays; its
@@ -260,7 +260,7 @@ Not shown yet:
 
 | when | what |
 |---|---|
-| phase 0 | plan written (`PLAN.md` §1–9) |
+| phase 0 | plan written (`protocol/PLAN.md` §1–9) |
 | phase 1 | normalizer + cache probe; fork keeps ~99% cache, output tool breaks it |
 | Kedi `9374d1f` | move to Pydantic AI 2.64 (cache usage reported correctly; `kedi-typesafe` 0.3.2 and `kedi-decisions` 0.1.2 released) |
 | phase 1b | first Kedi runs compact nothing; grouping limitation found |

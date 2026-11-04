@@ -1,6 +1,6 @@
 """Regenerate results/RESULTS.md from the raw records, so every published number traces to data.
 
-    .venv/bin/python -m benchmarks.agent_compaction.summarize
+    .venv/bin/python -m agent_compaction.summarize
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from pathlib import Path
 
 from . import task1, task2
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 RECORDS = ROOT / "records"
 OUT = ROOT / "results" / "RESULTS.md"
 

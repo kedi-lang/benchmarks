@@ -1,6 +1,6 @@
 """Run task 1 under one compaction strategy and record grade, usage and compaction events.
 
-    .venv/bin/python -m benchmarks.agent_compaction.run --strategy A1 --seeds 1 2 3
+    .venv/bin/python -m agent_compaction.run --strategy A1 --seeds 1 2 3
 Strategies: none (B0), B1 truncation, B2 stateless summary, A1 agent-led fork.
 """
 
@@ -27,11 +27,11 @@ from .compactor import (
     truncation_compactor,
 )
 
-RECORDS = Path(__file__).parent / "records"
+RECORDS = Path(__file__).resolve().parents[1] / "records"
 
 SOURCE_HEAD = """\
 ```
-from benchmarks.agent_compaction.state import PROCESSOR, CONDITION, TASK, PROBE, read_log
+from agent_compaction.state import PROCESSOR, CONDITION, TASK, PROBE, read_log
 ```
 
 ~Report(incidents: list[str], owner: str)
@@ -75,7 +75,7 @@ def _native_model(model_name: str, effort: str, cache_key: str, events: list) ->
     import httpx
     from codex_auth_helper import create_codex_responses_model
 
-    from benchmarks.agent_compaction.codex_model import BASE_INSTRUCTIONS
+    from agent_compaction.codex_model import BASE_INSTRUCTIONS
 
     model = create_codex_responses_model(
         model_name,
@@ -138,7 +138,7 @@ def _compatible_model(model_name: str, effort: str) -> Any:
     from pydantic_ai.models.wrapper import WrapperModel
     from pydantic_ai.providers.openai_compatible import OpenAICompatibleProvider
 
-    from benchmarks.agent_compaction.codex_model import BASE_INSTRUCTIONS
+    from agent_compaction.codex_model import BASE_INSTRUCTIONS
 
     prefix, _, name = model_name.partition(":")
     provider_name, base_url, key_var = COMPATIBLE[prefix]
@@ -194,7 +194,7 @@ def run_one(
     from kedi.interactive_session import InteractiveSession
     from kedi.promise import force
 
-    from benchmarks.agent_compaction.codex_model import build_model
+    from agent_compaction.codex_model import build_model
 
     state.SEED = seed
     held_out = task in task3.VARIANTS

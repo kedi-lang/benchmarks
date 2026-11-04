@@ -8,7 +8,7 @@ Requests, all on the same model, instructions and tool definitions:
   R5  [kept prefix] + compaction block     -> request after compaction (partial prefix)
   R6  compaction block only                -> stateless reset baseline (no prefix)
 
-Run: .venv/bin/python -m benchmarks.agent_compaction.cache_probe [--model gpt-6-luna]
+Run: .venv/bin/python -m agent_compaction.cache_probe [--model gpt-6-luna]
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ from pydantic_ai.messages import CachePoint, ModelRequest, ModelResponse, TextPa
 from pydantic_ai.models import ModelRequestParameters
 from pydantic_ai.tools import ToolDefinition
 
-from benchmarks.agent_compaction.codex_model import build_model
+from agent_compaction.codex_model import build_model
 
 TOOLS = [
     ToolDefinition(

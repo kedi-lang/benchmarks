@@ -2,7 +2,7 @@
 
 Copied verbatim from the Kedi workspace's `benchmarks/subagent_comparison/common/model.py` and
 `prompts.py` (unchanged since 2026-10-31), which every recorded run imported. The copy lets this
-folder run on its own.
+repository run on its own.
 """
 
 from __future__ import annotations

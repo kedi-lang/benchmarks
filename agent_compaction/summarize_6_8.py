@@ -1,6 +1,6 @@
 """Regenerate results/PHASES_6_8.md (held-out test, scope supplement, reset/reassert, more seeds).
 
-    .venv/bin/python -m benchmarks.agent_compaction.summarize_6_8
+    .venv/bin/python -m agent_compaction.summarize_6_8
 
 The last attempt per (task, strategy, seed) counts; infrastructure failures (rate limit, timeout) that
 remain after the single allowed rerun are reported as missing, not as strategy failures.
@@ -15,7 +15,7 @@ from pathlib import Path
 
 from . import task2, task3
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 RECORDS = ROOT / "records"
 OUT = ROOT / "results" / "PHASES_6_8.md"
 # A 503 (server unavailable) is infrastructure like a connection error: the request was not served.

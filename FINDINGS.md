@@ -74,7 +74,7 @@ grading. Primary statistic: exact paired McNemar.
 - "Reset" = same-session replacement through a Kedi history processor: protected prompt + runtime checkpoint
   + current exchange. Not a fresh provider conversation. Native + reset is **not implementable** in Kedi
   today: the opaque native compaction item is a protected checkpoint the processor may not remove.
-- Held-out set: `PREREGISTRATION.md` (committed `8217739` before any phase-6 run); harness committed
+- Held-out set: `protocol/PREREGISTRATION.md` (committed `8217739` before any phase-6 run); harness committed
   `b17e3a0` before results were read. Seeds 101–115.
 - Infra rule: rate-limit / timeout failures rerun once with the same seed; failures remaining after that are
   reported as missing. Request-limit and budget failures count against the strategy.
@@ -167,7 +167,7 @@ not 0/6). No cache claim is made; accuracy and token results do not depend on ca
 - Fixed: `compaction_mode: native` failed whenever a run budget was active (`8c6e7e8`, test `22931a1`).
 - Found, not fixed in Kedi: codex-auth-helper passes Pydantic AI a ready-made client that is never refreshed,
   so dependent templates on a new event loop fail with "Event loop is closed"; worked around by
-  `loop_guard.py`. Fix belongs in codex-auth-helper (client factory) or a single session loop in Kedi.
+  `agent_compaction/loop_guard.py`. Fix belongs in codex-auth-helper (client factory) or a single session loop in Kedi.
 - Open: signed-reasoning entries cannot be removed (1b); typed-output turns never close (2); summary blocks
   accumulate as protected prompts and user processors cannot emit replaceable checkpoints (4); the native
   compaction item cannot be dropped by a processor (blocks native + reset).
@@ -190,7 +190,7 @@ in Kedi.**
 
 ## Phase 9 status
 
-`PREREGISTRATION_PHASE9.md` (committed `fb1d0e7` before any run). The first run hit the subscription's usage
+`protocol/PREREGISTRATION_PHASE9.md` (committed `fb1d0e7` before any run). The first run hit the subscription's usage
 quota (`usage_limit_reached`); per the pre-registration each such seed got one rerun with the same seed
 (2026-11-02 for H4's secondary arm, 2026-11-03 for H5 and H6). Results are in the tables above and in
 `results/PHASES_6_8.md`. What is missing, and why:
@@ -207,12 +207,12 @@ quota (`usage_limit_reached`); per the pre-registration each such seed got one r
   1–0 (p = 0.50) to 1–1 (p = 0.75).
 - **H6: complete,** 45/45 runs.
 - **Classification:** a `503` (server unavailable) counts as infrastructure, like a connection error,
-  because the request was not served. `summarize_6_8.py` now lists it with the other infra errors; before,
+  because the request was not served. `agent_compaction/summarize_6_8.py` now lists it with the other infra errors; before,
   the three 503s were counted as strategy failures.
 
 ## Phase 10 status
 
-`PREREGISTRATION_PHASE10.md` (committed `4833f5e` before any test run). It was complete: 45/45 runs, no infra
+`protocol/PREREGISTRATION_PHASE10.md` (committed `4833f5e` before any test run). It was complete: 45/45 runs, no infra
 failures. Total spend about $3.4 of OpenRouter credit, plus about $0.2 for the pilots.
 
 The pilot (`records/pilot_deepseek/`, seeds 301–303) was disclosed in the pre-registration. It showed that this
@@ -228,5 +228,5 @@ before the budget was spent. Later pilots run every arm of the planned compariso
 - Timing ablation (policy just before/after a compaction, or with no later compaction) — not run.
 - Long-horizon 150K+ threshold sweep, reasoning-on (needs 1b), real coding/research tasks, replaceable
   checkpoint prototype — not run. A second model and a fake instruction in tool output ran in phase 9 (H5, H6).
-- Rerun any phase: `.venv/bin/python -m benchmarks.agent_compaction.run --strategy <s> --task <t> --seeds …`,
-  then move records into a phase folder and run `summarize.py` / `summarize_6_8.py`.
+- Rerun any phase: `.venv/bin/python -m agent_compaction.run --strategy <s> --task <t> --seeds …` (see
+  `README.md`), then move records into a phase folder and run `agent_compaction.summarize` / `agent_compaction.summarize_6_8`.

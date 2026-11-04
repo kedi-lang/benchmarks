@@ -54,7 +54,7 @@
     "phase 10": "4833f5e (the pre-registration commit)",
     "last 8 H5 seeds": "3d86fcf (run.py differs from fb1d0e7 only by the OpenAI-compatible model path)"
   },
-  "harness_dependencies": "Until 2026-11-04 run.py and cache_probe.py imported build_model and BASE_INSTRUCTIONS from the Kedi workspace's benchmarks/subagent_comparison/common (unchanged since 2026-10-31). codex_model.py now holds a verbatim copy.",
+  "harness_dependencies": "Until 2026-11-04 run.py and cache_probe.py imported build_model and BASE_INSTRUCTIONS from the Kedi workspace's benchmarks/subagent_comparison/common (unchanged since 2026-10-31). agent_compaction/codex_model.py now holds a verbatim copy (top-level codex_model.py from cbf6311 to e17ec87).",
   "kedi_profile": "> adapter: pydantic; > artifacts: enabled: false; > history: enabled: true, processor + processor_condition (estimated_tokens >= threshold); > use: read_log",
   "seeds": {
     "phases 2-5 and 7": "1-5",
@@ -64,5 +64,6 @@
     "phase 10 pilot": "301-303",
     "phase 10": "401-415"
   },
-  "reproduction_environment": "requirements.txt (Kedi from git at 833ce44) with constraints.txt (uv pip freeze of the runs' venv); checked in a fresh venv on 2026-11-04, see records/env_check"
+  "reproduction_environment": "requirements.txt (Kedi from git at 833ce44) with constraints.txt (uv pip freeze of the runs' venv); checked in a fresh venv on 2026-11-04, see records/env_check",
+  "layout": "Since the commit after e17ec87: harness in agent_compaction/, tests in tests/, plan and pre-registrations in protocol/; until e17ec87 every file was at the top level, imported as benchmarks.agent_compaction"
 }

@@ -1,6 +1,6 @@
 import pytest
 
-from benchmarks.agent_compaction.normalizer import (
+from agent_compaction.normalizer import (
     BLOCK,
     Group,
     Proposal,

@@ -1,51 +1,51 @@
 # Agent-led compaction experiment
 
 Can an agent compact its own conversation history better than no compaction, truncation, an external
-summarizer or the provider's own compaction? This folder holds everything for that experiment: code, raw
-records, generated results, the narrative report, the pre-registrations and the original plan.
+summarizer or the provider's own compaction? This repository holds everything for that experiment: the
+harness, raw records, generated results, the reports, the pre-registrations and the original plan.
 
-- `FINDINGS.md` — current conclusions (phases 1–10) in the research brief's format; start here.
-- `REPORT.md` — phases 1–5 told in order: hypothesis, design, every phase, numbers, dead ends, framework
-  findings, caveats. Source for the blog post.
-- `results/RESULTS.md` (phases 2–5, `summarize.py`) and `results/PHASES_6_8.md` (phases 6–10 despite the
-  name, `summarize_6_8.py`) — tables generated from `records/`. Do not edit by hand.
-- `PREREGISTRATION.md` (phase 6), `PREREGISTRATION_PHASE9.md`, `PREREGISTRATION_PHASE10.md` — the frozen
-  protocols, each committed before its runs.
-- `PLAN.md` — the working plan and lab notes as they were written during the experiment (copy of
-  `plans/AGENT_COMPACTION_EXPERIMENT_PLAN.md` in the Kedi workspace).
-- `environment.json` — models, library versions, and the Kedi and harness commits each phase ran with.
-- `requirements.txt`, `constraints.txt` — the environment: Kedi from git at a pinned commit, every other
-  package at the version the runs used.
-- `records/` — one JSON line per run attempt (answer, grade, usage, every compaction event, probe), grouped
-  by phase. `records/pilot_deepseek/README.md` describes the phase 10 pilot.
+## Layout
 
-## Code
-
-| file | role |
+| path | contents |
 |---|---|
-| `normalizer.py` | deterministic layout: forced keeps, original order, block at the first dropped group |
-| `test_normalizer.py` | unit tests for the normalizer |
+| `FINDINGS.md` | current conclusions (phases 1–10) in the research brief's format; start here |
+| `REPORT.md` | phases 1–5 told in order: hypothesis, design, numbers, dead ends, framework findings, caveats; source for the blog post |
+| `protocol/` | the pre-registrations, each committed before its runs (`PREREGISTRATION.md` for phase 6, `PREREGISTRATION_PHASE9.md`, `PREREGISTRATION_PHASE10.md`), and `PLAN.md`, the plan and lab notes as written during the experiment |
+| `agent_compaction/` | the harness, a Python package |
+| `tests/` | unit tests for the normalizer |
+| `records/` | one JSON line per run attempt (answer, grade, usage, every compaction event, probe), one folder per phase; `records/pilot_deepseek/` and `records/env_check/` have their own README |
+| `results/` | tables generated from `records/`; do not edit by hand |
+| `environment.json` | models, library versions, and the Kedi and harness commits each phase ran with |
+| `requirements.txt`, `constraints.txt` | the environment: Kedi from git at a pinned commit, every other package at the version the runs used |
+
+The documents in `protocol/` are kept as they were written. Their file paths and commands describe the
+layout of their time; see [Older commits](#older-commits).
+
+## Harness
+
+| module | role |
+|---|---|
+| `run.py` | runs one strategy on one task for a list of seeds and appends records |
 | `compactor.py` | strategies as Kedi `> history: processor:` callables (fork A1/A1-free/A1-fixed, stateless B2/B3, truncation B1, resets) and the `RecordingModel` wrapper |
-| `codex_model.py` | the Codex model builder and base instruction every run used (verbatim copy, see `environment.json`) |
-| `loop_guard.py` | keeps a `codex_auth_helper` model usable across Kedi invocations on different event loops |
-| `cache_probe.py` | phase 1: does a compaction fork read the prefix from the provider cache? |
+| `normalizer.py` | deterministic layout: forced keeps, original order, block at the first dropped group |
 | `task1.py` | task 1: rules in the prompt, eight noisy logs, one incident each |
 | `task2.py` | edge cases: `rev` (UPDATE/RETRACT/mid-task POLICY CHANGE), `long` (20 logs), `big` (oversized log) |
 | `task3.py` | held-out tasks: one instruction change (`override`, `format`, `scope`, their `-early` controls) and `override-inject` (phase 9 H6) |
 | `state.py` | values the Kedi program's Python prelude reads (processor, condition, task, tool) |
-| `run.py` | runs one strategy on one task for a list of seeds and appends records |
-| `summarize.py`, `summarize_6_8.py` | rebuild `results/RESULTS.md` and `results/PHASES_6_8.md` |
+| `codex_model.py` | the Codex model builder and base instruction every run used (verbatim copy, see `environment.json`) |
+| `loop_guard.py` | keeps a `codex_auth_helper` model usable across Kedi invocations on different event loops |
+| `cache_probe.py` | phase 1: does a compaction fork read the prefix from the provider cache? |
+| `summarize.py`, `summarize_6_8.py` | rebuild `results/RESULTS.md` (phases 2–5) and `results/PHASES_6_8.md` (phases 6–10, despite the name) |
 
 ## Reproduce
 
-**Setup.** The code imports itself as `benchmarks.agent_compaction`, so it runs from a working directory that
-holds this folder at `benchmarks/agent_compaction`. Kedi is installed from its repository at a pinned commit:
+**Setup.** Everything runs from the repository root. Kedi is installed from its repository at a pinned
+commit:
 
 ```bash
-mkdir agent-compaction && cd agent-compaction
-git clone <this repository> benchmarks/agent_compaction
+git clone <this repository> agent-compaction && cd agent-compaction
 uv venv --python 3.12
-uv pip install -r benchmarks/agent_compaction/requirements.txt -c benchmarks/agent_compaction/constraints.txt
+uv pip install -r requirements.txt -c constraints.txt
 ```
 
 - `kedi-lang/kedi` is private until Kedi's release. Installing it needs read access through git (for example
@@ -56,13 +56,8 @@ uv pip install -r benchmarks/agent_compaction/requirements.txt -c benchmarks/age
   Kedi `7cc06ea`, also set `tree-sitter-kedi==0.4.2` in `constraints.txt`. For the phase 1 cache probe
   (`bc96188`, Pydantic AI 2.57), install without `-c`.
 - uv builds tree-sitter-kedi from Kedi's submodule at that commit, which needs a C compiler.
-- For an exact rerun, also check out this repository at the phase's harness commit from `environment.json`.
-  Harness commits older than the one that added `codex_model.py` import that code from
-  `benchmarks.subagent_comparison.common`, which is not part of this repository; cherry-pick that commit
-  onto them.
-- Checked on 2026-11-04: a fresh environment built this way installed every package at its pinned version,
-  regenerated both result tables byte for byte, and completed one `native` run on `override` seed 101
-  (`records/env_check/`).
+- Checked on 2026-11-04 in fresh environments built this way: every package installed at its pinned
+  version, both result tables regenerated byte for byte, and real runs completed (`records/env_check/`).
 
 **Model access.**
 - `gpt-6-luna`, `gpt-6.1-terra` and native compaction use OpenAI Responses through `codex-auth-helper`,
@@ -78,17 +73,17 @@ uv pip install -r benchmarks/agent_compaction/requirements.txt -c benchmarks/age
 then regenerate the tables:
 
 ```bash
-.venv/bin/python -m benchmarks.agent_compaction.run --strategy A1-free --task long --seeds 201 202 203
-.venv/bin/python -m benchmarks.agent_compaction.summarize_6_8   # phases 6–10
-.venv/bin/python -m benchmarks.agent_compaction.summarize       # phases 2–5
-.venv/bin/python -m pytest benchmarks/agent_compaction/test_normalizer.py
+.venv/bin/python -m agent_compaction.run --strategy A1-free --task long --seeds 201 202 203
+.venv/bin/python -m agent_compaction.summarize_6_8   # phases 6–10
+.venv/bin/python -m agent_compaction.summarize       # phases 2–5
+.venv/bin/python -m pytest tests
 ```
 
 Defaults: `--model gpt-6-luna --effort medium --threshold 18000`. What each phase ran:
 
 | phase | tasks (`--task`) | strategies (`--strategy`) | model | seeds |
 |---|---|---|---|---|
-| 1 | `cache_probe`, with and without `--grow` | – | luna | – |
+| 1 | `agent_compaction.cache_probe`, with and without `--grow` | – | luna | – |
 | 2 | `t1` | `A1 B1 B2 none` | luna | 1–5 |
 | 3 | `t1` | `A1 A1-fixed A1-free B2 B3` | luna | 1–5 |
 | 4 | `rev long big` | `A1 A1-free B2 B3 none` | luna | 1–5 |
@@ -107,7 +102,25 @@ infrastructure: rate limit, timeout, usage limit, connection error and HTTP 503.
 attempt per seed and reports failures that remain after the rerun as missing. Request-limit and budget
 failures count against the strategy.
 
+### Older commits
+
+For an exact rerun, check out this repository at the phase's harness commit from `environment.json`.
+
+- Commits up to `e17ec87` keep every file at the top level and import themselves as
+  `benchmarks.agent_compaction`. Clone such a commit into `benchmarks/agent_compaction` under a working
+  directory and run `python -m benchmarks.agent_compaction.<module>` from that directory.
+- Commits before `cbf6311` also import `build_model` and `BASE_INSTRUCTIONS` from
+  `benchmarks.subagent_comparison.common`, which is not part of this repository. Recreate it from the
+  verbatim copy in the working directory:
+
+```bash
+mkdir -p benchmarks/subagent_comparison/common
+git -C benchmarks/agent_compaction show cbf6311:codex_model.py > benchmarks/subagent_comparison/common/model.py
+grep '^BASE_INSTRUCTIONS' benchmarks/subagent_comparison/common/model.py > benchmarks/subagent_comparison/common/prompts.py
+```
+
 ## Preservation
 
-This folder is outside the Kedi repository's history (`/benchmarks` is ignored), so it is its own git
-repository: commit after every batch. Records are append-only; never rewrite a published record.
+This repository lives in the Kedi workspace at `benchmarks/agent_compaction`, outside the Kedi repository's
+history (`/benchmarks` is ignored), so it has its own git history: commit after every batch. Records are
+append-only; never rewrite a published record.
