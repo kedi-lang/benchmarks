@@ -2,8 +2,9 @@
 
 Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-04, phases 1–10, all complete (missing runs are listed under Phase 9 status).
 `REPORT.md` (phases 1–5, the exploratory story) is preserved unchanged in substance; this file follows the
-research brief's reporting format and covers everything, with phases 6–8 as the main evidence. Tables:
-`results/RESULTS.md` (phases 2–5) and `results/PHASES_6_8.md` (phases 6–8), both generated from `records/`.
+research brief's reporting format and covers everything, with the pre-registered phases 6, 9 and 10 as the main evidence. Tables:
+`results/RESULTS.md` (phases 1–5) and `results/PHASES_6_8.md` (phases 6–10), both generated from `records/`;
+each starts with a key to the strategy, task and column codes.
 
 ## 1. Executive result (qualified)
 
@@ -92,7 +93,7 @@ before phase 10, with their own README).
 
 See `results/PHASES_6_8.md` (pass, infra-missing, policy violations, change applied, median total input incl.
 compaction calls, median output incl. compaction output, median calls incl. fork calls) and
-`results/RESULTS.md` for phases 2–5.
+`results/RESULTS.md` for phases 1–5.
 
 ## 5. Paired comparisons (A1-free vs …; exact McNemar)
 

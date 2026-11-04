@@ -95,7 +95,8 @@ Toy history of 3 turns (~26K tokens), two tools, per-run cache key. Six runs per
   had `cached_tokens`; 2.64 reports it correctly. Kedi moved to 2.64 (`9374d1f`).
 
 > **Correction (2026-11-02).** The phase-1 numbers above were never saved as raw records (only these notes).
-> A rerun with raw output (`records/phase1_cache_probe/probe_runs.jsonl`, 6 runs per request kind) did **not**
+> A rerun with raw output (`records/phase1_cache_probe/probe_runs.jsonl`, 6 runs per request kind, tabulated in
+> `results/RESULTS.md`) did **not**
 > reproduce them: the fork hit the cache in 2/6 runs (not 5/6) and the fork with an extra output tool hit it
 > once (99.5%), so "an output tool always breaks the cache" is not supported. Cache hits on this backend are
 > too noisy to support any cache claim; none of the accuracy or input-token results depend on it.
