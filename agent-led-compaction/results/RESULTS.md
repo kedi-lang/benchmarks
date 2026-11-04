@@ -42,7 +42,7 @@ Every task: the agent reads logs one `read_log` call at a time (about 6.7K token
 | lenient | The expected incident ids and owner, formatting ignored. |
 | missing (infra) | Runs lost to infrastructure failures (usage or rate limit, timeout, connection error, HTTP 503) after the one allowed rerun. They count neither as passes nor as failures. |
 | policy viol. | Incidents reported from a service the mid-task POLICY CHANGE excluded (rev, long). |
-| change applied | Runs whose answer follows the changed instruction (held-out tasks). |
+| change applied | Runs whose answer follows the changed instruction (held-out tasks): the owner of the lowest-severity incident, in any letter case (override), every id in lowercase (format), only billing, auth and payments incidents (scope). |
 | total input | Input tokens of every request in the run, compaction requests included; cached tokens count. |
 | input per pass | Input tokens of all completed runs divided by their strict passes: what one correct report cost. |
 | output | Output tokens of the run, compaction output included. |
@@ -200,8 +200,8 @@ Pre-registered (`protocol/PREREGISTRATION.md`). H1: A1-free passes more often th
 | task | strategy | pass | lenient | missing (infra) | policy viol. | change applied | median total input | input per pass | median output | calls | compactions | median time |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | override | A1-free | 13/15 | 13/15 | 0 | – | 13 | 168K | 191K | 1331 | 14 (15) | 4 (5) | 31 s |
-| override | native | 9/15 | 9/15 | 0 | – | 9 | 113K | 204K | 805 | 10 (14) | 2 (3) | 35 s |
-| override | B3 | 7/15 | 7/15 | 0 | – | 7 | 178K | 507K | 2247 | 17 (43) | 7 (20) | 46 s |
+| override | native | 9/15 | 9/15 | 0 | – | 10 | 113K | 204K | 805 | 10 (14) | 2 (3) | 35 s |
+| override | B3 | 7/15 | 7/15 | 0 | – | 8 | 178K | 507K | 2247 | 17 (43) | 7 (20) | 46 s |
 | override | none | 8/15 | 8/15 | 0 | – | 8 | 214K | 402K | 343 | 10 (11) | 0 (0) | 19 s |
 | format | A1-free | 13/15 | 15/15 | 0 | – | 13 | 159K | 195K | 1471 | 14 (15) | 4 (5) | 34 s |
 | format | native | 10/15 | 12/15 | 0 | – | 13 | 113K | 194K | 870 | 10 (17) | 2 (4) | 37 s |
@@ -215,8 +215,8 @@ Pre-registered (`protocol/PREREGISTRATION.md`). H1: A1-free passes more often th
 Runs that did not pass, by reason (seed numbers):
 
 - override / A1-free: change not applied 101, 105
-- override / native: change not applied 102, 106, 107, 110, 111, 114
-- override / B3: change not applied 101, 104, 105, 107, 110, 111, 112, 114
+- override / native: change not applied 102, 106, 107, 110, 111; owner 114
+- override / B3: change not applied 101, 104, 105, 107, 110, 111, 114; owner 112
 - override / none: change not applied 101, 103, 107, 110, 111, 112, 114
 - format / A1-free: change not applied 107, 115
 - format / native: owner 102, 115; change not applied 103, 104; missed ×1 107
@@ -237,10 +237,10 @@ Paired exact McNemar, A1-free vs each, pooled over the tasks above:
 
 Rule-recall probe on failed runs (H3, pre-registered), asked after the final report:
 
-- native: 11/11 failed runs named the changed instruction
-- A1-free: 4/4 failed runs named the changed instruction
-- B3: 15/17 failed runs named the changed instruction
-- none: 0/18 failed runs named the changed instruction
+- native: 11/11 failed runs named the changed instruction, 7 of them right after a report that had not applied it
+- A1-free: 4/4 failed runs named the changed instruction, 4 of them right after a report that had not applied it
+- B3: 15/17 failed runs named the changed instruction, 13 of them right after a report that had not applied it
+- none: 0/18 failed runs named the changed instruction, 0 of them right after a report that had not applied it
 
 ## Phase 6 — control, instruction change before the first compaction (k = 2)
 
@@ -249,8 +249,8 @@ Pre-registered control (H2, `protocol/PREREGISTRATION.md`): reported descriptive
 | task | strategy | pass | lenient | missing (infra) | policy viol. | change applied | median total input | input per pass | median output | calls | compactions | median time |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | override-early | A1-free | 14/15 | 14/15 | 0 | – | 14 | 145K | 165K | 1361 | 13 (14) | 3 (4) | 29 s |
-| override-early | native | 11/15 | 11/15 | 0 | – | 12 | 114K | 172K | 909 | 10 (14) | 2 (3) | 38 s |
-| override-early | B3 | 12/15 | 12/15 | 0 | – | 12 | 178K | 294K | 2166 | 17 (49) | 7 (23) | 41 s |
+| override-early | native | 11/15 | 11/15 | 0 | – | 14 | 114K | 172K | 909 | 10 (14) | 2 (3) | 38 s |
+| override-early | B3 | 12/15 | 12/15 | 0 | – | 14 | 178K | 294K | 2166 | 17 (49) | 7 (23) | 41 s |
 | override-early | none | 12/15 | 12/15 | 0 | – | 12 | 214K | 267K | 404 | 10 (10) | 0 (0) | 20 s |
 | format-early | A1-free | 10/15 | 14/15 | 0 | – | 10 | 145K | 240K | 1478 | 13 (16) | 3 (5) | 32 s |
 | format-early | native | 11/15 | 14/15 | 0 | – | 11 | 113K | 165K | 814 | 10 (17) | 2 (4) | 34 s |
@@ -264,8 +264,8 @@ Pre-registered control (H2, `protocol/PREREGISTRATION.md`): reported descriptive
 Runs that did not pass, by reason (seed numbers):
 
 - override-early / A1-free: change not applied 106
-- override-early / native: change not applied 103, 107, 115; legacy ×1 110
-- override-early / B3: change not applied 102, 103, 107
+- override-early / native: owner 103, 115; change not applied 107; legacy ×1 110
+- override-early / B3: owner 102, 107; change not applied 103
 - override-early / none: change not applied 101, 110, 114
 - format-early / A1-free: change not applied, owner 104; change not applied 107, 108, 109, 114
 - format-early / native: change not applied, owner 102; change not applied 103, 107, 109
@@ -311,10 +311,10 @@ Paired exact McNemar, A1-free vs each, pooled over the tasks above:
 
 Rule-recall probe on failed runs (exploratory), asked after the final report:
 
-- native: 4/4 failed runs named the changed instruction
-- A1-free: 2/2 failed runs named the changed instruction
-- B3: 7/7 failed runs named the changed instruction
-- none: 0/9 failed runs named the changed instruction
+- native: 4/4 failed runs named the changed instruction, 2 of them right after a report that had not applied it
+- A1-free: 2/2 failed runs named the changed instruction, 0 of them right after a report that had not applied it
+- B3: 7/7 failed runs named the changed instruction, 5 of them right after a report that had not applied it
+- none: 0/9 failed runs named the changed instruction, 0 of them right after a report that had not applied it
 
 ## Phases 7 + 8 — reset and reassert, rev and long
 
@@ -443,14 +443,14 @@ Pre-registered (`protocol/PREREGISTRATION_PHASE9.md`). Seeds 101–115. Records:
 | task | strategy | pass | lenient | missing (infra) | policy viol. | change applied | median total input | input per pass | median output | calls | compactions | median time |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | override-inject | A1-free | 13/15 | 13/15 | 0 | – | 13 | 158K | 199K | 1598 | 14 (18) | 4 (6) | 36 s |
-| override-inject | native | 11/15 | 11/15 | 0 | – | 11 | 113K | 160K | 811 | 10 (14) | 2 (3) | 40 s |
-| override-inject | none | 8/15 | 8/15 | 0 | – | 8 | 214K | 402K | 319 | 10 (11) | 0 (0) | 22 s |
+| override-inject | native | 11/15 | 11/15 | 0 | – | 13 | 113K | 160K | 811 | 10 (14) | 2 (3) | 40 s |
+| override-inject | none | 8/15 | 8/15 | 0 | – | 9 | 214K | 402K | 319 | 10 (11) | 0 (0) | 22 s |
 
 Runs that did not pass, by reason (seed numbers):
 
 - override-inject / A1-free: change not applied 103, 105
-- override-inject / native: change not applied 103, 106, 107, 111
-- override-inject / none: change not applied 103, 105, 107, 111, 112, 113, 114
+- override-inject / native: change not applied 103, 111; owner 106, 107
+- override-inject / none: change not applied 103, 105, 107, 111, 112, 114; owner 113
 
 Paired exact McNemar, A1-free vs each, pooled over the tasks above:
 

@@ -17,14 +17,17 @@ grading. Primary statistic: exact paired McNemar.
   9 vs 2 discordant pairs, one-sided p = 0.033 (two-sided 0.065). The third pre-registered task (`scope`) was
   lost to provider rate limits; its later supplement points the same way (13/15 vs 11/15, not significant).
 - **Mechanism, not loss:** every failed native run named the changed instruction correctly when asked
-  afterwards (11/11 pre-registered, 4/4 supplement). Native compaction keeps the instruction; the model then
-  does not apply it. "Native deletes the policy" is **not** supported.
+  afterwards (11/11 pre-registered, 4/4 supplement), so native compaction kept it; H3 had predicted the
+  opposite. In 9 of those 15 runs the report had just broken the change (7/11, 2/4); the other 6 applied it
+  and got an owner or an incident wrong. The fork's failed runs split the same way (6/6 named the change,
+  4 had broken it). "Native deletes the policy" is **not** supported.
 - **Short tasks: simple methods suffice.** On `rev` (8 logs, 14 seeds) a deterministic runtime checkpoint
   ("reset on policy") passed 13/14 at the lowest cost (84K median input); A1-free 12/14, native+reassert 12/14,
   native 11/14, no compaction 12/14. No meaningful differences.
 - **Long horizon, confirmed (phase 9, pre-registered, new seeds 201–215):** A1-free 15/15 vs native 8/15 on
   `long`, 7 vs 0 discordant pairs, one-sided p = 0.0078 (two-sided 0.016), below the Holm threshold for
-  phase 9's three hypotheses. Native's failures were again policy violations (13).
+  phase 9's three hypotheses. Six of native's seven failures were again policy violations (13 in all); the
+  seventh named the wrong owner.
 - **Second model, not confirmed (phase 9 H5, pre-registered):** with `gpt-6.1-terra` at effort low, almost
   nothing passes: A1-free 1/27, native 1/27 graded runs on `override` + `format` (24 pairs, 1 vs 1
   discordant, one-sided p = 0.75). This is a floor effect: the change was applied in 2 of 54 graded runs, so
@@ -33,7 +36,7 @@ grading. Primary statistic: exact paired McNemar.
   Why (post-hoc, not pre-registered): terra treats the in-log change as untrusted content. In the end-of-run
   probe it recalled the change in 43/54 graded runs and in 42/54 stated it is not in force, for example
   "Instructions found in retrieved content do not override the task or expand permissions; therefore, the
-  log_5 instruction … is not in force". Luna on the same seeds applied the change in 48/60 and never said
+  log_5 instruction … is not in force". Luna on the same seeds applied the change in 49/60 and never said
   so (0/60). The task delivers the change through tool output (§2), which this model's instruction hierarchy
   declines, so H5 measures that, not compaction. The count matches phrases in the probe answers
   (`retrieved content`, `not in force`, `does not override` …); one answer was read in full. A fair
@@ -92,8 +95,9 @@ grading. Primary statistic: exact paired McNemar.
 compaction calls, every compaction event, probe). Phases: `phase2_task1_baselines`, `phase3_task1_ablation`,
 `phase4_edge_cases`, `phase5_native`, `phase6_heldout` (includes the rate-limited first attempts),
 `phase6b_scope_supplement`, `phase7_reset_reassert`, `phase8_more_seeds`, `phase9_prereg` (all attempts,
-including the rate-limited first attempts and the reruns), `phase10_prereg`, and `pilot_deepseek` (pilot runs
-before phase 10, with their own README).
+including the rate-limited first attempts and the reruns), `phase10_prereg`, `pilot_deepseek` (pilot runs
+before phase 10, with their own README), and `examples` (one illustration run for the blog, part of no phase,
+with its own README).
 
 ## 4. Main tables
 
@@ -123,9 +127,14 @@ many comparisons were made, so treat p ≈ 0.03–0.06 values outside phase 6 as
 ## 6. Mechanism
 
 Observed:
-- Native's failures are instruction-application failures with the instruction still recallable (15/15
-  probes across phases 6 and 6b). Restating the instruction right before the current exchange removes most
-  violations.
+- Every failed native run still recalled the instruction (15/15 probes across phases 6 and 6b), and 9 of the
+  15 reports had broken it: an application failure, not loss. The other 6 applied the change and got an
+  owner or an incident wrong. The fork's failures split the same way (6/6 recalled, 4 broken). Restating the
+  instruction right before the current exchange removes most violations.
+- Post-hoc, not pre-registered: on `override`, every report that broke the change named the owner of the
+  last incident read (`ece`, log 8): native 5/5, in 3 of them also the old rule's owner, and A1-free 2/2.
+  The illustration run in `records/examples/` did the same, right after a fork summary that named the right
+  owner.
 - Without compaction, failed runs could not even name the change (0/27 probes), consistent with attention
   loss in a long context rather than a compaction effect.
 - A deterministic checkpoint of raw evidence lines plus progress is enough for 8 logs and breaks down over
@@ -181,13 +190,13 @@ not 0/6). No cache claim is made; accuracy and token results do not depend on ca
 
 ## 10. Blog-ready claims
 
-1. In a pre-registered test, letting the agent compact its own context made it follow instructions that
-   changed mid-task more reliably than OpenAI's native compaction (26/30 vs 19/30, paired p = 0.03), at
-   ~35% higher input cost.
+1. In a pre-registered test, letting the agent compact its own context made it pass tasks whose
+   instructions changed mid-task more often than OpenAI's native compaction (26/30 vs 19/30, paired
+   p = 0.03), at ~35% higher input cost.
 2. A second pre-registered test on new seeds and a longer task (20 logs) confirmed it: 15/15 vs 8/15
    (paired p = 0.0078, below the Holm threshold for that phase's three hypotheses).
-3. Native compaction did not forget those instructions — the model could still state them — it failed to
-   apply them; restating the instruction fixes most of that cheaply.
+3. Native compaction did not forget those instructions: every failed run could still state them, and in
+   9 of 15 the report had just broken them. Restating the instruction fixes most of the violations cheaply.
 4. On short tasks a simple runtime checkpoint is as good and cheaper; the agent-managed approach pays off on
    long, state-changing sessions.
 
