@@ -1,0 +1,69 @@
+{
+  "dates": "2026-11-01 to 2026-11-03; times below are UTC+3",
+  "python": "3.12.10",
+  "packages": {
+    "pydantic-ai-slim": "2.64.0 (2.57.0 for the phase 1 cache probe)",
+    "openai": "3.31.0",
+    "httpx": "0.28.1",
+    "codex-auth-helper": "1.10.1",
+    "kedi-typesafe": "0.3.2",
+    "kedi-decisions": "0.1.2",
+    "tree-sitter-kedi": "0.4.2, then 0.4.3 from Kedi 7cc06ea"
+  },
+  "kedi": "0.4.0 (workspace, editable)",
+  "models": {
+    "gpt-6-luna": {
+      "phases": "1-9",
+      "provider": "OpenAI Responses via codex-auth-helper (Codex subscription backend), store=false",
+      "reasoning_effort": "medium"
+    },
+    "gpt-6.1-terra": {
+      "phases": "9 (H5)",
+      "provider": "OpenAI Responses via codex-auth-helper (Codex subscription backend), store=false",
+      "reasoning_effort": "low"
+    },
+    "deepseek/deepseek-v4.1-flash": {
+      "phases": "10 and its pilot",
+      "provider": "OpenRouter Chat Completions via Pydantic AI OpenAICompatibleProvider; run.py --model openrouter:deepseek/deepseek-v4.1-flash, key in OPENROUTER_API_KEY",
+      "reasoning_effort": "medium"
+    }
+  },
+  "compaction_threshold_tokens": 18000,
+  "parallel_tool_calls": false,
+  "prompt_cache_key": "one per run (ac-<random>)",
+  "kedi_commits": {
+    "phase 1 cache probe": "bc96188 (Pydantic AI 2.57 at the time; raw usage parsed from traffic)",
+    "phase 1b dead ends": "9374d1f (Pydantic AI 2.64, before the grouping fix)",
+    "phases 2-4": "dafe680 'fix: let history processors trim a running tool loop' (and later 40d8409, codegen only)",
+    "phase 5": "40d8409 (the harness attached native compaction itself, before the Kedi fix)",
+    "phases 6 and 6b": "8c6e7e8 'fix: apply native compaction when the model is wrapped by a run budget'",
+    "phases 7-8 and the phase 1 rerun": "22931a1 (8c6e7e8 plus a test)",
+    "phase 9 first batch (2026-11-02 20:09-21:00)": "22931a1; from 20:44 43ca988, which changes submodule pointers only",
+    "phase 9 rerun attempt (2026-11-02 23:26-23:38)": "7cc06ea (adds the runtime fixes of 0eb0612 and tree-sitter-kedi 0.4.3)",
+    "phase 9 reruns, phase 10 and its pilot, the last 8 H5 seeds (2026-11-03)": "833ce44 (in stable through 6c404a1, PR #129; its source equals stable at 351ba1d)"
+  },
+  "kedi_working_tree": "A development checkout. The session log shows no uncommitted Kedi source change while runs started. One exception: on 2026-11-02 at 17:15, for one test run of a few seconds, a regression test swapped in the previous native_settings.py while the phase 6b `none` arm, which uses no native compaction, was running.",
+  "harness_commits": {
+    "phases 1-4": "08e3955",
+    "phase 5": "407ffd1",
+    "phases 6 and 6b": "b17e3a0 (committed before any phase 6 run)",
+    "phases 7-8": "8de8610",
+    "phase 1 rerun": "7b20566 (cache_probe.py as in 08e3955)",
+    "phase 9": "fb1d0e7 (the pre-registration commit)",
+    "phase 10 pilot": "3eb1353",
+    "phase 10": "4833f5e (the pre-registration commit)",
+    "last 8 H5 seeds": "3d86fcf (run.py differs from fb1d0e7 only by the OpenAI-compatible model path)"
+  },
+  "harness_dependencies": "Until 2026-11-04 run.py and cache_probe.py imported build_model and BASE_INSTRUCTIONS from the Kedi workspace's benchmarks/subagent_comparison/common (unchanged since 2026-10-31). agent_compaction/codex_model.py now holds a verbatim copy (top-level codex_model.py from cbf6311 to e17ec87).",
+  "kedi_profile": "> adapter: pydantic; > artifacts: enabled: false; > history: enabled: true, processor + processor_condition (estimated_tokens >= threshold); > use: read_log",
+  "seeds": {
+    "phases 2-5 and 7": "1-5",
+    "phase 8": "6-15 (rev seed 8 cannot be generated)",
+    "phases 6, 6b and 9 (H5, H6)": "101-115",
+    "phase 9 (H4)": "201-215",
+    "phase 10 pilot": "301-303",
+    "phase 10": "401-415"
+  },
+  "reproduction_environment": "pyproject.toml + uv.lock (uv sync): Kedi from git at 833ce44, every other package locked at the runs' versions. From e17ec87 to 0ec3bc5 the same versions came from requirements.txt + constraints.txt, checked in fresh venvs on 2026-11-04 (records/env_check)",
+  "layout": "Since the commit after e17ec87: harness in agent_compaction/, tests in tests/, plan and pre-registrations in protocol/; until e17ec87 every file was at the top level, imported as benchmarks.agent_compaction"
+}
