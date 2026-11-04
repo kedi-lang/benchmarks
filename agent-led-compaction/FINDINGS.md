@@ -40,9 +40,10 @@ grading. Primary statistic: exact paired McNemar.
   second-model test would mark the change as authorized, as H6 does, and needs its own pre-registration.
 - **Untrusted instruction in tool output, primary not confirmed (phase 9 H6, pre-registered):** with a
   legitimate marked change and an unmarked fake `FORMAT CHANGE`, A1-free passed 13/15 vs native 11/15
-  (3 vs 1, p = 0.31) and no compaction 8/15. No strategy obeyed the fake instruction (0/15 each), so the
+  (3 vs 1, p = 0.31) and no compaction 8/15. No final report obeyed the fake instruction (0/15 each), so the
   pre-registered condition for the claim holds: the fork did not promote untrusted text more often than
-  native. With 0/15 everywhere, the test cannot show a difference in that direction either.
+  native. With 0/15 everywhere, the test cannot show a difference in that direction either. The check reads
+  the final report only (every id in lowercase), not whether the fake entered an intermediate summary.
 - **Second model family, not confirmed, at a ceiling (phase 10 H7, pre-registered):** with
   `deepseek-v4.1-flash` (1M-token context, through OpenRouter) on `long`, seeds 401–415, every strategy
   nearly always passes. A1-free 15/15, stateless summary B3 14/15 (1 vs 0 discordant pairs, p = 0.50), no
@@ -77,6 +78,11 @@ grading. Primary statistic: exact paired McNemar.
   today: the opaque native compaction item is a protected checkpoint the processor may not remove.
 - Held-out set: `protocol/PREREGISTRATION.md` (committed `8217739` before any phase-6 run); harness committed
   `b17e3a0` before results were read. Seeds 101–115.
+- Deviation, found on 2026-11-04: the pre-registration describes the k = 2 control (H2) as the same three tasks
+  with the instruction moved to log 2. `task3.scenario` seeds its generator with the variant name, so
+  `override-early` and `override` with the same seed have different incidents: timing is not the only
+  difference, and H2 compares scenarios as well as timings. H1 is unaffected, because every strategy sees the
+  same data for a task and seed. The generator stays as it is, since it also grades the recorded runs.
 - Infra rule: rate-limit / timeout failures rerun once with the same seed; failures remaining after that are
   reported as missing. Request-limit and budget failures count against the strategy.
 
@@ -188,8 +194,8 @@ not 0/6). No cache claim is made; accuracy and token results do not depend on ca
 Limitations to state with them: the effect is shown on one model and backend (`gpt-6-luna` through the
 Codex backend). Two other models could not separate the strategies: `gpt-6.1-terra` sat at a floor, because
 it declines instructions found in tool output, and `deepseek-v4.1-flash` sat at a ceiling, passing even
-without compaction. Also: synthetic tasks, instructions delivered through tool output, reasoning off, and
-n = 14–30 per comparison.
+without compaction. Also: synthetic tasks, instructions delivered through tool output, one reasoning effort
+per model, and n = 14–30 per comparison.
 
 Suggested title: **Who Should Manage an Agent's Context? Native Compaction, Agent Forks, and Policy Changes
 in Kedi.**
@@ -232,7 +238,7 @@ before the budget was spent. Later pilots run every arm of the planned compariso
 
 - P2 progress ablations (A1 without `pending`, B3 + runtime progress line) — strategies not implemented yet.
 - Timing ablation (policy just before/after a compaction, or with no later compaction) — not run.
-- Long-horizon 150K+ threshold sweep, reasoning-on (needs 1b), real coding/research tasks, replaceable
+- Long-horizon 150K+ threshold sweep, other reasoning efforts, real coding/research tasks, replaceable
   checkpoint prototype — not run. A second model and a fake instruction in tool output ran in phase 9 (H5, H6),
   a second model family in phase 10 (H7).
 - Rerun any phase: `uv run python -m agent_compaction.run --strategy <s> --task <t> --seeds …` (see
