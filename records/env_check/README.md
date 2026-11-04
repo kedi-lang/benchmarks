@@ -1,7 +1,8 @@
 # Environment checks (2026-11-04, not part of any phase)
 
 Runs made to check the reproduction environment in `README.md`. Each ran in a fresh venv with Kedi installed
-from git at `833ce44` and every package at its `constraints.txt` version. No summary or test reads this folder.
+from git at `833ce44` and every package at the version the runs used (then pinned by `constraints.txt`, now
+by `uv.lock`). No summary or test reads this folder.
 
 | file | harness layout (commit) | run | result |
 |---|---|---|---|

@@ -117,7 +117,6 @@ def _native_model(model_name: str, effort: str, cache_key: str, events: list) ->
 COMPATIBLE = {
     # prefix: (provider name, base URL, API key environment variable)
     "openrouter": ("openrouter", "https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
-    "experiential": ("experiential", "https://api.experientiallabs.ai/v1", "EXPERIENTIAL_API_KEY"),
 }
 
 

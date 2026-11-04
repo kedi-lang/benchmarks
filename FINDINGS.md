@@ -177,13 +177,18 @@ not 0/6). No cache claim is made; accuracy and token results do not depend on ca
 1. In a pre-registered test, letting the agent compact its own context made it follow instructions that
    changed mid-task more reliably than OpenAI's native compaction (26/30 vs 19/30, paired p = 0.03), at
    ~35% higher input cost.
-2. Native compaction did not forget those instructions — the model could still state them — it failed to
+2. A second pre-registered test on new seeds and a longer task (20 logs) confirmed it: 15/15 vs 8/15
+   (paired p = 0.0078, below the Holm threshold for that phase's three hypotheses).
+3. Native compaction did not forget those instructions — the model could still state them — it failed to
    apply them; restating the instruction fixes most of that cheaply.
-3. On short tasks a simple runtime checkpoint is as good and cheaper; the agent-managed approach pays off on
+4. On short tasks a simple runtime checkpoint is as good and cheaper; the agent-managed approach pays off on
    long, state-changing sessions.
 
-Limitations to state with them: one model and backend, synthetic tasks, instructions delivered through tool
-output, reasoning off, n = 14–30 per comparison.
+Limitations to state with them: the effect is shown on one model and backend (`gpt-6-luna` through the
+Codex backend). Two other models could not separate the strategies: `gpt-6.1-terra` sat at a floor, because
+it declines instructions found in tool output, and `deepseek-v4.1-flash` sat at a ceiling, passing even
+without compaction. Also: synthetic tasks, instructions delivered through tool output, reasoning off, and
+n = 14–30 per comparison.
 
 Suggested title: **Who Should Manage an Agent's Context? Native Compaction, Agent Forks, and Policy Changes
 in Kedi.**
@@ -227,6 +232,7 @@ before the budget was spent. Later pilots run every arm of the planned compariso
 - P2 progress ablations (A1 without `pending`, B3 + runtime progress line) — strategies not implemented yet.
 - Timing ablation (policy just before/after a compaction, or with no later compaction) — not run.
 - Long-horizon 150K+ threshold sweep, reasoning-on (needs 1b), real coding/research tasks, replaceable
-  checkpoint prototype — not run. A second model and a fake instruction in tool output ran in phase 9 (H5, H6).
-- Rerun any phase: `.venv/bin/python -m agent_compaction.run --strategy <s> --task <t> --seeds …` (see
+  checkpoint prototype — not run. A second model and a fake instruction in tool output ran in phase 9 (H5, H6),
+  a second model family in phase 10 (H7).
+- Rerun any phase: `uv run python -m agent_compaction.run --strategy <s> --task <t> --seeds …` (see
   `README.md`), then move records into a phase folder and run `agent_compaction.summarize` / `agent_compaction.summarize_6_8`.

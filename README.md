@@ -1,7 +1,7 @@
 # Agent-led compaction experiment
 
 Can an agent compact its own conversation history better than no compaction, truncation, an external
-summarizer or the provider's own compaction? This repository holds everything for that experiment: the
+summarizer or the provider's own compaction? This folder holds everything for that experiment: the
 harness, raw records, generated results, the reports, the pre-registrations and the original plan.
 
 ## Layout
@@ -39,10 +39,10 @@ layout of their time; see [Older commits](#older-commits).
 
 ## Reproduce
 
-**Setup.** Everything runs from the repository root. Kedi comes from its repository at a pinned commit:
+**Setup.** Everything runs from this folder. Kedi comes from its repository at a pinned commit:
 
 ```bash
-git clone <this repository> agent-compaction && cd agent-compaction
+git clone https://github.com/kedi-lang/benchmarks.git && cd benchmarks/agent-led-compaction
 uv sync
 ```
 
@@ -103,12 +103,14 @@ failures count against the strategy.
 
 ### Older commits
 
-For an exact rerun, check out this repository at the phase's harness commit from `environment.json`.
+For an exact rerun, use the phase's harness commit from `environment.json`; every such commit is in this
+repository's history.
 
 - Commits up to `e17ec87` keep every file at the top level and import themselves as
-  `benchmarks.agent_compaction`. Clone such a commit into `benchmarks/agent_compaction` under a working
-  directory and, from that directory, run `python -m benchmarks.agent_compaction.<module>` with the
-  environment built here (`<this checkout>/.venv/bin/python`).
+  `benchmarks.agent_compaction`. Check such a commit out into `benchmarks/agent_compaction` under a working
+  directory (`git worktree add <dir>/benchmarks/agent_compaction <commit>`) and, from `<dir>`, run
+  `python -m benchmarks.agent_compaction.<module>` with the environment built here (this folder's
+  `.venv/bin/python`).
 - Commits before `cbf6311` also import `build_model` and `BASE_INSTRUCTIONS` from
   `benchmarks.subagent_comparison.common`, which is not part of this repository. Recreate it from the
   verbatim copy in the working directory:
@@ -121,6 +123,6 @@ grep '^BASE_INSTRUCTIONS' benchmarks/subagent_comparison/common/model.py > bench
 
 ## Preservation
 
-This repository lives in the Kedi workspace at `benchmarks/agent_compaction`, outside the Kedi repository's
-history (`/benchmarks` is ignored), so it has its own git history: commit after every batch. Records are
-append-only; never rewrite a published record.
+The experiment was developed in its own git repository and merged here with that history, so every commit
+hash cited in these documents resolves in this repository (`git show <hash>`). Records are append-only;
+never rewrite a published record.
