@@ -1,6 +1,6 @@
 # Findings — who should manage an agent's context?
 
-Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-03, phases 1–10 (phase 9: 8 H5 reruns still wait for the quota; see below).
+Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-04, phases 1–10, all complete (missing runs are listed under Phase 9 status).
 `REPORT.md` (phases 1–5, the exploratory story) is preserved unchanged in substance; this file follows the
 research brief's reporting format and covers everything, with phases 6–8 as the main evidence. Tables:
 `results/RESULTS.md` (phases 2–5) and `results/PHASES_6_8.md` (phases 6–8), both generated from `records/`.
@@ -25,11 +25,12 @@ grading. Primary statistic: exact paired McNemar.
   `long`, 7 vs 0 discordant pairs, one-sided p = 0.0078 (two-sided 0.016), below the Holm threshold for
   phase 9's three hypotheses. Native's failures were again policy violations (13).
 - **Second model, not confirmed (phase 9 H5, pre-registered):** with `gpt-6.1-terra` at effort low, almost
-  nothing passes: A1-free 1/24, native 0/22 graded runs on `override` + `format` (1 vs 0 discordant pairs,
-  p = 0.50). This is a floor effect: the change was applied in 1 of 46 graded runs, so the task does not
-  separate the strategies on this model and effort. 14 of 60 runs are missing (see Phase 9 status).
+  nothing passes: A1-free 1/27, native 1/27 graded runs on `override` + `format` (24 pairs, 1 vs 1
+  discordant, one-sided p = 0.75). This is a floor effect: the change was applied in 2 of 54 graded runs, so
+  the task does not separate the strategies on this model and effort. 6 of 60 runs are missing (see Phase 9
+  status).
   Why (post-hoc, not pre-registered): terra treats the in-log change as untrusted content. In the end-of-run
-  probe it recalled the change in 35/46 graded runs and in 36/46 stated it is not in force, for example
+  probe it recalled the change in 43/54 graded runs and in 42/54 stated it is not in force, for example
   "Instructions found in retrieved content do not override the task or expand permissions; therefore, the
   log_5 instruction … is not in force". Luna on the same seeds applied the change in 48/60 and never said
   so (0/60). The task delivers the change through tool output (§2), which this model's instruction hierarchy
@@ -101,13 +102,13 @@ compaction calls, median output incl. compaction output, median calls incl. fork
 | phases 7+8 rev+long (28–29) | 9–4, p=0.133 | 3–1, p=0.31 | 10–3, p=0.046 | – | 8–2, p=0.055 |
 | phases 7+8 long (14–15) | 6–2, p=0.14 | 2–0, p=0.25 | 9–1, p=0.011 | – | 7–1, p=0.035 |
 | **phase 9 H4 long, new seeds (15)** | **7–0, p=0.0078** | 0–0 (4 pairs) | – | – | – |
-| phase 9 H5 terra low, override+format (19) | 1–0, p=0.50 | – | – | – | – |
+| phase 9 H5 terra low, override+format (24) | 1–1, p=0.75 | – | – | – | – |
 | phase 9 H6 override-inject (15) | 3–1, p=0.31 | – | – | – | 5–0, p=0.031 |
 | phase 10 H7 long, deepseek-v4.1-flash (15) | – | – | – | 1–0, p=0.50 | 0–0 |
 
 Confirmatory (pre-registered): phase 6 k=5 vs native, phase 9 H4–H6 vs native, and phase 10 H7 vs B3 (single
 primary, not confirmed). With a Holm correction over
-phase 9's three hypotheses, H4 holds (0.0078 < 0.05/3); H5 (0.50) and H6 (0.31) are not confirmed with or without
+phase 9's three hypotheses, H4 holds (0.0078 < 0.05/3); H5 (0.75) and H6 (0.31) are not confirmed with or without
 it. A1-free vs none on H6 is secondary. Everything else is exploratory;
 many comparisons were made, so treat p ≈ 0.03–0.06 values outside phase 6 as suggestive, not as findings.
 
@@ -196,12 +197,13 @@ quota (`usage_limit_reached`); per the pre-registration each such seed got one r
 - **H4 secondary, native+reassert: 11 of 15 missing.** The rerun of those seeds failed with connection errors
   (`ModelConnectionError`); the one allowed rerun is used, so they stay missing. The 4 completed runs pass
   (4/4). The primary H4 comparison is complete.
-- **H5: 14 of 60 missing.** Three reruns hit `503` server errors (override A1-free 110, format A1-free 108,
-  format native 107). The quota ran out again near the end of the rerun batch. Three runs already in flight
-  got `usage_limit_reached` (override native 112, format A1-free 112, format native 113); their one rerun is
-  used. The launcher then stopped, so 8 seeds keep their rerun and will run when the quota resets:
-  override native 113–115, format A1-free 113–115, format native 114–115. They add at most 5 pairs, so H5 is
-  reported again after they ran; until then its result is provisional.
+- **H5: 6 of 60 missing, final.** Three reruns hit `503` server errors (override A1-free 110, format A1-free
+  108, format native 107). The quota ran out again near the end of the rerun batch. Three runs already in
+  flight got `usage_limit_reached` (override native 112, format A1-free 112, format native 113); their one
+  rerun is used. The launcher then stopped, so 8 seeds kept their rerun. They ran after the quota reset
+  (2026-11-03 22:50) and all completed: override native 113–115, format A1-free 113–115, format native
+  114–115. They added 5 pairs; one is discordant in native's favour (override seed 115), so H5 moved from
+  1–0 (p = 0.50) to 1–1 (p = 0.75).
 - **H6: complete,** 45/45 runs.
 - **Classification:** a `503` (server unavailable) counts as infrastructure, like a connection error,
   because the request was not served. `summarize_6_8.py` now lists it with the other infra errors; before,
@@ -215,7 +217,9 @@ failures. Total spend about $3.4 of OpenRouter credit, plus about $0.2 for the p
 The pilot (`records/pilot_deepseek/`, seeds 301–303) was disclosed in the pre-registration. It showed that this
 model applies changes delivered in tool output, unlike terra, and that it passes `long` even without
 compaction. That is why the primary compares the fork with a stateless summary instead of with none. The
-ceiling still held for B3, so H7 cannot separate the strategies on this model.
+ceiling still held for B3, so H7 cannot separate the strategies on this model. The pilot ran A1-free and none
+on `long` but not B3, the primary's comparator; a B3 run on the pilot seed would have tested the ceiling risk
+before the budget was spent. Later pilots run every arm of the planned comparison.
 
 ## Not done (brief items), with commands
 
