@@ -27,7 +27,7 @@ from pydantic_ai.messages import CachePoint, ModelRequest, ModelResponse, TextPa
 from pydantic_ai.models import ModelRequestParameters
 from pydantic_ai.tools import ToolDefinition
 
-from benchmarks.subagent_comparison.common.model import build_model
+from benchmarks.agent_compaction.codex_model import build_model
 
 TOOLS = [
     ToolDefinition(

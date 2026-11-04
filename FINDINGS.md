@@ -60,7 +60,8 @@ grading. Primary statistic: exact paired McNemar.
 
 ## 2. Protocol and implementation
 
-- Experiment repo: this folder (own git history). Kedi `stable` at `22931a1`; relevant Kedi changes:
+- Experiment repo: this folder (own git history). Kedi and harness commits per phase are in `environment.json`
+  (phases 6–8 on `8c6e7e8`/`22931a1`, phases 9–10 from `22931a1` to `833ce44`); relevant Kedi changes:
   `9374d1f` (Pydantic AI 2.64), `dafe680` (running tool loops trimmable), `8c6e7e8` + `22931a1` (native
   compaction under an active run budget, with a regression test on the adapter path sessions use).
 - Model and settings: `environment.json`. Pydantic AI 2.64, codex-auth-helper 1.10.1, `store=false`,

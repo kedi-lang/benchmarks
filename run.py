@@ -75,7 +75,7 @@ def _native_model(model_name: str, effort: str, cache_key: str, events: list) ->
     import httpx
     from codex_auth_helper import create_codex_responses_model
 
-    from benchmarks.subagent_comparison.common.prompts import BASE_INSTRUCTIONS
+    from benchmarks.agent_compaction.codex_model import BASE_INSTRUCTIONS
 
     model = create_codex_responses_model(
         model_name,
@@ -138,7 +138,7 @@ def _compatible_model(model_name: str, effort: str) -> Any:
     from pydantic_ai.models.wrapper import WrapperModel
     from pydantic_ai.providers.openai_compatible import OpenAICompatibleProvider
 
-    from benchmarks.subagent_comparison.common.prompts import BASE_INSTRUCTIONS
+    from benchmarks.agent_compaction.codex_model import BASE_INSTRUCTIONS
 
     prefix, _, name = model_name.partition(":")
     provider_name, base_url, key_var = COMPATIBLE[prefix]
@@ -194,7 +194,7 @@ def run_one(
     from kedi.interactive_session import InteractiveSession
     from kedi.promise import force
 
-    from benchmarks.subagent_comparison.common.model import build_model
+    from benchmarks.agent_compaction.codex_model import build_model
 
     state.SEED = seed
     held_out = task in task3.VARIANTS
