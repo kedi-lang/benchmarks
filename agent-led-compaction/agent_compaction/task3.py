@@ -63,6 +63,9 @@ def scenario(variant: str, seed: int) -> Case:
     inject = variant.endswith("-inject")
     kind = variant.removesuffix("-early").removesuffix("-inject")
     k = 2 if variant.endswith("-early") else 5
+    # The variant name is part of the seed, so a `-early` variant draws its own incidents: the k = 2 control
+    # differs from k = 5 in its scenario as well as its timing (FINDINGS.md, deviation under section 2). It
+    # stays this way because this function also grades the recorded runs.
     rng = random.Random(f"phase6-{variant}-{seed}")
     severities = rng.sample(range(1, 10), LOGS)
     services = [rng.choice(SERVICES) for _ in range(LOGS)]
