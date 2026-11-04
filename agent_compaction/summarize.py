@@ -10,6 +10,7 @@ allowed rerun are reported as missing, not as strategy failures.
 from __future__ import annotations
 
 import json
+import math
 import re
 import statistics
 from math import comb
@@ -25,7 +26,10 @@ INFRA = ("RateLimit", "Timeout", "usage_limit_reached", "ModelConnectionError", 
 FORKS = {"A1", "A1-free", "A1-fixed", "B2", "B3"}  # strategies whose compaction is a separate request
 STRATEGIES = ["none", "B1", "B2", "B3", "native", "native+reassert", "A1-fixed", "A1", "A1-free", "reset-det", "reset-fork"]
 TASKS = ["t1", "rev", "long", "big", "override", "format", "scope", "-early", "override-inject"]
-COLUMNS = ["pass", "lenient", "missing (infra)", "policy viol.", "change applied", "total input", "output", "calls", "compactions"]
+COLUMNS = [
+    "pass", "lenient", "missing (infra)", "policy viol.", "change applied", "total input", "input per pass", "output",
+    "calls", "compactions", "time", "difference",
+]
 SETUP = (
     "Every strategy compacts at an estimate of 18K tokens. The model is `gpt-6-luna` at reasoning effort "
     "medium unless a section names another. Each section names its records, its seeds and whether it was "
@@ -33,7 +37,8 @@ SETUP = (
     "comparisons, so their p-values describe the runs and test no hypothesis. Seeds give every strategy "
     "the same scenarios. Token columns are medians over the runs that completed; calls and compactions "
     "show the median and, in brackets, the maximum. Paired comparisons use the exact McNemar test on "
-    "(task, seed) pairs and drop a pair with a missing side. Role: *primary* tests a pre-registered "
+    "(task, seed) pairs and drop a pair with a missing side; the difference in pass rate comes with a 95% "
+    "confidence interval for paired proportions (Newcombe's method 10). Role: *primary* tests a pre-registered "
     "hypothesis; *secondary* and *descriptive* comparisons were named in the pre-registration without "
     "being hypotheses; *exploratory* ones were not pre-registered. Kedi and library versions per phase are "
     "in `environment.json`."
@@ -86,14 +91,37 @@ def _outcomes(runs: dict[int, dict], task: str) -> dict[int, bool | None]:
     return out
 
 
-def _mcnemar(a: dict, b: dict) -> tuple[int, int, int, float, float]:
+def _wilson(k: int, n: int, z: float = 1.959964) -> tuple[float, float]:
+    p, d = k / n, 1 + z * z / n
+    centre, half = p + z * z / (2 * n), z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))
+    return (centre - half) / d, (centre + half) / d
+
+
+def _difference(both: int, left: int, right: int, neither: int) -> str:
+    """Left minus right pass rate in points, with Newcombe's (1998, method 10) 95% interval for paired data."""
+    n = both + left + right + neither
+    if not n:
+        return "–"
+    p1, p2 = (both + left) / n, (both + right) / n
+    l1, u1 = _wilson(both + left, n)
+    l2, u2 = _wilson(both + right, n)
+    margins = (both + left) * (right + neither) * (both + right) * (left + neither)
+    phi = (both * neither - left * right) / math.sqrt(margins) if margins else 0.0
+    low = math.sqrt((p1 - l1) ** 2 - 2 * phi * (p1 - l1) * (u2 - p2) + (u2 - p2) ** 2)
+    high = math.sqrt((u1 - p1) ** 2 - 2 * phi * (u1 - p1) * (p2 - l2) + (p2 - l2) ** 2)
+    diff = p1 - p2
+    return f"{diff * 100:+.0f} ({(diff - low) * 100:.0f} to {(diff + high) * 100:.0f})"
+
+
+def _mcnemar(a: dict, b: dict) -> tuple[int, int, int, float, float, str]:
     keys = [k for k in a.keys() & b.keys() if a[k] is not None and b[k] is not None]
     x = sum(1 for k in keys if a[k] and not b[k])
     y = sum(1 for k in keys if b[k] and not a[k])
+    both = sum(1 for k in keys if a[k] and b[k])
     n = x + y
     one = sum(comb(n, i) for i in range(x, n + 1)) / 2**n if n else 1.0
     two = min(1.0, 2 * sum(comb(n, i) for i in range(0, min(x, y) + 1)) / 2**n) if n else 1.0
-    return len(keys), x, y, one, two
+    return len(keys), x, y, one, two, _difference(both, x, y, len(keys) - both - x - y)
 
 
 def _fisher_greater(a: int, n1: int, b: int, n2: int) -> float:
@@ -102,18 +130,20 @@ def _fisher_greater(a: int, n1: int, b: int, n2: int) -> float:
     return sum(comb(k, i) * comb(n - k, n1 - i) for i in range(a, min(k, n1) + 1)) / comb(n, n1)
 
 
-def _usage(records: list[dict]) -> str:
+def _usage(records: list[dict], passes: int) -> str:
     if not records:
-        return "– | – | – | –"
-    total_in = statistics.median(r["usage"]["input"] + (r["usage"].get("compaction_input") or 0) for r in records)
+        return "– | – | – | – | – | –"
+    inputs = [r["usage"]["input"] + (r["usage"].get("compaction_input") or 0) for r in records]
+    total_in = statistics.median(inputs)
+    per_pass = f"{sum(inputs) // passes // 1000}K" if passes else "–"
     total_out = statistics.median(
         r["usage"]["output"] + sum((e.get("output") or 0) for e in r["compactions"]) for r in records
     )
     calls = [r["usage"]["requests"] + sum(1 for e in r["compactions"] if e.get("strategy") in FORKS) for r in records]
     compactions = [len(r["compactions"]) for r in records]
     return (
-        f"{int(total_in) // 1000}K | {int(total_out)} | {statistics.median(calls):g} ({max(calls)}) "
-        f"| {statistics.median(compactions):g} ({max(compactions)})"
+        f"{int(total_in) // 1000}K | {per_pass} | {int(total_out)} | {statistics.median(calls):g} ({max(calls)}) "
+        f"| {statistics.median(compactions):g} ({max(compactions)}) | {statistics.median(r['seconds'] for r in records):.0f} s"
     )
 
 
@@ -131,8 +161,8 @@ def _table(
         "",
         note,
         "",
-        "| task | strategy | pass | lenient | missing (infra) | policy viol. | change applied | median total input | median output | calls | compactions |",
-        "|---|---|---|---|---|---|---|---|---|---|---|",
+        "| task | strategy | pass | lenient | missing (infra) | policy viol. | change applied | median total input | input per pass | median output | calls | compactions | median time |",
+        "|---|---|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     pooled: dict[str, dict] = {}
     failures = []
@@ -149,10 +179,11 @@ def _table(
             # Only rev and long change the policy mid-task.
             viol = sum(g.get("policy_violations", 0) for g in grades.values()) if task in {"rev", "long"} else "–"
             applied = sum(1 for g in grades.values() if g.get("change_applied")) if held_out else "–"
+            passes = sum(bool(outcomes[s]) for s in done)
             lines.append(
-                f"| {task} | {strategy} | {sum(bool(outcomes[s]) for s in done)}/{len(done)} "
+                f"| {task} | {strategy} | {passes}/{len(done)} "
                 f"| {sum(bool(g['lenient']) for g in grades.values())}/{len(done)} | {len(runs) - len(done)} "
-                f"| {viol} | {applied} | {_usage([runs[s] for s in done])} |"
+                f"| {viol} | {applied} | {_usage([runs[s] for s in done], passes)} |"
             )
             failures.append(
                 (
@@ -173,14 +204,14 @@ def _table(
     lines += [
         f"Paired exact McNemar, {left} vs each, pooled over the tasks above:",
         "",
-        "| comparison | role | pairs | left only | right only | p one-sided | p two-sided |",
-        "|---|---|---|---|---|---|---|",
+        "| comparison | role | pairs | left only | right only | p one-sided | p two-sided | difference, points (95% CI) |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     for strategy in strategies:
         if strategy != left and strategy in pooled and left in pooled:
-            n, x, y, one, two = _mcnemar(pooled[left], pooled[strategy])
+            n, x, y, one, two, diff = _mcnemar(pooled[left], pooled[strategy])
             role = (roles or {}).get(strategy, "exploratory")
-            lines.append(f"| {left} vs {strategy} | {role} | {n} | {x} | {y} | {one:.4f} | {two:.4f} |")
+            lines.append(f"| {left} vs {strategy} | {role} | {n} | {x} | {y} | {one:.4f} | {two:.4f} | {diff} |")
     return lines + [""]
 
 
@@ -258,15 +289,15 @@ def _pooled_2_5() -> list[str]:
         "",
         "Paired exact McNemar on the same (task, seed) scenarios:",
         "",
-        "| left | right | pairs | left only | right only | p one-sided | p two-sided |",
-        "|---|---|---|---|---|---|---|",
+        "| left | right | pairs | left only | right only | p one-sided | p two-sided | difference, points (95% CI) |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     comparisons = [("A1-free", s) for s in ("none", "B2", "B3", "native", "A1")] + [("A1", "B3"), ("A1", "native")]
     for scope, kept in (("all", None), ("rev+long", {"rev", "long"})):
         for left, right in comparisons:
             a, b = ({k: v for k, v in results[s].items() if kept is None or k[0] in kept} for s in (left, right))
-            n, x, y, one, two = _mcnemar(a, b)
-            lines.append(f"| {left} | {right} ({scope}) | {n} | {x} | {y} | {one:.4f} | {two:.4f} |")
+            n, x, y, one, two, diff = _mcnemar(a, b)
+            lines.append(f"| {left} | {right} ({scope}) | {n} | {x} | {y} | {one:.4f} | {two:.4f} | {diff} |")
     lines += ["", "Unpaired one-sided Fisher exact (ignores the pairing):", ""]
     passes = {s: [bool(v) for v in results[s].values()] for s in order}
     for left, right in [("A1-free", "none"), ("A1-free", "B2"), ("A1-free", "B3"), ("A1-free", "native")]:
