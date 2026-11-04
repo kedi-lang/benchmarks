@@ -14,6 +14,8 @@ records, generated results, the narrative report, the pre-registrations and the 
 - `PLAN.md` — the working plan and lab notes as they were written during the experiment (copy of
   `plans/AGENT_COMPACTION_EXPERIMENT_PLAN.md` in the Kedi workspace).
 - `environment.json` — models, library versions, and the Kedi and harness commits each phase ran with.
+- `requirements.txt`, `constraints.txt` — the environment: Kedi from git at a pinned commit, every other
+  package at the version the runs used.
 - `records/` — one JSON line per run attempt (answer, grade, usage, every compaction event, probe), grouped
   by phase. `records/pilot_deepseek/README.md` describes the phase 10 pilot.
 
@@ -36,13 +38,31 @@ records, generated results, the narrative report, the pre-registrations and the 
 
 ## Reproduce
 
-**Setup.** Clone Kedi (`kedi-lang/kedi`) and check out the commit `environment.json` lists for the phase.
-Put this folder at `benchmarks/agent_compaction` inside the checkout: the code imports itself as
-`benchmarks.agent_compaction`. From the checkout root, install with `uv sync --group dev` (Python 3.12;
-the lock pins the versions in `environment.json`). For an exact rerun, also check out this repository at
-the phase's harness commit from `environment.json`. Harness commits older than the one that added
-`codex_model.py` import that code from `benchmarks.subagent_comparison.common`, which is not part of this
-repository; cherry-pick that commit onto them.
+**Setup.** The code imports itself as `benchmarks.agent_compaction`, so it runs from a working directory that
+holds this folder at `benchmarks/agent_compaction`. Kedi is installed from its repository at a pinned commit:
+
+```bash
+mkdir agent-compaction && cd agent-compaction
+git clone <this repository> benchmarks/agent_compaction
+uv venv --python 3.12
+uv pip install -r benchmarks/agent_compaction/requirements.txt -c benchmarks/agent_compaction/constraints.txt
+```
+
+- `kedi-lang/kedi` is private until Kedi's release. Installing it needs read access through git (for example
+  after `gh auth setup-git`); after the release it installs for everyone.
+- `requirements.txt` pins Kedi at `833ce44`, the commit of phase 9's reruns, phase 10 and the last H5 seeds.
+  `constraints.txt` pins every other package to the version the runs used.
+- For another phase, put that phase's Kedi commit from `environment.json` into `requirements.txt`. Before
+  Kedi `7cc06ea`, also set `tree-sitter-kedi==0.4.2` in `constraints.txt`. For the phase 1 cache probe
+  (`bc96188`, Pydantic AI 2.57), install without `-c`.
+- uv builds tree-sitter-kedi from Kedi's submodule at that commit, which needs a C compiler.
+- For an exact rerun, also check out this repository at the phase's harness commit from `environment.json`.
+  Harness commits older than the one that added `codex_model.py` import that code from
+  `benchmarks.subagent_comparison.common`, which is not part of this repository; cherry-pick that commit
+  onto them.
+- Checked on 2026-11-04: a fresh environment built this way installed every package at its pinned version,
+  regenerated both result tables byte for byte, and completed one `native` run on `override` seed 101
+  (`records/env_check/`).
 
 **Model access.**
 - `gpt-6-luna`, `gpt-6.1-terra` and native compaction use OpenAI Responses through `codex-auth-helper`,
@@ -61,7 +81,7 @@ then regenerate the tables:
 .venv/bin/python -m benchmarks.agent_compaction.run --strategy A1-free --task long --seeds 201 202 203
 .venv/bin/python -m benchmarks.agent_compaction.summarize_6_8   # phases 6–10
 .venv/bin/python -m benchmarks.agent_compaction.summarize       # phases 2–5
-uv run --extra snapshots --group dev python -m pytest benchmarks/agent_compaction/test_normalizer.py -o addopts="" --no-cov
+.venv/bin/python -m pytest benchmarks/agent_compaction/test_normalizer.py
 ```
 
 Defaults: `--model gpt-6-luna --effort medium --threshold 18000`. What each phase ran:
