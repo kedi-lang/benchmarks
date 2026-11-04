@@ -41,7 +41,7 @@ COLUMNS = [
 SETUP = (
     "Phases 1–5 are exploratory: they were designed and run before any pre-registration, and many "
     "comparisons were made, so their p-values describe these runs and test no hypothesis (the "
-    "pre-registered tests are in `PHASES_6_8.md`). The model is `gpt-6-luna` at reasoning effort medium. "
+    "pre-registered tests are in `PHASES_6_10.md`). The model is `gpt-6-luna` at reasoning effort medium. "
     "Every strategy compacts at an estimate of 18K tokens. Seeds 1–5 give the same five scenarios to every "
     "strategy. Kedi and library versions per phase are in `environment.json`. The `calls` and "
     "`compactions` columns list one value per seed, in seed order."
