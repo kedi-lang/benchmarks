@@ -151,7 +151,8 @@ def grade(case: Case, answer: dict) -> dict:
     want_ids = sorted(x.lower() for x in want["incidents"])
     by_id = {i.incident_id: i for i in case.incidents}
     if case.kind == "override":
-        applied = answer.get("owner") == want["owner"]
+        # The change decides whose incident names the owner; the name's letter case is not part of it.
+        applied = str(answer.get("owner", "")).lower() == want["owner"]
     elif case.kind == "format":
         applied = bool(raw) and all(x == x.lower() for x in raw)
     else:

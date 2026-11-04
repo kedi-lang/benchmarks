@@ -1,0 +1,130 @@
+[
+  {
+    "compaction": 1,
+    "logs_read": 3,
+    "groups_offered": [
+      {
+        "id": "g0",
+        "tokens": 754,
+        "starts": "Fields to be substituted into the template string for final constructi"
+      },
+      {
+        "id": "g1",
+        "tokens": 6760,
+        "starts": "<tool-call read_log> 0000 auth worker-20 status=ok latency_ms=1107 tra"
+      },
+      {
+        "id": "g2",
+        "tokens": 6771,
+        "starts": "<tool-call read_log> 0000 billing worker-16 status=ok latency_ms=182 t"
+      },
+      {
+        "id": "g3",
+        "tokens": 6771,
+        "starts": "<tool-call read_log> 0000 billing worker-8 status=retry latency_ms=131"
+      }
+    ],
+    "reply": "{\"keep\":[\"g0\",\"g1\",\"g2\",\"g3\"],\"summary\":\"\"}"
+  },
+  {
+    "compaction": 2,
+    "logs_read": 4,
+    "groups_offered": [
+      {
+        "id": "g0",
+        "tokens": 754,
+        "starts": "Fields to be substituted into the template string for final constructi"
+      },
+      {
+        "id": "g1",
+        "tokens": 6760,
+        "starts": "<tool-call read_log> 0000 auth worker-20 status=ok latency_ms=1107 tra"
+      },
+      {
+        "id": "g2",
+        "tokens": 6771,
+        "starts": "<tool-call read_log> 0000 billing worker-16 status=ok latency_ms=182 t"
+      },
+      {
+        "id": "g3",
+        "tokens": 6771,
+        "starts": "<tool-call read_log> 0000 billing worker-8 status=retry latency_ms=131"
+      },
+      {
+        "id": "g4",
+        "tokens": 6773,
+        "starts": "<tool-call read_log> 0000 payments worker-1 status=slow latency_ms=788"
+      }
+    ],
+    "reply": "{\"keep\":[\"g0\"],\"summary\":\"So far, logs 1–4 contain these incidents: log_1: inc-4349, service ingest, severity 7, owner ayse; log_2: inc-2408, service payments, severity 5, owner mehmet; log_3: inc-5527, service storage, severity 3, owner zeynep; log_4: inc-6388, service payments, severity 4, owner can. No CHANGE lines appeared in logs 1–4. Continue by reading log_5 through log_8, one call at a time and in order, then report all incident IDs except those from service legacy, with IDs uppercased and IDs only; owner is the owner of the reported incident with the highest current severity.\"}"
+  },
+  {
+    "compaction": 3,
+    "logs_read": 6,
+    "groups_offered": [
+      {
+        "id": "g0",
+        "tokens": 754,
+        "starts": "Fields to be substituted into the template string for final constructi"
+      },
+      {
+        "id": "g1",
+        "tokens": 274,
+        "starts": "[Compacted history] So far, logs 1–4 contain these incidents: log_1: i"
+      },
+      {
+        "id": "g2",
+        "tokens": 6773,
+        "starts": "<tool-call read_log> 0000 payments worker-1 status=slow latency_ms=788"
+      },
+      {
+        "id": "g3",
+        "tokens": 6814,
+        "starts": "<tool-call read_log> 0000 payments worker-22 status=slow latency_ms=23"
+      },
+      {
+        "id": "g4",
+        "tokens": 6791,
+        "starts": "<tool-call read_log> 0000 billing worker-20 status=ok latency_ms=695 t"
+      }
+    ],
+    "reply": "{\"keep\":[\"g0\",\"g1\",\"g3\",\"g4\"],\"summary\":\"Logs 1–4 incidents: inc-4349 ingest severity 7 owner ayse; inc-2408 payments severity 5 owner mehmet; inc-5527 storage severity 3 owner zeynep; inc-6388 payments severity 4 owner can. No changes in logs 1–4. Log 5 incident: inc-9943 storage severity 9 owner elif. It contains OWNER RULE CHANGE: from then on, owner is for the reported incident with the LOWEST current severity. Log 6 incident: inc-2337 service legacy severity 6 owner deniz; exclude it. No later change seen. Need read log_7 then log_8, one call at a time in order, and apply the latest task instruction. Report IDs only, uppercased, excluding legacy; determine owner according to the latest owner rule.\"}"
+  },
+  {
+    "compaction": 4,
+    "logs_read": 7,
+    "groups_offered": [
+      {
+        "id": "g0",
+        "tokens": 754,
+        "starts": "Fields to be substituted into the template string for final constructi"
+      },
+      {
+        "id": "g1",
+        "tokens": 274,
+        "starts": "[Compacted history] So far, logs 1–4 contain these incidents: log_1: i"
+      },
+      {
+        "id": "g2",
+        "tokens": 309,
+        "starts": "[Compacted history] Logs 1–4 incidents: inc-4349 ingest severity 7 own"
+      },
+      {
+        "id": "g3",
+        "tokens": 6814,
+        "starts": "<tool-call read_log> 0000 payments worker-22 status=slow latency_ms=23"
+      },
+      {
+        "id": "g4",
+        "tokens": 6791,
+        "starts": "<tool-call read_log> 0000 billing worker-20 status=ok latency_ms=695 t"
+      },
+      {
+        "id": "g5",
+        "tokens": 6768,
+        "starts": "<tool-call read_log> 0000 payments worker-25 status=slow latency_ms=11"
+      }
+    ],
+    "reply": "{\"keep\":[\"g0\"],\"summary\":\"Template rules: exclude service legacy; report incident IDs uppercased, IDs only; owner is for the reported incident with the highest current severity unless superseded by a later CHANGE. Must read logs 1–8 in order, one call at a time, then fill report with incidents list and owner. Logs 1–4: inc-4349 ingest severity 7 owner ayse; inc-2408 payments severity 5 owner mehmet; inc-5527 storage severity 3 owner zeynep; inc-6388 payments severity 4 owner can. Log 5: inc-9943 storage severity 9 owner elif; OWNER RULE CHANGE says owner is for the reported incident with the LOWEST current severity. Log 6: inc-2337 service legacy severity 6 owner deniz; exclude it. Log 7: inc-1711 search severity 1 owner baran. No later change seen through log 7. Logs 1–7 were read; next read log_8, then report all eligible IDs in uppercase. Under current lowest-severity rule, owner among eligible reported incidents is baran (severity 1), assuming no later severity-1 or lower reported incident in log 8.\"}"
+  }
+]

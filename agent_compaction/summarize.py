@@ -314,13 +314,19 @@ def _pooled_2_5() -> list[str]:
 def _probe(label: str, folders: list[str], tasks: list[str]) -> list[str]:
     lines = [f"Rule-recall probe on failed runs ({label}), asked after the final report:", ""]
     for strategy in ("native", "A1-free", "B3", "none"):
-        failed = recalled = 0
+        failed = recalled = broken = 0
         for task in tasks:
             for seed, record in _runs(folders, task, strategy).items():
-                if record["answer"] and not _grade(task, seed, record["answer"])["strict"] and record.get("probe"):
+                grade = record["answer"] and _grade(task, seed, record["answer"])
+                if grade and not grade["strict"] and record.get("probe"):
+                    recalls = bool(record["probe"]["recalls_change"])
                     failed += 1
-                    recalled += bool(record["probe"]["recalls_change"])
-        lines.append(f"- {strategy}: {recalled}/{failed} failed runs named the changed instruction")
+                    recalled += recalls
+                    broken += recalls and not grade["change_applied"]
+        lines.append(
+            f"- {strategy}: {recalled}/{failed} failed runs named the changed instruction, {broken} of them "
+            "right after a report that had not applied it"
+        )
     return lines + [""]
 
 

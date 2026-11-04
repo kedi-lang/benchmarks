@@ -13,7 +13,7 @@ harness, raw records, generated results, the reports, the pre-registrations and 
 | `protocol/` | the pre-registrations, each committed before its runs (`PREREGISTRATION.md` for phase 6, `PREREGISTRATION_PHASE9.md`, `PREREGISTRATION_PHASE10.md`), and `PLAN.md`, the plan and lab notes as written during the experiment |
 | `agent_compaction/` | the harness, a Python package |
 | `tests/` | unit tests for the normalizer |
-| `records/` | one JSON line per run attempt (answer, grade, usage, every compaction event, probe), one folder per phase; `records/pilot_deepseek/` and `records/env_check/` have their own README |
+| `records/` | one JSON line per run attempt (answer, grade, usage, every compaction event, probe), one folder per phase; `records/pilot_deepseek/`, `records/env_check/` and `records/examples/` (an illustration run for the blog, part of no phase) have their own README |
 | `results/RESULTS.md` | every phase's tables, generated from `records/`; do not edit by hand |
 | `environment.json` | models, library versions, and the Kedi and harness commits each phase ran with |
 | `pyproject.toml`, `uv.lock` | the uv project: Kedi from git at a pinned commit, every other package locked at the version the runs used |
