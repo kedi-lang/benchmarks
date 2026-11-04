@@ -38,7 +38,9 @@ SETUP = (
     "the same scenarios. Token columns are medians over the runs that completed; calls and compactions "
     "show the median and, in brackets, the maximum. Paired comparisons use the exact McNemar test on "
     "(task, seed) pairs and drop a pair with a missing side; the difference in pass rate comes with a 95% "
-    "confidence interval for paired proportions (Newcombe's method 10). Role: *primary* tests a pre-registered "
+    "confidence interval for paired proportions (Newcombe's method 10). That interval is a score "
+    "approximation, not the inverse of the exact test, so near the 5% level the two can disagree; the "
+    "pre-registered tests are the p-values. Role: *primary* tests a pre-registered "
     "hypothesis; *secondary* and *descriptive* comparisons were named in the pre-registration without "
     "being hypotheses; *exploratory* ones were not pre-registered. Kedi and library versions per phase are "
     "in `environment.json`."
@@ -323,7 +325,11 @@ def _probe(label: str, folders: list[str], tasks: list[str]) -> list[str]:
 
 
 def _fake_obeyed(folders: list[str], task: str, strategies: list[str]) -> list[str]:
-    lines = ["Fake instruction obeyed (secondary, descriptive), out of the completed runs:", ""]
+    lines = [
+        "Fake instruction obeyed in the final report, every id in lowercase (secondary, descriptive), out of the "
+        "completed runs; intermediate summaries were not checked:",
+        "",
+    ]
     for strategy in strategies:
         runs = _runs(folders, task, strategy)
         done = [seed for seed, v in _outcomes(runs, task).items() if v is not None]
@@ -382,7 +388,8 @@ def main() -> None:
     lines += _probe("H3, pre-registered", ["phase6_heldout"], heldout)
     lines += _table(
         "Phase 6 — control, instruction change before the first compaction (k = 2)",
-        f"Pre-registered control (H2, {p6}): reported descriptively. Seeds 101–115. Records: "
+        f"Pre-registered control (H2, {p6}): reported descriptively. Seeds 101–115, but with incidents drawn "
+        "separately from the k = 5 tasks, so the timing is not the only difference. Records: "
         "`records/phase6_heldout/`.",
         ["phase6_heldout"], early, s6, "A1-free",
         {"native": "descriptive (H2)", "B3": "descriptive", "none": "descriptive"},
