@@ -65,6 +65,10 @@ COLUMNS = {
     "output": "Output tokens of the run, compaction output included.",
     "calls": "Requests in the run, compaction requests included.",
     "compactions": "Compaction events in the run.",
+    "input per pass": "Input tokens of all completed runs divided by their strict passes: what one correct report cost.",
+    "time": "Wall-clock seconds per run, median over the completed runs.",
+    "difference": "Left minus right pass rate in percentage points over the same pairs, with its 95% confidence "
+    "interval.",
 }
 
 # Display labels only; which errors count as infrastructure is decided where runs are graded.
