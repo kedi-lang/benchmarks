@@ -5,8 +5,9 @@ description = "Can an agent compact its own context better than its provider? An
 requires-python = "==3.12.*"
 dependencies = [
     "kedi[codex-model]",
-    # Kedi up to 833ce44 imports Pydantic AI's Anthropic model in its native compaction path,
-    # also when the model is OpenAI's.
+    # Kedi at 833ce44, which the runs used, imports Pydantic AI's Anthropic model in its native
+    # compaction path, also for OpenAI models. A later Kedi commit fixes that ("fix: native
+    # compaction imports only the model's own provider"); with it, this dependency can go.
     "anthropic",
 ]
 
