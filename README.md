@@ -35,7 +35,7 @@ layout of their time; see [Older commits](#older-commits).
 | `codex_model.py` | the Codex model builder and base instruction every run used (verbatim copy, see `environment.json`) |
 | `loop_guard.py` | keeps a `codex_auth_helper` model usable across Kedi invocations on different event loops |
 | `cache_probe.py` | phase 1: does a compaction fork read the prefix from the provider cache? |
-| `summarize.py`, `summarize_6_8.py` | rebuild `results/RESULTS.md` (phases 1–5) and `results/PHASES_6_8.md` (phases 6–10, despite the name) |
+| `summarize.py`, `summarize_6_10.py` | rebuild `results/RESULTS.md` (phases 1–5) and `results/PHASES_6_10.md` (phases 6–10) |
 | `legend.py` | what every strategy, task and column in those tables means, and why a run did not pass; both summaries use it |
 
 ## Reproduce
@@ -74,7 +74,7 @@ then regenerate the tables:
 
 ```bash
 uv run python -m agent_compaction.run --strategy A1-free --task long --seeds 201 202 203
-uv run python -m agent_compaction.summarize_6_8   # phases 6–10
+uv run python -m agent_compaction.summarize_6_10   # phases 6–10
 uv run python -m agent_compaction.summarize       # phases 1–5
 uv run pytest
 ```
@@ -97,7 +97,7 @@ Defaults: `--model gpt-6-luna --effort medium --threshold 18000`. What each phas
 | 9 H6 | `override-inject` | `A1-free native none` | luna | 101–115 |
 | 10 | `long` | `A1-free B3 none` | `--model openrouter:deepseek/deepseek-v4.1-flash` | 401–415 |
 
-Infrastructure failures got one rerun with the same seed. `summarize_6_8.py` counts these as
+Infrastructure failures got one rerun with the same seed. `summarize_6_10.py` counts these as
 infrastructure: rate limit, timeout, usage limit, connection error and HTTP 503. Its summary counts the last
 attempt per seed and reports failures that remain after the rerun as missing. Request-limit and budget
 failures count against the strategy.

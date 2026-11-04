@@ -3,7 +3,7 @@
 Native compaction, agent forks, resets and policy changes in Kedi. Status 2026-11-04, phases 1–10, all complete (missing runs are listed under Phase 9 status).
 `REPORT.md` (phases 1–5, the exploratory story) is preserved unchanged in substance; this file follows the
 research brief's reporting format and covers everything, with the pre-registered phases 6, 9 and 10 as the main evidence. Tables:
-`results/RESULTS.md` (phases 1–5) and `results/PHASES_6_8.md` (phases 6–10), both generated from `records/`;
+`results/RESULTS.md` (phases 1–5) and `results/PHASES_6_10.md` (phases 6–10), both generated from `records/`;
 each starts with a key to the strategy, task and column codes.
 
 ## 1. Executive result (qualified)
@@ -91,7 +91,7 @@ before phase 10, with their own README).
 
 ## 4. Main tables
 
-See `results/PHASES_6_8.md` (pass, infra-missing, policy violations, change applied, median total input incl.
+See `results/PHASES_6_10.md` (pass, infra-missing, policy violations, change applied, median total input incl.
 compaction calls, median output incl. compaction output, median calls incl. fork calls) and
 `results/RESULTS.md` for phases 1–5.
 
@@ -199,7 +199,7 @@ in Kedi.**
 `protocol/PREREGISTRATION_PHASE9.md` (committed `fb1d0e7` before any run). The first run hit the subscription's usage
 quota (`usage_limit_reached`); per the pre-registration each such seed got one rerun with the same seed
 (2026-11-02 for H4's secondary arm, 2026-11-03 for H5 and H6). Results are in the tables above and in
-`results/PHASES_6_8.md`. What is missing, and why:
+`results/PHASES_6_10.md`. What is missing, and why:
 
 - **H4 secondary, native+reassert: 11 of 15 missing.** The rerun of those seeds failed with connection errors
   (`ModelConnectionError`); the one allowed rerun is used, so they stay missing. The 4 completed runs pass
@@ -213,7 +213,7 @@ quota (`usage_limit_reached`); per the pre-registration each such seed got one r
   1–0 (p = 0.50) to 1–1 (p = 0.75).
 - **H6: complete,** 45/45 runs.
 - **Classification:** a `503` (server unavailable) counts as infrastructure, like a connection error,
-  because the request was not served. `agent_compaction/summarize_6_8.py` now lists it with the other infra errors; before,
+  because the request was not served. `agent_compaction/summarize_6_10.py` now lists it with the other infra errors; before,
   the three 503s were counted as strategy failures.
 
 ## Phase 10 status
@@ -236,4 +236,4 @@ before the budget was spent. Later pilots run every arm of the planned compariso
   checkpoint prototype — not run. A second model and a fake instruction in tool output ran in phase 9 (H5, H6),
   a second model family in phase 10 (H7).
 - Rerun any phase: `uv run python -m agent_compaction.run --strategy <s> --task <t> --seeds …` (see
-  `README.md`), then move records into a phase folder and run `agent_compaction.summarize` / `agent_compaction.summarize_6_8`.
+  `README.md`), then move records into a phase folder and run `agent_compaction.summarize` / `agent_compaction.summarize_6_10`.
