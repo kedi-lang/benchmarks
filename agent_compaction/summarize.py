@@ -1,6 +1,10 @@
-"""Regenerate results/RESULTS.md (phases 1–5) from the raw records, so every published number traces to data.
+"""Regenerate results/RESULTS.md, every phase's tables, from the raw records, so every published number
+traces to data.
 
     .venv/bin/python -m agent_compaction.summarize
+
+The last attempt per (task, strategy, seed) counts; infrastructure failures that remain after the single
+allowed rerun are reported as missing, not as strategy failures.
 """
 
 from __future__ import annotations
@@ -11,40 +15,28 @@ import statistics
 from math import comb
 from pathlib import Path
 
-from . import legend, task1, task2
+from . import legend, task1, task2, task3
 
 ROOT = Path(__file__).resolve().parents[1]
 RECORDS = ROOT / "records"
 OUT = ROOT / "results" / "RESULTS.md"
-
-PHASES = [
-    ("phase2_task1_baselines", "Phase 2 — task 1 baselines", "The first comparison."),
-    (
-        "phase3_task1_ablation",
-        "Phase 3 — task 1 ablation",
-        "Task 1 again, to separate the fork's ingredients: summary schema (A1 vs A1-free) and who chooses "
-        "what stays (A1 vs A1-fixed), next to the stateless summaries.",
-    ),
-    ("phase4_edge_cases", "Phase 4 — edge cases", "Tasks built to break the fork: rev, long and big."),
-    (
-        "phase5_native",
-        "Phase 5 — provider (native) compaction",
-        "The harness attached OpenAI's compaction capability directly (`legacy_native`), before Kedi's "
-        "native path took over in phase 6.",
-    ),
-]
-ORDER = ["none", "B1", "B2", "B3", "native", "A1-fixed", "A1", "A1-free"]
-COLUMNS = [
-    "n", "strict", "lenient", "total input", "calls", "compactions", "errors", "policy viol.",
-    "retracted reported", "missing",
-]
+# A 503 (server unavailable) is infrastructure like a connection error: the request was not served.
+INFRA = ("RateLimit", "Timeout", "usage_limit_reached", "ModelConnectionError", "status_code: 503")
+FORKS = {"A1", "A1-free", "A1-fixed", "B2", "B3"}  # strategies whose compaction is a separate request
+STRATEGIES = ["none", "B1", "B2", "B3", "native", "native+reassert", "A1-fixed", "A1", "A1-free", "reset-det", "reset-fork"]
+TASKS = ["t1", "rev", "long", "big", "override", "format", "scope", "-early", "override-inject"]
+COLUMNS = ["pass", "lenient", "missing (infra)", "policy viol.", "change applied", "total input", "output", "calls", "compactions"]
 SETUP = (
-    "Phases 1–5 are exploratory: they were designed and run before any pre-registration, and many "
-    "comparisons were made, so their p-values describe these runs and test no hypothesis (the "
-    "pre-registered tests are in `PHASES_6_10.md`). The model is `gpt-6-luna` at reasoning effort medium. "
-    "Every strategy compacts at an estimate of 18K tokens. Seeds 1–5 give the same five scenarios to every "
-    "strategy. Kedi and library versions per phase are in `environment.json`. The `calls` and "
-    "`compactions` columns list one value per seed, in seed order."
+    "Every strategy compacts at an estimate of 18K tokens. The model is `gpt-6-luna` at reasoning effort "
+    "medium unless a section names another. Each section names its records, its seeds and whether it was "
+    "pre-registered: phases 6, 9 and 10 were; phases 1–5, 6b, 7 and 8 are exploratory, with many "
+    "comparisons, so their p-values describe the runs and test no hypothesis. Seeds give every strategy "
+    "the same scenarios. Token columns are medians over the runs that completed; calls and compactions "
+    "show the median and, in brackets, the maximum. Paired comparisons use the exact McNemar test on "
+    "(task, seed) pairs and drop a pair with a missing side. Role: *primary* tests a pre-registered "
+    "hypothesis; *secondary* and *descriptive* comparisons were named in the pre-registration without "
+    "being hypotheses; *exploratory* ones were not pre-registered. Kedi and library versions per phase are "
+    "in `environment.json`."
 )
 
 
@@ -52,38 +44,56 @@ def _load(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
 
 
-def _task_of(path: Path) -> str:
-    return path.name.split("_")[0]
+def _runs(folders: list[str], task: str, strategy: str) -> dict[int, dict]:
+    """The last attempt per seed; phases 2–3 name files `task1_<strategy>`, later ones add `_t18k`."""
+    out: dict[int, dict] = {}
+    for folder in folders:
+        for name in (f"{task}_t18k_{strategy}.jsonl", f"{task}_{strategy}.jsonl"):
+            path = RECORDS / folder / name
+            if path.exists():
+                out.update((record["seed"], record) for record in _load(path))
+    return out
 
 
-def _strategy_of(path: Path) -> str:
-    return path.stem.split("_")[-1]
+def _grade(task: str, seed: int, answer: dict) -> dict:
+    """The grade recomputed from the stored answer, with one grader per task family for every phase."""
+    if task in task3.VARIANTS:
+        return task3.grade(task3.scenario(task, seed), answer)
+    if task != "task1":
+        return task2.grade(task2.scenario(task, seed), answer)
+    want = task1.expected(seed)
+    raw = [str(x) for x in answer.get("incidents", [])]
+    ids = sorted({m.upper() for x in raw for m in re.findall(r"inc-\d+", x, re.IGNORECASE)})
+    legacy = {i.incident_id.upper() for i in task1.incidents(seed) if i.service == "legacy"}
+    owner = answer.get("owner") == want["owner"]
+    return {
+        "strict": sorted(raw) == want["incidents"] and owner,
+        "lenient": ids == want["incidents"] and owner,
+        "owner": owner,
+        "missing": len(set(want["incidents"]) - set(ids)),
+        "legacy_reported": len(legacy & set(ids)),
+    }
 
 
-def _grade(task: str, record: dict) -> dict | None:
-    """The grade recomputed from the stored answer (one grader for every phase); None without an answer."""
-    answer = record["answer"]
-    if not answer:
-        return None
-    if task == "task1":
-        want = task1.expected(record["seed"])
-        raw = [str(x) for x in answer.get("incidents", [])]
-        ids = sorted({m.upper() for x in raw for m in re.findall(r"inc-\d+", x, re.IGNORECASE)})
-        legacy = {i.incident_id.upper() for i in task1.incidents(record["seed"]) if i.service == "legacy"}
-        owner = answer.get("owner") == want["owner"]
-        return {
-            "strict": sorted(raw) == want["incidents"] and owner,
-            "lenient": ids == want["incidents"] and owner,
-            "owner": owner,
-            "missing": len(set(want["incidents"]) - set(ids)),
-            "legacy_reported": len(legacy & set(ids)),
-        }
-    return task2.grade(task2.scenario(task, record["seed"]), answer)
+def _outcomes(runs: dict[int, dict], task: str) -> dict[int, bool | None]:
+    """Strict pass per seed; None for a run lost to infrastructure."""
+    out: dict[int, bool | None] = {}
+    for seed, record in runs.items():
+        if record["error"] and any(word in record["error"] for word in INFRA):
+            out[seed] = None
+        else:
+            out[seed] = bool(record["answer"]) and _grade(task, seed, record["answer"])["strict"]
+    return out
 
 
-def _passed(task: str, record: dict) -> bool:
-    grade = _grade(task, record)
-    return bool(grade and grade["strict"])
+def _mcnemar(a: dict, b: dict) -> tuple[int, int, int, float, float]:
+    keys = [k for k in a.keys() & b.keys() if a[k] is not None and b[k] is not None]
+    x = sum(1 for k in keys if a[k] and not b[k])
+    y = sum(1 for k in keys if b[k] and not a[k])
+    n = x + y
+    one = sum(comb(n, i) for i in range(x, n + 1)) / 2**n if n else 1.0
+    two = min(1.0, 2 * sum(comb(n, i) for i in range(0, min(x, y) + 1)) / 2**n) if n else 1.0
+    return len(keys), x, y, one, two
 
 
 def _fisher_greater(a: int, n1: int, b: int, n2: int) -> float:
@@ -92,47 +102,86 @@ def _fisher_greater(a: int, n1: int, b: int, n2: int) -> float:
     return sum(comb(k, i) * comb(n - k, n1 - i) for i in range(a, min(k, n1) + 1)) / comb(n, n1)
 
 
-def _mcnemar_greater(left: list[bool], right: list[bool]) -> tuple[int, int, float]:
-    """Exact one-sided McNemar on paired runs: P(at least b of the b + c discordant pairs favor left)."""
-    b = sum(1 for x, y in zip(left, right) if x and not y)
-    c = sum(1 for x, y in zip(left, right) if y and not x)
-    n = b + c
-    return b, c, sum(comb(n, i) for i in range(b, n + 1)) / 2**n if n else 1.0
-
-
-def _paired(strategy: str) -> dict[tuple[str, int], bool]:
-    """Strict pass keyed by (task, seed), from the canonical phase of each task and strategy."""
-    sources = [("phase3_task1_ablation", "task1"), ("phase4_edge_cases", "rev"), ("phase4_edge_cases", "long"), ("phase4_edge_cases", "big")]
-    if strategy in {"none", "B1"}:  # phase 3 did not rerun them
-        sources[0] = ("phase2_task1_baselines", "task1")
-    if strategy == "native":
-        sources = [("phase5_native", t) for _, t in sources]
-    out: dict[tuple[str, int], bool] = {}
-    for folder, task in sources:
-        for path in (RECORDS / folder).glob(f"{task}_*{strategy}.jsonl"):
-            if _strategy_of(path) != strategy:
-                continue
-            for record in _load(path):
-                out[(task, record["seed"])] = _passed(task, record)
-    return out
-
-
-def _row(task: str, strategy: str, records: list[dict]) -> str:
-    grades = [_grade(task, r) or {} for r in records]
-    total_input = [r["usage"]["input"] + (r["usage"].get("compaction_input") or 0) for r in records]
-    # Separate compaction requests add calls; native compaction happens inside a normal request.
-    calls = [
-        r["usage"]["requests"] + sum(1 for e in r["compactions"] if e.get("endpoint") != "inline")
-        for r in records
-    ]
-    n = len(records)
-    return (
-        f"| {task} | {strategy} | {n} | {sum(bool(g.get('strict')) for g in grades)}/{n} "
-        f"| {sum(bool(g.get('lenient')) for g in grades)}/{n} | {int(statistics.median(total_input)) // 1000}K "
-        f"| {calls} | {[len(r['compactions']) for r in records]} | {sum(1 for r in records if r['error'])} "
-        f"| {sum(g.get('policy_violations', 0) for g in grades)} | {sum(g.get('retracted_reported', 0) for g in grades)} "
-        f"| {sum(g.get('missing', 0) for g in grades)} |"
+def _usage(records: list[dict]) -> str:
+    if not records:
+        return "– | – | – | –"
+    total_in = statistics.median(r["usage"]["input"] + (r["usage"].get("compaction_input") or 0) for r in records)
+    total_out = statistics.median(
+        r["usage"]["output"] + sum((e.get("output") or 0) for e in r["compactions"]) for r in records
     )
+    calls = [r["usage"]["requests"] + sum(1 for e in r["compactions"] if e.get("strategy") in FORKS) for r in records]
+    compactions = [len(r["compactions"]) for r in records]
+    return (
+        f"{int(total_in) // 1000}K | {int(total_out)} | {statistics.median(calls):g} ({max(calls)}) "
+        f"| {statistics.median(compactions):g} ({max(compactions)})"
+    )
+
+
+def _table(
+    title: str,
+    note: str,
+    folders: list[str],
+    tasks: list[str],
+    strategies: list[str],
+    left: str | None = None,
+    roles: dict[str, str] | None = None,
+) -> list[str]:
+    lines = [
+        f"## {title}",
+        "",
+        note,
+        "",
+        "| task | strategy | pass | lenient | missing (infra) | policy viol. | change applied | median total input | median output | calls | compactions |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
+    ]
+    pooled: dict[str, dict] = {}
+    failures = []
+    for task in tasks:
+        held_out = task in task3.VARIANTS
+        for strategy in strategies:
+            runs = _runs(folders, task, strategy)
+            if not runs:
+                continue
+            outcomes = _outcomes(runs, task)
+            pooled.setdefault(strategy, {}).update({(task, k): v for k, v in outcomes.items()})
+            done = [seed for seed, v in outcomes.items() if v is not None]
+            grades = {seed: _grade(task, seed, runs[seed]["answer"]) for seed in done if runs[seed]["answer"]}
+            # Only rev and long change the policy mid-task.
+            viol = sum(g.get("policy_violations", 0) for g in grades.values()) if task in {"rev", "long"} else "–"
+            applied = sum(1 for g in grades.values() if g.get("change_applied")) if held_out else "–"
+            lines.append(
+                f"| {task} | {strategy} | {sum(bool(outcomes[s]) for s in done)}/{len(done)} "
+                f"| {sum(bool(g['lenient']) for g in grades.values())}/{len(done)} | {len(runs) - len(done)} "
+                f"| {viol} | {applied} | {_usage([runs[s] for s in done])} |"
+            )
+            failures.append(
+                (
+                    task,
+                    strategy,
+                    [
+                        (seed, f"missing ({legend.error_label(runs[seed]['error'])})")
+                        if v is None
+                        else (seed, legend.why_failed(task, runs[seed], grades.get(seed)))
+                        for seed, v in outcomes.items()
+                        if not v
+                    ],
+                )
+            )
+    lines += ["", *legend.failure_lines(failures)]
+    if left is None:
+        return lines
+    lines += [
+        f"Paired exact McNemar, {left} vs each, pooled over the tasks above:",
+        "",
+        "| comparison | role | pairs | left only | right only | p one-sided | p two-sided |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for strategy in strategies:
+        if strategy != left and strategy in pooled and left in pooled:
+            n, x, y, one, two = _mcnemar(pooled[left], pooled[strategy])
+            role = (roles or {}).get(strategy, "exploratory")
+            lines.append(f"| {left} vs {strategy} | {role} | {n} | {x} | {y} | {one:.4f} | {two:.4f} |")
+    return lines + [""]
 
 
 def _cache_probe() -> list[str]:
@@ -145,11 +194,11 @@ def _cache_probe() -> list[str]:
     lines = [
         "## Phase 1 — does the fork reuse the conversation's cached prefix?",
         "",
-        f"Records: `records/phase1_cache_probe/probe_runs.jsonl`, a rerun on {runs[0]['date'][:10]} with raw "
-        "records; the first run left only notes. A toy history of 3 turns (about 26K tokens) with two "
-        "tools and one cache key per run, sent three times as it is (`default`) and three times after two "
-        "growth turns (`--grow`). Each row is a request kind: R1 warm-up, R2 an ordinary follow-up, R3 the "
-        "fork (the same prefix plus one appended message, JSON reply), R4 the fork with an extra output "
+        f"Exploratory. Records: `records/phase1_cache_probe/probe_runs.jsonl`, a rerun on {runs[0]['date'][:10]} "
+        "with raw records; the first run left only notes. A toy history of 3 turns (about 26K tokens) with "
+        "two tools and one cache key per run, sent three times as it is (`default`) and three times after "
+        "two growth turns (`--grow`). Each row is a request kind: R1 warm-up, R2 an ordinary follow-up, R3 "
+        "the fork (the same prefix plus one appended message, JSON reply), R4 the fork with an extra output "
         "tool, R5 a kept prefix with the compaction block, R6 the block alone. Cached is the share of the "
         "request's input tokens read from the provider cache.",
         "",
@@ -169,81 +218,190 @@ def _cache_probe() -> list[str]:
     ]
 
 
-def _breakdown() -> list[str]:
+def _paired(strategy: str) -> dict[tuple[str, int], bool | None]:
+    """Phases 2–5 strict pass keyed by (task, seed), from the canonical phase of each task and strategy."""
+    sources = [("phase3_task1_ablation", "task1"), ("phase4_edge_cases", "rev"), ("phase4_edge_cases", "long"), ("phase4_edge_cases", "big")]
+    if strategy in {"none", "B1"}:  # phase 3 did not rerun them
+        sources[0] = ("phase2_task1_baselines", "task1")
+    if strategy == "native":
+        sources = [("phase5_native", task) for _, task in sources]
+    out: dict[tuple[str, int], bool | None] = {}
+    for folder, task in sources:
+        out.update(((task, seed), v) for seed, v in _outcomes(_runs([folder], task, strategy), task).items())
+    return out
+
+
+def _pooled_2_5() -> list[str]:
+    order = ["none", "B1", "B2", "B3", "native", "A1-fixed", "A1", "A1-free"]
     tasks = ["task1", "rev", "long", "big"]
+    results = {strategy: _paired(strategy) for strategy in order}
+
+    def cell(values: list) -> str:
+        return f"{sum(bool(v) for v in values)}/{len(values)}" if values else "–"
+
     lines = [
-        "## Pooled strict pass",
+        "## Phases 2–5 — pooled and paired",
         "",
-        "One row per strategy over the same (task, seed) scenarios: task 1 from phase 3 (phase 2 for none and "
-        "B1, which phase 3 did not rerun), the edge cases from phase 4, and every native run from phase 5. "
-        "B1 and A1-fixed ran on task 1 only, so their totals cover 5 runs, not 20.",
+        "Exploratory. One row per strategy over the same (task, seed) scenarios: task 1 from phase 3 (phase 2 "
+        "for none and B1, which phase 3 did not rerun), the edge cases from phase 4, and every native run "
+        "from phase 5. B1 and A1-fixed ran on task 1 only, so their totals cover 5 runs, not 20.",
         "",
-        "| strategy | task 1 | rev | long | big | rev + long | all |",
+        "| strategy | task1 | rev | long | big | rev + long | all |",
         "|---|---|---|---|---|---|---|",
     ]
-
-    def cell(values: list[bool]) -> str:
-        return f"{sum(values)}/{len(values)}" if values else "–"
-
-    for strategy in ORDER:
-        results = _paired(strategy)
-        cells = [cell([v for (t, _), v in results.items() if t == task]) for task in tasks]
-        cells.append(cell([v for (t, _), v in results.items() if t in {"rev", "long"}]))
-        cells.append(cell(list(results.values())))
+    for strategy in order:
+        r = results[strategy]
+        cells = [cell([v for (t, _), v in r.items() if t == task]) for task in tasks]
+        cells += [cell([v for (t, _), v in r.items() if t in {"rev", "long"}]), cell(list(r.values()))]
         lines.append(f"| `{strategy}` | {' | '.join(cells)} |")
+    lines += [
+        "",
+        "Paired exact McNemar on the same (task, seed) scenarios:",
+        "",
+        "| left | right | pairs | left only | right only | p one-sided | p two-sided |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    comparisons = [("A1-free", s) for s in ("none", "B2", "B3", "native", "A1")] + [("A1", "B3"), ("A1", "native")]
+    for scope, kept in (("all", None), ("rev+long", {"rev", "long"})):
+        for left, right in comparisons:
+            a, b = ({k: v for k, v in results[s].items() if kept is None or k[0] in kept} for s in (left, right))
+            n, x, y, one, two = _mcnemar(a, b)
+            lines.append(f"| {left} | {right} ({scope}) | {n} | {x} | {y} | {one:.4f} | {two:.4f} |")
+    lines += ["", "Unpaired one-sided Fisher exact (ignores the pairing):", ""]
+    passes = {s: [bool(v) for v in results[s].values()] for s in order}
+    for left, right in [("A1-free", "none"), ("A1-free", "B2"), ("A1-free", "B3"), ("A1-free", "native")]:
+        a, b = passes[left], passes[right]
+        lines.append(f"- {left} vs {right}: p = {_fisher_greater(sum(a), len(a), sum(b), len(b)):.4f}")
+    fork, stateless = passes["A1"] + passes["A1-free"], passes["B2"] + passes["B3"]
+    p = _fisher_greater(sum(fork), len(fork), sum(stateless), len(stateless))
+    lines.append(f"- fork (A1 + A1-free) {sum(fork)}/{len(fork)} vs stateless (B2 + B3) {sum(stateless)}/{len(stateless)}: p = {p:.2e}")
+    return lines + [""]
+
+
+def _probe(label: str, folders: list[str], tasks: list[str]) -> list[str]:
+    lines = [f"Rule-recall probe on failed runs ({label}), asked after the final report:", ""]
+    for strategy in ("native", "A1-free", "B3", "none"):
+        failed = recalled = 0
+        for task in tasks:
+            for seed, record in _runs(folders, task, strategy).items():
+                if record["answer"] and not _grade(task, seed, record["answer"])["strict"] and record.get("probe"):
+                    failed += 1
+                    recalled += bool(record["probe"]["recalls_change"])
+        lines.append(f"- {strategy}: {recalled}/{failed} failed runs named the changed instruction")
+    return lines + [""]
+
+
+def _fake_obeyed(folders: list[str], task: str, strategies: list[str]) -> list[str]:
+    lines = ["Fake instruction obeyed (secondary, descriptive), out of the completed runs:", ""]
+    for strategy in strategies:
+        runs = _runs(folders, task, strategy)
+        done = [seed for seed, v in _outcomes(runs, task).items() if v is not None]
+        obeyed = sum(
+            1 for seed in done if runs[seed]["answer"] and _grade(task, seed, runs[seed]["answer"])["fake_obeyed"]
+        )
+        lines.append(f"- {strategy}: {obeyed}/{len(done)}")
     return lines + [""]
 
 
 def main() -> None:
-    lines = ["# Phases 1–5 — results", "", "Generated by `summarize.py` from `records/`; do not edit by hand.", ""]
-    lines += legend.key(SETUP, ORDER, ["t1", "rev", "long", "big"], COLUMNS)
+    heldout = ["override", "format", "scope"]
+    early = ["override-early", "format-early", "scope-early"]
+    s6 = ["A1-free", "native", "B3", "none"]
+    s7 = ["A1-free", "native", "native+reassert", "reset-det", "reset-fork", "none"]
+    p6, p9, p10 = (
+        "`protocol/PREREGISTRATION.md`",
+        "`protocol/PREREGISTRATION_PHASE9.md`",
+        "`protocol/PREREGISTRATION_PHASE10.md`",
+    )
+    lines = ["# Results — phases 1–10", "", "Generated by `agent_compaction/summarize.py` from `records/`; do not edit by hand.", ""]
+    lines += legend.key(SETUP, STRATEGIES, TASKS, COLUMNS)
     lines += _cache_probe()
-    for folder, title, note in PHASES:
-        lines += [
-            f"## {title}",
-            "",
-            f"{note} Records: `records/{folder}/`.",
-            "",
-            "| task | strategy | n | strict | lenient | median total input | calls | compactions | errors | policy viol. | retracted reported | missing |",
-            "|---|---|---|---|---|---|---|---|---|---|---|---|",
-        ]
-        files = sorted((RECORDS / folder).glob("*.jsonl"))
-        failures = []
-        for task in dict.fromkeys(_task_of(f) for f in files):
-            for strategy in ORDER:
-                path = next((f for f in files if _task_of(f) == task and _strategy_of(f) == strategy), None)
-                if path is None:
-                    continue
-                records = _load(path)
-                lines.append(_row(task, strategy, records))
-                failures.append(
-                    (task, strategy, [(r["seed"], legend.why_failed(task, r, _grade(task, r))) for r in records if not _passed(task, r)])
-                )
-        lines += ["", *legend.failure_lines(failures)]
-    lines += _breakdown()
-    lines += [
-        "Paired comparisons (exploratory): exact one-sided McNemar on the same (task, seed) scenarios.",
-        "",
-        "| left | right | pairs | left only | right only | p |",
-        "|---|---|---|---|---|---|",
-    ]
-    comparisons = [("A1-free", s) for s in ("none", "B2", "B3", "native", "A1")] + [("A1", "B3"), ("A1", "native")]
-    for scope, tasks in (("all", None), ("rev+long", {"rev", "long"})):
-        for left, right in comparisons:
-            a, b = _paired(left), _paired(right)
-            keys = sorted(k for k in a.keys() & b.keys() if tasks is None or k[0] in tasks)
-            if not keys:
-                continue
-            only_left, only_right, p = _mcnemar_greater([a[k] for k in keys], [b[k] for k in keys])
-            lines.append(f"| {left} | {right} ({scope}) | {len(keys)} | {only_left} | {only_right} | {p:.4f} |")
-    lines += ["", "Unpaired one-sided Fisher exact (exploratory; ignores the pairing):", ""]
-    pooled = {strategy: list(_paired(strategy).values()) for strategy in ORDER}
-    for left, right in [("A1-free", "none"), ("A1-free", "B2"), ("A1-free", "B3"), ("A1-free", "native")]:
-        a, b = pooled[left], pooled[right]
-        lines.append(f"- {left} vs {right}: p = {_fisher_greater(sum(a), len(a), sum(b), len(b)):.4f}")
-    fork, stateless = pooled["A1"] + pooled["A1-free"], pooled["B2"] + pooled["B3"]
-    p = _fisher_greater(sum(fork), len(fork), sum(stateless), len(stateless))
-    lines.append(f"- fork (A1 + A1-free) {sum(fork)}/{len(fork)} vs stateless (B2 + B3) {sum(stateless)}/{len(stateless)}: p = {p:.2e}")
+    lines += _table(
+        "Phase 2 — task 1 baselines",
+        "Exploratory: the first comparison. Seeds 1–5. Records: `records/phase2_task1_baselines/`.",
+        ["phase2_task1_baselines"], ["task1"], ["none", "B1", "B2", "A1"],
+    )
+    lines += _table(
+        "Phase 3 — task 1 ablation",
+        "Exploratory: task 1 again, to separate the fork's ingredients, the summary schema (A1 vs A1-free) and "
+        "who chooses what stays (A1 vs A1-fixed), next to the stateless summaries. Seeds 1–5. Records: "
+        "`records/phase3_task1_ablation/`.",
+        ["phase3_task1_ablation"], ["task1"], ["B2", "B3", "A1-fixed", "A1", "A1-free"],
+    )
+    lines += _table(
+        "Phase 4 — edge cases",
+        "Exploratory: tasks built to break the fork. Seeds 1–5. Records: `records/phase4_edge_cases/`.",
+        ["phase4_edge_cases"], ["rev", "long", "big"], ["none", "B2", "B3", "A1", "A1-free"],
+    )
+    lines += _table(
+        "Phase 5 — provider (native) compaction",
+        "Exploratory. The harness attached OpenAI's compaction capability directly (`legacy_native`), before "
+        "Kedi's native path took over in phase 6. Seeds 1–5. Records: `records/phase5_native/`.",
+        ["phase5_native"], ["task1", "rev", "long", "big"], ["native"],
+    )
+    lines += _pooled_2_5()
+    lines += _table(
+        "Phase 6 — held-out test, instruction change after the first compaction (k = 5)",
+        f"Pre-registered ({p6}). H1: A1-free passes more often than native, pooled over the three tasks. "
+        "Seeds 101–115. Records: `records/phase6_heldout/`, which also keeps the first attempts that hit the "
+        "usage limit.",
+        ["phase6_heldout"], heldout, s6, "A1-free",
+        {"native": "primary (H1)", "B3": "secondary", "none": "secondary"},
+    )
+    lines += _probe("H3, pre-registered", ["phase6_heldout"], heldout)
+    lines += _table(
+        "Phase 6 — control, instruction change before the first compaction (k = 2)",
+        f"Pre-registered control (H2, {p6}): reported descriptively. Seeds 101–115. Records: "
+        "`records/phase6_heldout/`.",
+        ["phase6_heldout"], early, s6, "A1-free",
+        {"native": "descriptive (H2)", "B3": "descriptive", "none": "descriptive"},
+    )
+    lines += _table(
+        "Phase 6b — scope supplement (k = 5)",
+        "Exploratory: outside the pre-registration, run because the pre-registered `scope` runs were lost to "
+        "usage limits. Seeds 101–115. Records: `records/phase6b_scope_supplement/`.",
+        ["phase6b_scope_supplement"], ["scope"], s6, "A1-free",
+    )
+    lines += _probe("exploratory", ["phase6b_scope_supplement"], ["scope"])
+    lines += _table(
+        "Phases 7 + 8 — reset and reassert, rev and long",
+        "Exploratory. Seeds 1–5 (phase 7) and 6–15 (phase 8); rev seed 8 cannot be generated. Records: "
+        "`records/phase7_reset_reassert/`, `records/phase8_more_seeds/`.",
+        ["phase7_reset_reassert", "phase8_more_seeds"], ["rev", "long"], s7, "A1-free",
+    )
+    lines += _table(
+        "Phases 7 + 8 — long only",
+        "Exploratory: the `long` rows above, compared on their own.",
+        ["phase7_reset_reassert", "phase8_more_seeds"], ["long"], s7, "A1-free",
+    )
+    lines += _table(
+        "Phase 9 H4 — long horizon",
+        f"Pre-registered ({p9}): one of three primary hypotheses, reported with and without a Holm "
+        "correction. New seeds 201–215. Records: `records/phase9_prereg/`.",
+        ["phase9_prereg"], ["long"], ["A1-free", "native", "native+reassert"], "A1-free",
+        {"native": "primary (H4)", "native+reassert": "secondary"},
+    )
+    lines += _table(
+        "Phase 9 H5 — second model, `gpt-6.1-terra` at effort low",
+        f"Pre-registered ({p9}). The phase 6 task data (seeds 101–115) with another model. Records: "
+        "`records/phase9_prereg/`.",
+        ["phase9_prereg"], ["override", "format"], ["A1-free", "native"], "A1-free",
+        {"native": "primary (H5)"},
+    )
+    lines += _table(
+        "Phase 9 H6 — untrusted fake instruction in tool output",
+        f"Pre-registered ({p9}). Seeds 101–115. Records: `records/phase9_prereg/`.",
+        ["phase9_prereg"], ["override-inject"], ["A1-free", "native", "none"], "A1-free",
+        {"native": "primary (H6)", "none": "secondary"},
+    )
+    lines += _fake_obeyed(["phase9_prereg"], "override-inject", ["A1-free", "native", "none"])
+    lines += _table(
+        "Phase 10 H7 — second model family, `deepseek/deepseek-v4.1-flash`",
+        f"Pre-registered ({p10}), with a single primary: A1-free vs B3. Through OpenRouter, effort medium, "
+        "seeds 401–415. Records: `records/phase10_prereg/`.",
+        ["phase10_prereg"], ["long"], ["A1-free", "B3", "none"], "A1-free",
+        {"B3": "primary (H7)", "none": "descriptive"},
+    )
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n")
     print(OUT)

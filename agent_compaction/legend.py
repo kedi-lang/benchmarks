@@ -1,7 +1,6 @@
-"""What the codes in the results tables mean, and why a run failed.
+"""What the codes in the results tables mean, and why a run did not pass.
 
-Both summaries render their key and their failure lists from here, so the two results files define every
-strategy, task and column the same way.
+`summarize.py` renders the key at the top of `results/RESULTS.md` and its failure lists from here.
 """
 
 from __future__ import annotations
