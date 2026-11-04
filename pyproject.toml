@@ -1,0 +1,22 @@
+[project]
+name = "kedi-agent-compaction"
+version = "0.1.0"
+description = "Can an agent compact its own context better than its provider? An experiment on Kedi."
+requires-python = "==3.12.*"
+dependencies = [
+    "kedi[codex-model]",
+    # Kedi up to 833ce44 imports Pydantic AI's Anthropic model in its native compaction path,
+    # also when the model is OpenAI's.
+    "anthropic",
+]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[tool.uv]
+# The harness runs from the repository root (python -m agent_compaction.run); nothing is built.
+package = false
+
+[tool.uv.sources]
+# kedi-lang/kedi is private until Kedi's release; locking and syncing need read access to it.
+kedi = { git = "https://github.com/kedi-lang/kedi.git", rev = "833ce44c46ad8279d2eb74324988ecca79714c21" }
