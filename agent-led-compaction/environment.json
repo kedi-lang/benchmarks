@@ -40,7 +40,8 @@
     "phases 7-8 and the phase 1 rerun": "22931a1 (8c6e7e8 plus a test)",
     "phase 9 first batch (2026-11-02 20:09-21:00)": "22931a1; from 20:44 43ca988, which changes submodule pointers only",
     "phase 9 rerun attempt (2026-11-02 23:26-23:38)": "7cc06ea (adds the runtime fixes of 0eb0612 and tree-sitter-kedi 0.4.3)",
-    "phase 9 reruns, phase 10 and its pilot, the last 8 H5 seeds (2026-11-03)": "833ce44 (in stable through 6c404a1, PR #129; its source equals stable at 351ba1d)"
+    "phase 9 reruns, phase 10 and its pilot, the last 8 H5 seeds (2026-11-03)": "833ce44 (in stable through 6c404a1, PR #129; its source equals stable at 351ba1d)",
+    "A1-recent pilot (2026-11-05 17:06-17:15)": "3b90c18 (workspace, editable)"
   },
   "kedi_working_tree": "A development checkout. The session log shows no uncommitted Kedi source change while runs started. One exception: on 2026-11-02 at 17:15, for one test run of a few seconds, a regression test swapped in the previous native_settings.py while the phase 6b `none` arm, which uses no native compaction, was running.",
   "harness_commits": {
@@ -52,7 +53,8 @@
     "phase 9": "fb1d0e7 (the pre-registration commit)",
     "phase 10 pilot": "3eb1353",
     "phase 10": "4833f5e (the pre-registration commit)",
-    "last 8 H5 seeds": "3d86fcf (run.py differs from fb1d0e7 only by the OpenAI-compatible model path)"
+    "last 8 H5 seeds": "3d86fcf (run.py differs from fb1d0e7 only by the OpenAI-compatible model path)",
+    "A1-recent pilot": "20b52f3"
   },
   "harness_dependencies": "Until 2026-11-04 run.py and cache_probe.py imported build_model and BASE_INSTRUCTIONS from the Kedi workspace's benchmarks/subagent_comparison/common (unchanged since 2026-10-31). agent_compaction/codex_model.py now holds a verbatim copy (top-level codex_model.py from cbf6311 to e17ec87).",
   "kedi_profile": "> adapter: pydantic; > artifacts: enabled: false; > history: enabled: true, processor + processor_condition (estimated_tokens >= threshold); > use: read_log",
@@ -62,7 +64,8 @@
     "phases 6, 6b and 9 (H5, H6)": "101-115",
     "phase 9 (H4)": "201-215",
     "phase 10 pilot": "301-303",
-    "phase 10": "401-415"
+    "phase 10": "401-415",
+    "A1-recent pilot": "501-503"
   },
   "reproduction_environment": "pyproject.toml + uv.lock (uv sync): Kedi from git at 833ce44, every other package locked at the runs' versions. From e17ec87 to 0ec3bc5 the same versions came from requirements.txt + constraints.txt, checked in fresh venvs on 2026-11-04 (records/env_check)",
   "layout": "Since the commit after e17ec87: harness in agent_compaction/, tests in tests/, plan and pre-registrations in protocol/; until e17ec87 every file was at the top level, imported as benchmarks.agent_compaction"
