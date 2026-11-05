@@ -19,6 +19,8 @@ STRATEGIES = {
     "pending work, summaries) and chooses which exchanges stay verbatim.",
     "A1-free": "Agent fork, free text: the agent itself, seeing its full context, summarizes what it drops "
     "as free text and chooses which exchanges stay verbatim.",
+    "A1-recent": "Agent fork, recent retention: as A1-free, but the agent chooses how many of the latest "
+    "exchanges stay verbatim, not which ones.",
     "A1-fixed": "Agent fork, fixed retention: as A1, but the last 2 exchanges stay, not the ones the agent "
     "chooses.",
     "native": "Provider compaction: OpenAI's server-side compaction (Responses `context_management`) at the "

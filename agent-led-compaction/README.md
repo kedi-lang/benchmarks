@@ -26,7 +26,7 @@ layout of their time; see [Older commits](#older-commits).
 | module | role |
 |---|---|
 | `run.py` | runs one strategy on one task for a list of seeds and appends records |
-| `compactor.py` | strategies as Kedi `> history: processor:` callables (fork A1/A1-free/A1-fixed, stateless B2/B3, truncation B1, resets) and the `RecordingModel` wrapper |
+| `compactor.py` | strategies as Kedi `> history: processor:` callables (fork A1/A1-free/A1-recent/A1-fixed, stateless B2/B3, truncation B1, resets) and the `RecordingModel` wrapper |
 | `normalizer.py` | deterministic layout: forced keeps, original order, block at the first dropped group |
 | `task1.py` | task 1: rules in the prompt, eight noisy logs, one incident each |
 | `task2.py` | edge cases: `rev` (UPDATE/RETRACT/mid-task POLICY CHANGE), `long` (20 logs), `big` (oversized log) |

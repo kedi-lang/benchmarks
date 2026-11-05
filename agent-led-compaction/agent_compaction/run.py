@@ -222,9 +222,10 @@ def run_one(
         else RecordingModel(guard_event_loops(build_model(model_name, effort)), cache_key=cache_key)
     )
     processor = state.PROCESSOR = {
-        "A1": lambda: fork_compactor(model, log, structured=True, dynamic=True),
-        "A1-free": lambda: fork_compactor(model, log, structured=False, dynamic=True),
-        "A1-fixed": lambda: fork_compactor(model, log, structured=True, dynamic=False),
+        "A1": lambda: fork_compactor(model, log, structured=True, keep="free"),
+        "A1-free": lambda: fork_compactor(model, log, structured=False, keep="free"),
+        "A1-recent": lambda: fork_compactor(model, log, structured=False, keep="recent"),
+        "A1-fixed": lambda: fork_compactor(model, log, structured=True, keep="fixed"),
         "B2": lambda: stateless_compactor(model, log, structured=False),
         "B3": lambda: stateless_compactor(model, log, structured=True),
         "B1": lambda: truncation_compactor(log),
@@ -319,7 +320,7 @@ def run_one(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--strategy", required=True, choices=["none", "B1", "B2", "B3", "A1", "A1-free", "A1-fixed", "native", "native-compact", "reset-det", "reset-fork", "native+reassert"])
+    parser.add_argument("--strategy", required=True, choices=["none", "B1", "B2", "B3", "A1", "A1-free", "A1-recent", "A1-fixed", "native", "native-compact", "reset-det", "reset-fork", "native+reassert"])
     parser.add_argument("--seeds", type=int, nargs="+", default=[1])
     parser.add_argument("--threshold", type=int, default=18_000)
     parser.add_argument("--model", default="gpt-6-luna")

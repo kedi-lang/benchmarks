@@ -23,7 +23,7 @@ RECORDS = ROOT / "records"
 OUT = ROOT / "results" / "RESULTS.md"
 # A 503 (server unavailable) is infrastructure like a connection error: the request was not served.
 INFRA = ("RateLimit", "Timeout", "usage_limit_reached", "ModelConnectionError", "status_code: 503")
-FORKS = {"A1", "A1-free", "A1-fixed", "B2", "B3"}  # strategies whose compaction is a separate request
+FORKS = {"A1", "A1-free", "A1-recent", "A1-fixed", "B2", "B3"}  # strategies whose compaction is a separate request
 STRATEGIES = ["none", "B1", "B2", "B3", "native", "native+reassert", "A1-fixed", "A1", "A1-free", "reset-det", "reset-fork"]
 TASKS = ["t1", "rev", "long", "big", "override", "format", "scope", "-early", "override-inject"]
 COLUMNS = [
