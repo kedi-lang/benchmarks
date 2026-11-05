@@ -121,9 +121,11 @@ STRUCTURED = """\
   "pending": [work still to do],
   "summaries": [{{"text": "...", "covers": [ids of dropped groups it replaces]}}]"""
 FREE = '  "summary": "free-text summary of everything you still need from the dropped groups"'
-KEEP = """\
-  "keep": [ids of groups to keep verbatim; everything not kept is removed],
-"""
+KEEP = {
+    "free": '  "keep": [ids of groups to keep verbatim; everything not kept is removed],\n',
+    "recent": '  "keep_recent": how many of the most recent groups to keep verbatim (an integer); all older groups are removed,\n',
+    "fixed": "",
+}
 FORK_PROMPT = """\
 Your context is about to be compacted. Decide what of the conversation above you still need.
 Reply with JSON only, no prose:
@@ -207,6 +209,13 @@ def _fixed_drop(groups: list[Group], keep_recent: int) -> set[str]:
     return {g.group_id for g in droppable[: -keep_recent or None]}
 
 
+def _recent_keep(groups: list[Group], count: Any) -> list[str]:
+    """A1-recent: the fork names how many of the latest groups stay; protected ones are still forced in."""
+    if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+        raise ProposalError("`keep_recent` must be a non-negative integer")
+    return [g.group_id for g in groups[max(len(groups) - count, 0) :]] if count else []
+
+
 def _transcript(ctx: Any, drop: set[str]) -> str:
     return "\n\n".join(
         f"[{f'g{i}'}]\n" + _preview_full(ctx.messages[s.entry_start : s.entry_end])
@@ -234,15 +243,21 @@ def _segments_for_drop(groups: list[Group], drop: set[str]) -> list[str]:
 
 
 def fork_compactor(
-    model: RecordingModel, log: CompactionLog, *, structured: bool, dynamic: bool, keep_recent: int = 2
+    model: RecordingModel, log: CompactionLog, *, structured: bool, keep: str, keep_recent: int = 2
 ):
-    """A1 (structured, dynamic), A1-free (free text, dynamic), A1-fixed (structured, last groups)."""
-    name = {(True, True): "A1", (False, True): "A1-free", (True, False): "A1-fixed"}[(structured, dynamic)]
+    """Who picks the verbatim groups: the fork, any of them (A1 structured, A1-free free text); the fork, a
+    count of the latest ones (A1-recent, free text); or nobody, the last `keep_recent` (A1-fixed, structured)."""
+    name = {
+        (True, "free"): "A1",
+        (False, "free"): "A1-free",
+        (False, "recent"): "A1-recent",
+        (True, "fixed"): "A1-fixed",
+    }[(structured, keep)]
 
     async def process(ctx: Any) -> list[ModelMessage]:
         groups = _groups(ctx)
         prompt = FORK_PROMPT.format(
-            keep=KEEP if dynamic else "",
+            keep=KEEP[keep],
             fields=STRUCTURED if structured else FREE,
             index=_index(ctx, groups),
         )
@@ -250,9 +265,12 @@ def fork_compactor(
         event: dict[str, Any] = {"strategy": name, "before": ctx.estimated_tokens, **_usage(response)}
         try:
             data = _parse_json(_text(response))
-            if not dynamic:
+            if keep == "fixed":
                 drop = _fixed_drop(groups, keep_recent)
                 data["keep"] = [g.group_id for g in groups if g.group_id not in drop]
+            elif keep == "recent":
+                data["keep"] = _recent_keep(groups, data.get("keep_recent"))
+                event["keep_recent"] = data["keep_recent"]
             if not structured:
                 summary = data.get("summary")
                 if not isinstance(summary, str):
@@ -443,7 +461,7 @@ def deterministic_reset(log: CompactionLog, *, threshold: int):
 
 def fork_with_policy_trigger(model: RecordingModel, log: CompactionLog, *, threshold: int):
     """reset-fork: A1-free, also triggered by every instruction change (reset timing held equal)."""
-    inner = fork_compactor(model, log, structured=False, dynamic=True)
+    inner = fork_compactor(model, log, structured=False, keep="free")
     state: dict[str, Any] = {}
 
     async def process(ctx: Any) -> list[ModelMessage]:
