@@ -47,8 +47,7 @@ git clone https://github.com/kedi-lang/benchmarks.git && cd benchmarks/agent-led
 uv sync
 ```
 
-- `kedi-lang/kedi` is private until Kedi's release. Syncing needs read access to it through git (for example
-  after `gh auth setup-git`); after the release it works for everyone.
+- `uv sync` fetches Kedi from the public `kedi-lang/kedi` repository; no GitHub access token is needed.
 - `pyproject.toml` takes Kedi at `833ce44` (`[tool.uv.sources]`), the commit of phase 9's reruns, phase 10
   and the last H5 seeds. `uv.lock` holds every other package at the version the runs used, on Python 3.12.
 - For another phase, set `rev` in `[tool.uv.sources]` to that phase's Kedi commit from `environment.json`
